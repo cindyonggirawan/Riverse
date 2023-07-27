@@ -1,0 +1,410 @@
+Cara buat project:
+composer create-project --prefer-dist laravel/laravel="^8.0" [nama project]
+
+Cara run laravel:
+php artisan serve
+
+Lokasi Views:
+resources -> views -> welcome.blade.php
+
+Lokasi Routes:
+routes -> web.php
+
+Route mengarahkan kita ketika mengetik sesuatu di address bar
+Route::get('/hello', function(){
+    return response('<h1>Hello World!</h1>', 200)
+    //200 artinya ok, 404 artinya error
+    ->header('Content-Type', 'text/plain')
+    //supaya tidak dirender menjadi html (defaultnya html)
+    ->header('foo', 'bar');
+    //nanti hasilnya foo: bar
+});
+
+Wildcards:
+//yang didalam {} adalah yang mau diganti-ganti
+Route::get('/posts/{id}', function($id){
+    //DIE DUMP SANGAT MEMBANTU UNTUK LIHAT VALUE VARIABEL
+    dd($id);
+    return response('Post ' . $id);
+    //nanti dia concat dengan menggunakan .
+})->where('id', '[0-9]+');
+//tambahkan constraint dimana hanya boleh angka
+
+Search:
+Route::get('/search', function(Request $request){
+    //ingat buat import class Request (klik kanan)
+    return $request->name . ' ' . $request->city;
+    dd($request);
+});
+
+Di api.php, kita juga dapat memasukan multi dimensional array:
+Route::get('/posts', function(){
+    return response()->json([
+        'posts' => [
+            [
+                'title' => 'Post One'
+            ]
+        ]
+    ]);
+});
+
+Contohnya di route, kita tuliskan:
+Route::get('/', function () {
+    //buat array untuk di passing dalam view listings.blade.php
+    return view('listings', [
+        'heading' => 'Latest Listings',
+        'listings' => [
+            [
+                'id' => 1,
+                'title' => 'Listing One',
+                'description' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, quisquam natus accusamus expedita accusantium harum in, dolore dolorem totam nobis consequatur, maiores atque! Necessitatibus, minima quis! Pariatur perspiciatis inventore corrupti.'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Listing Two',
+                'description' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, quisquam natus accusamus expedita accusantium harum in, dolore dolorem totam nobis consequatur, maiores atque! Necessitatibus, minima quis! Pariatur perspiciatis inventore corrupti.'
+            ]
+        ]
+    ]);
+});
+
+Php template:
+<h1><?php echo $heading; ?></h1>
+<?php foreach($listings as $listing): ?>
+    <h2><?php echo $listing['title']; ?></h2>
+    <p><?php echo $listing['description']; ?></p>
+<?php endforeach; ?>
+
+Untuk memperbaiki keterbacaan, maka muncul Blade templates:
+<h1>{{ $test }}</h1>
+<h1>{{ $heading }}</h1>
+@foreach ($listings as $listing)
+    <h2>{{ $listing['title'] }}</h2>
+    //pakai $[''] seperti ini dulu karena kita belum mengenal collection
+    <p>{{ $listing['description'] }}</p>
+@endforeach
+
+Blade directives:
+@php
+    $test = 2;
+@endphp
+<h1>{{ $test }}</h1>
+
+@if (count($listings) == 0)
+    <p>No listings found</p>
+@endif
+
+//Unless adalah alternatif lain selain if-else
+@unless (count($listings) == 0)
+    @foreach ($listings as $listing)
+        <h2>{{ $listing['title'] }}</h2>
+        <p>{{ $listing['description'] }}</p>
+    @endforeach
+@else
+    <p>No listings found</p>
+@endunless
+
+Lokasi Models:
+app -> Models -> User.php
+
+Penamaan model harus singular
+
+Cara membuat model:
+php artisan make:model Listing
+
+Isi model Listing dengan:
+<?php
+    namespace App\Models;
+
+    class Listing {
+        public static function all() {
+            return
+            [
+                [
+                    'id' => 1,
+                    'title' => 'Listing One',
+                    'description' => 'One Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, quisquam natus accusamus expedita accusantium harum in, dolore dolorem totam nobis consequatur, maiores atque! Necessitatibus, minima quis! Pariatur perspiciatis inventore corrupti.'
+                ],
+                [
+                    'id' => 2,
+                    'title' => 'Listing Two',
+                    'description' => 'Two Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, quisquam natus accusamus expedita accusantium harum in, dolore dolorem totam nobis consequatur, maiores atque! Necessitatibus, minima quis! Pariatur perspiciatis inventore corrupti.'
+                ]
+            ];
+        }
+
+        public static function find($id) {
+            //self merujuk ke class itu sendiri
+            //:: artinya fungsi static
+            $listings = self::all();
+
+            foreach($listings as $listing) {
+                if($listing['id'] == $id) {
+                    return $listing;
+                }
+            }
+        }
+    }
+?>
+
+Sekarang, route kita yang awalnya berisi array listing kita ubah
+Route::get('/', function () {
+    return view('listings', [
+        'heading' => 'Latest Listings',
+        'listings' => Listing::all()
+    ]);
+});
+
+Untuk mengakses sebuah listing, kita menggunakan:
+Route::get('/listings/{id}', function($id) {
+    return view('listing', [
+        'listing' => Listing::find($id)
+    ]);
+});
+
+Lokasi mysql:
+config -> database.php
+
+Lokasi environment:
+.env
+
+Ubah ini saat mulai menggunakan database:
+DB_PORT=[port mysql]
+DB_DATABASE=[nama database baru]
+
+Lokasi migration table:
+database -> migrations
+
+Cara membuat migration table:
+php artisan make:migration create_listings_table
+
+Ubah kolom dalam listings table menjadi:
+$table->string('title');
+$table->string('tags');
+$table->string('company');
+$table->string('location');
+$table->string('email');
+$table->string('website');
+$table->longText('description');
+
+Cara menjalankan migrate:
+php artisan migrate
+
+Lokasi seed:
+database -> seeders -> DatabaseSeeder.Php
+
+Cara menjalankan seeding:
+php artisan db:seed
+
+Cara menjalankan ulang migrate:
+php artisan migrate:refresh
+
+Cara menjalankan ulang migrate dan seed sekaligus:
+php artisan migrate:refresh --seed
+
+Buat dalam DatabaseSeeder:
+//melalui factory
+\App\Models\User::factory(5)->create();
+
+//langsung seed
+Listing::create([
+    'title' => 'Laravel Senior Developer',
+    'tags' => 'laravel, javascript',
+    'company' => 'Acme Corp',
+    'location' => 'Boston, MA',
+    'email' => 'email1@email.com',
+    'website' => 'https://www.acme.com',
+    'description' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione, quisquam natus accusamus expedita accusantium harum in, dolore dolorem totam nobis consequatur, maiores atque! Necessitatibus, minima quis! Pariatur perspiciatis inventore corrupti.'
+]);
+
+Cara membuat factory:
+php artisan make:factory ListingFactory
+
+Dalam ListingFactory, kita dapat menggunakan faker untuk membuat dummy:
+return [
+    'title' => $this->faker->sentence(),
+    'tags' => 'laravel, api, backend',
+    'company' => $this->faker->company(),
+    'email' => $this->faker->companyEmail(),
+    'website' => $this->faker->url(),
+    'location' => $this->faker->city(),
+    'description' => $this->faker->paragraph(5),
+];
+
+Apa yang utama maka dia @yield('content') //content adalah nama section
+Apa yang melanjutkan bagian utama, maka dia @extends('layout') //layout adalah nama blade.php, kemudian taruh @section('content') ... @endsection
+Apa yang bagian kecil-kecil tapi tidak berulang, tinggal di @include('partials._hero') //partials adalah nama folder dan _hero adalah nama blade.php
+Apa yang bagian kecil-kecil dan berulang, dapat dijadikan component, tinggal ketik <x-listing-card :listing="$listing"/> untuk insert component, dan dalam componentnya terima @props(['listing'])
+
+Semua asset image ada di:
+public
+
+Dengan model eloquent, kita dapat mengubah $listing['title'] menjadi $listing->title
+
+Untuk aset, kita dapat menuliskan src="{{ asset('images/no-image.png') }}
+
+Untuk mencegah kita mengakses id yang tidak ada, kita dapat mengubah routenya menjadi:
+Route::get('/listings/{id}', function($id) {
+    $listing = Listing::find($id);
+
+    if($listing) {
+        return view('listing', [
+            'listing' => $listing
+        ]);
+    }
+    else {
+        abort('404');
+    }
+});
+
+Dengan adanya route model binding:
+//otomatis 404 kalo tidak ada idnya
+Route::get('/listings/{listing}', function(Listing $listing) {
+    //tidak pass id lagi, melainkan model listing
+    return view('listing', [
+        'listing' => $listing
+    ]);
+});
+
+Penambahan class dapat diantisipasi dengan cara berikut:
+<div {{ $attributes->merge(['class' => 'bg-gray-50 border border-gray-200 rounded p-6']) }}>
+    {{ $slot }}
+</div>
+
+Lokasi Controller:
+app -> Http -> Controllers -> Controller.php
+
+Cara membuat controller:
+php artisan make:controller ListingController
+
+Isi function controller menjadi:
+class ListingController extends Controller
+{
+    // Show all listings
+    public function index() {
+        return view('listings', [
+            'listings' => Listing::all()
+        ]);
+    }
+
+    // Show single listings
+    public function show(Listing $listing) {
+        return view('listing', [
+            'listing' => $listing
+        ]);
+    }
+}
+
+Ganti routenya menjadi:
+Route::get('/', [ListingController::class, 'index']);
+Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
+Dalam controller, berikut ini adalah penamaan function yang paling umum:
+index - show all listings
+show - show single listing
+create - show form to create new listing
+store - store new listing
+edit - show form to edit listing
+update - update listing
+destroy - delete listing
+
+Ketika memindahkan ke dalam folder, nama filenya menjadi:
+listings.index //listings adalah nama folder dan index adalah nama blade.php
+
+Untuk melakukan filtering langsung tanpa page baru, kita dapat melakukan query dalam controller seperti:
+class ListingController extends Controller
+{
+    public function index() {
+        return view('listings.index', [
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->get()
+        ]);
+    }
+}
+
+Kemudian, modelnya juga diisi menjadi:
+class Listing extends Model
+{
+    use HasFactory;
+
+    public function scopeFilter($query, array $filters) {
+        //untuk filter tag
+        if($filters['tag'] ?? false) {
+            $query->where('tags', 'like', '%' . request('tag') . '%');
+        }
+
+        //untuk filter search
+        if($filters['search'] ?? false) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('description', 'like', '%' . request('search') . '%')
+            ->orWhere('tags', 'like', '%' . request('search') . '%');
+        }
+    }
+}
+
+Opsional, cara install clockwork dengan composer:
+composer require itsgoingd/clockwork
+
+Saat membuat create, kita harus memastikan bahwa setiap field memiliki atribute name dan tambahkan method post di form kita:
+<form method="POST" action="/listings">
+    @csrf //harus ada untuk mencegah orang lain mengumpulkan data ke end point kita
+</form>
+
+Saat membuat store, di routenya bukan lagi get, melainkan post:
+Route::post('/listings', [ListingController::class, 'store']);
+
+Kita dapat menambahkan error message dengan menambahkan ini di blade.php:
+@error('description')
+    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+@enderror
+
+Ingat untuk membuat:
+protected $fillable = ['title', 'company', 'location', 'website', 'email', 'description', 'tags'];
+Setiap kali ingin memasukkan data ke field langsung banyak
+
+Solusi lain adalah dengan menambahkan ini dalam AppServiceProvider.php:
+public function boot()
+{
+    Model::unguard();
+}
+
+Dalam menaruh message sebagai alert, kita dapat menambahkan ini di ListingController:
+return redirect('/')->with('message', 'Listing created successfully!');
+
+Kemudian, kita buat componentnya dan taruh x-flash-message di layout.blade.php
+
+Kita dapat menambahkan atribut <input value="{{ old('company') }}"> agar teks dalam field tidak hilang ketika reload
+
+Untuk menambahkan page, kita tinggal mengubah get() menjadi paginate() atau simplePaginate()
+public function index() {
+    // dd(request('tag'));
+    return view('listings.index', [
+        'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate(6)
+    ]);
+}
+
+Jika form kita menerima input file, maka kita harus menambahkan atribut:
+<form enctype="multipart/form-data">
+
+Buka config -> filesystems.php dan ubah 'default' => env('FILESYSTEM_DRIVER', 'public'),
+
+Cara cek ada logo atau tidak:
+if($request->hasFile('logo')) {
+    $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+}
+
+Gambar akan tersimpan di storage -> app -> public -> logos
+Maka, apabila kita ingin memindahkannya ke public -> images, cara mengubahnya adalah:
+php artisan storage:link
+
+Tambahkan @method('PUT') atau @method('DELETE') dibawah @csrf di edit.blade.php
+
+Lokasi Authenticate.php:
+app -> Http -> Middleware -> Authenticate.php
+
+Buka app -> Providers -> RouteServiceProvider.php dan ubah public const HOME menjadi '/'
+
+Cara membuka tinker:
+php artisan tinker
+
+Cara keluar dari tinker:
+exit
