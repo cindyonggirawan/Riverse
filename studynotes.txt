@@ -1,8 +1,18 @@
 Cara buat project:
 composer create-project --prefer-dist laravel/laravel="^8.0" [nama project]
+atau
+composer create-project laravel/laravel [nama project]
+atau
+laravel new [nama project]
 
 Cara run laravel:
-php artisan serve
+php artisan serve -> dilakukan dalam folder project yang sudah dibuatkan laravel
+
+Bisa juga pakai valet untuk mempermudah pengetikan domain:
+ping coba.test
+CTRL + C -> buat exit
+cd .. -> naik satu folder (diluar folder project laravel)
+valet park
 
 Lokasi Views:
 resources -> views -> welcome.blade.php
