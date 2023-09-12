@@ -14,6 +14,11 @@ class Admin extends Model
 
     protected $hidden = ['password'];
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);

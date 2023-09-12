@@ -14,6 +14,11 @@ class Fasilitator extends Model
 
     protected $hidden = ['password'];
 
+    public function isFasilitator()
+    {
+        return $this->role === 'fasilitator';
+    }
+
 
     public function setPasswordAttribute($value)
     {

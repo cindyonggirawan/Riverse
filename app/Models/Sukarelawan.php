@@ -19,6 +19,11 @@ class Sukarelawan extends Model
 
     protected $hidden = ['password'];
 
+    public function isSukarelawan()
+    {
+        return $this->role === 'sukarelawan';
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
