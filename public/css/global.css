@@ -4,10 +4,26 @@
     font-family: "Poppins", sans-serif;
 }
 
+body {
+    background: #f6f8fc;
+    min-height: 80vh;
+}
+
 .custom-nav {
+    position: fixed;
+    width: 90%;
+    top: 0;
     display: flex;
     justify-content: space-between;
-    padding: 30px 50px 0 50px;
+    padding: 30px 50px 30px 50px;
+    transition: background-color 0.3s ease;
+}
+.custom-nav.scrolled {
+    background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0) 10%,
+        rgba(255, 255, 255, 0.8) 80%
+    ); /* Gradient background */
 }
 
 .nav-row {
@@ -28,6 +44,7 @@
 
 .selected {
     color: #5822ca;
+    text-decoration: none;
 }
 
 .underline {
@@ -45,6 +62,10 @@
     border: 1px solid #19b2e2;
 }
 
+.rect-btn-outline:hover {
+    background-color: #ffffffaa;
+}
+
 .riverse-logo img {
     width: 100px;
     height: 40px;
@@ -52,9 +73,9 @@
 
 .footer-custom {
     background: #edf0f3;
-    position: fixed;
     bottom: 0;
     width: 100%;
+    margin-top: 20px;
 }
 
 .footer-top {
