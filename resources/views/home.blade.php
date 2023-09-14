@@ -48,6 +48,28 @@
 <div class="page-content">
   <h3>Aktvitas yang berada di 
     <a href="/" class="selected">Sungai Ciliwung</a></h3>
+
+    <div class="activity-row">
+      <x-activity-card-big/>
+      <div class="activity-col">
+        <x-activity-card-horizontal/>
+        <x-activity-card-horizontal/>
+        <x-activity-card-horizontal/>
+      </div>
+    </div>
+    <div class="activity-row">
+      <x-activity-card/>
+      <x-activity-card/>
+      <x-activity-card/>
+      <div class="lihat-semua-card-container">
+        <img src="{{asset('images/activities_hands.png')}}" alt="">
+        <div class="activities-card-content">
+          <h1>1.000+</h1>
+          <p>aktivitas tersedia<br/>pada platform ini</p>
+          <a href="/activities" class="purple-outline-btn-long">Lihat Semua</a>
+        </div>
+      </div>
+    </div>
 </div>
 @endsection
 
