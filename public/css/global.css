@@ -6,7 +6,13 @@
 
 body {
     background: #f6f8fc;
-    min-height: 80vh;
+}
+
+.page-body {
+    background: #f6f8fc;
+    max-width: 1280px;
+    min-height: 75vh;
+    margin: auto;
 }
 
 .custom-nav {
@@ -133,4 +139,136 @@ body {
 
 .italic {
     font-style: italic;
+}
+
+.component-testing-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 80vh;
+}
+
+/* Component Stylings */
+.activity-card-container {
+    width: 268px;
+    min-height: 320px;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.activity-card-container-lg {
+    width: 566px;
+    height: 597px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 16px;
+}
+
+.activity-card-container-hor {
+    width: 566px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    gap: 20px;
+    border-radius: 16px;
+}
+
+.activity-card-container .img-container {
+    width: 248px;
+    height: 174px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    padding: 0 10px;
+}
+
+.activity-card-container-lg .img-container-lg {
+    width: 556px;
+    height: 404px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+}
+
+.activity-card-container-hor .img-container-hor {
+    width: 215px;
+    height: 169px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px;
+}
+
+.card-info-lg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.card-info-lg h2 {
+    margin-bottom: 2px;
+}
+
+.card-info-hor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.card-row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.card-row img {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.likes {
+    display: flex;
+    gap: 8px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: fit-content;
+
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
 }
