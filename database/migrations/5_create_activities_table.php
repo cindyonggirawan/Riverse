@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string("title");
+            $table->string("picture");
             $table->string("invitationManager");
             $table->date("registrationDeadline");
             $table->string("status");
             $table->string("rejectionMessage");
             $table->date("date");
-            $table->integer("startTime");
-            $table->integer("endTime");
+            $table->string("startTime");
+            $table->string("endTime");
             $table->string("jobName");
             $table->string("jobDescription");
             $table->string("criteria");
