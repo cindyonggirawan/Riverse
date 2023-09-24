@@ -9,5 +9,8 @@ class Benefit extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $table = 'benefits';
+    protected $guarded = [];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 }

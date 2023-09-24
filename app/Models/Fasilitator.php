@@ -10,15 +10,15 @@ class Fasilitator extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
-
-    protected $hidden = ['password'];
+    protected $table = 'fasilitators';
+    protected $guarded = [];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     public function isFasilitator()
     {
         return $this->role === 'fasilitator';
     }
-
 
     public function setPasswordAttribute($value)
     {

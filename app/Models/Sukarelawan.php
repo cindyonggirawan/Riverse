@@ -13,11 +13,12 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Sukarelawan extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    protected $guarded = ['id'];
-
-    protected $hidden = ['password'];
+    protected $table = 'sukarelawans';
+    protected $guarded = [];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     public function isSukarelawan()
     {

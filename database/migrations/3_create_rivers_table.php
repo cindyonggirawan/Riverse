@@ -6,25 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('rivers', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string("addressLink");
-            $table->string("banner");
+    // /**
+    //  * Run the migrations.
+    //  */
+    // public function up(): void
+    // {
+    //     Schema::create('rivers', function (Blueprint $table) {
+    //         $table->id()->autoIncrement();
+    //         $table->string("addressLink");
+    //         $table->string("banner");
 
-            $table->timestamps();
-        });
-    }
+    //         $table->timestamps();
+    //     });
+    // }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('rivers');
-    }
+    // /**
+    //  * Reverse the migrations.
+    //  */
+    // public function down(): void
+    // {
+    //     Schema::dropIfExists('rivers');
+    // }
 };
