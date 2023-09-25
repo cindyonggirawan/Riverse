@@ -11,8 +11,9 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Verification Status Id</th>
-                                <th>Fasilitator Type Id</th>
+                                <th>Name</th>
+                                <th>Verification Status</th>
+                                <th>Fasilitator Type</th>
                                 <th>Description</th>
                                 <th>Logo Image Url</th>
                                 <th>Address</th>
@@ -25,8 +26,9 @@
                             @foreach ($fasilitators as $fasilitator)
                                 <tr>
                                     <td>{{ $fasilitator->id }}</a></td>
-                                    <td>{{ $fasilitator->verificationStatusId }}</td>
-                                    <td>{{ $fasilitator->fasilitatorTypeId }}</td>
+                                    <td>{{ $fasilitator->user->name }}</td>
+                                    <td>{{ $fasilitator->verificationStatus->name }}</td>
+                                    <td>{{ $fasilitator->fasilitatorType->name }}</td>
                                     <td>{{ Str::words($fasilitator->description, 5) }}</td>
                                     <td>{{ $fasilitator->logoImageUrl !== null ? $fasilitator->logoImageUrl : '-' }}</td>
                                     <td>{{ Str::words($fasilitator->address, 5) }}</td>

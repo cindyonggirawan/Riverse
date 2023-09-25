@@ -14,6 +14,7 @@ use App\Http\Controllers\SukarelawanController;
 use App\Http\Controllers\SukarelawanStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationStatusController;
+use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -104,3 +105,9 @@ Route::get('/login', [LoginController::class, 'index'])->name('login')->middlewa
 Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/waiting-for-verification/sukarelawans', [VerifyController::class, 'indexSukarelawan']);
+
+Route::patch('/verify/sukarelawans/{sukarelawan:slug}', [VerifyController::class, 'updateVerifiedSukarelawan']);
+
+Route::patch('/reject/sukarelawans/{sukarelawan:slug}', [VerifyController::class, 'updateRejectedSukarelawan']);

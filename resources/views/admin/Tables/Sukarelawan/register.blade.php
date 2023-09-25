@@ -74,16 +74,16 @@
                             <label for="gender" class="col-sm-4 col-form-label required">Gender</label>
                             <div class="col-sm-8">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="gender" id="male" value="Male"
+                                    <input type="radio" name="gender" id="male" value="Laki-laki"
                                         class="custom-control-input @error('gender') is-invalid @enderror" required
-                                        {{ old('gender') === 'Male' ? 'checked' : '' }}>
-                                    <label for="male" class="custom-control-label">Male</label>
+                                        {{ old('gender') === 'Laki-laki' ? 'checked' : '' }}>
+                                    <label for="male" class="custom-control-label">Laki-laki</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" name="gender" id="female" value="Female"
+                                    <input type="radio" name="gender" id="female" value="Perempuan"
                                         class="custom-control-input @error('gender') is-invalid @enderror" required
-                                        {{ old('gender') === 'Female' ? 'checked' : '' }}>
-                                    <label for="female" class="custom-control-label">Female</label>
+                                        {{ old('gender') === 'Perempuan' ? 'checked' : '' }}>
+                                    <label for="female" class="custom-control-label">Perempuan</label>
                                 </div>
                             </div>
                             @error('gender')

@@ -11,7 +11,9 @@ class BenefitController extends Controller
     {
         return view('admin.Tables.Benefit.benefits', [
             'title' => 'Benefits',
-            'benefits' => Benefit::all()
+            'benefits' => Benefit::with(['level'])
+                ->orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

@@ -11,7 +11,8 @@ class LevelController extends Controller
     {
         return view('admin.Tables.Level.levels', [
             'title' => 'Levels',
-            'levels' => Level::all()
+            'levels' => Level::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

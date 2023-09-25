@@ -11,6 +11,16 @@
                         <dt class="col-sm-4">Id</dt>
                         <dd class="col-sm-8">{{ $benefit->id }}</dd>
 
+                        <hr class="col-sm-12">
+
+                        <dt class="col-sm-4">Level Id</dt>
+                        <dd class="col-sm-8">{{ $benefit->levelId }}</dd>
+
+                        <dt class="col-sm-4">Level</dt>
+                        <dd class="col-sm-8">{{ $benefit->level->name }}</dd>
+
+                        <hr class="col-sm-12">
+
                         <dt class="col-sm-4">Name</dt>
                         <dd class="col-sm-8">{{ $benefit->name }}</dd>
 

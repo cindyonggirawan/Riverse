@@ -11,11 +11,27 @@
                         <dt class="col-sm-4">Id</dt>
                         <dd class="col-sm-8">{{ $fasilitator->id }}</dd>
 
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">{{ $fasilitator->user->email }}</dd>
+
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">{{ $fasilitator->user->name }}</dd>
+
+                        <hr class="col-sm-12">
+
                         <dt class="col-sm-4">Verification Status Id</dt>
                         <dd class="col-sm-8">{{ $fasilitator->verificationStatusId }}</dd>
 
+                        <dt class="col-sm-4">Verification Status</dt>
+                        <dd class="col-sm-8">{{ $fasilitator->verificationStatus->name }}</dd>
+
                         <dt class="col-sm-4">Fasilitator Type Id</dt>
                         <dd class="col-sm-8">{{ $fasilitator->fasilitatorTypeId }}</dd>
+
+                        <dt class="col-sm-4">Fasilitator Type</dt>
+                        <dd class="col-sm-8">{{ $fasilitator->fasilitatorType->name }}</dd>
+
+                        <hr class="col-sm-12">
 
                         <dt class="col-sm-4">Description</dt>
                         <dd class="col-sm-8">{{ $fasilitator->description }}</dd>

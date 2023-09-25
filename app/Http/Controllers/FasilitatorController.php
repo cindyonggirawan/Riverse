@@ -11,7 +11,9 @@ class FasilitatorController extends Controller
     {
         return view('admin.Tables.Fasilitator.fasilitators', [
             'title' => 'Fasilitators',
-            'fasilitators' => Fasilitator::all()
+            'fasilitators' => Fasilitator::with(['user', 'verificationStatus', 'fasilitatorType'])
+                ->orderBy('updated_at', 'desc')
+                ->get()
         ]);
     }
 

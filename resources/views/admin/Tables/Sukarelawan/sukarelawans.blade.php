@@ -11,8 +11,9 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Verification Status Id</th>
-                                <th>Level Id</th>
+                                <th>Name</th>
+                                <th>Verification Status</th>
+                                <th>Level</th>
                                 <th>Gender</th>
                                 <th>Date Of Birth</th>
                                 <th>National Identity Number</th>
@@ -27,8 +28,9 @@
                             @foreach ($sukarelawans as $sukarelawan)
                                 <tr>
                                     <td>{{ $sukarelawan->id }}</a></td>
-                                    <td>{{ $sukarelawan->verificationStatusId }}</td>
-                                    <td>{{ $sukarelawan->levelId }}</td>
+                                    <td>{{ $sukarelawan->user->name }}</td>
+                                    <td>{{ $sukarelawan->verificationStatus->name }}</td>
+                                    <td>{{ $sukarelawan->level->name }}</td>
                                     <td>{{ $sukarelawan->gender }}</td>
                                     <td>{{ $sukarelawan->dateOfBirth }}</td>
                                     <td>{{ $sukarelawan->nationalIdentityNumber }}</td>

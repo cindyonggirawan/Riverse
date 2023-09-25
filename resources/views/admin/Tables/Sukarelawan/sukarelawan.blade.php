@@ -11,11 +11,27 @@
                         <dt class="col-sm-4">Id</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->id }}</dd>
 
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">{{ $sukarelawan->user->email }}</dd>
+
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">{{ $sukarelawan->user->name }}</dd>
+
+                        <hr class="col-sm-12">
+
                         <dt class="col-sm-4">Verification Status Id</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->verificationStatusId }}</dd>
 
+                        <dt class="col-sm-4">Verification Status</dt>
+                        <dd class="col-sm-8">{{ $sukarelawan->verificationStatus->name }}</dd>
+
                         <dt class="col-sm-4">Level Id</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->levelId }}</dd>
+
+                        <dt class="col-sm-4">Level</dt>
+                        <dd class="col-sm-8">{{ $sukarelawan->level->name }}</dd>
+
+                        <hr class="col-sm-12">
 
                         <dt class="col-sm-4">Gender</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->gender }}</dd>

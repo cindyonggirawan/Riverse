@@ -11,8 +11,15 @@
                         <dt class="col-sm-4">Id</dt>
                         <dd class="col-sm-8">{{ $user->id }}</dd>
 
+                        <hr class="col-sm-12">
+
                         <dt class="col-sm-4">Role Id</dt>
                         <dd class="col-sm-8">{{ $user->roleId }}</dd>
+
+                        <dt class="col-sm-4">Role</dt>
+                        <dd class="col-sm-8">{{ $user->role->name }}</dd>
+
+                        <hr class="col-sm-12">
 
                         <dt class="col-sm-4">Email</dt>
                         <dd class="col-sm-8">{{ $user->email }}</dd>

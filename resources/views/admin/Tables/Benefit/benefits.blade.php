@@ -11,6 +11,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Level</th>
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Coupon Code</th>
@@ -23,6 +24,7 @@
                             @foreach ($benefits as $benefit)
                                 <tr>
                                     <td>{{ $benefit->id }}</a></td>
+                                    <td>{{ $benefit->level->name }}</a></td>
                                     <td>{{ $benefit->name }}</td>
                                     <td>{{ Str::words($benefit->description, 5) }}</td>
                                     <td>{{ $benefit->couponCode }}</td>

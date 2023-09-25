@@ -52,6 +52,11 @@
                 color: #dc3545;
                 margin-left: 4px;
             }
+
+            .btn-square {
+                width: 30px;
+                height: 30px;
+            }
         </style>
     </head>
 

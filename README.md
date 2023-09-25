@@ -27,11 +27,11 @@ Run ```composer install```
 
 Run ```php artisan migrate: fresh --seed```
 
-configure ```env``` file
+Configure ```env``` file
 
-run ```php artisan storage link```
+Run ```php artisan storage link```
 
-run ```php artisn serve```
+Run ```php artisan serve```
 
 ## Commit Message Guidelines
 

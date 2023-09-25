@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Hash;
 
 class Fasilitator extends Model
@@ -15,18 +16,33 @@ class Fasilitator extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
 
-    public function isFasilitator()
+    /**
+     * Get the user that owns the Fasilitator
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->role === 'fasilitator';
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
-    public function setPasswordAttribute($value)
+    /**
+     * Get the verificationStatus that owns the Fasilitator
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function verificationStatus(): BelongsTo
     {
-        $this->attributes['password'] = Hash::make($value);
+        return $this->belongsTo(VerificationStatus::class, 'verificationStatusId', 'id');
     }
 
-    public function activities()
+    /**
+     * Get the fasilitatorType that owns the Fasilitator
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function fasilitatorType(): BelongsTo
     {
-        return $this->hasMany(Activity::class);
+        return $this->belongsTo(FasilitatorType::class, 'fasilitatorTypeId', 'id');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\Sukarelawan as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,18 +21,33 @@ class Sukarelawan extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
 
-    public function isSukarelawan()
+    /**
+     * Get the user that owns the Sukarelawan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->role === 'sukarelawan';
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
-    public function setPasswordAttribute($value)
+    /**
+     * Get the verificationStatus that owns the Sukarelawan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function verificationStatus(): BelongsTo
     {
-        $this->attributes['password'] = Hash::make($value);
+        return $this->belongsTo(VerificationStatus::class, 'verificationStatusId', 'id');
     }
 
-    public function sukarelawanActivityDetails()
+    /**
+     * Get the level that owns the Sukarelawan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function level(): BelongsTo
     {
-        return $this->hasMany(SukarelawanActivityDetail::class);
+        return $this->belongsTo(Level::class, 'levelId', 'id');
     }
 }

@@ -70,7 +70,8 @@ class RegisterController extends Controller
     {
         return view('admin.Tables.Fasilitator.register', [
             'title' => 'Register as Fasilitator',
-            'fasilitatorTypes' => FasilitatorType::all()
+            'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 
