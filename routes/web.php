@@ -14,7 +14,7 @@ use App\Http\Controllers\SukarelawanController;
 use App\Http\Controllers\SukarelawanStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationStatusController;
-use App\Http\Controllers\VerifyController;
+use App\Http\Controllers\VerifySukarelawanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,6 +78,10 @@ Route::get('/benefits', [BenefitController::class, 'index']);
 
 Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
 
+
+
+
+
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 
 Route::get('/register/sukarelawan', [RegisterController::class, 'showSukarelawan']);
@@ -106,8 +110,30 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/waiting-for-verification/sukarelawans', [VerifyController::class, 'indexSukarelawan']);
 
-Route::patch('/verify/sukarelawans/{sukarelawan:slug}', [VerifyController::class, 'updateVerifiedSukarelawan']);
 
-Route::patch('/reject/sukarelawans/{sukarelawan:slug}', [VerifyController::class, 'updateRejectedSukarelawan']);
+
+
+Route::get('/waiting-for-verification/sukarelawans', [VerifySukarelawanController::class, 'indexWaitingForVerificationSukarelawan']);
+
+Route::patch('/verify/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanController::class, 'updateVerifiedSukarelawan']);
+
+Route::patch('/reject/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanController::class, 'updateRejectedSukarelawan']);
+
+Route::patch('/verify/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllVerifiedSukarelawan']);
+
+Route::patch('/reject/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllRejectedSukarelawan']);
+
+Route::get('/verified/sukarelawans', [VerifySukarelawanController::class, 'indexVerifiedSukarelawan']);
+
+Route::patch('/unverify/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanController::class, 'updateUnverifiedSukarelawan']);
+
+Route::patch('/unverify/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllUnverifiedSukarelawan']);
+
+Route::get('/rejected/sukarelawans', [VerifySukarelawanController::class, 'indexRejectedSukarelawan']);
+
+Route::patch('/unreject/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanController::class, 'updateUnrejectedSukarelawan']);
+
+Route::patch('/unreject/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllUnrejectedSukarelawan']);
+
+Route::get('/all/sukarelawans', [VerifySukarelawanController::class, 'indexAllSukarelawan']);

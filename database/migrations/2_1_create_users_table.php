@@ -26,8 +26,6 @@ return new class extends Migration
             $table->primary('id');
 
             $table->foreign('roleId')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->softDeletes();
         });
     }
 

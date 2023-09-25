@@ -41,10 +41,6 @@
 
                         <dt class="col-sm-4">Updated At</dt>
                         <dd class="col-sm-8">{{ $benefit->updated_at }}</dd>
-
-                        <dt class="col-sm-4">Deleted At</dt>
-                        <dd class="col-sm-8">{{ $benefit->deleted_at !== null ? $benefit->deleted_at : '-' }}
-                        </dd>
                     </dl>
                 </div>
                 <!-- /.card-body -->

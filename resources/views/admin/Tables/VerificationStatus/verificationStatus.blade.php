@@ -22,10 +22,6 @@
 
                         <dt class="col-sm-4">Updated At</dt>
                         <dd class="col-sm-8">{{ $verificationStatus->updated_at }}</dd>
-
-                        <dt class="col-sm-4">Deleted At</dt>
-                        <dd class="col-sm-8">
-                            {{ $verificationStatus->deleted_at !== null ? $verificationStatus->deleted_at : '-' }}</dd>
                     </dl>
                 </div>
                 <!-- /.card-body -->

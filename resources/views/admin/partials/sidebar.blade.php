@@ -19,7 +19,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/waiting-for-verification/sukarelawans"
-                                class="nav-link {{ $title === 'Sukarelawans' ? 'active' : '' }}">
+                                class="nav-link {{ $title === 'Waiting For Verification Sukarelawans' ? 'active' : '' }}">
                                 <i class="fas fa-table nav-icon"></i>
                                 <p>Sukarelawans</p>
                             </a>

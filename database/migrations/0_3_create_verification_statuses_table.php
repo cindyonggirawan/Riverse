@@ -20,8 +20,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->primary('id');
-
-            $table->softDeletes();
         });
     }
 

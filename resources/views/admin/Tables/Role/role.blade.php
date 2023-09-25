@@ -22,9 +22,6 @@
 
                         <dt class="col-sm-4">Updated At</dt>
                         <dd class="col-sm-8">{{ $role->updated_at }}</dd>
-
-                        <dt class="col-sm-4">Deleted At</dt>
-                        <dd class="col-sm-8">{{ $role->deleted_at !== null ? $role->deleted_at : '-' }}</dd>
                     </dl>
                 </div>
                 <!-- /.card-body -->

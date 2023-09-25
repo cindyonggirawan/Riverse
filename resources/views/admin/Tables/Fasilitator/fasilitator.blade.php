@@ -66,10 +66,6 @@
 
                         <dt class="col-sm-4">Updated At</dt>
                         <dd class="col-sm-8">{{ $fasilitator->updated_at }}</dd>
-
-                        <dt class="col-sm-4">Deleted At</dt>
-                        <dd class="col-sm-8">
-                            {{ $fasilitator->deleted_at !== null ? $fasilitator->deleted_at : '-' }}</dd>
                     </dl>
                 </div>
                 <!-- /.card-body -->

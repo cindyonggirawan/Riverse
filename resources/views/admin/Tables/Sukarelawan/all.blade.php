@@ -16,11 +16,17 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nama</th>
+                                <th>Level</th>
+                                <th>XP</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Usia</th>
                                 <th>Nomor Induk Kependudukan</th>
                                 <th>Tanggal Pendaftaran</th>
-                                <th>Penentuan</th>
+                                <th>Tanggal Verifikasi</th>
+                                <th>Tanggal Penolakan</th>
+                                <th>Alasan Penolakan</th>
+                                <th>Status</th>
+                                <th>Pengaturan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,34 +34,38 @@
                                 <tr>
                                     <td>{{ $sukarelawan->id }}</a></td>
                                     <td>{{ $sukarelawan->user->name }}</td>
+                                    <td>{{ $sukarelawan->level->name }}</td>
+                                    <td>{{ $sukarelawan->experiencePoint }} XP</td>
                                     <td>{{ $sukarelawan->gender }}</td>
                                     <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
                                     <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->created_at)->format('d/m/Y') }}
                                     </td>
+                                    <td>{{ $sukarelawan->verified_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->verified_at)->format('d/m/Y') : '-' }}
+                                    </td>
+                                    <td>{{ $sukarelawan->rejected_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->rejected_at)->format('d/m/Y') : '-' }}
+                                    </td>
+                                    <td>{{ $sukarelawan->reasonForRejection !== null ? $sukarelawan->reasonForRejection : '-' }}
+                                    </td>
+                                    <td>{{ $sukarelawan->verificationStatus->name }}</a></td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="verifyForm" action="/verify/sukarelawans/{{ $sukarelawan->slug }}"
-                                                method="post">
-                                                @method('patch')
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm btn-square">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </form>
+                                            <a class="btn btn-info btn-sm btn-square" href="#">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>
 
-                                            <form id="rejectForm" action="/reject/sukarelawans/{{ $sukarelawan->slug }}"
-                                                method="post">
-                                                @method('patch')
+                                            <form id="deleteForm" action="#" method="post">
+                                                @method('delete')
                                                 @csrf
-                                                <input type="hidden" name="reasonForRejection" id="reasonForRejection">
                                             </form>
 
                                             <div class="mx-1"></div>
 
-                                            <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showReasonForRejectionInput()">
-                                                <i class="fas fa-times"></i>
+                                            <button type="submit" class="btn btn-danger btn-sm btn-square"
+                                                onclick="showDeletionConfirmation()">
+                                                <i class="fas fa-trash">
+                                                </i>
                                             </button>
                                         </div>
                                     </td>

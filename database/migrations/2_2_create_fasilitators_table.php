@@ -33,8 +33,6 @@ return new class extends Migration
             $table->foreign('id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('verificationStatusId')->references('id')->on('verification_statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('fasilitatorTypeId')->references('id')->on('fasilitator_types')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->softDeletes();
         });
     }
 

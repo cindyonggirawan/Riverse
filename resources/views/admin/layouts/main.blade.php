@@ -150,7 +150,7 @@
         <!-- Page specific script -->
         <script>
             $(function() {
-                $("#table1").DataTable({
+                $('#table1').DataTable({
                     "responsive": true,
                     "lengthChange": false,
                     "order": [],
@@ -158,76 +158,12 @@
                     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 }).buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
 
-                $("#example2").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-
-                $("#example3").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
-
-                $("#example4").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example4_wrapper .col-md-6:eq(0)');
-
-                $("#example5").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example5_wrapper .col-md-6:eq(0)');
-
-                $("#example6").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example6_wrapper .col-md-6:eq(0)');
-
-                $("#example7").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example7_wrapper .col-md-6:eq(0)');
-
-                $("#dob").datetimepicker({
+                $('#dob').datetimepicker({
                     format: 'DD/MM/YYYY'
                 });
 
-                $("#dow").datetimepicker({
-                    format: 'YYYY/MM/DD'
-                });
-
-                $("#doj").datetimepicker({
-                    format: 'YYYY/MM/DD'
-                });
-
                 $('#st').datetimepicker({
-                    format: 'YYYY/MM/DD HH:mm',
-                    stepping: 1,
-                    icons: {
-                        time: 'fas fa-clock'
-                    }
-                });
-
-                $('#et').datetimepicker({
-                    format: 'YYYY/MM/DD HH:mm',
+                    format: 'DD/MM/YYYY HH:mm',
                     stepping: 1,
                     icons: {
                         time: 'fas fa-clock'
@@ -312,6 +248,50 @@
                     });
                 }
             });
+
+            function showReasonForRejectionInput() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Reason for Rejection',
+                    input: 'text',
+                    inputPlaceholder: 'Reason for Rejection',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    preConfirm: (text) => {
+                        document.getElementById('reasonForRejection').value = text;
+                        document.getElementById('rejectForm').submit();
+                    }
+                });
+            }
+
+            function showAllReasonForRejectionInput() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Reason for Rejection',
+                    text: 'The reason for rejection you enter here will be saved for all Sukarelawans who have just registered at this time',
+                    input: 'text',
+                    inputPlaceholder: 'Reason for Rejection',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    preConfirm: (text) => {
+                        document.getElementById('allReasonForRejection').value = text;
+                        document.getElementById('rejectAllForm').submit();
+                    }
+                });
+            }
+
+            function showDeletionConfirmation() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Deletion',
+                    text: 'Are you sure you want to delete this data?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    preConfirm: () => {
+                        document.getElementById('deleteForm').submit();
+                    }
+                })
+            }
         </script>
     </body>
 

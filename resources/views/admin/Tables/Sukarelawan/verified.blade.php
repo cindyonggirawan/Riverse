@@ -16,10 +16,13 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nama</th>
+                                <th>Level</th>
+                                <th>XP</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Usia</th>
                                 <th>Nomor Induk Kependudukan</th>
                                 <th>Tanggal Pendaftaran</th>
+                                <th>Tanggal Verifikasi</th>
                                 <th>Penentuan</th>
                             </tr>
                         </thead>
@@ -28,35 +31,25 @@
                                 <tr>
                                     <td>{{ $sukarelawan->id }}</a></td>
                                     <td>{{ $sukarelawan->user->name }}</td>
+                                    <td>{{ $sukarelawan->level->name }}</td>
+                                    <td>{{ $sukarelawan->experiencePoint }} XP</td>
                                     <td>{{ $sukarelawan->gender }}</td>
                                     <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
                                     <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->created_at)->format('d/m/Y') }}
                                     </td>
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->verified_at)->format('d/m/Y') }}
+                                    </td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="verifyForm" action="/verify/sukarelawans/{{ $sukarelawan->slug }}"
+                                            <form id="unverifyForm" action="/unverify/sukarelawans/{{ $sukarelawan->slug }}"
                                                 method="post">
                                                 @method('patch')
                                                 @csrf
-                                                <button type="submit" class="btn btn-success btn-sm btn-square">
-                                                    <i class="fas fa-check"></i>
+                                                <button type="submit" class="btn btn-outline-secondary btn-sm btn-square">
+                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </form>
-
-                                            <form id="rejectForm" action="/reject/sukarelawans/{{ $sukarelawan->slug }}"
-                                                method="post">
-                                                @method('patch')
-                                                @csrf
-                                                <input type="hidden" name="reasonForRejection" id="reasonForRejection">
-                                            </form>
-
-                                            <div class="mx-1"></div>
-
-                                            <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showReasonForRejectionInput()">
-                                                <i class="fas fa-times"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>
