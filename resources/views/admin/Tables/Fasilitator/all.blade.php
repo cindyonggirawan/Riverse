@@ -6,7 +6,7 @@
             <!-- Card -->
             <div class="card card-primary card-outline card-outline-tabs">
                 <!-- Tabbar -->
-                @include('admin.partials.tabbar.sukarelawanVerification')
+                @include('admin.partials.tabbar.fasilitatorVerification')
                 <!-- /.tabbar -->
 
                 <!-- /.Card Body-->
@@ -16,11 +16,9 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nama</th>
-                                <th>Level</th>
-                                <th>XP</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Usia</th>
-                                <th>Nomor Induk Kependudukan</th>
+                                <th>Tipe</th>
+                                <th>Alamat</th>
+                                <th>Nomor Telepon</th>
                                 <th>Tanggal Pendaftaran</th>
                                 <th>Tanggal Verifikasi</th>
                                 <th>Tanggal Penolakan</th>
@@ -30,24 +28,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sukarelawans as $sukarelawan)
+                            @foreach ($fasilitators as $fasilitator)
                                 <tr>
-                                    <td>{{ $sukarelawan->id }}</a></td>
-                                    <td>{{ $sukarelawan->user->name }}</td>
-                                    <td>{{ $sukarelawan->level->name }}</td>
-                                    <td>{{ $sukarelawan->experiencePoint }} XP</td>
-                                    <td>{{ $sukarelawan->gender }}</td>
-                                    <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
-                                    <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
-                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->created_at)->format('d/m/Y') }}
+                                    <td>{{ $fasilitator->id }}</a></td>
+                                    <td>{{ $fasilitator->user->name }}</td>
+                                    <td>{{ $fasilitator->fasilitatorType->name }}</td>
+                                    <td>{{ $fasilitator->address }}</td>
+                                    <td>{{ $fasilitator->phoneNumber }}</td>
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $fasilitator->created_at)->format('d/m/Y') }}
                                     </td>
-                                    <td>{{ $sukarelawan->verified_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->verified_at)->format('d/m/Y') : '-' }}
+                                    <td>{{ $fasilitator->verified_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $fasilitator->verified_at)->format('d/m/Y') : '-' }}
                                     </td>
-                                    <td>{{ $sukarelawan->rejected_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->rejected_at)->format('d/m/Y') : '-' }}
+                                    <td>{{ $fasilitator->rejected_at !== null ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $fasilitator->rejected_at)->format('d/m/Y') : '-' }}
                                     </td>
-                                    <td>{{ $sukarelawan->reasonForRejection !== null ? $sukarelawan->reasonForRejection : '-' }}
+                                    <td>{{ $fasilitator->reasonForRejection !== null ? $fasilitator->reasonForRejection : '-' }}
                                     </td>
-                                    <td>{{ $sukarelawan->verificationStatus->name }}</a></td>
+                                    <td>{{ $fasilitator->verificationStatus->name }}</a></td>
                                     <td>
                                         <div class="form-inline">
                                             <a class="btn btn-info btn-sm btn-square" href="#">

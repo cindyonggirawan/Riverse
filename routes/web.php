@@ -14,6 +14,7 @@ use App\Http\Controllers\SukarelawanController;
 use App\Http\Controllers\SukarelawanStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationStatusController;
+use App\Http\Controllers\VerifyFasilitatorController;
 use App\Http\Controllers\VerifySukarelawanController;
 use Illuminate\Support\Facades\Route;
 
@@ -137,3 +138,31 @@ Route::patch('/unreject/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanCont
 Route::patch('/unreject/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllUnrejectedSukarelawan']);
 
 Route::get('/all/sukarelawans', [VerifySukarelawanController::class, 'indexAllSukarelawan']);
+
+
+
+
+
+Route::get('/waiting-for-verification/fasilitators', [VerifyFasilitatorController::class, 'indexWaitingForVerificationFasilitator']);
+
+Route::patch('/verify/fasilitators/{fasilitator:slug}', [VerifyFasilitatorController::class, 'updateVerifiedFasilitator']);
+
+Route::patch('/reject/fasilitators/{fasilitator:slug}', [VerifyFasilitatorController::class, 'updateRejectedFasilitator']);
+
+Route::patch('/verify/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllVerifiedFasilitator']);
+
+Route::patch('/reject/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllRejectedFasilitator']);
+
+Route::get('/verified/fasilitators', [VerifyFasilitatorController::class, 'indexVerifiedFasilitator']);
+
+Route::patch('/unverify/fasilitators/{fasilitator:slug}', [VerifyFasilitatorController::class, 'updateUnverifiedFasilitator']);
+
+Route::patch('/unverify/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllUnverifiedFasilitator']);
+
+Route::get('/rejected/fasilitators', [VerifyFasilitatorController::class, 'indexRejectedFasilitator']);
+
+Route::patch('/unreject/fasilitators/{fasilitator:slug}', [VerifyFasilitatorController::class, 'updateUnrejectedFasilitator']);
+
+Route::patch('/unreject/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllUnrejectedFasilitator']);
+
+Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFasilitator']);

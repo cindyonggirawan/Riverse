@@ -6,7 +6,7 @@
             <!-- Card -->
             <div class="card card-primary card-outline card-outline-tabs">
                 <!-- Tabbar -->
-                @include('admin.partials.tabbar.sukarelawanVerification')
+                @include('admin.partials.tabbar.fasilitatorVerification')
                 <!-- /.tabbar -->
 
                 <!-- /.Card Body-->
@@ -16,33 +16,29 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nama</th>
-                                <th>Level</th>
-                                <th>XP</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Usia</th>
-                                <th>Nomor Induk Kependudukan</th>
+                                <th>Tipe</th>
+                                <th>Alamat</th>
+                                <th>Nomor Telepon</th>
                                 <th>Tanggal Pendaftaran</th>
                                 <th>Tanggal Verifikasi</th>
                                 <th>Penentuan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sukarelawans as $sukarelawan)
+                            @foreach ($fasilitators as $fasilitator)
                                 <tr>
-                                    <td>{{ $sukarelawan->id }}</a></td>
-                                    <td>{{ $sukarelawan->user->name }}</td>
-                                    <td>{{ $sukarelawan->level->name }}</td>
-                                    <td>{{ $sukarelawan->experiencePoint }} XP</td>
-                                    <td>{{ $sukarelawan->gender }}</td>
-                                    <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
-                                    <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
-                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->created_at)->format('d/m/Y') }}
+                                    <td>{{ $fasilitator->id }}</a></td>
+                                    <td>{{ $fasilitator->user->name }}</td>
+                                    <td>{{ $fasilitator->fasilitatorType->name }}</td>
+                                    <td>{{ $fasilitator->address }}</td>
+                                    <td>{{ $fasilitator->phoneNumber }}</td>
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $fasilitator->created_at)->format('d/m/Y') }}
                                     </td>
-                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->verified_at)->format('d/m/Y') }}
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $fasilitator->verified_at)->format('d/m/Y') }}
                                     </td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="unverifyForm" action="/unverify/sukarelawans/{{ $sukarelawan->slug }}"
+                                            <form id="unverifyForm" action="/unverify/fasilitators/{{ $fasilitator->slug }}"
                                                 method="post">
                                                 @method('patch')
                                                 @csrf

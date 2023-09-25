@@ -25,6 +25,15 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/waiting-for-verification/fasilitators"
+                                class="nav-link {{ $title === 'Waiting For Verification Fasilitators' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Fasilitators</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item menu-open">

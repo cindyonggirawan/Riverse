@@ -50,6 +50,51 @@
                             Kembalikan semua
                         </button>
                     </form>
+                @elseif ($title === 'Waiting For Verification Fasilitators')
+                    <form id="verifyAllForm" action="/verify/all-fasilitators" method="post"
+                        @if ($fasilitators->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i>
+                            Verifikasi semua
+                        </button>
+                    </form>
+
+                    <form id="rejectAllForm" action="/reject/all-fasilitators" method="post"
+                        @if ($fasilitators->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <input type="hidden" name="allReasonForRejection" id="allReasonForRejection">
+                    </form>
+
+                    <div class="mx-1" @if ($fasilitators->count() === 0) style="display: none;" @endif></div>
+
+                    <button class="btn btn-danger" onclick="showAllReasonForRejectionInput()"
+                        @if ($fasilitators->count() === 0) style="display: none;" @endif>
+                        <i class="fas fa-times"></i>
+                        Tolak semua
+                    </button>
+                @elseif ($title === 'Verified Fasilitators')
+                    <form id="unverifyAllForm" action="/unverify/all-fasilitators" method="post"
+                        @if ($fasilitators->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Kembalikan semua
+                        </button>
+                    </form>
+                @elseif ($title === 'Rejected Fasilitators')
+                    <form id="unrejectAllForm" action="/unreject/all-fasilitators" method="post"
+                        @if ($fasilitators->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Kembalikan semua
+                        </button>
+                    </form>
                 @endif
             </div>
         </div>

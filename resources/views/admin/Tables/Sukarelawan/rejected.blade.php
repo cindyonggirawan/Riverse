@@ -6,7 +6,7 @@
             <!-- Card -->
             <div class="card card-primary card-outline card-outline-tabs">
                 <!-- Tabbar -->
-                @include('admin.partials.verificationTabbar')
+                @include('admin.partials.tabbar.sukarelawanVerification')
                 <!-- /.tabbar -->
 
                 <!-- /.Card Body-->
@@ -37,7 +37,8 @@
                                     </td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->rejected_at)->format('d/m/Y') }}
                                     </td>
-                                    <td>{{ $sukarelawan->reasonForRejection }}</td>
+                                    <td>{{ $sukarelawan->reasonForRejection !== null ? $sukarelawan->reasonForRejection : '-' }}
+                                    </td>
                                     <td>
                                         <div class="form-inline">
                                             <form id="unrejectForm" action="/unreject/sukarelawans/{{ $sukarelawan->slug }}"
