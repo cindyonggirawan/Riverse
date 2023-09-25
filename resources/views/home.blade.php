@@ -46,7 +46,7 @@
 </div>
 
 <div class="page-content">
-  <h3>Aktvitas yang berada di 
+  <h3>Aktvitas yang berada di
     <a href="/" class="selected">Sungai Ciliwung</a></h3>
 
     <div class="activity-row">

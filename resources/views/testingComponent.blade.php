@@ -6,5 +6,5 @@
     <x-activity-card-horizontal/>
     <x-activity-card/>
 </div>
-   
+
 @endsection

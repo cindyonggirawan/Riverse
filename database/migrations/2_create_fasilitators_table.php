@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fasilitators', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
             $table->string("name")->unique();
             $table->string("description");
             $table->string("status");

@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Riverse</title>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('/css/global.css') }}"/>
   @yield('css')
 </head>
@@ -25,8 +26,29 @@
     </div>
 
     <div class="nav-row">
-      @if(Auth::check())
+      @if(null != auth()->user())
       {{-- LOGOUT --}}
+        <h5>
+            Hello,
+            @if(auth()->user()->role_id == 0)
+                Sukarelawan {{ $sukarelawan->name }}
+            @elseif (auth()->user()->role_id == 1)
+                Fasilitator {{ $fasilitator->name }}
+            @endif
+        </h5>
+
+        @if(auth()->user()->role_id == 0)
+            <img class="custom-test-profile-image shadow-4-strong" src={{ asset('storage/' . $sukarelawan->picture) }} alt="sukarelawan image">
+        @elseif (auth()->user()->role_id == 1)
+            <img class="custom-test-profile-image shadow-4-strong" src={{ asset('storage/' . $fasilitator->picture) }} alt="fasilitator image">
+        @endif
+
+        <form action="/logout" method="post">
+            @csrf
+            <button class="w-100 btn btn-sm btn-primary" type="submit">Logout</button>
+        </form>
+
+      {{-- redirect to Register as Sukarelawan --}}
       @else
       {{-- LOGIN --}}
       <a class="nav-link selected" href="/login">Login</a>
@@ -46,9 +68,11 @@
   <div class="page-body">
     @yield('content')
   </div>
-    
+
   {{-- Footer --}}
   @include('layout.components.footer')
+
+  @stack('scripts')
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -61,5 +85,7 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>

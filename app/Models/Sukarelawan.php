@@ -33,4 +33,9 @@ class Sukarelawan extends Model
     {
         return $this->hasMany(SukarelawanActivityDetail::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

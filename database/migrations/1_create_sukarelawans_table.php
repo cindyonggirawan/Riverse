@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sukarelawans', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
             $table->string("name");
             $table->integer("experiencePoint");
             $table->integer("level");
             $table->string("email")->unique();
             $table->string("password");
             $table->string("picture");
-            $table->string("nationalIdentityNumber")->unique();
+            $table->string("nationalIdentityNumber");
             $table->string("identityCardPicture");
             $table->string("gender");
             $table->string("status"); // check verifikasi KTP
