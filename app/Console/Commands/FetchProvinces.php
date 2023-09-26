@@ -32,8 +32,10 @@ class FetchProvinces extends Command
         $data = $response->json();
 
         foreach ($data as $item) {
+            $number = str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);
+
             Province::create([
-                'id' => 'PE' . $item['id'],
+                'id' => 'PE' . $item['id'] . $number,
                 'name' => ucwords(strtolower($item['name'])),
                 'slug' => Generator::generateSlug(Province::class, $item['name'])
             ]);

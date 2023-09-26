@@ -34,6 +34,7 @@ return new class extends Migration
             $table->text('sukarelawanEquipment');
             $table->string('groupChatUrl');
             $table->bigInteger('experiencePointGiven');
+            $table->string('qrCodeImageUrl')->nullable();
             $table->string('slug')->unique();
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('rejected_at')->nullable();

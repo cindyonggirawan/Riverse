@@ -33,14 +33,16 @@ class FetchCities extends Command
             ->get();
 
         foreach ($provinces as $province) {
-            $provinceId = substr($province->id, 2, 4);
+            $provinceId = substr($province->id, 2, 2);
 
             $response = Http::get("https://kanglerian.github.io/api-wilayah-indonesia/api/regencies/$provinceId.json");
             $data = $response->json();
 
             foreach ($data as $item) {
+                $number = str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+
                 City::create([
-                    'id' => 'CY' . $item['id'],
+                    'id' => 'CY' . $item['id'] . $number,
                     'provinceId' => $province->id,
                     'name' => ucwords(strtolower($item['name'])),
                     'slug' => Generator::generateSlug(City::class, $item['name'])
