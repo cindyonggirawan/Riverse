@@ -14,7 +14,7 @@ class VerifyFasilitatorController extends Controller
 
         return view('admin.Tables.Fasilitator.waitingForVerification', [
             'title' => 'Waiting For Verification Fasilitators',
-            'fasilitators' => Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+            'fasilitators' => Fasilitator::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('created_at', 'asc')
                 ->get()
         ]);
@@ -45,7 +45,7 @@ class VerifyFasilitatorController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
 
-        $fasilitators = Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+        $fasilitators = Fasilitator::where('verificationStatusId', $verificationStatusId)
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -63,7 +63,7 @@ class VerifyFasilitatorController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
 
-        $fasilitators = Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+        $fasilitators = Fasilitator::where('verificationStatusId', $verificationStatusId)
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -84,7 +84,7 @@ class VerifyFasilitatorController extends Controller
 
         return view('admin.Tables.Fasilitator.verified', [
             'title' => 'Verified Fasilitators',
-            'fasilitators' => Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+            'fasilitators' => Fasilitator::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('verified_at', 'desc')
                 ->get()
         ]);
@@ -104,7 +104,7 @@ class VerifyFasilitatorController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id;
 
-        $fasilitators = Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+        $fasilitators = Fasilitator::where('verificationStatusId', $verificationStatusId)
             ->orderBy('verified_at', 'desc')
             ->get();
 
@@ -124,7 +124,7 @@ class VerifyFasilitatorController extends Controller
 
         return view('admin.Tables.Fasilitator.rejected', [
             'title' => 'Rejected Fasilitators',
-            'fasilitators' => Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+            'fasilitators' => Fasilitator::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('rejected_at', 'desc')
                 ->get()
         ]);
@@ -145,7 +145,7 @@ class VerifyFasilitatorController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Sudah Ditolak')->first()->id;
 
-        $fasilitators = Fasilitator::with(['user', 'fasilitatorType'])->where('verificationStatusId', $verificationStatusId)
+        $fasilitators = Fasilitator::where('verificationStatusId', $verificationStatusId)
             ->orderBy('rejected_at', 'desc')
             ->get();
 
@@ -164,8 +164,7 @@ class VerifyFasilitatorController extends Controller
     {
         return view('admin.Tables.Fasilitator.all', [
             'title' => 'All Fasilitators',
-            'fasilitators' => Fasilitator::with(['user', 'verificationStatus', 'fasilitatorType'])
-                ->orderBy('created_at', 'asc')
+            'fasilitators' => Fasilitator::orderBy('created_at', 'asc')
                 ->get()
         ]);
     }

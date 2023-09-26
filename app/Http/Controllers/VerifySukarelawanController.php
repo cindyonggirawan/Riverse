@@ -14,7 +14,7 @@ class VerifySukarelawanController extends Controller
 
         return view('admin.Tables.Sukarelawan.waitingForVerification', [
             'title' => 'Waiting For Verification Sukarelawans',
-            'sukarelawans' => Sukarelawan::with(['user'])->where('verificationStatusId', $verificationStatusId)
+            'sukarelawans' => Sukarelawan::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('created_at', 'asc')
                 ->get()
         ]);
@@ -45,7 +45,7 @@ class VerifySukarelawanController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
 
-        $sukarelawans = Sukarelawan::with(['user'])->where('verificationStatusId', $verificationStatusId)
+        $sukarelawans = Sukarelawan::where('verificationStatusId', $verificationStatusId)
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -63,7 +63,7 @@ class VerifySukarelawanController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
 
-        $sukarelawans = Sukarelawan::with(['user'])->where('verificationStatusId', $verificationStatusId)
+        $sukarelawans = Sukarelawan::where('verificationStatusId', $verificationStatusId)
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -84,7 +84,7 @@ class VerifySukarelawanController extends Controller
 
         return view('admin.Tables.Sukarelawan.verified', [
             'title' => 'Verified Sukarelawans',
-            'sukarelawans' => Sukarelawan::with(['user', 'level'])->where('verificationStatusId', $verificationStatusId)
+            'sukarelawans' => Sukarelawan::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('verified_at', 'desc')
                 ->get()
         ]);
@@ -104,7 +104,7 @@ class VerifySukarelawanController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id;
 
-        $sukarelawans = Sukarelawan::with(['user', 'level'])->where('verificationStatusId', $verificationStatusId)
+        $sukarelawans = Sukarelawan::where('verificationStatusId', $verificationStatusId)
             ->orderBy('verified_at', 'desc')
             ->get();
 
@@ -124,7 +124,7 @@ class VerifySukarelawanController extends Controller
 
         return view('admin.Tables.Sukarelawan.rejected', [
             'title' => 'Rejected Sukarelawans',
-            'sukarelawans' => Sukarelawan::with(['user'])->where('verificationStatusId', $verificationStatusId)
+            'sukarelawans' => Sukarelawan::where('verificationStatusId', $verificationStatusId)
                 ->orderBy('rejected_at', 'desc')
                 ->get()
         ]);
@@ -145,7 +145,7 @@ class VerifySukarelawanController extends Controller
     {
         $verificationStatusId = VerificationStatus::where('name', 'Sudah Ditolak')->first()->id;
 
-        $sukarelawans = Sukarelawan::with(['user'])->where('verificationStatusId', $verificationStatusId)
+        $sukarelawans = Sukarelawan::where('verificationStatusId', $verificationStatusId)
             ->orderBy('rejected_at', 'desc')
             ->get();
 
@@ -164,8 +164,7 @@ class VerifySukarelawanController extends Controller
     {
         return view('admin.Tables.Sukarelawan.all', [
             'title' => 'All Sukarelawans',
-            'sukarelawans' => Sukarelawan::with(['user', 'verificationStatus', 'level'])
-                ->orderBy('created_at', 'asc')
+            'sukarelawans' => Sukarelawan::orderBy('created_at', 'asc')
                 ->get()
         ]);
     }

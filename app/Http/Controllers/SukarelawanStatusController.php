@@ -11,7 +11,8 @@ class SukarelawanStatusController extends Controller
     {
         return view('admin.Tables.SukarelawanStatus.sukarelawanStatuses', [
             'title' => 'Sukarelawan Statuses',
-            'sukarelawanStatuses' => SukarelawanStatus::all()
+            'sukarelawanStatuses' => SukarelawanStatus::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

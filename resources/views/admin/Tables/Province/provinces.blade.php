@@ -12,16 +12,18 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($activities as $activity)
+                            @foreach ($provinces as $province)
                                 <tr>
-                                    <td>{{ $activity->id }}</td>
-                                    <td>{{ $activity->name }}</td>
+                                    <td>{{ $province->id }}</a></td>
+                                    <td>{{ $province->name }}</td>
+                                    <td>{{ $province->created_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/activities/{{ $activity->slug }}">
+                                        <a class="btn btn-primary btn-sm" href="/provinces/{{ $province->slug }}">
                                             <i class="fas fa-folder">
                                             </i>
                                             View

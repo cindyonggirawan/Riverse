@@ -11,8 +11,7 @@ class SukarelawanController extends Controller
     {
         return view('admin.Tables.Sukarelawan.sukarelawans', [
             'title' => 'Sukarelawans',
-            'sukarelawans' => Sukarelawan::with(['user', 'verificationStatus', 'level'])
-                ->orderBy('updated_at', 'desc')
+            'sukarelawans' => Sukarelawan::orderBy('updated_at', 'desc')
                 ->get()
         ]);
     }

@@ -20,6 +20,7 @@ class Sukarelawan extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $with = ['user', 'verificationStatus', 'level'];
 
     /**
      * Get the user that owns the Sukarelawan

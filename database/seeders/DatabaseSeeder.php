@@ -11,12 +11,15 @@ use App\Models\Benefit;
 use App\Models\Generator;
 use Illuminate\Support\Str;
 use App\Models\ActivityStatus;
+use App\Models\City;
 use App\Models\FasilitatorType;
 use Illuminate\Database\Seeder;
 use App\Models\SukarelawanStatus;
 use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ExperiencePointStatus;
+use App\Models\River;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -120,6 +123,19 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make($password),
             'name' => $name,
             'slug' => $slug
+        ]);
+
+        Artisan::call('app:fetch-provinces');
+
+        Artisan::call('app:fetch-cities');
+
+        $name = 'Sungai Ciliwung';
+        River::create([
+            'id' => Generator::generateId(River::class),
+            'cityId' => City::where('name', 'Kota Jakarta Utara')->first()->id,
+            'name' => $name,
+            'locationUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
+            'slug' => Generator::generateSlug(River::class, $name)
         ]);
     }
 }

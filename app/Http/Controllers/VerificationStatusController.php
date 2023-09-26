@@ -11,7 +11,8 @@ class VerificationStatusController extends Controller
     {
         return view('admin.Tables.VerificationStatus.verificationStatuses', [
             'title' => 'Verification Statuses',
-            'verificationStatuses' => VerificationStatus::all()
+            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

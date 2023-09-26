@@ -15,6 +15,7 @@ class Fasilitator extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $with = ['user', 'verificationStatus', 'fasilitatorType'];
 
     /**
      * Get the user that owns the Fasilitator

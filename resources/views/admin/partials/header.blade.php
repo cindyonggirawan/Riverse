@@ -96,6 +96,13 @@
                         </button>
                     </form>
                 @endif
+
+                @if ($title === 'Activities')
+                    <a class="btn btn-warning" href="/activities/create">
+                        <i class="fas fa-plus"></i>
+                        Buat baru
+                    </a>
+                @endif
             </div>
         </div>
         <!-- /.row -->

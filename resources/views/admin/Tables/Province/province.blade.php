@@ -9,10 +9,19 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-4">Id</dt>
-                        <dd class="col-sm-8">{{ $activity->id }}</dd>
+                        <dd class="col-sm-8">{{ $province->id }}</dd>
 
                         <dt class="col-sm-4">Name</dt>
-                        <dd class="col-sm-8">{{ $activity->name }}</dd>
+                        <dd class="col-sm-8">{{ $province->name }}</dd>
+
+                        <dt class="col-sm-4">Slug</dt>
+                        <dd class="col-sm-8">{{ $province->slug }}</dd>
+
+                        <dt class="col-sm-4">Created At</dt>
+                        <dd class="col-sm-8">{{ $province->created_at }}</dd>
+
+                        <dt class="col-sm-4">Updated At</dt>
+                        <dd class="col-sm-8">{{ $province->updated_at }}</dd>
                     </dl>
                 </div>
                 <!-- /.card-body -->

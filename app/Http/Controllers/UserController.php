@@ -11,8 +11,7 @@ class UserController extends Controller
     {
         return view('admin.Tables.User.users', [
             'title' => 'Users',
-            'users' => User::with(['role'])
-                ->orderBy('updated_at', 'desc')
+            'users' => User::orderBy('updated_at', 'desc')
                 ->get()
         ]);
     }

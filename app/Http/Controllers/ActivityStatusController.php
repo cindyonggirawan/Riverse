@@ -11,7 +11,8 @@ class ActivityStatusController extends Controller
     {
         return view('admin.Tables.ActivityStatus.activityStatuses', [
             'title' => 'Activity Statuses',
-            'activityStatuses' => ActivityStatus::all()
+            'activityStatuses' => ActivityStatus::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

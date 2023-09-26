@@ -17,6 +17,7 @@ class User extends Authenticatable
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $with = ['role'];
 
     /**
      * The attributes that are mass assignable.

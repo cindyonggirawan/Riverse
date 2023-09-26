@@ -3,12 +3,15 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ActivityStatusController;
 use App\Http\Controllers\BenefitController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ExperiencePointStatusController;
 use App\Http\Controllers\FasilitatorController;
 use App\Http\Controllers\FasilitatorTypeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RiverController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SukarelawanController;
 use App\Http\Controllers\SukarelawanStatusController;
@@ -37,10 +40,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('testingComponent');
 // });
 
-// Route::get('/activities', [ActivityController::class, 'index']);
-
-// Route::get('/activities/{slug}', [ActivityController::class, 'show']);
-
 Route::get('/', function () {
     return view('admin.layouts.main', [
         'title' => 'Home'
@@ -58,6 +57,14 @@ Route::get('/fasilitator-types/{fasilitatorType:slug}', [FasilitatorTypeControll
 Route::get('/verification-statuses', [VerificationStatusController::class, 'index']);
 
 Route::get('/verification-statuses/{verificationStatus:slug}', [VerificationStatusController::class, 'show']);
+
+Route::get('/provinces', [ProvinceController::class, 'index']);
+
+Route::get('/provinces/{province:slug}', [ProvinceController::class, 'show']);
+
+Route::get('/cities', [CityController::class, 'index']);
+
+Route::get('/cities/{city:slug}', [CityController::class, 'show']);
 
 Route::get('/activity-statuses', [ActivityStatusController::class, 'index']);
 
@@ -166,3 +173,19 @@ Route::patch('/unreject/fasilitators/{fasilitator:slug}', [VerifyFasilitatorCont
 Route::patch('/unreject/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllUnrejectedFasilitator']);
 
 Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFasilitator']);
+
+
+
+
+
+Route::get('/rivers', [RiverController::class, 'index']);
+
+Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
+
+/* NOT FINAL */
+
+Route::get('/activities/create', [ActivityController::class, 'create']);
+
+Route::get('/activities', [ActivityController::class, 'index']);
+
+Route::get('/activities/{activity:slug}', [ActivityController::class, 'show']);

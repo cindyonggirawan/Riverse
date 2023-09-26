@@ -75,6 +75,18 @@
                                 <p>Benefits</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/rivers" class="nav-link {{ $title === 'Rivers' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Rivers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/activities" class="nav-link {{ $title === 'Activities' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Activities</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -105,6 +117,18 @@
                                 class="nav-link {{ $title === 'Verification Statuses' ? 'active' : '' }}">
                                 <i class="fas fa-table nav-icon"></i>
                                 <p>Verification Statuses</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/provinces" class="nav-link {{ $title === 'Provinces' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Provinces</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/cities" class="nav-link {{ $title === 'Cities' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Cities</p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -11,7 +11,8 @@ class ExperiencePointStatusController extends Controller
     {
         return view('admin.Tables.ExperiencePointStatus.experiencePointStatuses', [
             'title' => 'Experience Point Statuses',
-            'experiencePointStatuses' => ExperiencePointStatus::all()
+            'experiencePointStatuses' => ExperiencePointStatus::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

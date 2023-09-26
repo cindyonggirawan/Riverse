@@ -14,6 +14,7 @@ class Benefit extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $with = ['level'];
 
     /**
      * Get the level that owns the Benefit

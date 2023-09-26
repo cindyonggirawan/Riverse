@@ -11,7 +11,8 @@ class RoleController extends Controller
     {
         return view('admin.Tables.Role.roles', [
             'title' => 'Roles',
-            'roles' => Role::all()
+            'roles' => Role::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

@@ -11,7 +11,8 @@ class FasilitatorTypeController extends Controller
     {
         return view('admin.Tables.FasilitatorType.fasilitatorTypes', [
             'title' => 'Fasilitator Types',
-            'fasilitatorTypes' => FasilitatorType::all()
+            'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
+                ->get()
         ]);
     }
 

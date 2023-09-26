@@ -11,17 +11,23 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>City</th>
                                 <th>Name</th>
+                                <th>Location Url</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($activities as $activity)
+                            @foreach ($rivers as $river)
                                 <tr>
-                                    <td>{{ $activity->id }}</td>
-                                    <td>{{ $activity->name }}</td>
+                                    <td>{{ $river->id }}</a></td>
+                                    <td>{{ $river->city->name }}</a></td>
+                                    <td>{{ $river->name }}</td>
+                                    <td>{{ $river->locationUrl }}</td>
+                                    <td>{{ $river->updated_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/activities/{{ $activity->slug }}">
+                                        <a class="btn btn-primary btn-sm" href="/rivers/{{ $river->slug }}">
                                             <i class="fas fa-folder">
                                             </i>
                                             View

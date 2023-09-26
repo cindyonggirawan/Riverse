@@ -11,15 +11,23 @@ class ActivityController extends Controller
     {
         return view('admin.Tables.Activity.activities', [
             'title' => 'Activities',
-            'activities' => Activity::all()
+            'activities' => Activity::orderBy('updated_at', 'desc')
+                ->get()
         ]);
     }
 
-    public function show($slug)
+    public function show(Activity $activity)
     {
         return view('admin.Tables.Activity.activity', [
             'title' => 'Activity',
-            'activity' => Activity::find($slug)
+            'activity' => $activity
+        ]);
+    }
+
+    public function create()
+    {
+        return view('admin.Tables.Activity.create', [
+            'title' => 'Create Activity'
         ]);
     }
 }
