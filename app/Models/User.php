@@ -60,4 +60,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'roleId', 'id');
     }
+
+    /**
+     * Get the sukarelawan associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sukarelawan(): HasOne
+    {
+        return $this->hasOne(Sukarelawan::class, 'id', 'id');
+    }
+
+    /**
+     * Get the fasilitator associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function fasilitator(): HasOne
+    {
+        return $this->hasOne(Fasilitator::class, 'id', 'id');
+    }
 }
