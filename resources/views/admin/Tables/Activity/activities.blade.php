@@ -18,7 +18,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Registration Deadline Date</th>
-                                <th>Cleanup Date</th>
+                                <th>Clean Up Date</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Gathering Point Url</th>
@@ -46,7 +46,7 @@
                                     <td>{{ $activity->name }}</td>
                                     <td>{{ Str::words($activity->description, 5) }}</td>
                                     <td>{{ $activity->registrationDeadlineDate }}</td>
-                                    <td>{{ $activity->cleanupDate }}</td>
+                                    <td>{{ $activity->cleanUpDate }}</td>
                                     <td>{{ $activity->startTime }}</td>
                                     <td>{{ $activity->endTime }}</td>
                                     <td>{{ $activity->gatheringPointUrl }}</td>
@@ -54,7 +54,7 @@
                                     <td>{{ $activity->sukarelawanJobName }}</td>
                                     <td>{{ Str::words($activity->sukarelawanJobDetail, 5) }}</td>
                                     <td>{{ Str::words($activity->sukarelawanCriteria, 5) }}</td>
-                                    <td>{{ $activity->minimumNumberOfSukarelawan }}</td>
+                                    <td>{{ $activity->minimumNumOfSukarelawan }}</td>
                                     <td>{{ Str::words($activity->sukarelawanEquipment, 5) }}</td>
                                     <td>{{ $activity->groupChatUrl }}</td>
                                     <td>{{ $activity->experiencePointGiven }}</td>

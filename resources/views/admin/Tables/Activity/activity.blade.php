@@ -48,8 +48,8 @@
                         <dt class="col-sm-4">Registration Deadline Date</dt>
                         <dd class="col-sm-8">{{ $activity->registrationDeadlineDate }}</dd>
 
-                        <dt class="col-sm-4">Cleanup Date</dt>
-                        <dd class="col-sm-8">{{ $activity->cleanupDate }}</dd>
+                        <dt class="col-sm-4">Clean Up Date</dt>
+                        <dd class="col-sm-8">{{ $activity->cleanUpDate }}</dd>
 
                         <dt class="col-sm-4">Start Time</dt>
                         <dd class="col-sm-8">{{ $activity->startTime }}</dd>
@@ -74,7 +74,7 @@
                         <dd class="col-sm-8">{{ $activity->sukarelawanCriteria }}</dd>
 
                         <dt class="col-sm-4">Minimum Number Of Sukarelawan</dt>
-                        <dd class="col-sm-8">{{ $activity->minimumNumberOfSukarelawan }}</dd>
+                        <dd class="col-sm-8">{{ $activity->minimumNumOfSukarelawan }}</dd>
 
                         <dt class="col-sm-4">Sukarelawan Equipment</dt>
                         <dd class="col-sm-8">{{ $activity->sukarelawanEquipment }}</dd>

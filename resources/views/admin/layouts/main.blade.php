@@ -14,7 +14,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,400&display=swap"
             rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
         <!-- DataTables -->
@@ -251,6 +252,24 @@
                 }
             });
 
+            function showExperiencePointGivenInput() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Experience Point Given',
+                    input: 'number',
+                    inputAttributes: {
+                        required: 'required'
+                    },
+                    inputPlaceholder: 'Experience Point Given',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    preConfirm: (number) => {
+                        document.getElementById('experiencePointGiven').value = number;
+                        document.getElementById('verifyForm').submit();
+                    }
+                });
+            }
+
             function showReasonForRejectionInput() {
                 Swal.fire({
                     icon: 'warning',
@@ -266,11 +285,30 @@
                 });
             }
 
+            function showAllExperiencePointGivenInput() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Experience Point Given',
+                    text: 'The experience point given you enter here will be saved for all who have just registered at this time',
+                    input: 'number',
+                    inputAttributes: {
+                        required: 'required'
+                    },
+                    inputPlaceholder: 'Experience Point Given',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    preConfirm: (number) => {
+                        document.getElementById('allExperiencePointGiven').value = number;
+                        document.getElementById('verifyAllForm').submit();
+                    }
+                });
+            }
+
             function showAllReasonForRejectionInput() {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Reason for Rejection',
-                    text: 'The reason for rejection you enter here will be saved for all Sukarelawans who have just registered at this time',
+                    text: 'The reason for rejection you enter here will be saved for all who have just registered at this time',
                     input: 'text',
                     inputPlaceholder: 'Reason for Rejection',
                     showCancelButton: true,
@@ -296,7 +334,8 @@
             }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+        </script>
     </body>
 
 </html>

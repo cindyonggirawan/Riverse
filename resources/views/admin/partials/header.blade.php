@@ -95,6 +95,54 @@
                             Kembalikan semua
                         </button>
                     </form>
+                @elseif ($title === 'Waiting For Verification Activities')
+                    <form id="verifyAllForm" action="/verify/all-activities" method="post"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <input type="hidden" name="allExperiencePointGiven" id="allExperiencePointGiven">
+                    </form>
+
+                    <button class="btn btn-success" onclick="showAllExperiencePointGivenInput()"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        <i class="fas fa-check"></i>
+                        Verifikasi semua
+                    </button>
+
+                    <form id="rejectAllForm" action="/reject/all-activities" method="post"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <input type="hidden" name="allReasonForRejection" id="allReasonForRejection">
+                    </form>
+
+                    <div class="mx-1" @if ($activities->count() === 0) style="display: none;" @endif></div>
+
+                    <button class="btn btn-danger" onclick="showAllReasonForRejectionInput()"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        <i class="fas fa-times"></i>
+                        Tolak semua
+                    </button>
+                @elseif ($title === 'Verified Activities')
+                    <form id="unverifyAllForm" action="/unverify/all-activities" method="post"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Kembalikan semua
+                        </button>
+                    </form>
+                @elseif ($title === 'Rejected Activities')
+                    <form id="unrejectAllForm" action="/unreject/all-activities" method="post"
+                        @if ($activities->count() === 0) style="display: none;" @endif>
+                        @method('patch')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Kembalikan semua
+                        </button>
+                    </form>
                 @endif
 
                 @if ($title === 'Activities')

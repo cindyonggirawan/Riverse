@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->date('registrationDeadlineDate');
-            $table->date('cleanupDate');
+            $table->date('cleanUpDate');
             $table->time('startTime');
             $table->time('endTime');
             $table->string('gatheringPointUrl');
@@ -30,10 +30,10 @@ return new class extends Migration
             $table->string('sukarelawanJobName');
             $table->text('sukarelawanJobDetail');
             $table->text('sukarelawanCriteria');
-            $table->bigInteger('minimumNumberOfSukarelawan');
+            $table->bigInteger('minimumNumOfSukarelawan');
             $table->text('sukarelawanEquipment');
             $table->string('groupChatUrl');
-            $table->bigInteger('experiencePointGiven');
+            $table->bigInteger('experiencePointGiven')->default(0);
             $table->string('qrCodeImageUrl')->nullable();
             $table->string('slug')->unique();
             $table->timestamp('verified_at')->nullable();

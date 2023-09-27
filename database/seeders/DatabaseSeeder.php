@@ -168,30 +168,29 @@ class DatabaseSeeder extends Seeder
             'slug' => Generator::generateSlug(River::class, $name)
         ]);
 
-        // $names = ['Activity 1', 'Activity 2', 'Activity 3'];
-        // foreach ($names as $name) {
-        //     Activity::create([
-        //         'id' => Generator::generateId(Activity::class),
-        //         'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
-        //         'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
-        //         'fasilitatorId' => Fasilitator::first()->id,
-        //         'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
-        //         'name' => $name,
-        //         'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        //         'registrationDeadlineDate' => '2023-09-09',
-        //         'cleanupDate' => '2023-09-10',
-        //         'startTime' => '09:00:00',
-        //         'endTime' => '12:00:00',
-        //         'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
-        //         'sukarelawanJobName' => 'Pembersih Handal',
-        //         'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
-        //         'sukarelawanCriteria' => 'Tidak takut air dan kotoran',
-        //         'minimumNumberOfSukarelawan' => 10,
-        //         'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan',
-        //         'groupChatUrl' => 'https://web.whatsapp.com/',
-        //         'experiencePointGiven' => 100,
-        //         'slug' => Generator::generateSlug(Activity::class, $name)
-        //     ]);
-        // }
+        $names = ['Activity 1', 'Activity 2', 'Activity 3'];
+        foreach ($names as $name) {
+            Activity::create([
+                'id' => Generator::generateId(Activity::class),
+                'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+                'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
+                'fasilitatorId' => Fasilitator::first()->id,
+                'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
+                'name' => $name,
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                'registrationDeadlineDate' => '2023-09-09',
+                'cleanUpDate' => '2023-09-10',
+                'startTime' => '09:00:00',
+                'endTime' => '12:00:00',
+                'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
+                'sukarelawanJobName' => 'Pembersih Handal',
+                'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
+                'sukarelawanCriteria' => 'Tidak takut air dan kotoran.',
+                'minimumNumOfSukarelawan' => 10,
+                'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan.',
+                'groupChatUrl' => 'https://wa.me/8987654321',
+                'slug' => Generator::generateSlug(Activity::class, $name)
+            ]);
+        }
     }
 }

@@ -34,6 +34,15 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/waiting-for-verification/activities"
+                                class="nav-link {{ $title === 'Waiting For Verification Activities' ? 'active' : '' }}">
+                                <i class="fas fa-table nav-icon"></i>
+                                <p>Activities</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item menu-open">

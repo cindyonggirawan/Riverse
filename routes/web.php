@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SukarelawanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationStatusController;
+use App\Http\Controllers\VerifyActivityController;
 use App\Http\Controllers\VerifyFasilitatorController;
 use App\Http\Controllers\VerifySukarelawanController;
 use Illuminate\Support\Facades\Route;
@@ -165,10 +166,36 @@ Route::get('/rivers', [RiverController::class, 'index']);
 
 Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
-/* NOT FINAL */
+/* START NOT FINAL */
 
 Route::get('/activities/create', [ActivityController::class, 'create']);
+
+/* END NOT FINAL */
 
 Route::get('/activities', [ActivityController::class, 'index']);
 
 Route::get('/activities/{activity:slug}', [ActivityController::class, 'show']);
+
+Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
+
+Route::patch('/verify/activities/{activity:slug}', [VerifyActivityController::class, 'updateVerifiedActivity']);
+
+Route::patch('/reject/activities/{activity:slug}', [VerifyActivityController::class, 'updateRejectedActivity']);
+
+Route::patch('/verify/all-activities', [VerifyActivityController::class, 'updateAllVerifiedActivity']);
+
+Route::patch('/reject/all-activities', [VerifyActivityController::class, 'updateAllRejectedActivity']);
+
+Route::get('/verified/activities', [VerifyActivityController::class, 'indexVerifiedActivity']);
+
+Route::patch('/unverify/activities/{activity:slug}', [VerifyActivityController::class, 'updateUnverifiedActivity']);
+
+Route::patch('/unverify/all-activities', [VerifyActivityController::class, 'updateAllUnverifiedActivity']);
+
+Route::get('/rejected/activities', [VerifyActivityController::class, 'indexRejectedActivity']);
+
+Route::patch('/unreject/activities/{activity:slug}', [VerifyActivityController::class, 'updateUnrejectedActivity']);
+
+Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'updateAllUnrejectedActivity']);
+
+Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
