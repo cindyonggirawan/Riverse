@@ -69,7 +69,6 @@ class RegisterController extends Controller
             'gender' => $request->gender,
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
-            'experiencePoint' => 0,
             'nationalIdentityCardImageUrl' => $validated['nationalIdentityCardImage_link'],
             'profileImageUrl' =>  $validated['profileImage_link'],
             'slug' => $slug

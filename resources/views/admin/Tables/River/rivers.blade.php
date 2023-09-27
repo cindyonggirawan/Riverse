@@ -11,7 +11,6 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>City</th>
                                 <th>Name</th>
                                 <th>Location Url</th>
                                 <th>Updated At</th>
@@ -22,7 +21,6 @@
                             @foreach ($rivers as $river)
                                 <tr>
                                     <td>{{ $river->id }}</a></td>
-                                    <td>{{ $river->city->name }}</a></td>
                                     <td>{{ $river->name }}</td>
                                     <td>{{ $river->locationUrl }}</td>
                                     <td>{{ $river->updated_at }}</td>

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('rivers', function (Blueprint $table) {
             $table->string('id', 11);
 
-            $table->string('cityId', 11);
-
             $table->string('name');
             $table->string('locationUrl');
             $table->string('slug')->unique();
@@ -23,8 +21,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->primary('id');
-
-            $table->foreign('cityId')->references('id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('nationalIdentityNumber');
             $table->string('nationalIdentityCardImageUrl')->nullable();
             $table->string('profileImageUrl')->nullable();
-            $table->bigInteger('experiencePoint');
             $table->string('slug')->unique();
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('rejected_at')->nullable();

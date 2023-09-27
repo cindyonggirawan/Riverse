@@ -11,16 +11,6 @@
                         <dt class="col-sm-4">Id</dt>
                         <dd class="col-sm-8">{{ $river->id }}</dd>
 
-                        <hr class="col-sm-12">
-
-                        <dt class="col-sm-4">City Id</dt>
-                        <dd class="col-sm-8">{{ $river->cityId }}</dd>
-
-                        <dt class="col-sm-4">City</dt>
-                        <dd class="col-sm-8">{{ $river->city->name }}</dd>
-
-                        <hr class="col-sm-12">
-
                         <dt class="col-sm-4">Name</dt>
                         <dd class="col-sm-8">{{ $river->name }}</dd>
 

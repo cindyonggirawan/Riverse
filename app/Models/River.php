@@ -14,15 +14,4 @@ class River extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
-    protected $with = ['city'];
-
-    /**
-     * Get the city that owns the River
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class, 'cityId', 'id');
-    }
 }

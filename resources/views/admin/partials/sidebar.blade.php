@@ -120,36 +120,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/provinces" class="nav-link {{ $title === 'Provinces' ? 'active' : '' }}">
-                                <i class="fas fa-table nav-icon"></i>
-                                <p>Provinces</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/cities" class="nav-link {{ $title === 'Cities' ? 'active' : '' }}">
-                                <i class="fas fa-table nav-icon"></i>
-                                <p>Cities</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="/activity-statuses"
                                 class="nav-link {{ $title === 'Activity Statuses' ? 'active' : '' }}">
                                 <i class="fas fa-table nav-icon"></i>
                                 <p>Activity Statuses</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/sukarelawan-statuses"
-                                class="nav-link {{ $title === 'Sukarelawan Statuses' ? 'active' : '' }}">
-                                <i class="fas fa-table nav-icon"></i>
-                                <p>Sukarelawan Statuses</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/experience-point-statuses"
-                                class="nav-link {{ $title === 'Experience Point Statuses' ? 'active' : '' }}">
-                                <i class="fas fa-table nav-icon"></i>
-                                <p>Experience Point Statuses</p>
                             </a>
                         </li>
                     </ul>

@@ -3,19 +3,15 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ActivityStatusController;
 use App\Http\Controllers\BenefitController;
-use App\Http\Controllers\CityController;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ExperiencePointStatusController;
 use App\Http\Controllers\FasilitatorController;
 use App\Http\Controllers\FasilitatorTypeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RiverController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SukarelawanController;
-use App\Http\Controllers\SukarelawanStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationStatusController;
 use App\Http\Controllers\VerifyFasilitatorController;
@@ -61,25 +57,9 @@ Route::get('/verification-statuses', [VerificationStatusController::class, 'inde
 
 Route::get('/verification-statuses/{verificationStatus:slug}', [VerificationStatusController::class, 'show']);
 
-Route::get('/provinces', [ProvinceController::class, 'index']);
-
-Route::get('/provinces/{province:slug}', [ProvinceController::class, 'show']);
-
-Route::get('/cities', [CityController::class, 'index']);
-
-Route::get('/cities/{city:slug}', [CityController::class, 'show']);
-
 Route::get('/activity-statuses', [ActivityStatusController::class, 'index']);
 
 Route::get('/activity-statuses/{activityStatus:slug}', [ActivityStatusController::class, 'show']);
-
-Route::get('/sukarelawan-statuses', [SukarelawanStatusController::class, 'index']);
-
-Route::get('/sukarelawan-statuses/{sukarelawanStatus:slug}', [SukarelawanStatusController::class, 'show']);
-
-Route::get('/experience-point-statuses', [ExperiencePointStatusController::class, 'index']);
-
-Route::get('/experience-point-statuses/{experiencePointStatus:slug}', [ExperiencePointStatusController::class, 'show']);
 
 Route::get('/levels', [LevelController::class, 'index']);
 

@@ -23,6 +23,17 @@ class Sukarelawan extends Model
     protected $with = ['user', 'verificationStatus', 'level'];
 
     /**
+     * getExperiencePointAttribute method to retrieve the value 
+     * when accessing $sukarelawan->experiencePoint
+     */
+    public function getExperiencePointAttribute()
+    {
+        $experiencePoint = 0;
+
+        return $experiencePoint;
+    }
+
+    /**
      * Get the user that owns the Sukarelawan
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

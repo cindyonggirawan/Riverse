@@ -12,16 +12,13 @@ use App\Models\Benefit;
 use App\Models\Generator;
 use Illuminate\Support\Str;
 use App\Models\ActivityStatus;
-use App\Models\City;
 use App\Models\FasilitatorType;
 use Illuminate\Database\Seeder;
-use App\Models\SukarelawanStatus;
 use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Hash;
-use App\Models\ExperiencePointStatus;
 use App\Models\Fasilitator;
 use App\Models\River;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Sukarelawan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,13 +27,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         $names = ['Admin', 'Sukarelawan', 'Fasilitator'];
         foreach ($names as $name) {
             Role::create([
@@ -70,24 +60,6 @@ class DatabaseSeeder extends Seeder
                 'id' => Generator::generateId(ActivityStatus::class),
                 'name' => $name,
                 'slug' => Generator::generateSlug(ActivityStatus::class, $name)
-            ]);
-        }
-
-        $names = ['Menunggu Penerimaan', 'Sudah Diterima', 'Sudah Ditolak', 'Menunggu Clock-In', 'Menunggu Clock-Out', 'Sudah Hadir'];
-        foreach ($names as $name) {
-            SukarelawanStatus::create([
-                'id' => Generator::generateId(SukarelawanStatus::class),
-                'name' => $name,
-                'slug' => Generator::generateSlug(SukarelawanStatus::class, $name)
-            ]);
-        }
-
-        $names = ['Menunggu Pencairan', 'Sudah Dicairkan'];
-        foreach ($names as $name) {
-            ExperiencePointStatus::create([
-                'id' => Generator::generateId(ExperiencePointStatus::class),
-                'name' => $name,
-                'slug' => Generator::generateSlug(ExperiencePointStatus::class, $name)
             ]);
         }
 
@@ -130,6 +102,34 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $data = [
+            'email' => 'sukarelawan@riverse.com',
+            'password' => 'Sukarelawan123',
+            'name' => 'Sukarelawan',
+            'gender' => 'Male',
+            'dateOfBirth' => '01/01/2001',
+            'nationalIdentityNumber' => '0000000000000001'
+        ];
+        $id = Generator::generateId(Sukarelawan::class);
+        $slug = Generator::generateSlug(User::class, $data['name']);
+        User::create([
+            'id' => $id,
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'name' => $data['name'],
+            'slug' => $slug
+        ]);
+        Sukarelawan::create([
+            'id' => $id,
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => $data['nationalIdentityNumber'],
+            'slug' => $slug
+        ]);
+
+        $data = [
             'email' => 'fasilitator@riverse.com',
             'password' => 'Fasilitator123',
             'name' => 'Fasilitator',
@@ -138,7 +138,6 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jl. Pondok Indah No. 123, Kota Jakarta Utara',
             'phoneNumber' => '8987654321'
         ];
-
         $id = Generator::generateId(Fasilitator::class);
         $slug = Generator::generateSlug(User::class, $data['name']);
         User::create([
@@ -161,43 +160,38 @@ class DatabaseSeeder extends Seeder
 
         /* CLOSE USER */
 
-        Artisan::call('app:fetch-provinces');
-
-        Artisan::call('app:fetch-cities');
-
         $name = 'Sungai Ciliwung';
         River::create([
             'id' => Generator::generateId(River::class),
-            'cityId' => City::where('name', 'Kota Jakarta Utara')->first()->id,
             'name' => $name,
             'locationUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
             'slug' => Generator::generateSlug(River::class, $name)
         ]);
 
-        $names = ['Activity 1', 'Activity 2', 'Activity 3'];
-        foreach ($names as $name) {
-            Activity::create([
-                'id' => Generator::generateId(Activity::class),
-                'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
-                'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
-                'fasilitatorId' => Fasilitator::first()->id,
-                'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
-                'name' => $name,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                'registrationDeadlineDate' => '2023-09-09',
-                'cleanupDate' => '2023-09-10',
-                'startTime' => '09:00:00',
-                'endTime' => '12:00:00',
-                'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
-                'sukarelawanJobName' => 'Pembersih Handal',
-                'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
-                'sukarelawanCriteria' => 'Tidak takut air dan kotoran',
-                'minimumNumberOfSukarelawan' => 10,
-                'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan',
-                'groupChatUrl' => 'https://web.whatsapp.com/',
-                'experiencePointGiven' => 100,
-                'slug' => Generator::generateSlug(Activity::class, $name)
-            ]);
-        }
+        // $names = ['Activity 1', 'Activity 2', 'Activity 3'];
+        // foreach ($names as $name) {
+        //     Activity::create([
+        //         'id' => Generator::generateId(Activity::class),
+        //         'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+        //         'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
+        //         'fasilitatorId' => Fasilitator::first()->id,
+        //         'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
+        //         'name' => $name,
+        //         'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        //         'registrationDeadlineDate' => '2023-09-09',
+        //         'cleanupDate' => '2023-09-10',
+        //         'startTime' => '09:00:00',
+        //         'endTime' => '12:00:00',
+        //         'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
+        //         'sukarelawanJobName' => 'Pembersih Handal',
+        //         'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
+        //         'sukarelawanCriteria' => 'Tidak takut air dan kotoran',
+        //         'minimumNumberOfSukarelawan' => 10,
+        //         'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan',
+        //         'groupChatUrl' => 'https://web.whatsapp.com/',
+        //         'experiencePointGiven' => 100,
+        //         'slug' => Generator::generateSlug(Activity::class, $name)
+        //     ]);
+        // }
     }
 }
