@@ -97,11 +97,11 @@ class RegisterController extends Controller
             'description' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators',
-            'logoImageUrl' => ['required', 'image']
+            'logoImage_link' => ['required', 'image']
         ]);
 
-        if ($request->hasFile('logoImageUrl')) {
-            $validated['logoImageUrl'] = $request->file('logoImageUrl')->store('images', 'public');
+        if ($request->hasFile('logoImage_link')) {
+            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
         }
 
         $id = Generator::generateId(Fasilitator::class);
@@ -123,7 +123,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $validated['logoImageUrl'],
+            'logoImageUrl' => $validated['logoImage_link'],
             'slug' => $slug
         ]);
 

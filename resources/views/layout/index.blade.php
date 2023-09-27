@@ -29,8 +29,10 @@
         @if(auth()->user() != null)
         <h5>
             Hello,
-            @if (auth()->user()->role->name == "Sukarelawan" || auth()->user()->role->name == "Fasilitator")
+            @if (auth()->user()->role->name == "Sukarelawan")
                 Sukarelawan {{ auth()->user()->name }}
+            @elseif (auth()->user()->role->name == "Fasilitator")
+                Fasilitator {{ auth()->user()->name }}
             @elseif (auth()->user()->role->name == "Admin")
                 Admin
             @endif
