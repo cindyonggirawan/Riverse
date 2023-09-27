@@ -5,7 +5,7 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/register/sukarelawan" method="post" class="form-horizontal">
+                <form action="/register/sukarelawan" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -119,12 +119,35 @@
                                 </div>
                                 <input type="text" name="nationalIdentityNumber" id="nationalIdentityNumber"
                                     class="form-control @error('nationalIdentityNumber') is-invalid @enderror"
-                                    placeholder="National Identity Number" required
-                                    value="{{ old('nationalIdentityNumber') }}">
+                                    placeholder="National Identity Number" required>
                             </div>
                             @error('nationalIdentityNumber')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="flKtpImage" class="col-sm-4 col-form-label">National Identity Card Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="nationalIdentityCardImage_link" id="flKtpImage" class="form-control">
+                            </div>
+                            @error('nationalIdentityCardImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="ktpPreview" src='' alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="flPictureImage" class="col-sm-4 col-form-label">Profile Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="profileImage_link" id="flPictureImage" class="form-control">
+                            </div>
+                            @error('profileImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="picturePreview" src='' alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
                         </div>
 
                         <hr class="my-4">
@@ -148,3 +171,27 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const pictureImageInp = document.querySelector("#flPictureImage");
+        const pictureImageEl = document.querySelector("#picturePreview");
+
+        const ktpImageInp = document.querySelector("#flKtpImage");
+        const ktpImageEl = document.querySelector("#ktpPreview")
+
+        pictureImageInp.onchange = (ev) => {
+            const [file] = pictureImageInp.files;
+            if (file) {
+                pictureImageEl.src = URL.createObjectURL(file);
+            }
+        };
+
+        ktpImageInp.onchange = (ev) => {
+            const [file] = ktpImageInp.files;
+            if (file) {
+                ktpImageEl.src = URL.createObjectURL(file);
+            }
+        };
+    </script>
+@endpush

@@ -37,8 +37,18 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'gender' => 'required',
             'dateOfBirth' => 'required|date_format:d/m/Y',
-            'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans'
+            'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans',
+            'profileImage_link' => 'required|image',
+            'nationalIdentityCardImage_link' => 'required|image'
         ]);
+
+        if ($request->hasFile('profileImage_link')) {
+            $validated['profileImage_link'] = $request->file('profileImage_link')->store('images', 'public');
+        }
+
+        if ($request->hasFile('nationalIdentityCardImage_link')) {
+            $validated['nationalIdentityCardImage_link'] = $request->file('nationalIdentityCardImage_link')->store('images', 'public');
+        }
 
         $id = Generator::generateId(Sukarelawan::class);
         $slug = Generator::generateSlug(User::class, $request->name);
@@ -60,6 +70,8 @@ class RegisterController extends Controller
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
             'experiencePoint' => 0,
+            'nationalIdentityCardImageUrl' => $validated['nationalIdentityCardImage_link'],
+            'profileImageUrl' =>  $validated['profileImage_link'],
             'slug' => $slug
         ]);
 
@@ -84,8 +96,13 @@ class RegisterController extends Controller
             'fasilitatorTypeId' => 'required',
             'description' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators'
+            'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators',
+            'logoImage_link' => ['required', 'image']
         ]);
+
+        if ($request->hasFile('logoImage_link')) {
+            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
+        }
 
         $id = Generator::generateId(Fasilitator::class);
         $slug = Generator::generateSlug(User::class, $request->name);
@@ -106,6 +123,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
+            'logoImageUrl' => $validated['logoImage_link'],
             'slug' => $slug
         ]);
 

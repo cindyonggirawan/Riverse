@@ -2,8 +2,8 @@
     <!-- It is not the man who has too little, but the man who craves more, that is poor. - Seneca -->
     <div class="activity-card-container-hor">
         {{-- TODO: change to activity image --}}
-<div class="img-container-hor" 
-style="background-image: url('{{ asset('/images/{{$image_src}}') }}');">
+<div class="img-container-hor"
+style="background-image: url('{{ asset('/images/' . $image_src) }}');">
     <div class="likes">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="21" viewBox="0 0 22 21" fill="none">
             <path d="M5.33295 9.75C6.13895 9.75 6.86595 9.304 7.36395 8.67C8.14021 7.67962 9.11466 6.86218 10.225 6.27C10.948 5.886 11.575 5.314 11.878 4.555C12.0908 4.02325 12.2001 3.45575 12.2 2.883V2.25C12.2 2.05109 12.279 1.86032 12.4196 1.71967C12.5603 1.57902 12.751 1.5 12.95 1.5C13.5467 1.5 14.119 1.73705 14.5409 2.15901C14.9629 2.58097 15.2 3.15326 15.2 3.75C15.2 4.902 14.94 5.993 14.477 6.968C14.211 7.526 14.584 8.25 15.202 8.25H18.328C19.354 8.25 20.273 8.944 20.382 9.965C20.427 10.387 20.45 10.815 20.45 11.25C20.4541 13.9863 19.519 16.6412 17.801 18.771C17.413 19.253 16.814 19.5 16.196 19.5H12.18C11.6964 19.4998 11.216 19.4221 10.757 19.27L7.64295 18.23C7.18406 18.0774 6.70356 17.9997 6.21995 18H4.60395M4.60395 18C4.68695 18.205 4.77695 18.405 4.87395 18.602C5.07095 19.002 4.79596 19.5 4.35096 19.5H3.44296C2.55396 19.5 1.72995 18.982 1.47095 18.132C1.1246 16.9952 0.949016 15.8133 0.949955 14.625C0.949955 13.072 1.24496 11.589 1.78096 10.227C2.08696 9.453 2.86695 9 3.69995 9H4.75295C5.22495 9 5.49795 9.556 5.25295 9.96C4.39885 11.366 3.94838 12.9799 3.95095 14.625C3.94932 15.7816 4.1714 16.9277 4.60496 18H4.60395ZM12.95 8.25H15.2" stroke="#5822CA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -19,7 +19,7 @@ style="background-image: url('{{ asset('/images/{{$image_src}}') }}');">
     </h3>
     <div class="card-row">
         {{-- TODO: change to fasilitator img source --}}
-        <img src="{{asset('images/{{$fasilitatorImage}}')}}" alt="">
+        <img src="{{asset('images/' . $fasilitatorImage )}}" alt="">
         {{-- TODO: change to fasilitator name --}}
         <p class="selected">{{$fasilitatorName}}</p>
     </div>

@@ -5,7 +5,7 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/register/fasilitator" method="post" class="form-horizontal">
+                <form action="/register/fasilitator" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -135,6 +135,18 @@
                             @enderror
                         </div>
 
+                        <div class="form-group row">
+                            <label for="flLogoImage" class="col-sm-4 col-form-label">Logo Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="logoImage_link" id="flLogoImage" class="form-control">
+                            </div>
+                            @error('logoImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="logoPreview" src='' alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+
                         <hr class="my-4">
 
                         <div class="text-center"><a href="/login">I already have an account</a></div>
@@ -156,3 +168,19 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const logoImageInp = document.querySelector("#flLogoImage");
+        const logoImageEl = document.querySelector("#logoPreview");
+
+        logoImageInp.onchange = (ev) => {
+            const [file] = logoImageInp.files;
+            if (file) {
+                logoImageEl.src = URL.createObjectURL(file);
+            }
+        };
+
+    </script>
+@endpush
+

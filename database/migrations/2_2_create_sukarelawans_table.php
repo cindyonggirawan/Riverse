@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('gender');
             $table->date('dateOfBirth');
-            $table->string('nationalIdentityNumber')->unique();
+            $table->string('nationalIdentityNumber');
             $table->string('nationalIdentityCardImageUrl')->nullable();
             $table->string('profileImageUrl')->nullable();
             $table->bigInteger('experiencePoint');

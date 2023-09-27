@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ActivityStatusController;
 use App\Http\Controllers\BenefitController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExperiencePointStatusController;
 use App\Http\Controllers\FasilitatorController;
 use App\Http\Controllers\FasilitatorTypeController;
@@ -40,11 +41,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('testingComponent');
 // });
 
-Route::get('/', function () {
+Route::get('/admin', function () {
     return view('admin.layouts.main', [
-        'title' => 'Home'
+        'title' => 'Admin Home'
     ]);
 });
+
+Route::get('/', [Controller::class, 'index']);
 
 Route::get('/roles', [RoleController::class, 'index']);
 
