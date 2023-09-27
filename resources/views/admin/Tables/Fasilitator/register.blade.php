@@ -5,7 +5,7 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/register/fasilitator" method="post" class="form-horizontal">
+                <form action="/register/fasilitator" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">

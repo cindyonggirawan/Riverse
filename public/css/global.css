@@ -272,3 +272,8 @@ body {
     right: 10px;
     z-index: 10;
 }
+
+.custom-test-profile-image {
+    max-width: 70px;
+    border-radius: 50%;
+}
