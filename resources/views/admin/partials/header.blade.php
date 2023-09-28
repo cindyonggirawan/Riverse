@@ -146,7 +146,7 @@
                 @endif
 
                 @if ($title === 'Activities')
-                    <a class="btn btn-warning" href="/activities/create">
+                    <a class="btn btn-dark" href="/activities/create">
                         <i class="fas fa-plus"></i>
                         Buat baru
                     </a>

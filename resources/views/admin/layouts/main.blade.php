@@ -165,12 +165,20 @@
                     format: 'DD/MM/YYYY'
                 });
 
+                $('#rdd').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+
+                $('#cud').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+
                 $('#st').datetimepicker({
-                    format: 'DD/MM/YYYY HH:mm',
-                    stepping: 1,
-                    icons: {
-                        time: 'fas fa-clock'
-                    }
+                    format: 'HH:mm'
+                });
+
+                $('#et').datetimepicker({
+                    format: 'HH:mm'
                 });
 
                 $('.select2bs4').select2({
@@ -332,9 +340,6 @@
                     }
                 })
             }
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
         </script>
     </body>
 

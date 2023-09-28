@@ -166,11 +166,9 @@ Route::get('/rivers', [RiverController::class, 'index']);
 
 Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
-/* START NOT FINAL */
-
 Route::get('/activities/create', [ActivityController::class, 'create']);
 
-/* END NOT FINAL */
+Route::post('/activities/create', [ActivityController::class, 'store']);
 
 Route::get('/activities', [ActivityController::class, 'index']);
 
