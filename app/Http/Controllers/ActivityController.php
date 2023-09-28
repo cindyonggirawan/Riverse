@@ -77,7 +77,7 @@ class ActivityController extends Controller
                 'required',
                 'string',
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
-            ],
+            ]
         ]);
 
         Activity::create([

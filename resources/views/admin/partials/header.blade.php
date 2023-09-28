@@ -145,8 +145,15 @@
                     </form>
                 @endif
 
-                @if ($title === 'Activities')
-                    <a class="btn btn-dark" href="/activities/create">
+                @if ($title === 'Activities' || $title === 'Levels' || $title === 'Benefits')
+                    <a class="btn btn-dark"
+                        href="
+                    @if ($title === 'Activities') /activities/create
+                    @elseif ($title === 'Levels')
+                    /levels/create
+                    @elseif ($title === 'Benefits')
+                    /benefits/create @endif
+                    ">
                         <i class="fas fa-plus"></i>
                         Buat baru
                     </a>

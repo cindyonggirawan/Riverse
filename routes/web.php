@@ -62,13 +62,9 @@ Route::get('/activity-statuses', [ActivityStatusController::class, 'index']);
 
 Route::get('/activity-statuses/{activityStatus:slug}', [ActivityStatusController::class, 'show']);
 
-Route::get('/levels', [LevelController::class, 'index']);
+Route::get('/rivers', [RiverController::class, 'index']);
 
-Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
-
-Route::get('/benefits', [BenefitController::class, 'index']);
-
-Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
+Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
 
 
@@ -162,10 +158,6 @@ Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFa
 
 
 
-Route::get('/rivers', [RiverController::class, 'index']);
-
-Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
-
 Route::get('/activities/create', [ActivityController::class, 'create']);
 
 Route::post('/activities/create', [ActivityController::class, 'store']);
@@ -197,3 +189,27 @@ Route::patch('/unreject/activities/{activity:slug}', [VerifyActivityController::
 Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'updateAllUnrejectedActivity']);
 
 Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
+
+
+
+
+
+Route::get('/levels/create', [LevelController::class, 'create']);
+
+Route::post('/levels/create', [LevelController::class, 'store']);
+
+Route::get('/levels', [LevelController::class, 'index']);
+
+Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
+
+
+
+
+
+Route::get('/benefits/create', [BenefitController::class, 'create']);
+
+Route::post('/benefits/create', [BenefitController::class, 'store']);
+
+Route::get('/benefits', [BenefitController::class, 'index']);
+
+Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
