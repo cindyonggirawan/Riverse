@@ -168,4 +168,16 @@ class VerifySukarelawanController extends Controller
                 ->get()
         ]);
     }
+
+    public function destroyAllSukarelawan()
+    {
+        $sukarelawans = Sukarelawan::orderBy('created_at', 'asc')
+            ->get();
+
+        foreach ($sukarelawans as $sukarelawan) {
+            $sukarelawan->delete();
+        }
+
+        return redirect('/all/sukarelawans')->with('success', 'All Sukarelawans destruction successful!');
+    }
 }

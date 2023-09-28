@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+        <link rel="stylesheet"
+            href="{{ asset('plugins/datatables-fixedcolumns/css/fixedColumns.bootstrap4.min.css') }}">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Tempusdominus Bootstrap 4 -->
@@ -126,6 +128,7 @@
         <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('plugins/datatables-fixedcolumns/js/dataTables.fixedColumns.min.js') }}"></script>
         <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
         <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
         <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
@@ -166,11 +169,23 @@
         <script>
             $(function() {
                 $('#table1').DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "order": [],
-                    "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    // responsive: true,
+                    lengthChange: true,
+                    order: [],
+                    // autoWidth: false,
+                    buttons: [
+                        "copy", "csv", "excel", "pdf", "print", "colvis"
+                    ],
+                    scrollColapse: true,
+                    scrollX: true,
+                    fixedColumns: {
+                        leftColumns: 1,
+                        rightColumns: 1,
+                    },
+                    columnDefs: [{
+                        targets: -1,
+                        width: '100px'
+                    }]
                 }).buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
 
                 $('#dob').datetimepicker({
@@ -313,7 +328,7 @@
                 Swal.fire({
                     icon: 'info',
                     title: 'Experience Point Given',
-                    text: 'The experience point given you enter here will be saved for all who have just registered at this time',
+                    text: 'The experience point given you enter here will be saved for all data that are newly registered at this time',
                     input: 'number',
                     inputAttributes: {
                         required: 'required'
@@ -332,7 +347,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Reason for Rejection',
-                    text: 'The reason for rejection you enter here will be saved for all who have just registered at this time',
+                    text: 'The reason for rejection you enter here will be saved for all data that are newly registered at this time',
                     input: 'text',
                     inputPlaceholder: 'Reason for Rejection',
                     showCancelButton: true,
@@ -353,6 +368,19 @@
                     confirmButtonText: 'Yes',
                     preConfirm: () => {
                         document.getElementById('deleteForm').submit();
+                    }
+                })
+            }
+
+            function showAllDeletionConfirmation() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Deletion',
+                    text: 'Are you sure you want to delete all this data? All data that has been deleted cannot be restored',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    preConfirm: () => {
+                        document.getElementById('deleteAllForm').submit();
                     }
                 })
             }

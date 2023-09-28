@@ -7,7 +7,7 @@
             <div class="card">
                 <!-- /.Card Body-->
                 <div class="card-body table-responsive">
-                    <table id="table1" class="table table-bordered table-hover table-striped table-head-fixed text-nowrap">
+                    <table id="table1" class="table table-bordered table-hover table-striped text-nowrap">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -29,8 +29,9 @@
                                 <th>Minimum Number Of Sukarelawan</th>
                                 <th>Sukarelawan Equipment</th>
                                 <th>Group Chat Url</th>
+                                <th>Group Chat QR Code Image Url</th>
                                 <th>Experience Point Given</th>
-                                <th>QR Code Image Url</th>
+                                <th>Attendance QR Code Image Url</th>
                                 <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
@@ -57,15 +58,41 @@
                                     <td>{{ $activity->minimumNumOfSukarelawan }}</td>
                                     <td>{{ Str::words(strip_tags($activity->sukarelawanEquipment), 5) }}</td>
                                     <td>{{ $activity->groupChatUrl }}</td>
+                                    <td>{{ $activity->groupChatQRCodeImageUrl !== null ? $activity->groupChatQRCodeImageUrl : '-' }}
                                     <td>{{ $activity->experiencePointGiven }}</td>
-                                    <td>{{ $activity->qrCodeImageUrl !== null ? $activity->qrCodeImageUrl : '-' }}</td>
+                                    <td>{{ $activity->attendanceQRCodeImageUrl !== null ? $activity->attendanceQRCodeImageUrl : '-' }}
+                                    </td>
                                     <td>{{ $activity->updated_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/activities/{{ $activity->slug }}">
-                                            <i class="fas fa-folder">
-                                            </i>
-                                            View
-                                        </a>
+                                        <div class="form-inline">
+                                            <a class="btn btn-primary btn-sm btn-square"
+                                                href="/activities/{{ $activity->slug }}">
+                                                <i class="fas fa-folder">
+                                                </i>
+                                            </a>
+
+                                            <div class="mx-1"></div>
+
+                                            <a class="btn btn-info btn-sm btn-square"
+                                                href="/activities/{{ $activity->slug }}/edit">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>
+
+                                            <form id="deleteForm" action="/activities/{{ $activity->slug }}"
+                                                method="post">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+
+                                            <div class="mx-1"></div>
+
+                                            <button class="btn btn-danger btn-sm btn-square"
+                                                onclick="showDeletionConfirmation()">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

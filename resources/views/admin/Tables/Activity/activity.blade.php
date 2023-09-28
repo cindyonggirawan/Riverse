@@ -82,11 +82,17 @@
                         <dt class="col-sm-4">Group Chat Url</dt>
                         <dd class="col-sm-8">{{ $activity->groupChatUrl }}</dd>
 
+                        <dt class="col-sm-4">Group Chat QR Code Image Url</dt>
+                        <dd class="col-sm-8">
+                            {{ $activity->groupChatQRCodeImageUrl !== null ? $activity->groupChatQRCodeImageUrl : '-' }}
+                        </dd>
+
                         <dt class="col-sm-4">Experience Point Given</dt>
                         <dd class="col-sm-8">{{ $activity->experiencePointGiven }}</dd>
 
-                        <dt class="col-sm-4">QR Code Image Url</dt>
-                        <dd class="col-sm-8">{{ $activity->qrCodeImageUrl !== null ? $activity->qrCodeImageUrl : '-' }}
+                        <dt class="col-sm-4">Attendance QR Code Image Url</dt>
+                        <dd class="col-sm-8">
+                            {{ $activity->attendanceQRCodeImageUrl !== null ? $activity->attendanceQRCodeImageUrl : '-' }}
                         </dd>
 
                         <dt class="col-sm-4">Slug</dt>

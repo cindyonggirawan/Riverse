@@ -126,6 +126,8 @@ Route::patch('/unreject/all-sukarelawans', [VerifySukarelawanController::class, 
 
 Route::get('/all/sukarelawans', [VerifySukarelawanController::class, 'indexAllSukarelawan']);
 
+Route::delete('/delete/all-sukarelawans', [VerifySukarelawanController::class, 'destroyAllSukarelawan']);
+
 
 
 
@@ -154,6 +156,8 @@ Route::patch('/unreject/all-fasilitators', [VerifyFasilitatorController::class, 
 
 Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFasilitator']);
 
+Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, 'destroyAllFasilitator']);
+
 
 
 
@@ -161,6 +165,12 @@ Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFa
 Route::get('/activities/create', [ActivityController::class, 'create']);
 
 Route::post('/activities/create', [ActivityController::class, 'store']);
+
+Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
+
+Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
+
+Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
 
 Route::get('/activities', [ActivityController::class, 'index']);
 
@@ -190,6 +200,7 @@ Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'upda
 
 Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
 
+Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destroyAllActivity']);
 
 
 

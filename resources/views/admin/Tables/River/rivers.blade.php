@@ -7,7 +7,7 @@
             <div class="card">
                 <!-- /.Card Body-->
                 <div class="card-body table-responsive">
-                    <table id="table1" class="table table-bordered table-hover table-striped table-head-fixed text-nowrap">
+                    <table id="table1" class="table table-bordered table-hover table-striped text-nowrap">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -25,11 +25,12 @@
                                     <td>{{ $river->locationUrl }}</td>
                                     <td>{{ $river->updated_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/rivers/{{ $river->slug }}">
-                                            <i class="fas fa-folder">
-                                            </i>
-                                            View
-                                        </a>
+                                        <div class="form-inline">
+                                            <a class="btn btn-primary btn-sm btn-square" href="/rivers/{{ $river->slug }}">
+                                                <i class="fas fa-folder">
+                                                </i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\River;
 use App\Models\Activity;
 use App\Models\Generator;
@@ -40,7 +41,7 @@ class ActivityController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'registrationDeadlineDate' => [
                 'required',
                 'date_format:d/m/Y',
@@ -69,10 +70,10 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ],
             'sukarelawanJobName' => 'required|string|max:255',
-            'sukarelawanJobDetail' => 'required|string|max:255',
-            'sukarelawanCriteria' => 'required|string|max:255',
+            'sukarelawanJobDetail' => 'required|string',
+            'sukarelawanCriteria' => 'required|string',
             'minimumNumOfSukarelawan' => 'required|integer|min:1|max:999',
-            'sukarelawanEquipment' => 'required|string|max:255',
+            'sukarelawanEquipment' => 'required|string',
             'groupChatUrl' => [
                 'required',
                 'string',
@@ -103,5 +104,172 @@ class ActivityController extends Controller
         ]);
 
         return redirect('/activities')->with('success', 'Activity creation successful!');
+    }
+
+    public function destroy(Activity $activity)
+    {
+        $activity->delete();
+        return redirect('/activities')->with('success', 'Activity destruction successful!');
+    }
+
+    public function edit(Activity $activity)
+    {
+        return view('admin.Tables.Activity.edit', [
+            'title' => 'Edit Activity',
+            'activity' => $activity,
+            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
+    public function update(Request $request, Activity $activity)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'registrationDeadlineDate' => [
+                'required',
+                'date_format:d/m/Y',
+                'before:cleanUpDate'
+            ],
+            'verificationStatusId' => 'required',
+            'reasonForRejection' => 'nullable|string|max:255',
+            'cleanUpDate' => [
+                'required',
+                'date_format:d/m/Y',
+                'after:registrationDeadlineDate'
+            ],
+            'startTime' => [
+                'required',
+                'date_format:H:i',
+                'before:endTime',
+            ],
+            'endTime' => [
+                'required',
+                'date_format:H:i',
+                'after:startTime',
+            ],
+            'gatheringPointUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ],
+            'sukarelawanJobName' => 'required|string|max:255',
+            'sukarelawanJobDetail' => 'required|string',
+            'sukarelawanCriteria' => 'required|string',
+            'minimumNumOfSukarelawan' => 'required|integer|min:1|max:999',
+            'sukarelawanEquipment' => 'required|string',
+            'groupChatUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ],
+            'experiencePointGiven' => 'nullable|integer|min:0|max:999'
+        ]);
+
+        $slug = $activity->slug;
+
+        if ($request->name !== $activity->name) {
+            $slug = Generator::generateSlug(Activity::class, $request->name);
+        }
+
+        $experiencePointGiven = $activity->experiencePointGiven;
+        $verified_at = $activity->verified_at;
+
+        $reasonForRejection = $activity->reasonForRejection;
+        $rejected_at = $activity->rejected_at;
+
+        $menungguVerifikasiId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
+        $sudahDiverifikasiId = VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id;
+        $sudahDitolakId = VerificationStatus::where('name', 'Sudah Ditolak')->first()->id;
+
+        if ($request->verificationStatusId === $menungguVerifikasiId) {
+            $experiencePointGiven = 0;
+            $verified_at = null;
+            $reasonForRejection = null;
+            $rejected_at = null;
+        } else if ($request->verificationStatusId === $sudahDiverifikasiId) {
+            $experiencePointGiven = $request->experiencePointGiven;
+            $verified_at = now();
+            $reasonForRejection = null;
+            $rejected_at = null;
+        } else if ($request->verificationStatusId === $sudahDitolakId) {
+            $experiencePointGiven = 0;
+            $verified_at = null;
+            $reasonForRejection = $request->reasonForRejection;
+            $rejected_at = now();
+        }
+
+        $activityStatusId = $activity->activityStatusId;
+
+        $requestRegistrationDeadlineDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->registrationDeadlineDate)));
+        $requestCleanUpDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->cleanUpDate)));
+        $requestStartTime = date('H:i:s', strtotime($request->startTime));
+        $requestEndTime = date('H:i:s', strtotime($request->endTime));
+
+        $now = Carbon::now();
+
+        $pendaftaranSedangDibukaId = ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id;
+        $pendaftaranSudahDitutupId = ActivityStatus::where('name', 'Pendaftaran Sudah Ditutup')->first()->id;
+        $aktivitasBelumDimulaiId = ActivityStatus::where('name', 'Aktivitas Belum Dimulai')->first()->id;
+        $aktivitasSedangBerlangsungId = ActivityStatus::where('name', 'Aktivitas Sedang Berlangsung')->first()->id;
+        $aktivitasSudahSelesaiId = ActivityStatus::where('name', 'Aktivitas Sudah Selesai')->first()->id;
+
+        if ($request->verificationStatusId === $sudahDiverifikasiId) {
+            if (
+                $requestRegistrationDeadlineDate !== $activity->registrationDeadlineDate ||
+                $requestCleanUpDate !== $activity->cleanUpDate ||
+                $requestStartTime !== $activity->startTime ||
+                $requestEndTime !== $activity->endTime
+            ) {
+                $registrationDeadlineDate = Carbon::parse($requestRegistrationDeadlineDate);
+                $cleanUpDate = Carbon::parse($requestCleanUpDate);
+                $cleanUpDate_ = Carbon::parse($requestCleanUpDate);
+                $cleanUpDate__ = Carbon::parse($requestCleanUpDate);
+
+                $startTime_ = Carbon::parse($requestStartTime);
+                $startTime = $cleanUpDate_->setTime($startTime_->hour, $startTime_->minute, $startTime_->second);
+
+                $endTime__ = Carbon::parse($requestEndTime);
+                $endTime = $cleanUpDate__->setTime($endTime__->hour, $endTime__->minute, $endTime__->second);
+
+                if ($now >= $endTime && $now >= $startTime && $now >= $cleanUpDate && $now >= $registrationDeadlineDate) {
+                    $activityStatusId = $aktivitasSudahSelesaiId;
+                } else if ($now < $endTime && $now >= $startTime && $now >= $cleanUpDate && $now >= $registrationDeadlineDate) {
+                    $activityStatusId = $aktivitasSedangBerlangsungId;
+                } else if ($now < $endTime && $now < $startTime && $now >= $cleanUpDate && $now >= $registrationDeadlineDate) {
+                    $activityStatusId = $aktivitasBelumDimulaiId;
+                } else if ($now < $endTime && $now < $startTime && $now < $cleanUpDate && $now >= $registrationDeadlineDate) {
+                    $activityStatusId = $pendaftaranSudahDitutupId;
+                } else if ($now < $endTime && $now < $startTime && $now < $cleanUpDate && $now < $registrationDeadlineDate) {
+                    $activityStatusId = $pendaftaranSedangDibukaId;
+                }
+            }
+        }
+
+        $activity->update([
+            'verificationStatusId' => $request->verificationStatusId,
+            'activityStatusId' => $activityStatusId,
+            'name' => $request->name,
+            'description' => $request->description,
+            'registrationDeadlineDate' => $requestRegistrationDeadlineDate,
+            'cleanUpDate' => $requestCleanUpDate,
+            'startTime' => $requestStartTime,
+            'endTime' => $requestEndTime,
+            'gatheringPointUrl' => $request->gatheringPointUrl,
+            'sukarelawanJobName' => $request->sukarelawanJobName,
+            'sukarelawanJobDetail' => $request->sukarelawanJobDetail,
+            'sukarelawanCriteria' => $request->sukarelawanCriteria,
+            'minimumNumOfSukarelawan' => $request->minimumNumOfSukarelawan,
+            'sukarelawanEquipment' => $request->sukarelawanEquipment,
+            'groupChatUrl' => $request->groupChatUrl,
+            'experiencePointGiven' => $experiencePointGiven,
+            'verified_at' => $verified_at,
+            'rejected_at' => $rejected_at,
+            'reasonForRejection' => $reasonForRejection,
+            'slug' => $slug
+        ]);
+
+        return redirect('/activities')->with('success', 'Activity update successful!');
     }
 }
