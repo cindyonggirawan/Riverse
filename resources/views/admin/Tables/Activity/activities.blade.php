@@ -44,7 +44,7 @@
                                     <td>{{ $activity->fasilitator->user->name }}</td>
                                     <td>{{ $activity->activityStatus->name }}</td>
                                     <td>{{ $activity->name }}</td>
-                                    <td>{{ Str::words($activity->description, 5) }}</td>
+                                    <td>{{ Str::words(strip_tags($activity->description), 5) }}</td>
                                     <td>{{ $activity->registrationDeadlineDate }}</td>
                                     <td>{{ $activity->cleanUpDate }}</td>
                                     <td>{{ $activity->startTime }}</td>
@@ -52,10 +52,10 @@
                                     <td>{{ $activity->gatheringPointUrl }}</td>
                                     <td>{{ $activity->bannerImageUrl !== null ? $activity->bannerImageUrl : '-' }}</td>
                                     <td>{{ $activity->sukarelawanJobName }}</td>
-                                    <td>{{ Str::words($activity->sukarelawanJobDetail, 5) }}</td>
-                                    <td>{{ Str::words($activity->sukarelawanCriteria, 5) }}</td>
+                                    <td>{{ Str::words(strip_tags($activity->sukarelawanJobDetail), 5) }}</td>
+                                    <td>{{ Str::words(strip_tags($activity->sukarelawanCriteria), 5) }}</td>
                                     <td>{{ $activity->minimumNumOfSukarelawan }}</td>
-                                    <td>{{ Str::words($activity->sukarelawanEquipment, 5) }}</td>
+                                    <td>{{ Str::words(strip_tags($activity->sukarelawanEquipment), 5) }}</td>
                                     <td>{{ $activity->groupChatUrl }}</td>
                                     <td>{{ $activity->experiencePointGiven }}</td>
                                     <td>{{ $activity->qrCodeImageUrl !== null ? $activity->qrCodeImageUrl : '-' }}</td>

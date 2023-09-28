@@ -44,6 +44,9 @@
         <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
         <!-- SweetAlert2 -->
         <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+        <!-- Trix Editor -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.4/trix.min.js"></script>
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -58,6 +61,15 @@
             .btn-square {
                 width: 30px;
                 height: 30px;
+            }
+
+            trix-toolbar [data-trix-button-group="file-tools"] {
+                display: none;
+            }
+
+            .is-invalid-in-editor {
+                border-color: #dc3545;
+                padding-right: 2.25rem !important;
             }
         </style>
     </head>
@@ -258,6 +270,10 @@
                         }
                     });
                 }
+
+                document.addEventListener('trix-file-accept', function(e) {
+                    e.preventDefault();
+                });
             });
 
             function showExperiencePointGivenInput() {

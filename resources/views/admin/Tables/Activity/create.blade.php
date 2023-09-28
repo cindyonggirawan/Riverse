@@ -24,8 +24,10 @@
                         <div class="form-group row">
                             <label for="description" class="col-sm-4 col-form-label required">Description</label>
                             <div class="col-sm-8">
-                                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                                    placeholder="Description" rows="3" style="resize: none;" required>{{ old('description') }}</textarea>
+                                <input type="hidden" name="description" id="description" class="trix-content">
+                                <trix-editor input="description"
+                                    class="@error('description') is-invalid-in-editor @enderror" placeholder="Description"
+                                    required>{!! old('description') !!}</trix-editor>
                             </div>
                             @error('description')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -147,9 +149,13 @@
                             <label for="sukarelawanJobDetail" class="col-sm-4 col-form-label required">Sukarelawan Job
                                 Detail</label>
                             <div class="col-sm-8">
-                                <textarea name="sukarelawanJobDetail" id="sukarelawanJobDetail"
-                                    class="form-control @error('sukarelawanJobDetail') is-invalid @enderror" placeholder="Sukarelawan Job Detail"
-                                    rows="3" style="resize: none;" required>{{ old('sukarelawanJobDetail') }}</textarea>
+                                <input type="hidden" name="sukarelawanJobDetail" id="sukarelawanJobDetail"
+                                    class="trix-content">
+                                <trix-editor input="sukarelawanJobDetail"
+                                    class="@error('sukarelawanJobDetail') is-invalid-in-editor @enderror"
+                                    placeholder="Sukarelawan Job
+                                    Detail"
+                                    required>{!! old('sukarelawanJobDetail') !!}</trix-editor>
                             </div>
                             @error('sukarelawanJobDetail')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -160,9 +166,13 @@
                             <label for="sukarelawanCriteria" class="col-sm-4 col-form-label required">Sukarelawan
                                 Criteria</label>
                             <div class="col-sm-8">
-                                <textarea name="sukarelawanCriteria" id="sukarelawanCriteria"
-                                    class="form-control @error('sukarelawanCriteria') is-invalid @enderror" placeholder="Sukarelawan Criteria"
-                                    rows="3" style="resize: none;" required>{{ old('sukarelawanCriteria') }}</textarea>
+                                <input type="hidden" name="sukarelawanCriteria" id="sukarelawanCriteria"
+                                    class="trix-content">
+                                <trix-editor input="sukarelawanCriteria"
+                                    class="@error('sukarelawanCriteria') is-invalid-in-editor @enderror"
+                                    placeholder="Sukarelawan
+                                    Criteria"
+                                    required>{!! old('sukarelawanCriteria') !!}</trix-editor>
                             </div>
                             @error('sukarelawanCriteria')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -187,9 +197,13 @@
                             <label for="sukarelawanEquipment" class="col-sm-4 col-form-label required">Sukarelawan
                                 Equipment</label>
                             <div class="col-sm-8">
-                                <textarea name="sukarelawanEquipment" id="sukarelawanEquipment"
-                                    class="form-control @error('sukarelawanEquipment') is-invalid @enderror" placeholder="Sukarelawan Equipment"
-                                    rows="3" style="resize: none;" required>{{ old('sukarelawanEquipment') }}</textarea>
+                                <input type="hidden" name="sukarelawanEquipment" id="sukarelawanEquipment"
+                                    class="trix-content">
+                                <trix-editor input="sukarelawanEquipment"
+                                    class="@error('sukarelawanEquipment') is-invalid-in-editor @enderror"
+                                    placeholder="Sukarelawan
+                                    Equipment"
+                                    required>{!! old('sukarelawanEquipment') !!}</trix-editor>
                             </div>
                             @error('sukarelawanEquipment')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
