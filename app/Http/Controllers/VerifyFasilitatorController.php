@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fasilitator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
 
@@ -175,7 +176,8 @@ class VerifyFasilitatorController extends Controller
             ->get();
 
         foreach ($fasilitators as $fasilitator) {
-            $fasilitator->delete();
+            Fasilitator::destroy($fasilitator->id);
+            User::destroy($fasilitator->id);
         }
 
         return redirect('/all/fasilitators')->with('success', 'All Fasilitators destruction successful!');

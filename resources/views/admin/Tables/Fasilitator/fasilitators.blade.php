@@ -19,7 +19,7 @@
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
+                                <th><span class="pe-5">Action</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +42,28 @@
                                                 <i class="fas fa-folder">
                                                 </i>
                                             </a>
+
+                                            <div class="mx-1"></div>
+
+                                            <a class="btn btn-info btn-sm btn-square"
+                                                href="/fasilitators/{{ $fasilitator->slug }}/edit">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>
+
+                                            <form id="deleteForm" action="/fasilitators/{{ $fasilitator->slug }}"
+                                                method="post">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+
+                                            <div class="mx-1"></div>
+
+                                            <button class="btn btn-danger btn-sm btn-square"
+                                                onclick="showDeletionConfirmation()">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

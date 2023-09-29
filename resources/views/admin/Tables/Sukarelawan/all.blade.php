@@ -50,19 +50,29 @@
                                     <td>{{ $sukarelawan->verificationStatus->name }}</a></td>
                                     <td>
                                         <div class="form-inline">
-                                            <a class="btn btn-info btn-sm btn-square" href="#">
+                                            <a class="btn btn-primary btn-sm btn-square"
+                                                href="/sukarelawans/{{ $sukarelawan->slug }}">
+                                                <i class="fas fa-folder">
+                                                </i>
+                                            </a>
+
+                                            <div class="mx-1"></div>
+
+                                            <a class="btn btn-info btn-sm btn-square"
+                                                href="/sukarelawans/{{ $sukarelawan->slug }}/edit">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                             </a>
 
-                                            <form id="deleteForm" action="#" method="post">
+                                            <form id="deleteForm" action="/sukarelawans/{{ $sukarelawan->slug }}"
+                                                method="post">
                                                 @method('delete')
                                                 @csrf
                                             </form>
 
                                             <div class="mx-1"></div>
 
-                                            <button type="submit" class="btn btn-danger btn-sm btn-square"
+                                            <button class="btn btn-danger btn-sm btn-square"
                                                 onclick="showDeletionConfirmation()">
                                                 <i class="fas fa-trash">
                                                 </i>

@@ -172,7 +172,7 @@
                     // responsive: true,
                     lengthChange: true,
                     order: [],
-                    // autoWidth: false,
+                    autoWidth: false,
                     buttons: [
                         "copy", "csv", "excel", "pdf", "print", "colvis"
                     ],
@@ -181,11 +181,7 @@
                     fixedColumns: {
                         leftColumns: 1,
                         rightColumns: 1,
-                    },
-                    columnDefs: [{
-                        targets: -1,
-                        width: '100px'
-                    }]
+                    }
                 }).buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
 
                 $('#dob').datetimepicker({

@@ -5,7 +5,9 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/register/sukarelawan" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="/sukarelawans/{{ $sukarelawan->slug }}" method="post" class="form-horizontal"
+                    enctype="multipart/form-data">
+                    @method('patch')
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -14,7 +16,7 @@
                             <div class="col-sm-8">
                                 <input type="email" name="email" id="email"
                                     class="form-control @error('email') is-invalid @enderror" placeholder="Email" required
-                                    value="{{ old('email') }}">
+                                    value="{{ old('email', $sukarelawan->user->email) }}">
                             </div>
                             @error('email')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -22,36 +24,39 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-sm-4 col-form-label required">Password</label>
-                            <div class="input-group col-sm-8">
-                                <input type="password" name="password" id="password"
-                                    class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                                    required>
-                                <div class="input-group-append">
-                                    <button id="toggle_password" class="btn btn-default" type="button">
-                                        <i id="password_eye_icon" class="fas fa-eye"></i>
-                                    </button>
-                                </div>
+                            <label for="verificationStatusId" class="col-sm-4 col-form-label required">Verification
+                                Status</label>
+                            <div class="col-sm-8">
+                                <select name="verificationStatusId" id="verificationStatusId"
+                                    class="form-control select2bs4 @error('verificationStatusId') is-invalid @enderror"
+                                    style="width: 100%;" required>
+                                    @foreach ($verificationStatuses as $verificationStatus)
+                                        @if (old('verificationStatusId', $sukarelawan->verificationStatusId) == $verificationStatus->id)
+                                            <option value="{{ $verificationStatus->id }}" selected>
+                                                {{ $verificationStatus->name }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $verificationStatus->id }}">
+                                                {{ $verificationStatus->name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
-                            @error('password')
+                            @error('verificationStatusId')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group row">
-                            <label for="password_confirmation" class="col-sm-4 col-form-label required">Password
-                                Confirmation</label>
-                            <div class="input-group col-sm-8">
-                                <input type="password" name="password_confirmation" id="password_confirmation"
-                                    class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    placeholder="Password Confirmation" required>
-                                <div class="input-group-append">
-                                    <button id="toggle_password_confirmation" class="btn btn-default" type="button">
-                                        <i id="password_confirmation_eye_icon" class="fas fa-eye"></i>
-                                    </button>
-                                </div>
+                            <label for="reasonForRejection" class="col-sm-4 col-form-label">Reason For
+                                Rejection</label>
+                            <div class="col-sm-8">
+                                <textarea name="reasonForRejection" id="reasonForRejection"
+                                    class="form-control @error('reasonForRejection') is-invalid @enderror" placeholder="Reason For Rejection"
+                                    rows="3" style="resize: none;">{{ old('reasonForRejection', $sukarelawan->reasonForRejection) }}</textarea>
                             </div>
-                            @error('password_confirmation')
+                            @error('reasonForRejection')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -63,7 +68,7 @@
                             <div class="col-sm-8">
                                 <input type="text" name="name" id="name"
                                     class="form-control @error('name') is-invalid @enderror" placeholder="Name" required
-                                    value="{{ old('name') }}">
+                                    value="{{ old('name', $sukarelawan->user->name) }}">
                             </div>
                             @error('name')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -76,13 +81,13 @@
                                 <div class="custom-control custom-radio">
                                     <input type="radio" name="gender" id="laki-laki" value="Laki-laki"
                                         class="custom-control-input @error('gender') is-invalid @enderror" required
-                                        {{ old('gender') === 'Laki-laki' ? 'checked' : '' }}>
+                                        {{ old('gender', $sukarelawan->gender) === 'Laki-laki' ? 'checked' : '' }}>
                                     <label for="laki-laki" class="custom-control-label">Laki-laki</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" name="gender" id="perempuan" value="Perempuan"
                                         class="custom-control-input @error('gender') is-invalid @enderror" required
-                                        {{ old('gender') === 'Perempuan' ? 'checked' : '' }}>
+                                        {{ old('gender', $sukarelawan->gender) === 'Perempuan' ? 'checked' : '' }}>
                                     <label for="perempuan" class="custom-control-label">Perempuan</label>
                                 </div>
                             </div>
@@ -101,7 +106,8 @@
                                 </div>
                                 <input type="text" name="dateOfBirth" id="dateOfBirth"
                                     class="form-control datetimepicker-input @error('dateOfBirth') is-invalid @enderror"
-                                    data-target="#dob" placeholder="DD/MM/YYYY" required value="{{ old('dateOfBirth') }}">
+                                    data-target="#dob" placeholder="DD/MM/YYYY" required
+                                    value="{{ old('dateOfBirth', date('d/m/Y', strtotime(str_replace('-', '/', $sukarelawan->dateOfBirth)))) }}">
                             </div>
                             @error('dateOfBirth')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -120,41 +126,12 @@
                                 <input type="text" name="nationalIdentityNumber" id="nationalIdentityNumber"
                                     class="form-control @error('nationalIdentityNumber') is-invalid @enderror"
                                     placeholder="National Identity Number" required
-                                    value="{{ old('nationalIdentityNumber') }}">
+                                    value="{{ old('nationalIdentityNumber', $sukarelawan->nationalIdentityNumber) }}">
                             </div>
                             @error('nationalIdentityNumber')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        <div class="form-group row">
-                            <label for="flKtpImage" class="col-sm-4 col-form-label">National Identity Card Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="nationalIdentityCardImage_link" id="flKtpImage"
-                                    class="form-control">
-                            </div>
-                            @error('nationalIdentityCardImage_link')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="ktpPreview" src='' alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="flPictureImage" class="col-sm-4 col-form-label">Profile Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="profileImage_link" id="flPictureImage" class="form-control">
-                            </div>
-                            @error('profileImage_link')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="picturePreview" src='' alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
-                        </div>
-
-                        <hr class="my-4">
-
-                        <div class="text-center"><a href="/login">I already have an account</a></div>
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -164,7 +141,7 @@
                             </i>
                             Back
                         </a>
-                        <button type="submit" class="btn btn-primary float-right">Register</button>
+                        <button type="submit" class="btn btn-primary float-right">Update</button>
                     </div>
                     <!-- /.card-footer -->
                 </form>
@@ -173,27 +150,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const pictureImageInp = document.querySelector("#flPictureImage");
-        const pictureImageEl = document.querySelector("#picturePreview");
-
-        const ktpImageInp = document.querySelector("#flKtpImage");
-        const ktpImageEl = document.querySelector("#ktpPreview")
-
-        pictureImageInp.onchange = (ev) => {
-            const [file] = pictureImageInp.files;
-            if (file) {
-                pictureImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-        ktpImageInp.onchange = (ev) => {
-            const [file] = ktpImageInp.files;
-            if (file) {
-                ktpImageEl.src = URL.createObjectURL(file);
-            }
-        };
-    </script>
-@endpush

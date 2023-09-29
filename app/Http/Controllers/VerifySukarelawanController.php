@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sukarelawan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
 
@@ -175,7 +176,8 @@ class VerifySukarelawanController extends Controller
             ->get();
 
         foreach ($sukarelawans as $sukarelawan) {
-            $sukarelawan->delete();
+            Sukarelawan::destroy($sukarelawan->id);
+            User::destroy($sukarelawan->id);
         }
 
         return redirect('/all/sukarelawans')->with('success', 'All Sukarelawans destruction successful!');

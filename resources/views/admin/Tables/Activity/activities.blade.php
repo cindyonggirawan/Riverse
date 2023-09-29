@@ -33,7 +33,7 @@
                                 <th>Experience Point Given</th>
                                 <th>Attendance QR Code Image Url</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
+                                <th><span class="pe-5">Action</span></th>
                             </tr>
                         </thead>
                         <tbody>

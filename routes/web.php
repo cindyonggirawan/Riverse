@@ -76,9 +76,21 @@ Route::get('/register/sukarelawan', [RegisterController::class, 'showSukarelawan
 
 Route::post('/register/sukarelawan', [RegisterController::class, 'storeSukarelawan']);
 
+Route::delete('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'destroy']);
+
+Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'edit']);
+
+Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update']);
+
 Route::get('/register/fasilitator', [RegisterController::class, 'showFasilitator']);
 
 Route::post('/register/fasilitator', [RegisterController::class, 'storeFasilitator']);
+
+Route::delete('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'destroy']);
+
+Route::get('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'edit']);
+
+Route::patch('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'update']);
 
 Route::get('/users', [UserController::class, 'index']);
 

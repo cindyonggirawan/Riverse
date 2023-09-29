@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Generator;
 use App\Models\Sukarelawan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Models\VerificationStatus;
 
 class SukarelawanController extends Controller
 {
@@ -22,5 +26,99 @@ class SukarelawanController extends Controller
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan
         ]);
+    }
+
+    public function destroy(Sukarelawan $sukarelawan)
+    {
+        Sukarelawan::destroy($sukarelawan->id);
+        User::destroy($sukarelawan->id);
+
+        return redirect('/sukarelawans')->with('success', 'Sukarelawan destruction successful!');
+    }
+
+    public function edit(Sukarelawan $sukarelawan)
+    {
+        return view('admin.Tables.Sukarelawan.edit', [
+            'title' => 'Edit Sukarelawan',
+            'sukarelawan' => $sukarelawan,
+            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
+    public function update(Request $request, Sukarelawan $sukarelawan)
+    {
+        $validated = $request->validate([
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'email:dns',
+                'regex:/^\S+@\S+\.\S+$/',
+                Rule::unique('users')->ignore($sukarelawan->id),
+            ],
+            'verificationStatusId' => 'required',
+            'reasonForRejection' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
+            'gender' => 'required',
+            'dateOfBirth' => 'required|date_format:d/m/Y',
+            'nationalIdentityNumber' => [
+                'required',
+                'string',
+                'size:16',
+                'regex:/^\d{16}$/',
+                Rule::unique('sukarelawans')->ignore($sukarelawan->id),
+            ]
+        ]);
+
+        $slug = $sukarelawan->slug;
+
+        if ($request->name !== $sukarelawan->user->name) {
+            $slug = Generator::generateSlug(User::class, $request->name);
+        }
+
+        $verified_at = $sukarelawan->verified_at;
+
+        $reasonForRejection = $sukarelawan->reasonForRejection;
+        $rejected_at = $sukarelawan->rejected_at;
+
+        $menungguVerifikasiId = VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id;
+        $sudahDiverifikasiId = VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id;
+        $sudahDitolakId = VerificationStatus::where('name', 'Sudah Ditolak')->first()->id;
+
+        if ($request->verificationStatusId === $menungguVerifikasiId) {
+            $verified_at = null;
+            $reasonForRejection = null;
+            $rejected_at = null;
+        } else if ($request->verificationStatusId === $sudahDiverifikasiId) {
+            $verified_at = now();
+            $reasonForRejection = null;
+            $rejected_at = null;
+        } else if ($request->verificationStatusId === $sudahDitolakId) {
+            $verified_at = null;
+            $reasonForRejection = $request->reasonForRejection;
+            $rejected_at = now();
+        }
+
+        $user = $sukarelawan->user;
+
+        $user->update([
+            'email' => strtolower($request->email),
+            'name' => ucwords($request->name),
+            'slug' => $slug
+        ]);
+
+        $sukarelawan->update([
+            'verificationStatusId' => $request->verificationStatusId,
+            'gender' => $request->gender,
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
+            'nationalIdentityNumber' => $request->nationalIdentityNumber,
+            'verified_at' => $verified_at,
+            'rejected_at' => $rejected_at,
+            'reasonForRejection' => $reasonForRejection,
+            'slug' => $slug
+        ]);
+
+        return redirect('/sukarelawans')->with('success', 'Sukarelawan update successful!');
     }
 }

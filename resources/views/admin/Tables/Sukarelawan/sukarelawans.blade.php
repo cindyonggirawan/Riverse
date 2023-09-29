@@ -21,7 +21,7 @@
                                 <th>Profile Image Url</th>
                                 <th>Experience Point</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
+                                <th><span class="pe-5">Action</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,6 +47,28 @@
                                                 <i class="fas fa-folder">
                                                 </i>
                                             </a>
+
+                                            <div class="mx-1"></div>
+
+                                            <a class="btn btn-info btn-sm btn-square"
+                                                href="/sukarelawans/{{ $sukarelawan->slug }}/edit">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>
+
+                                            <form id="deleteForm" action="/sukarelawans/{{ $sukarelawan->slug }}"
+                                                method="post">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+
+                                            <div class="mx-1"></div>
+
+                                            <button class="btn btn-danger btn-sm btn-square"
+                                                onclick="showDeletionConfirmation()">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

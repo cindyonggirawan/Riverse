@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'sukarelawan@riverse.com',
             'password' => 'Sukarelawan123',
             'name' => 'Sukarelawan',
-            'gender' => 'Male',
+            'gender' => 'Laki-laki',
             'dateOfBirth' => '01/01/2001',
             'nationalIdentityNumber' => '0000000000000001'
         ];
