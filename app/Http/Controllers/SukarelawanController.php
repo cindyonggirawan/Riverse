@@ -68,8 +68,21 @@ class SukarelawanController extends Controller
                 'size:16',
                 'regex:/^\d{16}$/',
                 Rule::unique('sukarelawans')->ignore($sukarelawan->id),
-            ]
+            ],
+            'profileImage_link' => 'nullable|image',
+            'nationalIdentityCardImage_link' => 'nullable|image'
         ]);
+
+        $validated['profileImage_link'] = $sukarelawan->profileImageUrl;
+        $validated['nationalIdentityCardImage_link'] = $sukarelawan->nationalIdentityCardImageUrl;
+
+        if ($request->hasFile('profileImage_link')) {
+            $validated['profileImage_link'] = $request->file('profileImage_link')->store('images', 'public');
+        }
+
+        if ($request->hasFile('nationalIdentityCardImage_link')) {
+            $validated['nationalIdentityCardImage_link'] = $request->file('nationalIdentityCardImage_link')->store('images', 'public');
+        }
 
         $slug = $sukarelawan->slug;
 
@@ -116,7 +129,9 @@ class SukarelawanController extends Controller
             'verified_at' => $verified_at,
             'rejected_at' => $rejected_at,
             'reasonForRejection' => $reasonForRejection,
-            'slug' => $slug
+            'slug' => $slug,
+            'profileImageUrl' => $validated['profileImage_link'],
+            'nationalIdentityCardImageUrl' => $validated['nationalIdentityCardImage_link']
         ]);
 
         return redirect('/sukarelawans')->with('success', 'Sukarelawan update successful!');

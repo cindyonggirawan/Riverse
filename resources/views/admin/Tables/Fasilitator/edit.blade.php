@@ -140,6 +140,19 @@
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="form-group row">
+                            <label for="flLogoImage" class="col-sm-4 col-form-label">Logo Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="logoImage_link" id="flLogoImage" class="form-control">
+                            </div>
+                            @error('logoImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="logoPreview" src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}" alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -158,3 +171,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const logoImageInp = document.querySelector("#flLogoImage");
+        const logoImageEl = document.querySelector("#logoPreview");
+
+        logoImageInp.onchange = (ev) => {
+            const [file] = logoImageInp.files;
+            if (file) {
+                logoImageEl.src = URL.createObjectURL(file);
+            }
+        };
+
+    </script>
+@endpush
