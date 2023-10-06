@@ -132,6 +132,33 @@
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="form-group row">
+                            <label for="flKtpImage" class="col-sm-4 col-form-label">National Identity Card Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="nationalIdentityCardImage_link" id="flKtpImage"
+                                    class="form-control" value="{{ old('nationalIdentityCardImage_link', $sukarelawan->nationalIdentityCardImageUrl) }}">
+                            </div>
+                            @error('nationalIdentityCardImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="ktpPreview" src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}" alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="flPictureImage" class="col-sm-4 col-form-label">Profile Image</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="profileImage_link" id="flPictureImage"
+                                class="form-control" value="{{ old('profileImage_link', $sukarelawan->profileImageUrl) }}">
+                            </div>
+                            @error('profileImage_link')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="picturePreview" src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}" alt=""
+                                style="aspect-ratio: 1; object-fit: cover;">
+                        </div>
+
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -150,3 +177,27 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const pictureImageInp = document.querySelector("#flPictureImage");
+        const pictureImageEl = document.querySelector("#picturePreview");
+
+        const ktpImageInp = document.querySelector("#flKtpImage");
+        const ktpImageEl = document.querySelector("#ktpPreview")
+
+        pictureImageInp.onchange = (ev) => {
+            const [file] = pictureImageInp.files;
+            if (file) {
+                pictureImageEl.src = URL.createObjectURL(file);
+            }
+        };
+
+        ktpImageInp.onchange = (ev) => {
+            const [file] = ktpImageInp.files;
+            if (file) {
+                ktpImageEl.src = URL.createObjectURL(file);
+            }
+        };
+    </script>
+@endpush

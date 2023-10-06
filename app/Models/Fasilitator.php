@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Hash;
 
 class Fasilitator extends Model
@@ -45,5 +46,15 @@ class Fasilitator extends Model
     public function fasilitatorType(): BelongsTo
     {
         return $this->belongsTo(FasilitatorType::class, 'fasilitatorTypeId', 'id');
+    }
+
+    public function activity(): BelongsTo
+    {
+        return $this->belongsTo(Activity::class, 'id', 'fasilitatorId');
+    }
+
+    public function experience_histories(): HasMany
+    {
+        return $this->hasMany(ExperienceHistory::class, 'fasilitatorId', 'id');
     }
 }

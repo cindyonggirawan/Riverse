@@ -14,4 +14,9 @@ class River extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+
+    public function activity()
+    {
+        return $this->hasOne(Activity::class, 'activityId', 'id');
+    }
 }

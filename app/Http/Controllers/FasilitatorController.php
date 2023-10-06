@@ -73,8 +73,15 @@ class FasilitatorController extends Controller
                 'max:13',
                 'regex:/^(?!62)\d{10,13}$/',
                 Rule::unique('fasilitators')->ignore($fasilitator->id),
-            ]
+            ],
+            'logoImage_link' => 'nullable|image'
         ]);
+
+        $validated['logoImage_link'] = $fasilitator->logoImageUrl;
+
+        if ($request->hasFile('logoImage_link')) {
+            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
+        }
 
         $slug = $fasilitator->slug;
 
@@ -122,6 +129,7 @@ class FasilitatorController extends Controller
             'verified_at' => $verified_at,
             'rejected_at' => $rejected_at,
             'reasonForRejection' => $reasonForRejection,
+            'logoImageUrl' => $validated['logoImage_link'],
             'slug' => $slug
         ]);
 
