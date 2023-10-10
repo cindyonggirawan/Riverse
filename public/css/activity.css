@@ -1,0 +1,480 @@
+/* for searchbars */
+.filter {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.filter p {
+    font-weight: 500;
+}
+
+form .row {
+    width: 90%;
+}
+
+.filter-box {
+    width: 240px;
+    height: 80px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.filter-box h5 {
+    font-weight: 400;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+.searchbox {
+    padding: 8px 8px;
+    border: 1px solid #e6e9ee;
+    border-radius: 10px;
+    width: 95%;
+}
+
+.search-button {
+    position: absolute;
+    top: 55%; /* Position it vertically centered */
+    right: 10px; /* Adjust the right distance as needed */
+    transform: translateY(-50%); /* Center vertically */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+input::placeholder {
+    color: #9fadc4;
+}
+
+select.searchbox option.placeholder {
+    color: #9fadc4 !important; /* Color for the "Pilih" option */
+}
+
+.filter form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter p {
+    margin-top: 20px;
+}
+
+.filter .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-outline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 120px;
+    height: 40px;
+
+    border-radius: 10px;
+    border: 1px solid #5822ca;
+    color: #5822ca;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* max-width: 95%; */
+    text-decoration: none;
+    color: white;
+
+    border-radius: 10px;
+    background: #5822ca;
+    padding: 10px 24px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-fill:hover,
+.btn-outline:hover {
+    opacity: 75%;
+    transition: ease-in 0.2s;
+}
+
+.full {
+    padding: 10px 0px;
+    width: 90%;
+    max-width: 90%;
+}
+
+.activities-body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 40px;
+    max-width: 1280px;
+    font-size: 14px;
+}
+
+.activities-body h5 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin-top: 50px;
+}
+
+.activities-body .col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.activities-body .row {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.activities-body .row-spaced {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+}
+
+.activities-body .content-card-center {
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.activities-body .content-card {
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 10px;
+    max-width: 560px;
+}
+
+.activities-body .content-card-center .img-container {
+    width: 220px;
+    height: 160px;
+    background-color: #5822ca;
+    border-radius: 12px;
+    position: relative;
+}
+
+.content-card h5 {
+    font-weight: 500;
+}
+
+.content-card .row {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.content-card p {
+    font-size: 14px;
+    color: black;
+}
+
+.content-card .sub-header {
+    font-size: 14px;
+    color: #838181;
+}
+
+.content-card-center p {
+    font-size: 14px;
+    color: #838181;
+}
+
+.content-card p {
+    font-size: 14px;
+}
+
+.content-card-center .danger {
+    color: red;
+}
+
+.activities-body .content-card a {
+    color: #19b2e2;
+    /* text-decoration-line: underline; */
+    font-weight: 400;
+    font-size: 12px;
+    text-align: right;
+}
+
+.content-card button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.content-card li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.content-card li p {
+    color: black;
+}
+
+.content-card li .number {
+    color: white;
+    background-color: #5822ca;
+    width: 2em;
+    height: 2em;
+    border-radius: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-card-center a {
+    background-color: #5822ca;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.content-card-center .btn-container {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-danger a {
+    background-color: #e21919;
+}
+
+.bg-disabled a {
+    background-color: #838181;
+}
+
+.barcode-container {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    border: 1px solid #9fadc4;
+}
+
+.activities-body .row {
+    gap: 20px;
+}
+
+.content-card-center .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* Styles for the progress bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #f6f8fc;
+    border-radius: 32px;
+}
+
+.progress-fill {
+    width: var(--progress-width);
+    height: 100%;
+    background-color: #5822ca;
+    border-radius: 32px;
+}
+
+.progress-row {
+    display: flex;
+    font-size: 12px;
+    gap: 4px;
+    color: #838181;
+}
+
+.progress-row p {
+    font-size: 12px;
+    color: #838181;
+}
+
+.progress-row .selected {
+    color: #5822ca;
+    font-weight: 500;
+}
+
+.perlengkapan-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.perlengkapan {
+    font-size: 12px;
+    color: #5822ca;
+    padding: 8px 10px;
+    border: 1.6px solid #5822ca;
+    border-radius: 8px;
+}
+
+.cclg {
+    min-width: 870px;
+    max-width: 870px;
+}
+
+.ccmd {
+    width: 600px;
+    min-width: 600px;
+    max-width: 600px;
+    margin-right: 10px;
+}
+.ccmd p {
+    max-width: 300px;
+}
+
+.ccsm {
+    width: 200px;
+    max-width: 200px;
+}
+
+.fasilitator-link p,
+.fasilitator-link .row,
+.fasilitator-link a {
+    color: #5822ca;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    border-radius: 16px;
+    margin: 15% auto;
+    padding: 40px;
+    max-width: 40%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    gap: 8px;
+}
+
+.disable {
+    color: #838181;
+}
+
+.absensi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    gap: 20px;
+}
+
+.absensi .row {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.clock-time-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    /* background-color: #838181; */
+    border-radius: 100px;
+    padding: 20px 40px;
+    gap: 10px;
+}
+
+.clockin {
+    color: #d88b4c;
+    background-color: #fff9e2;
+}
+
+.clockout {
+    color: #38d46d;
+    background-color: #e3ffe2;
+}
+
+.clock-time-container .col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.absensi .white {
+    color: white;
+    padding: 0px 50px;
+}

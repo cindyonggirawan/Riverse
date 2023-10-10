@@ -22,6 +22,56 @@ class ActivityController extends Controller
         ]);
     }
 
+    public function publicIndex(Request $request)
+    {
+        $query = Activity::query();
+
+        //TODO: fix this relation
+        // // get activites yg sedang dibuka doang!
+        // $query->whereHas('activity_statuses', function ($subQuery) {
+        //     $subQuery->where('name', 'Sedang Dibuka');
+        // });
+
+        //for filtering TODO: clarify this relation
+        if ($request->has('searchFasilitator')) {
+            $searchFasilitatorName = $request->input('searchFasilitator');
+            $query->whereHas('fasilitator.user', function ($subQuery) use ($searchFasilitatorName) {
+                $subQuery->where('name', 'like', '%' . $searchFasilitatorName . '%');
+            });
+        }
+
+        if ($request->has('searchActivity')) {
+            $query->where('title', 'like', '%' . $request->input('searchActivity') . '%');
+        }
+
+        //for sorting
+        if ($request->has('sort')) {
+            $sortBy = $request->input('sortBy');
+
+            if ($sortBy === 'dateClosest') {
+                $query->orderBy('date');
+            } elseif ($sortBy === 'dateFarthest') {
+                $query->orderByDesc('date');
+            } elseif ($sortBy === 'mostLikes') {
+                $query->orderBy('likes', 'desc');
+            } elseif ($sortBy === 'leastLikes') {
+                $query->orderBy('likes', 'asc');
+            }
+        } elseif ($request->has('reset')) {
+            //reset sorting
+        }
+
+        $activities = $query->get();
+
+        // Paginate the results with 9 items per page
+        $activities = $query->paginate(9);
+
+        return view('public.activities', [
+            'title' => 'Activities',
+            'activities' => $activities
+        ]);
+    }
+
     public function show(Activity $activity)
     {
         return view('admin.Tables.Activity.activity', [
@@ -29,6 +79,13 @@ class ActivityController extends Controller
             'activity' => $activity
         ]);
     }
+
+    public function publicShow()
+    {
+        // return view("public.activity.fasilitator.activity");
+        return view("public.activity.sukarelawan.activity");
+    }
+
 
     public function create()
     {

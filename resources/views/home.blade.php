@@ -1,6 +1,7 @@
 @extends('layout.index')
 
 @section('css')
+{{-- @include('layout.useBootstrap') --}}
 <link rel="stylesheet" href="{{ asset('/css/home.css') }}"/>
 @endsection
 
