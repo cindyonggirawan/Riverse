@@ -439,6 +439,7 @@ select.searchbox option.placeholder {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
+    border-radius: 20px;
 }
 
 .absensi .row {
