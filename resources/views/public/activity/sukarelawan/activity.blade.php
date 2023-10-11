@@ -107,7 +107,7 @@
     </h1>
         {{-- Absensi --}}
     <div class="content-card cclg">
-      <div class="absensi" style="background-image: url('{{ asset('/images/about_card_1.png') }}';">
+      <div class="absensi" style="background-image: url('{{ asset('/images/about_card_1.png') }}');">
         <h5>
           Absensi
         </h5>
