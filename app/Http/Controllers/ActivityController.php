@@ -94,6 +94,17 @@ class ActivityController extends Controller
         ]);
     }
 
+    public function publicCreate(Request $request)
+    {
+        $currentStep = $request->cookie('currentStep', 1);
+
+        // Pass the current step to your view
+        return view('public.activity.fasilitator.create', [
+            'title' => 'Create Activity',
+            'currentStep' => $currentStep,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

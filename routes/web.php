@@ -172,6 +172,9 @@ Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, '
 
 Route::get('/activities/create', [ActivityController::class, 'create']);
 
+Route::get('/activities/publicCreate', [ActivityController::class, 'publicCreate']);
+
+
 Route::post('/activities/create', [ActivityController::class, 'store']);
 
 Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
