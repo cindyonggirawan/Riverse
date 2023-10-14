@@ -105,6 +105,38 @@ class ActivityController extends Controller
         ]);
     }
 
+    public function storePublic(Request $request)
+    {
+        $currentStep = $request->input('currentStep');
+
+        // Check which button was clicked
+        if ($request->has('nextStepButton')) {
+            // Handle validation for the current step
+            if ($currentStep == 1) {
+                $validatedStep1 = $request->validate([
+                    'name' => 'required|string|max:255',
+                    'description' => 'required|string',
+                ]);
+
+                // Increment the current step
+                $currentStep = 2;
+                return view('your-view', compact('currentStep'))->with('validatedStep1', $validatedStep1);
+            } elseif ($currentStep == 2) {
+                $validatedStep2 = $request->validate([
+                    'sukarelawanJobName' => 'required|string|max:255',
+                    'sukarelawanJobDetail' => 'required|string',
+                    // Validation rules for Step 2 fields
+                ]);
+
+                // Combine data from Step 1 and Step 2 (use session or flash data as needed)
+
+                // Redirect to the final step or perform database storage
+            }
+        }
+
+        // Handle other steps or final storage as needed
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
