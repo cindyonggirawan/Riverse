@@ -233,6 +233,10 @@ Route::get('/benefits/create', [BenefitController::class, 'create']);
 
 Route::post('/benefits/create', [BenefitController::class, 'store']);
 
+Route::get('/benefits/{benefit:slug}/edit', [BenefitController::class, 'edit']);
+
+Route::patch('/benefits/{benefit:slug}', [BenefitController::class, 'update']);
+
 Route::get('/benefits', [BenefitController::class, 'index']);
 
 Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);

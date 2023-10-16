@@ -5,7 +5,8 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/benefits/create" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="/benefits/{{ $benefit->slug }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    @method('patch')
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -14,7 +15,7 @@
                             <div class="col-sm-8">
                                 <input type="text" name="name" id="name"
                                     class="form-control @error('name') is-invalid @enderror" placeholder="Name" required
-                                    value="{{ old('name') }}">
+                                    value="{{ old('name', $benefit->name) }}">
                             </div>
                             @error('name')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -26,9 +27,9 @@
                             <div class="col-sm-8">
                                 <select name="levelId" id="levelId"
                                     class="form-control select2bs4 @error('levelId') is-invalid @enderror"
-                                    style="width: 100%;" required>
+                                    style="width: 100%;" required value="{{ old('levelId', $benefit->level->id) }}">
                                     @foreach ($levels as $level)
-                                        @if (old('levelId') == $level->id)
+                                        @if (old('levelId', $benefit->level->id) == $level->id)
                                             <option value="{{ $level->id }}" selected>
                                                 {{ $level->name }}
                                             </option>
@@ -49,7 +50,7 @@
                             <label for="description" class="col-sm-4 col-form-label required">Description</label>
                             <div class="col-sm-8">
                                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                                    placeholder="Description" rows="3" style="resize: none;" required>{{ old('description') }}</textarea>
+                                    placeholder="Description" rows="3" style="resize: none;" required>{{ old('description', $benefit->description) }}</textarea>
                             </div>
                             @error('description')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -66,7 +67,7 @@
                                 </div>
                                 <input type="text" name="couponCode" id="couponCode"
                                     class="form-control @error('couponCode') is-invalid @enderror" placeholder="Coupon Code"
-                                    required value="{{ old('couponCode') }}">
+                                    required value="{{ old('couponCode', $benefit->couponCode) }}">
                             </div>
                             @error('couponCode')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
@@ -81,7 +82,7 @@
                             @error('benefitImage_link')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="benefitPreview" src='' alt="benefit image"
+                            <img class="w-25 ratio ratio-1x1 mt-3" id="benefitPreview" src="{{ asset('storage/' . $benefit->bannerImageUrl) }}" alt="benefit image"
                                 style="aspect-ratio: 1; object-fit: cover;">
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                             </i>
                             Back
                         </a>
-                        <button type="submit" class="btn btn-primary float-right">Create</button>
+                        <button type="submit" class="btn btn-primary float-right">Update</button>
                     </div>
                     <!-- /.card-footer -->
                 </form>
