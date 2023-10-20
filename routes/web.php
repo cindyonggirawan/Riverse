@@ -171,11 +171,13 @@ Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFa
 Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, 'destroyAllFasilitator']);
 
 Route::get('/activities/create', [ActivityController::class, 'create']);
-
-Route::get('/activities/publicCreate', [ActivityController::class, 'publicCreate']);
-
-
 Route::post('/activities/create', [ActivityController::class, 'store']);
+
+Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCreate'])->name('activity.publicCreate');
+Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore');
+
+Route::post('/activities/confirmStore', [ActivityController::class, 'confirmStore']);
+
 
 Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
 

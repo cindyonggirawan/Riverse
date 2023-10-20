@@ -44,15 +44,3 @@ function displayImage(file) {
         document.querySelector(".browse-button").innerHTML = "Gambar";
     }
 }
-
-function decrementValue() {
-    const input = document.getElementById("sukarelawan");
-    if (parseInt(input.value) > 0) {
-        input.value = parseInt(input.value) - 1;
-    }
-}
-
-function incrementValue() {
-    const input = document.getElementById("sukarelawan");
-    input.value = parseInt(input.value) + 1;
-}

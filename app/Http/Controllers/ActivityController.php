@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\ActivityStatus;
 use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ActivityController extends Controller
 {
@@ -94,48 +95,125 @@ class ActivityController extends Controller
         ]);
     }
 
-    public function publicCreate(Request $request)
+    public function publicCreate(Request $request, $step = 1)
     {
-        $currentStep = $request->cookie('currentStep', 1);
-
-        // Pass the current step to your view
-        return view('public.activity.fasilitator.create', [
+        return view("public.activity.fasilitator.createStep{$step}", [
             'title' => 'Create Activity',
-            'currentStep' => $currentStep,
+            'currentStep' => $step,
         ]);
     }
 
-    public function storePublic(Request $request)
+    public function publicStore(Request $request, $step = 1)
     {
-        $currentStep = $request->input('currentStep');
+        if ($step == 1) {
+            $this->handleStep1($request);
+        } elseif ($step == 2) {
+            $this->handleStep2($request);
+        } elseif ($step == 3) {
+            $activity = $this->handleStep3($request);
+            return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+        }
+        $nextStep = $step + 1;
+        return redirect()->route('activity.publicCreate', $nextStep);
+    }
 
-        // Check which button was clicked
-        if ($request->has('nextStepButton')) {
-            // Handle validation for the current step
-            if ($currentStep == 1) {
-                $validatedStep1 = $request->validate([
-                    'name' => 'required|string|max:255',
-                    'description' => 'required|string',
-                ]);
+    private function handleStep1(Request $request)
+    {
+        $validatedStep1 = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'registrationDeadlineDate' => [
+                'required',
+                'after:today',
+                'before:cleanUpDate'
+            ],
+            'cleanUpDate' => [
+                'required',
+                'after:today',
+                'after:registrationDeadlineDate'
+            ],
+            'startTime' => [
+                'required',
+                'before:endTime',
+            ],
+            'endTime' => [
+                'required',
+                'after:startTime',
+            ],
+            'gatheringPointUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ],
+            'picture' => "sometimes|image"
+        ]);
 
-                // Increment the current step
-                $currentStep = 2;
-                return view('your-view', compact('currentStep'))->with('validatedStep1', $validatedStep1);
-            } elseif ($currentStep == 2) {
-                $validatedStep2 = $request->validate([
-                    'sukarelawanJobName' => 'required|string|max:255',
-                    'sukarelawanJobDetail' => 'required|string',
-                    // Validation rules for Step 2 fields
-                ]);
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
+            $picture->storeAs('public/images', $pictureName);
+            $pictureURL = 'images/' . $pictureName;
+            $validatedStep1['picture'] = $pictureURL;
 
-                // Combine data from Step 1 and Step 2 (use session or flash data as needed)
-
-                // Redirect to the final step or perform database storage
-            }
+            // Store the file name in the session
+            Session::put('step1Data.picture', $pictureName);
         }
 
-        // Handle other steps or final storage as needed
+        Session::put('step1Data', $validatedStep1);
     }
+
+    private function handleStep2(Request $request)
+    {
+        $validatedStep2 = $request->validate([
+            'sukarelawanJobName' => 'required|string|max:255',
+            'sukarelawanJobDetail' => 'required|string',
+            'sukarelawanCriteria' => 'required|string',
+            'minimumNumOfSukarelawan' => 'required|integer|min:1|max:999',
+            'sukarelawanEquipment' => 'required|string',
+            'groupChatUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ]
+        ]);
+        Session::put('step2Data', $validatedStep2);
+    }
+
+    private function handleStep3(Request $request)
+    {
+        $step1Data = Session::get('step1Data');
+        $step2Data = Session::get('step2Data');
+        $combinedData = array_merge($step1Data, $step2Data);
+
+        $newActivity = Activity::create([
+            'id' => Generator::generateId(Activity::class),
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
+            'fasilitatorId' => Auth::user()->id,
+            'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
+            'name' => $combinedData->name,
+            'description' => $combinedData->description,
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->registrationDeadlineDate))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->cleanUpDate))),
+            'startTime' => date('H:i:s', strtotime($combinedData->startTime)),
+            'endTime' => date('H:i:s', strtotime($combinedData->endTime)),
+            'gatheringPointUrl' => $combinedData->gatheringPointUrl,
+            'sukarelawanJobName' => $combinedData->sukarelawanJobName,
+            'sukarelawanJobDetail' => $combinedData->sukarelawanJobDetail,
+            'sukarelawanCriteria' => $combinedData->sukarelawanCriteria,
+            'minimumNumOfSukarelawan' => $combinedData->minimumNumOfSukarelawan,
+            'sukarelawanEquipment' => $combinedData->sukarelawanEquipment,
+            'groupChatUrl' => $combinedData->groupChatUrl,
+            'slug' => Generator::generateSlug(Activity::class, $combinedData->name)
+        ]);
+
+        // Optionally, you can clear the session data for steps 1 and 2 if needed
+        Session::forget('step1Data');
+        Session::forget('step2Data');
+
+        return $newActivity;
+    }
+
 
     public function store(Request $request)
     {
