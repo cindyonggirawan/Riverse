@@ -11,6 +11,7 @@ use App\Models\ActivityStatus;
 use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ActivityController extends Controller
 {
@@ -148,17 +149,22 @@ class ActivityController extends Controller
             'picture' => "sometimes|image"
         ]);
 
+        // Check if a picture has been uploaded
         if ($request->hasFile('picture')) {
+            $previousPicture = Session::get('step1Data.picture');
+            if ($previousPicture) {
+                Storage::delete('public/' . $previousPicture);
+            }
+
             $picture = $request->file('picture');
             $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
             $picture->storeAs('public/images', $pictureName);
             $pictureURL = 'images/' . $pictureName;
             $validatedStep1['picture'] = $pictureURL;
-
-            // Store the file name in the session
             Session::put('step1Data.picture', $pictureName);
         }
 
+        // Store the rest of the validated data
         Session::put('step1Data', $validatedStep1);
     }
 
@@ -204,6 +210,7 @@ class ActivityController extends Controller
             'minimumNumOfSukarelawan' => $combinedData->minimumNumOfSukarelawan,
             'sukarelawanEquipment' => $combinedData->sukarelawanEquipment,
             'groupChatUrl' => $combinedData->groupChatUrl,
+            'picture' => $combinedData->picture,
             'slug' => Generator::generateSlug(Activity::class, $combinedData->name)
         ]);
 
