@@ -806,7 +806,7 @@ select.searchbox option.placeholder {
 .form-subheadline {
     color: #9fadc4;
     margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .form-recap .divider {

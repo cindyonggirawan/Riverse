@@ -7,7 +7,7 @@
 @section('content')
     <div class="create-activity">
         <div class="top">
-            <h1>Buat Aktivitas - Langkah 2</h1>
+            <h1>Buat Aktivitas</h1>
             <div class="form-steps">
                 <a href="/activities/create/1">
                     <div class="circle">

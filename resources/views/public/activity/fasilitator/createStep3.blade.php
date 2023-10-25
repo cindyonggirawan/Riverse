@@ -5,14 +5,19 @@
 @endsection
 
 
+
+
 @php
-    // dd(Session::get('step1Data'));
+    // parse sukarelawan kriteria
+    $sukarelawanCriteria = explode('; ', Session::get('step2Data.sukarelawanCriteria'));
+    // parse sukarelawan equipment
+    $sukarelawanEquipment = explode('; ', Session::get('step2Data.sukarelawanEquipment'));
 @endphp
 
 @section('content')
     <div class="create-activity">
         <div class="top">
-            <h1>Buat Aktivitas - Langkah 3</h1>
+            <h1>Buat Aktivitas</h1>
             <div class="form-steps">
                 <a href="/activities/create/1">
                     <div class="circle">
@@ -148,19 +153,32 @@
                             Kriteria Sukarelawan
                         </div>
                         <div class="form-content">
-                            {{ Session::get('step2Data.sukarelawanCriteria') }}
+                            <div class="perlengkapan-container">
+                                @foreach ($sukarelawanCriteria as $criteria)
+                                    <div class="perlengkapan">
+                                        {{ $criteria }}
+                                    </div>
+                                @endforeach
+                            </div>
+                            {{-- {{ Session::get('step2Data.sukarelawanCriteria') }} --}}
                         </div>
                         <div class="form-subheadline">
                             Jumlah Sukarelawan
                         </div>
                         <div class="form-content">
-                            {{ Session::get('step2Data.minimumNumOfSukarelawan') }}
+                            {{ Session::get('step2Data.minimumNumOfSukarelawan') }} orang
                         </div>
                         <div class="form-subheadline">
                             Perlengkapan Suakrelawan
                         </div>
                         <div class="form-content">
-                            {{ Session::get('step2Data.sukarelawanEquipment') }}
+                            <div class="perlengkapan-container">
+                                @foreach ($sukarelawanEquipment as $equipment)
+                                    <div class="perlengkapan">
+                                        {{ $equipment }}
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
                         <div class="divider"></div>
