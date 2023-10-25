@@ -31,7 +31,9 @@ body {
     justify-content: space-between;
     padding: 30px 50px 30px 50px;
     transition: background-color 0.3s ease;
+    z-index: 100;
 }
+
 .custom-nav.scrolled {
     background: linear-gradient(
         to top,

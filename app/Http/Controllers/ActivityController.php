@@ -120,6 +120,10 @@ class ActivityController extends Controller
 
     private function handleStep1(Request $request)
     {
+
+
+        $hasNewImage = $request->hasNewImage;
+
         $validatedStep1 = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -149,8 +153,12 @@ class ActivityController extends Controller
             'picture' => "sometimes|image"
         ]);
 
+
         // Check if a picture has been uploaded
         if ($request->hasFile('picture')) {
+
+
+            $hasNewImage = true;
             $previousPicture = Session::get('step1Data.picture');
             if ($previousPicture) {
                 Storage::delete('public/' . $previousPicture);
@@ -161,10 +169,11 @@ class ActivityController extends Controller
             $picture->storeAs('public/images', $pictureName);
             $pictureURL = 'images/' . $pictureName;
             $validatedStep1['picture'] = $pictureURL;
-            Session::put('step1Data.picture', $pictureName);
         }
 
-        // Store the rest of the validated data
+        if ($hasNewImage == false) {
+            $validatedStep1['picture'] = $request->oldPicture;
+        }
         Session::put('step1Data', $validatedStep1);
     }
 

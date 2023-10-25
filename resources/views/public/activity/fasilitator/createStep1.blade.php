@@ -1,8 +1,14 @@
 @extends('layout.index')
 
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/activity.css') }}" />
 @endsection
+
+@php
+    $hasNewImage = false;
+@endphp
+
 
 @section('content')
     <div class="create-activity">
@@ -28,6 +34,8 @@
         <form action="{{ route('activity.publicStore', ['step' => 1]) }}" method="post" class="create-activity-form"
             enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="hasNewImage" value="{{ $hasNewImage }}">
+
             <input type="hidden" name="currentStep" id="currentStep" value="{{ $currentStep }}">
             <div class="form-step-container">
                 <div class="form-card-container">
@@ -118,6 +126,12 @@
 
 
                         <div class="custom-file-input">
+                            {{-- Store Session's picture to oldPicture --}}
+                            @if (Session::has('step1Data.picture'))
+                                <input type="text" name="oldPicture" value="{{ Session::get('step1Data.picture') }}"
+                                    hidden>
+                            @endif
+
                             <input type="file" name="picture" id="imageInput" accept="image/*"
                                 value="{{ Session::get('step1Data.picture') ?? '' }}" hidden />
                             <label for="imageInput">
