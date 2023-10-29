@@ -185,6 +185,8 @@ Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit
 
 Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
 
+Route::get('/manage/activities', [ActivityController::class, 'index']);
+
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
 
 Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);

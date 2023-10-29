@@ -91,7 +91,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/activities" class="nav-link {{ $title === 'Activities' ? 'active' : '' }}">
+                            <a href="/manage/activities" class="nav-link {{ $title === 'Activities' ? 'active' : '' }}">
                                 <i class="fas fa-table nav-icon"></i>
                                 <p>Activities</p>
                             </a>
