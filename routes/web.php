@@ -191,6 +191,8 @@ Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('act
 
 Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
 
+Route::get('/manage/activities/{activity:slug}', [ActivityController::class, 'show']);
+
 Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
 
 Route::patch('/verify/activities/{activity:slug}', [VerifyActivityController::class, 'updateVerifiedActivity']);

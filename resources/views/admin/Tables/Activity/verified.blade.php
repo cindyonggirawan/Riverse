@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>XP</th>
                                 <th>Tanggal Pelaksanaan</th>
@@ -31,6 +32,15 @@
                             @foreach ($activities as $activity)
                                 <tr>
                                     <td>{{ $activity->id }}</a></td>
+                                    <td>
+                                        @if ($activity->bannerImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $activity->bannerImageUrl) }}"
+                                                alt="{{ $activity->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Activity/bannerImages/default.png') }}"
+                                                alt="{{ $activity->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $activity->name }}</td>
                                     <td>{{ $activity->experiencePointGiven }} XP</td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $activity->cleanUpDate)->format('d/m/Y') }}

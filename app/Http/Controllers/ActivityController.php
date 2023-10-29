@@ -230,7 +230,6 @@ class ActivityController extends Controller
         return $newActivity;
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -308,7 +307,7 @@ class ActivityController extends Controller
             'slug' => Generator::generateSlug(Activity::class, $request->name)
         ]);
 
-        return redirect('/activities')->with('success', 'Activity creation successful!');
+        return redirect('/manage/activities')->with('success', 'Activity creation successful!');
     }
 
     public function destroy(Activity $activity)
@@ -317,7 +316,7 @@ class ActivityController extends Controller
             Storage::delete($activity->bannerImageUrl);
         }
         $activity->delete();
-        return redirect('/activities')->with('success', 'Activity destruction successful!');
+        return redirect('/manage/activities')->with('success', 'Activity destruction successful!');
     }
 
     public function edit(Activity $activity)
@@ -493,6 +492,6 @@ class ActivityController extends Controller
             'slug' => $slug
         ]);
 
-        return redirect('/activities')->with('success', 'Activity update successful!');
+        return redirect('/manage/activities')->with('success', 'Activity update successful!');
     }
 }

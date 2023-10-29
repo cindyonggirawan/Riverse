@@ -39,6 +39,17 @@
 
                         <hr class="col-sm-12">
 
+                        <dt class="col-sm-4">Image</dt>
+                        <dd class="col-sm-8">
+                            @if ($activity->bannerImageUrl !== null)
+                                <img src="{{ asset('storage/' . $activity->bannerImageUrl) }}" alt="{{ $activity->name }}"
+                                    class="img-fluid img-square-big">
+                            @else
+                                <img src="{{ asset('images/Activity/bannerImages/default.png') }}"
+                                    alt="{{ $activity->name }}" class="img-fluid img-square-big">
+                            @endif
+                        </dd>
+
                         <dt class="col-sm-4">Name</dt>
                         <dd class="col-sm-8">{{ $activity->name }}</dd>
 
