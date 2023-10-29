@@ -170,13 +170,14 @@ Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFa
 
 Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, 'destroyAllFasilitator']);
 
-
-
-
-
 Route::get('/activities/create', [ActivityController::class, 'create']);
-
 Route::post('/activities/create', [ActivityController::class, 'store']);
+
+Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCreate'])->name('activity.publicCreate');
+Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore');
+
+Route::post('/activities/confirmStore', [ActivityController::class, 'confirmStore']);
+
 
 Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
 
@@ -184,9 +185,9 @@ Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit
 
 Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
 
-Route::get('/activities', [ActivityController::class, 'index']);
+Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
 
-Route::get('/activities/{activity:slug}', [ActivityController::class, 'show']);
+Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
 
 Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
 
