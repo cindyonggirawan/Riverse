@@ -11,11 +11,13 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Profile Image</th>
                                 <th>Name</th>
                                 <th>Verification Status</th>
                                 <th>Level</th>
                                 <th>Gender</th>
                                 <th>Date Of Birth</th>
+                                <th>Card Image</th>
                                 <th>National Identity Number</th>
                                 <th>National Identity Card Image Url</th>
                                 <th>Profile Image Url</th>
@@ -28,11 +30,29 @@
                             @foreach ($sukarelawans as $sukarelawan)
                                 <tr>
                                     <td>{{ $sukarelawan->id }}</a></td>
+                                    <td>
+                                        @if ($sukarelawan->profileImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $sukarelawan->user->name }}</td>
                                     <td>{{ $sukarelawan->verificationStatus->name }}</td>
                                     <td>{{ $sukarelawan->level->name }}</td>
                                     <td>{{ $sukarelawan->gender }}</td>
                                     <td>{{ $sukarelawan->dateOfBirth }}</td>
+                                    <td>
+                                        @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
                                     <td>{{ $sukarelawan->nationalIdentityCardImageUrl !== null ? $sukarelawan->nationalIdentityCardImageUrl : '-' }}
                                     </td>

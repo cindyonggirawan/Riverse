@@ -6,6 +6,7 @@ use App\Models\Sukarelawan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
+use Illuminate\Support\Facades\Storage;
 
 class VerifySukarelawanController extends Controller
 {
@@ -176,6 +177,12 @@ class VerifySukarelawanController extends Controller
             ->get();
 
         foreach ($sukarelawans as $sukarelawan) {
+            if ($sukarelawan->nationalIdentityCardImageUrl) {
+                Storage::delete($sukarelawan->nationalIdentityCardImageUrl);
+            }
+            if ($sukarelawan->profileImageUrl) {
+                Storage::delete($sukarelawan->profileImageUrl);
+            }
             Sukarelawan::destroy($sukarelawan->id);
             User::destroy($sukarelawan->id);
         }

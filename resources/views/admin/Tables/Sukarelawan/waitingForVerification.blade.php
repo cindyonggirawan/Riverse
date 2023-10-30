@@ -15,9 +15,11 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Gambar Profil</th>
                                 <th>Nama</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Usia</th>
+                                <th>Gambar Kartu</th>
                                 <th>Nomor Induk Kependudukan</th>
                                 <th>Tanggal Pendaftaran</th>
                                 <th>Penentuan</th>
@@ -27,9 +29,27 @@
                             @foreach ($sukarelawans as $sukarelawan)
                                 <tr>
                                     <td>{{ $sukarelawan->id }}</a></td>
+                                    <td>
+                                        @if ($sukarelawan->profileImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $sukarelawan->user->name }}</td>
                                     <td>{{ $sukarelawan->gender }}</td>
                                     <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
+                                    <td>
+                                        @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"
+                                                alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $sukarelawan->nationalIdentityNumber }}</td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sukarelawan->created_at)->format('d/m/Y') }}
                                     </td>

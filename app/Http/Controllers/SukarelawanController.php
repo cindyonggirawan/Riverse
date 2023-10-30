@@ -8,6 +8,7 @@ use App\Models\Sukarelawan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\VerificationStatus;
+use Illuminate\Support\Facades\Storage;
 
 class SukarelawanController extends Controller
 {
@@ -30,6 +31,12 @@ class SukarelawanController extends Controller
 
     public function destroy(Sukarelawan $sukarelawan)
     {
+        if ($sukarelawan->nationalIdentityCardImageUrl) {
+            Storage::delete($sukarelawan->nationalIdentityCardImageUrl);
+        }
+        if ($sukarelawan->profileImageUrl) {
+            Storage::delete($sukarelawan->profileImageUrl);
+        }
         Sukarelawan::destroy($sukarelawan->id);
         User::destroy($sukarelawan->id);
 
@@ -69,19 +76,32 @@ class SukarelawanController extends Controller
                 'regex:/^\d{16}$/',
                 Rule::unique('sukarelawans')->ignore($sukarelawan->id),
             ],
-            'profileImage_link' => 'nullable|image',
-            'nationalIdentityCardImage_link' => 'nullable|image'
+            'nationalIdentityCardImageUrl' => 'required|image',
+            'profileImageUrl' => 'required|image'
         ]);
 
-        $validated['profileImage_link'] = $sukarelawan->profileImageUrl;
-        $validated['nationalIdentityCardImage_link'] = $sukarelawan->nationalIdentityCardImageUrl;
+        $id = $sukarelawan->id;
 
-        if ($request->hasFile('profileImage_link')) {
-            $validated['profileImage_link'] = $request->file('profileImage_link')->store('images', 'public');
+        $file = $request->file('nationalIdentityCardImageUrl');
+        if ($file) {
+            if ($request->oldNationalIdentityCardImageUrl) {
+                Storage::delete($request->oldNationalIdentityCardImageUrl);
+            }
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $nationalIdentityCardImageUrl = $file->storeAs('Sukarelawan/nationalIdentityCardImages', $fileName);
+        } else {
+            $nationalIdentityCardImageUrl = $sukarelawan->nationalIdentityCardImageUrl;
         }
 
-        if ($request->hasFile('nationalIdentityCardImage_link')) {
-            $validated['nationalIdentityCardImage_link'] = $request->file('nationalIdentityCardImage_link')->store('images', 'public');
+        $file = $request->file('profileImageUrl');
+        if ($file) {
+            if ($request->oldProfileImageUrl) {
+                Storage::delete($request->oldProfileImageUrl);
+            }
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $profileImageUrl = $file->storeAs('Sukarelawan/profileImages', $fileName);
+        } else {
+            $profileImageUrl = $sukarelawan->profileImageUrl;
         }
 
         $slug = $sukarelawan->slug;
@@ -126,12 +146,12 @@ class SukarelawanController extends Controller
             'gender' => $request->gender,
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
+            'nationalIdentityCardImageUrl' => $nationalIdentityCardImageUrl,
+            'profileImageUrl' => $profileImageUrl,
             'verified_at' => $verified_at,
             'rejected_at' => $rejected_at,
             'reasonForRejection' => $reasonForRejection,
-            'slug' => $slug,
-            'profileImageUrl' => $validated['profileImage_link'],
-            'nationalIdentityCardImageUrl' => $validated['nationalIdentityCardImage_link']
+            'slug' => $slug
         ]);
 
         return redirect('/sukarelawans')->with('success', 'Sukarelawan update successful!');
