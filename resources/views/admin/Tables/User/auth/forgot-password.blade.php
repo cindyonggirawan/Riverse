@@ -19,7 +19,7 @@
                     </div>
                 @endif
                 <!-- Form -->
-                <form action="/login" method="post" class="form-horizontal">
+                <form action="{{ route('password.email') }}" method="post" class="form-horizontal">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -34,33 +34,6 @@
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-sm-4 col-form-label required">Password</label>
-                            <div class="input-group col-sm-8">
-                                <input type="password" name="password" id="password"
-                                    class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                                    required>
-                                <div class="input-group-append">
-                                    <button id="toggle_password" class="btn btn-default" type="button">
-                                        <i id="password_eye_icon" class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @error('password')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <hr class="my-4">
-
-                        <div class="text-center my-2"><a href="/register">I don't have an account</a></div>
-
-                        <div class="text-center my-2"><a href="/email-verification">I didn't receive the verification
-                                email</a>
-                        </div>
-
-                        <div class="text-center"><a href="/forgot-password">I forgot my password</a></div>
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -70,7 +43,7 @@
                             </i>
                             Back
                         </a>
-                        <button type="submit" class="btn btn-primary float-right">Login</button>
+                        <button type="submit" class="btn btn-primary float-right">Send Email Verification Link</button>
                     </div>
                     <!-- /.card-footer -->
                 </form>
