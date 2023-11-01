@@ -82,10 +82,27 @@ class ActivityController extends Controller
         ]);
     }
 
-    public function publicShow()
+    public function publicShow(Activity $activity)
     {
-        // return view("public.activity.fasilitator.activity");
-        return view("public.activity.sukarelawan.activity");
+        $user = auth()->user();
+        if ($user != null) {
+            if (str_starts_with($user->id, 'FR')) {
+                return view('public.activity.fasilitator.activity', [
+                    'title' => 'Activity',
+                    'activity' => $activity
+                ]);
+            } else {
+                return view('public.activity.sukarelawan.activity', [
+                    'title' => 'Activity',
+                    'activity' => $activity
+                ]);
+            }
+        } else {
+            return view('public.activity.guest.activity', [
+                'title' => 'Activity',
+                'activity' => $activity
+            ]);
+        }
     }
 
 
@@ -98,7 +115,7 @@ class ActivityController extends Controller
 
     public function publicCreate(Request $request, $step = 1)
     {
-        return view("public.activity.fasilitator.createStep{$step}", [
+        return view("public.activity.fasilitator.create.createStep{$step}", [
             'title' => 'Create Activity',
             'currentStep' => $step,
         ]);
@@ -107,21 +124,19 @@ class ActivityController extends Controller
     public function publicStore(Request $request, $step = 1)
     {
         if ($step == 1) {
-            $this->handleStep1($request);
+            $this->handleCreateStep1($request);
         } elseif ($step == 2) {
-            $this->handleStep2($request);
+            $this->handleCreateStep2($request);
         } elseif ($step == 3) {
-            $activity = $this->handleStep3($request);
+            $activity = $this->handleCreateStep3($request);
             return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
         }
         $nextStep = $step + 1;
         return redirect()->route('activity.publicCreate', $nextStep);
     }
 
-    private function handleStep1(Request $request)
+    private function handleCreateStep1(Request $request)
     {
-
-
         $hasNewImage = $request->hasNewImage;
 
         $validatedStep1 = $request->validate([
@@ -177,7 +192,7 @@ class ActivityController extends Controller
         Session::put('step1Data', $validatedStep1);
     }
 
-    private function handleStep2(Request $request)
+    private function handleCreateStep2(Request $request)
     {
         $validatedStep2 = $request->validate([
             'sukarelawanJobName' => 'required|string|max:255',
@@ -194,7 +209,7 @@ class ActivityController extends Controller
         Session::put('step2Data', $validatedStep2);
     }
 
-    private function handleStep3(Request $request)
+    private function handleCreateStep3(Request $request)
     {
         $step1Data = Session::get('step1Data');
         $step2Data = Session::get('step2Data');
@@ -314,6 +329,147 @@ class ActivityController extends Controller
             'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
                 ->get()
         ]);
+    }
+
+    public function publicEdit(Activity $activity, $step = 1)
+    {
+        // $this->authorize('update', $activity);
+
+        return view("public.activity.fasilitator.update.updateStep{$step}", [
+            'title' => 'Edit Activity',
+            'activity' => $activity,
+            'currentStep' => $step,
+            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
+    public function publicUpdate(Request $request, $step = 1)
+    {
+        $step = (int) $step;
+
+
+        if ($step == 1) {
+            $this->handleUpdateStep1($request);
+        } elseif ($step == 2) {
+            $this->handleUpdateStep2($request);
+        } elseif ($step == 3) {
+            $activity = $this->handleUpdateStep3($request);
+            return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+        }
+        $nextStep = $step + 1;
+        return redirect()->route('activity.publicEdit', $nextStep);
+    }
+
+    // TODO: fix these handleUpdates
+    private function handleUpdateStep1(Request $request)
+    {
+        $hasNewImage = $request->hasNewImage;
+
+        $validatedStep1 = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'registrationDeadlineDate' => [
+                'required',
+                'after:today',
+                'before:cleanUpDate'
+            ],
+            'cleanUpDate' => [
+                'required',
+                'after:today',
+                'after:registrationDeadlineDate'
+            ],
+            'startTime' => [
+                'required',
+                'before:endTime',
+            ],
+            'endTime' => [
+                'required',
+                'after:startTime',
+            ],
+            'gatheringPointUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ],
+            'picture' => "sometimes|image"
+        ]);
+
+
+        // Check if a picture has been uploaded
+        if ($request->hasFile('picture')) {
+
+
+            $hasNewImage = true;
+            $previousPicture = Session::get('step1Data.picture');
+            if ($previousPicture) {
+                Storage::delete('public/' . $previousPicture);
+            }
+
+            $picture = $request->file('picture');
+            $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
+            $picture->storeAs('public/images', $pictureName);
+            $pictureURL = 'images/' . $pictureName;
+            $validatedStep1['picture'] = $pictureURL;
+        }
+
+        if ($hasNewImage == false) {
+            $validatedStep1['picture'] = $request->oldPicture;
+        }
+        Session::put('step1Data', $validatedStep1);
+    }
+
+    private function handleUpdateStep2(Request $request)
+    {
+        $validatedStep2 = $request->validate([
+            'sukarelawanJobName' => 'required|string|max:255',
+            'sukarelawanJobDetail' => 'required|string',
+            'sukarelawanCriteria' => 'required|string',
+            'minimumNumOfSukarelawan' => 'required|integer|min:1|max:999',
+            'sukarelawanEquipment' => 'required|string',
+            'groupChatUrl' => [
+                'required',
+                'string',
+                'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
+            ]
+        ]);
+        Session::put('step2Data', $validatedStep2);
+    }
+
+    private function handleUpdateStep3(Request $request)
+    {
+        $step1Data = Session::get('step1Data');
+        $step2Data = Session::get('step2Data');
+        $combinedData = array_merge($step1Data, $step2Data);
+
+        $newActivity = Activity::create([
+            'id' => Generator::generateId(Activity::class),
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
+            'fasilitatorId' => Auth::user()->id,
+            'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
+            'name' => $combinedData->name,
+            'description' => $combinedData->description,
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->registrationDeadlineDate))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->cleanUpDate))),
+            'startTime' => date('H:i:s', strtotime($combinedData->startTime)),
+            'endTime' => date('H:i:s', strtotime($combinedData->endTime)),
+            'gatheringPointUrl' => $combinedData->gatheringPointUrl,
+            'sukarelawanJobName' => $combinedData->sukarelawanJobName,
+            'sukarelawanJobDetail' => $combinedData->sukarelawanJobDetail,
+            'sukarelawanCriteria' => $combinedData->sukarelawanCriteria,
+            'minimumNumOfSukarelawan' => $combinedData->minimumNumOfSukarelawan,
+            'sukarelawanEquipment' => $combinedData->sukarelawanEquipment,
+            'groupChatUrl' => $combinedData->groupChatUrl,
+            'picture' => $combinedData->picture,
+            'slug' => Generator::generateSlug(Activity::class, $combinedData->name)
+        ]);
+
+        // Optionally, you can clear the session data for steps 1 and 2 if needed
+        Session::forget('step1Data');
+        Session::forget('step2Data');
+
+        return $newActivity;
     }
 
     public function update(Request $request, Activity $activity)

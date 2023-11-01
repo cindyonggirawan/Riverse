@@ -170,51 +170,48 @@ Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFa
 
 Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, 'destroyAllFasilitator']);
 
+
+// CRUD Activities
+
+// admin create
 Route::get('/activities/create', [ActivityController::class, 'create']);
 Route::post('/activities/create', [ActivityController::class, 'store']);
 
+
+// facilitator create
 Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCreate'])->name('activity.publicCreate');
 Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore');
 
-Route::post('/activities/confirmStore', [ActivityController::class, 'confirmStore']);
-
-
-Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
-
+// admin update
 Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
-
 Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
 
+// facilitator update
+Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])
+    ->name('activity.publicEdit');
+Route::patch('/activities/{activity:slug}/edit/{step}', [ActivityController::class, 'publicUpdate'])
+    ->name('activity.publicUpdate');
+
+// delete
+Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
+
+// read
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
-
 Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
-
 Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
 
 Route::patch('/verify/activities/{activity:slug}', [VerifyActivityController::class, 'updateVerifiedActivity']);
-
 Route::patch('/reject/activities/{activity:slug}', [VerifyActivityController::class, 'updateRejectedActivity']);
-
 Route::patch('/verify/all-activities', [VerifyActivityController::class, 'updateAllVerifiedActivity']);
-
 Route::patch('/reject/all-activities', [VerifyActivityController::class, 'updateAllRejectedActivity']);
-
 Route::get('/verified/activities', [VerifyActivityController::class, 'indexVerifiedActivity']);
-
 Route::patch('/unverify/activities/{activity:slug}', [VerifyActivityController::class, 'updateUnverifiedActivity']);
-
 Route::patch('/unverify/all-activities', [VerifyActivityController::class, 'updateAllUnverifiedActivity']);
-
 Route::get('/rejected/activities', [VerifyActivityController::class, 'indexRejectedActivity']);
-
 Route::patch('/unreject/activities/{activity:slug}', [VerifyActivityController::class, 'updateUnrejectedActivity']);
-
 Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'updateAllUnrejectedActivity']);
-
 Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
-
 Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destroyAllActivity']);
-
 
 
 
