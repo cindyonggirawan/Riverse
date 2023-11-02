@@ -31,9 +31,9 @@
             </div>
         </div>
 
-        <form action="{{ route('activity.publicUpdate', ['activity' => $activity->slug, 'step' => $currentStep]) }}"
-            method="post" class="create-activity-form" enctype="multipart/form-data">
-
+        <form action="{{ route('activity.publicUpdate', ['activity' => $activity->slug, 'step' => 1]) }}" method="POST"
+            action="patchlink" class="create-activity-form" enctype="multipart/form-data">
+            @method('patch')
             @csrf
             <input type="hidden" name="hasNewImage" value="{{ $hasNewImage }}">
             <input type="hidden" name="activityId" value="{{ $activity->id }}">
@@ -119,6 +119,7 @@
                     </div>
                 </div>
 
+                {{--
                 <div class="form-card-container">
                     <div class="form-card">
                         <div class="form-header">
@@ -128,46 +129,44 @@
 
 
                         <div class="custom-file-input">
-                            {{-- Store Session's picture to oldPicture --}}
-                            @if (Session::has('step1DataUpdate.picture'))
-                                <input type="text" name="oldPicture"
-                                    value="{{ Session::get('step1DataUpdate.picture') }}" hidden>
+                @if (Session::has('step1DataUpdate.picture'))
+                    <input type="text" name="oldPicture" value="{{ Session::get('step1DataUpdate.picture') }}" hidden>
+                @endif
+
+                <input type="file" name="picture" id="imageInput" accept="image/*"
+                    value="{{ Session::get('step1DataUpdate.picture') ?? $activity->picture }}" hidden />
+                <label for="imageInput">
+                    <div class="drop-zone">
+                        <div class="image-preview" id="imagePreview" @if (Session::has('step1DataUpdate.picture') || $activity->picture != null) @else hidden @endif>
+                            @if (Session::has('step1DataUpdate.picture') || $activity->picture != null)
+                                <img id="previewImage"
+                                    src="{{ asset('storage/' . Session::get('step1DataUpdate.picture')) ?? $activity->picture }}"
+                                    alt="Image Preview" />
+                            @else
+                                <img id="previewImage" src="" alt="Image Preview" />
                             @endif
-
-                            <input type="file" name="picture" id="imageInput" accept="image/*"
-                                value="{{ Session::get('step1DataUpdate.picture') ?? $activity->picture }}" hidden />
-                            <label for="imageInput">
-                                <div class="drop-zone">
-                                    <div class="image-preview" id="imagePreview"
-                                        @if (Session::has('step1DataUpdate.picture') || $activity->picture != null) @else hidden @endif>
-                                        @if (Session::has('step1DataUpdate.picture') || $activity->picture != null)
-                                            <img id="previewImage"
-                                                src="{{ asset('storage/' . Session::get('step1DataUpdate.picture')) ?? $activity->picture }}"
-                                                alt="Image Preview" />
-                                        @else
-                                            <img id="previewImage" src="" alt="Image Preview" />
-                                        @endif
-                                    </div>
-                                    @if (Session::has('step1DataUpdate.picture') || $activity->picture != null)
-                                    @else
-                                        <div class="browse-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
-                                                viewBox="0 0 50 50" fill="none">
-                                                <path d="M25.0001 10.417V39.5837M10.4167 25.0003H39.5834" stroke="#838181"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                            Gambar
-                                        </div>
-                                    @endif
-
-                                </div>
-                            </label>
-                            @error('picture')
-                                <span class="error">{{ $message }}</span>
-                            @enderror
                         </div>
+                        @if (Session::has('step1DataUpdate.picture') || $activity->picture != null)
+                        @else
+                            <div class="browse-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                    viewBox="0 0 50 50" fill="none">
+                                    <path d="M25.0001 10.417V39.5837M10.4167 25.0003H39.5834" stroke="#838181"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Gambar
+                            </div>
+                        @endif
+
                     </div>
-                </div>
+                </label>
+                @error('picture')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div>
+    </div>
+    </div>
+    --}}
 
                 <button type="submit" class="btn-fill" id="nextStepButton" name="nextStepButton">
                     Lanjut

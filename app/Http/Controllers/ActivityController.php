@@ -85,6 +85,7 @@ class ActivityController extends Controller
     public function publicShow(Activity $activity)
     {
         $user = auth()->user();
+
         if ($user != null) {
             if (str_starts_with($user->id, 'FR')) {
                 return view('public.activity.fasilitator.activity', [
@@ -221,21 +222,21 @@ class ActivityController extends Controller
             'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
             'fasilitatorId' => Auth::user()->id,
             'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
-            'name' => $combinedData->name,
-            'description' => $combinedData->description,
-            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->registrationDeadlineDate))),
-            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->cleanUpDate))),
-            'startTime' => date('H:i:s', strtotime($combinedData->startTime)),
-            'endTime' => date('H:i:s', strtotime($combinedData->endTime)),
-            'gatheringPointUrl' => $combinedData->gatheringPointUrl,
-            'sukarelawanJobName' => $combinedData->sukarelawanJobName,
-            'sukarelawanJobDetail' => $combinedData->sukarelawanJobDetail,
-            'sukarelawanCriteria' => $combinedData->sukarelawanCriteria,
-            'minimumNumOfSukarelawan' => $combinedData->minimumNumOfSukarelawan,
-            'sukarelawanEquipment' => $combinedData->sukarelawanEquipment,
-            'groupChatUrl' => $combinedData->groupChatUrl,
-            'picture' => $combinedData->picture,
-            'slug' => Generator::generateSlug(Activity::class, $combinedData->name)
+            'name' => $combinedData["name"],
+            'description' => $combinedData["description"],
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["registrationDeadlineDate"]))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["cleanUpDate"]))),
+            'startTime' => date('H:i:s', strtotime($combinedData['startTime'])),
+            'endTime' => date('H:i:s', strtotime($combinedData["endTime"])),
+            'gatheringPointUrl' => $combinedData["gatheringPointUrl"],
+            'sukarelawanJobName' => $combinedData["sukarelawanJobName"],
+            'sukarelawanJobDetail' => $combinedData["sukarelawanJobDetail"],
+            'sukarelawanCriteria' => $combinedData["sukarelawanCriteria"],
+            'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
+            'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
+            'groupChatUrl' => $combinedData["groupChatUrl"],
+            'picture' => $combinedData["picture"],
+            'slug' => Generator::generateSlug(Activity::class, $combinedData["name"])
         ]);
 
         // Optionally, you can clear the session data for steps 1 and 2 if needed
@@ -344,27 +345,28 @@ class ActivityController extends Controller
         ]);
     }
 
-    public function publicUpdate(Request $request, $step = 1)
+    public function publicUpdate(Request $request, Activity $activity, $step = 1)
     {
         $step = (int) $step;
-
 
         if ($step == 1) {
             $this->handleUpdateStep1($request);
         } elseif ($step == 2) {
             $this->handleUpdateStep2($request);
         } elseif ($step == 3) {
-            $activity = $this->handleUpdateStep3($request);
-            return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+            $newSlug =  $this->handleUpdateStep3($request, $activity);
+            return redirect()->route('activity.publicShow', ['activity' => $newSlug]);
         }
         $nextStep = $step + 1;
-        return redirect()->route('activity.publicEdit', $nextStep);
+        return redirect()->route('activity.publicEdit', ['activity' => $activity->slug, "step" => $nextStep]);
     }
 
-    // TODO: fix these handleUpdates
+
+
+
     private function handleUpdateStep1(Request $request)
     {
-        $hasNewImage = $request->hasNewImage;
+        // $hasNewImage = $request->hasNewImage;
 
         $validatedStep1 = $request->validate([
             'name' => 'required|string|max:255',
@@ -391,32 +393,41 @@ class ActivityController extends Controller
                 'required',
                 'string',
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
-            ],
-            'picture' => "sometimes|image"
+            ]
         ]);
 
 
         // Check if a picture has been uploaded
-        if ($request->hasFile('picture')) {
+        // if ($request->hasFile('picture')) {
+
+        //     $validatedPicture = $request->validate([
+        //         'picture' => "sometimes|image"
+        //     ]);
 
 
-            $hasNewImage = true;
-            $previousPicture = Session::get('step1Data.picture');
-            if ($previousPicture) {
-                Storage::delete('public/' . $previousPicture);
-            }
+        //     $hasNewImage = true;
 
-            $picture = $request->file('picture');
-            $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-            $picture->storeAs('public/images', $pictureName);
-            $pictureURL = 'images/' . $pictureName;
-            $validatedStep1['picture'] = $pictureURL;
-        }
+        //     // $previousPicture = $activity->picture;
+        //     // if ($previousPicture) {
+        //     //     Storage::delete('public/' . $previousPicture);
+        //     // }
 
-        if ($hasNewImage == false) {
-            $validatedStep1['picture'] = $request->oldPicture;
-        }
-        Session::put('step1Data', $validatedStep1);
+        //     $picture = $request->file('picture');
+        //     $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
+        //     $picture->storeAs('public/images', $pictureName);
+        //     $pictureURL = 'images/' . $pictureName;
+        //     $validatedStep1['picture'] = $pictureURL;
+        // }
+
+        // if ($hasNewImage == false) {
+        //     $validatedStep1['picture'] = $request->oldPicture;
+        // }
+
+        // dd($validatedStep1);
+
+
+
+        Session::put('step1DataUpdate', $validatedStep1);
     }
 
     private function handleUpdateStep2(Request $request)
@@ -433,43 +444,41 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ]
         ]);
-        Session::put('step2Data', $validatedStep2);
+        Session::put('step2DataUpdate', $validatedStep2);
     }
 
-    private function handleUpdateStep3(Request $request)
+    private function handleUpdateStep3(Request $request, Activity $activity)
     {
-        $step1Data = Session::get('step1Data');
-        $step2Data = Session::get('step2Data');
+        $step1Data = Session::get('step1DataUpdate');
+        $step2Data = Session::get('step2DataUpdate');
         $combinedData = array_merge($step1Data, $step2Data);
 
-        $newActivity = Activity::create([
-            'id' => Generator::generateId(Activity::class),
-            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
-            'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
-            'fasilitatorId' => Auth::user()->id,
-            'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
-            'name' => $combinedData->name,
-            'description' => $combinedData->description,
-            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->registrationDeadlineDate))),
-            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData->cleanUpDate))),
-            'startTime' => date('H:i:s', strtotime($combinedData->startTime)),
-            'endTime' => date('H:i:s', strtotime($combinedData->endTime)),
-            'gatheringPointUrl' => $combinedData->gatheringPointUrl,
-            'sukarelawanJobName' => $combinedData->sukarelawanJobName,
-            'sukarelawanJobDetail' => $combinedData->sukarelawanJobDetail,
-            'sukarelawanCriteria' => $combinedData->sukarelawanCriteria,
-            'minimumNumOfSukarelawan' => $combinedData->minimumNumOfSukarelawan,
-            'sukarelawanEquipment' => $combinedData->sukarelawanEquipment,
-            'groupChatUrl' => $combinedData->groupChatUrl,
-            'picture' => $combinedData->picture,
-            'slug' => Generator::generateSlug(Activity::class, $combinedData->name)
+        $slug = $activity->slug;
+        if ($activity->name !== $combinedData["name"]) {
+            $slug = Generator::generateSlug(Activity::class, $request->name);
+        }
+
+        $activity->update([
+            'name' => $combinedData["name"],
+            'description' => $combinedData["description"],
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["registrationDeadlineDate"]))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["cleanUpDate"]))),
+            'startTime' => date('H:i:s', strtotime($combinedData["startTime"])),
+            'endTime' => date('H:i:s', strtotime($combinedData["endTime"])),
+            'gatheringPointUrl' => $combinedData["gatheringPointUrl"],
+            'sukarelawanJobName' => $combinedData["sukarelawanJobName"],
+            'sukarelawanJobDetail' => $combinedData["sukarelawanJobDetail"],
+            'sukarelawanCriteria' => $combinedData["sukarelawanCriteria"],
+            'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
+            'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
+            'groupChatUrl' => $combinedData['groupChatUrl'],
+            'slug' => $slug
         ]);
 
-        // Optionally, you can clear the session data for steps 1 and 2 if needed
-        Session::forget('step1Data');
-        Session::forget('step2Data');
+        Session::forget('step1DataUpdate');
+        Session::forget('step2DataUpdate');
 
-        return $newActivity;
+        return $slug;
     }
 
     public function update(Request $request, Activity $activity)

@@ -189,6 +189,7 @@ Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update'
 // facilitator update
 Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])
     ->name('activity.publicEdit');
+
 Route::patch('/activities/{activity:slug}/edit/{step}', [ActivityController::class, 'publicUpdate'])
     ->name('activity.publicUpdate');
 
@@ -197,7 +198,7 @@ Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destro
 
 // read
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
-Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
+Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow'])->name("activity.publicShow");
 Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
 
 Route::patch('/verify/activities/{activity:slug}', [VerifyActivityController::class, 'updateVerifiedActivity']);

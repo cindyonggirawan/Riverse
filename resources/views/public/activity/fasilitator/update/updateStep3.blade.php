@@ -37,7 +37,9 @@
             </div>
         </div>
 
-        <form action="{{ route('activity.publicUpdate', ['step' => 3]) }}" method="post">
+        <form action="{{ route('activity.publicUpdate', ['activity' => $activity->slug, 'step' => 3]) }}" method="post"
+            action="patchlink">
+            @method('patch')
             @csrf
             <div class="form-recap">
                 <div class="form-card-container">
@@ -207,7 +209,7 @@
         </form>
 
         <div class="goBack">
-            <a href="/activities/create/2">
+            <a href="/activities/{{ $activity->slug }}/edit/2">
                 <button>Sebelumnya</button>
             </a>
         </div>

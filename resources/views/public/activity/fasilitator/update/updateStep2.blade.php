@@ -25,8 +25,10 @@
             </div>
         </div>
 
-        <form action="{{ route('activity.publicUpdate', ['step' => 2]) }}" method="patch" class="create-activity-form"
-            enctype="multipart/form-data">
+        <form action="{{ route('activity.publicUpdate', ['activity' => $activity->slug, 'step' => 2]) }}" method="post"
+            action="patchlink" class="create-activity-form" enctype="multipart/form-data">
+            @method('patch')
+
             @csrf
             <input type="hidden" name="currentStep" id="currentStep" value="2">
             <div class="form-step-container">
@@ -99,7 +101,7 @@
         </form>
 
         <div class="goBack">
-            <a href="/activities/create/1">
+            <a href="/activities/{{ $activity->slug }}/edit/1">
                 <button>Sebelumnya</button>
             </a>
         </div>
