@@ -6,6 +6,7 @@ use App\Http\Controllers\BenefitController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FasilitatorController;
 use App\Http\Controllers\FasilitatorTypeController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -110,6 +111,14 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::post('/logout', [LoginController::class, 'logout']);
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordIndex'])->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
+
 
 
 
@@ -186,19 +195,17 @@ Route::post('/activities/create/{step}', [ActivityController::class, 'publicStor
 Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
 Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
 
-// facilitator update
-Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])
-    ->name('activity.publicEdit');
+Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit');
+Route::patch('/activities/{activity:slug}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate');
 
-Route::patch('/activities/{activity:slug}/edit/{step}', [ActivityController::class, 'publicUpdate'])
-    ->name('activity.publicUpdate');
+Route::get('/manage/activities', [ActivityController::class, 'index']);
 
-// delete
-Route::delete('/activities/{activity:slug}', [ActivityController::class, 'destroy']);
-
-// read
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
-Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow'])->name("activity.publicShow");
+
+Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
+
+Route::get('/manage/activities/{activity:slug}', [ActivityController::class, 'show']);
+
 Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
 
 Route::patch('/verify/activities/{activity:slug}', [VerifyActivityController::class, 'updateVerifiedActivity']);
@@ -213,8 +220,6 @@ Route::patch('/unreject/activities/{activity:slug}', [VerifyActivityController::
 Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'updateAllUnrejectedActivity']);
 Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
 Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destroyAllActivity']);
-
-
 
 Route::get('/levels/create', [LevelController::class, 'create']);
 

@@ -5,7 +5,7 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/activities/create" method="post" class="form-horizontal">
+                <form action="/activities/create" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
@@ -126,6 +126,25 @@
                                     placeholder="Gathering Point Url" required value="{{ old('gatheringPointUrl') }}">
                             </div>
                             @error('gatheringPointUrl')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="form-group row">
+                            <label for="bannerImageUrl" class="col-sm-4 col-form-label required">Banner Image</label>
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input @error('bannerImageUrl') is-invalid @enderror"
+                                        name="bannerImageUrl" id="bannerImageUrl" accept="image/*"
+                                        onchange="previewImage()" required>
+                                    <label class="custom-file-label" for="bannerImageUrl">Choose</label>
+                                </div>
+                            </div>
+                            <img class="col-sm-4 offset-sm-4 img-fluid img-preview"></img>
+                            @error('bannerImageUrl')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>

@@ -246,7 +246,6 @@ class ActivityController extends Controller
         return $newActivity;
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -279,6 +278,7 @@ class ActivityController extends Controller
                 'string',
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ],
+            'bannerImageUrl' => 'required|image',
             'sukarelawanJobName' => 'required|string|max:255',
             'sukarelawanJobDetail' => 'required|string',
             'sukarelawanCriteria' => 'required|string',
@@ -291,8 +291,17 @@ class ActivityController extends Controller
             ]
         ]);
 
+        $id = Generator::generateId(Activity::class);
+
+        $file = $request->file('bannerImageUrl');
+        $bannerImageUrl = null;
+        if ($file) {
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $bannerImageUrl = $file->storeAs('Activity/bannerImages', $fileName);
+        }
+
         Activity::create([
-            'id' => Generator::generateId(Activity::class),
+            'id' => $id,
             'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
             'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
             'fasilitatorId' => Auth::user()->id,
@@ -304,6 +313,7 @@ class ActivityController extends Controller
             'startTime' => date('H:i:s', strtotime($request->startTime)),
             'endTime' => date('H:i:s', strtotime($request->endTime)),
             'gatheringPointUrl' => $request->gatheringPointUrl,
+            'bannerImageUrl' => $bannerImageUrl,
             'sukarelawanJobName' => $request->sukarelawanJobName,
             'sukarelawanJobDetail' => $request->sukarelawanJobDetail,
             'sukarelawanCriteria' => $request->sukarelawanCriteria,
@@ -313,13 +323,16 @@ class ActivityController extends Controller
             'slug' => Generator::generateSlug(Activity::class, $request->name)
         ]);
 
-        return redirect('/activities')->with('success', 'Activity creation successful!');
+        return redirect('/manage/activities')->with('success', 'Activity creation successful!');
     }
 
     public function destroy(Activity $activity)
     {
+        if ($activity->bannerImageUrl) {
+            Storage::delete($activity->bannerImageUrl);
+        }
         $activity->delete();
-        return redirect('/activities')->with('success', 'Activity destruction successful!');
+        return redirect('/manage/activities')->with('success', 'Activity destruction successful!');
     }
 
     public function edit(Activity $activity)
@@ -513,6 +526,7 @@ class ActivityController extends Controller
                 'string',
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ],
+            'bannerImageUrl' => 'required|image',
             'sukarelawanJobName' => 'required|string|max:255',
             'sukarelawanJobDetail' => 'required|string',
             'sukarelawanCriteria' => 'required|string',
@@ -525,6 +539,19 @@ class ActivityController extends Controller
             ],
             'experiencePointGiven' => 'nullable|integer|min:0|max:999'
         ]);
+
+        $id = $activity->id;
+
+        $file = $request->file('bannerImageUrl');
+        if ($file) {
+            if ($request->oldBannerImageUrl) {
+                Storage::delete($request->oldBannerImageUrl);
+            }
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $bannerImageUrl = $file->storeAs('Activity/bannerImages', $fileName);
+        } else {
+            $bannerImageUrl = $activity->bannerImageUrl;
+        }
 
         $slug = $activity->slug;
 
@@ -616,6 +643,7 @@ class ActivityController extends Controller
             'startTime' => $requestStartTime,
             'endTime' => $requestEndTime,
             'gatheringPointUrl' => $request->gatheringPointUrl,
+            'bannerImageUrl' => $bannerImageUrl,
             'sukarelawanJobName' => $request->sukarelawanJobName,
             'sukarelawanJobDetail' => $request->sukarelawanJobDetail,
             'sukarelawanCriteria' => $request->sukarelawanCriteria,
@@ -629,6 +657,6 @@ class ActivityController extends Controller
             'slug' => $slug
         ]);
 
-        return redirect('/activities')->with('success', 'Activity update successful!');
+        return redirect('/manage/activities')->with('success', 'Activity update successful!');
     }
 }

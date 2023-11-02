@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
+use Illuminate\Support\Facades\Storage;
 
 class VerifyActivityController extends Controller
 {
@@ -179,6 +180,9 @@ class VerifyActivityController extends Controller
             ->get();
 
         foreach ($activities as $activity) {
+            if ($activity->bannerImageUrl) {
+                Storage::delete($activity->bannerImageUrl);
+            }
             $activity->delete();
         }
 

@@ -73,6 +73,20 @@
                 border-color: #dc3545;
                 padding-right: 2.25rem !important;
             }
+
+            .img-square-small {
+                width: 30px;
+                height: 30px;
+                object-fit: cover;
+                border-radius: 10%;
+            }
+
+            .img-square-big {
+                width: 210px;
+                height: 210px;
+                object-fit: cover;
+                border-radius: 10%;
+            }
         </style>
     </head>
 
@@ -379,6 +393,38 @@
                         document.getElementById('deleteAllForm').submit();
                     }
                 })
+            }
+
+            function previewImage() {
+                const image = document.querySelector('.custom-file-input');
+                const imagePreview = document.querySelector(".img-preview");
+
+                imagePreview.style.display = 'block';
+                imagePreview.classList.add('mt-3');
+                imagePreview.classList.add('img-square-big');
+
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imagePreview.src = oFREvent.target.result;
+                }
+            }
+
+            function previewImage2() {
+                const image = document.querySelector('.custom-file-input-2');
+                const imagePreview = document.querySelector(".img-preview-2");
+
+                imagePreview.style.display = 'block';
+                imagePreview.classList.add('mt-3');
+                imagePreview.classList.add('img-square-big');
+
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imagePreview.src = oFREvent.target.result;
+                }
             }
         </script>
     </body>

@@ -15,6 +15,7 @@
                                 <th>River</th>
                                 <th>Fasilitator</th>
                                 <th>Activity Status</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Registration Deadline Date</th>
@@ -44,6 +45,15 @@
                                     <td>{{ $activity->river->name }}</td>
                                     <td>{{ $activity->fasilitator->user->name }}</td>
                                     <td>{{ $activity->activityStatus->name }}</td>
+                                    <td>
+                                        @if ($activity->bannerImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $activity->bannerImageUrl) }}"
+                                                alt="{{ $activity->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Activity/bannerImages/default.png') }}"
+                                                alt="{{ $activity->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $activity->name }}</td>
                                     <td>{{ Str::words(strip_tags($activity->description), 5) }}</td>
                                     <td>{{ $activity->registrationDeadlineDate }}</td>
@@ -66,7 +76,7 @@
                                     <td>
                                         <div class="form-inline">
                                             <a class="btn btn-primary btn-sm btn-square"
-                                                href="/activities/{{ $activity->slug }}">
+                                                href="/manage/activities/{{ $activity->slug }}">
                                                 <i class="fas fa-folder">
                                                 </i>
                                             </a>

@@ -14,6 +14,17 @@
                         <dt class="col-sm-4">Email</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->user->email }}</dd>
 
+                        <dt class="col-sm-4">Profile Image</dt>
+                        <dd class="col-sm-8">
+                            @if ($sukarelawan->profileImageUrl !== null)
+                                <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                    alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-big">
+                            @else
+                                <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                    alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-big">
+                            @endif
+                        </dd>
+
                         <dt class="col-sm-4">Name</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->user->name }}</dd>
 
@@ -38,6 +49,17 @@
 
                         <dt class="col-sm-4">Date Of Birth</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->dateOfBirth }}</dd>
+
+                        <dt class="col-sm-4">Card Image</dt>
+                        <dd class="col-sm-8">
+                            @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
+                                <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                    alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-big">
+                            @else
+                                <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"
+                                    alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-big">
+                            @endif
+                        </dd>
 
                         <dt class="col-sm-4">National Identity Number</dt>
                         <dd class="col-sm-8">{{ $sukarelawan->nationalIdentityNumber }}</dd>

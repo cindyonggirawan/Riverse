@@ -568,6 +568,7 @@ class ComposerStaticInit126b8f455b84296575fa7b53291017e3
         'App\\Models\\SukarelawanActivityStatus' => __DIR__ . '/../..' . '/app/Models/SukarelawanActivityStatus.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\VerificationStatus' => __DIR__ . '/../..' . '/app/Models/VerificationStatus.php',
+        'App\\Policies\\ActivityPolicy' => __DIR__ . '/../..' . '/app/Policies/ActivityPolicy.php',
         'App\\Policies\\SukarelawanActivityStatusPolicy' => __DIR__ . '/../..' . '/app/Policies/SukarelawanActivityStatusPolicy.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

@@ -57,6 +57,7 @@ return array(
     'App\\Models\\SukarelawanActivityStatus' => $baseDir . '/app/Models/SukarelawanActivityStatus.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\VerificationStatus' => $baseDir . '/app/Models/VerificationStatus.php',
+    'App\\Policies\\ActivityPolicy' => $baseDir . '/app/Policies/ActivityPolicy.php',
     'App\\Policies\\SukarelawanActivityStatusPolicy' => $baseDir . '/app/Policies/SukarelawanActivityStatusPolicy.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

@@ -134,31 +134,58 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="flKtpImage" class="col-sm-4 col-form-label">National Identity Card Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="nationalIdentityCardImage_link" id="flKtpImage"
-                                    class="form-control" value="{{ old('nationalIdentityCardImage_link', $sukarelawan->nationalIdentityCardImageUrl) }}">
+                            <label for="nationalIdentityCardImageUrl" class="col-sm-4 col-form-label required">National
+                                Identity Card Image</label>
+                            <input type="hidden" name="oldNationalIdentityCardImageUrl"
+                                id="oldNationalIdentityCardImageUrl"
+                                value="{{ $sukarelawan->nationalIdentityCardImageUrl }}">
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input @error('nationalIdentityCardImageUrl') is-invalid @enderror"
+                                        name="nationalIdentityCardImageUrl" id="nationalIdentityCardImageUrl"
+                                        accept="image/*" onchange="previewImage()" required>
+                                    <label class="custom-file-label" for="nationalIdentityCardImageUrl">Choose</label>
+                                </div>
                             </div>
-                            @error('nationalIdentityCardImage_link')
+                            @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
+                                <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                    alt="{{ $sukarelawan->user->name }}"
+                                    class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview">
+                            @else
+                                <img class="col-sm-4 offset-sm-4 img-fluid img-preview"></img>
+                            @endif
+
+                            @error('nationalIdentityCardImageUrl')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="ktpPreview" src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}" alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
                         </div>
 
                         <div class="form-group row">
-                            <label for="flPictureImage" class="col-sm-4 col-form-label">Profile Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="profileImage_link" id="flPictureImage"
-                                class="form-control" value="{{ old('profileImage_link', $sukarelawan->profileImageUrl) }}">
+                            <label for="profileImageUrl" class="col-sm-4 col-form-label required">Profile Image</label>
+                            <input type="hidden" name="oldProfileImageUrl" id="oldProfileImageUrl"
+                                value="{{ $sukarelawan->profileImageUrl }}">
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input custom-file-input-2 @error('profileImageUrl') is-invalid @enderror"
+                                        name="profileImageUrl" id="profileImageUrl" accept="image/*"
+                                        onchange="previewImage2()" required>
+                                    <label class="custom-file-label" for="profileImageUrl">Choose</label>
+                                </div>
                             </div>
-                            @error('profileImage_link')
+                            @if ($sukarelawan->profileImageUrl !== null)
+                                <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                    alt="{{ $sukarelawan->user->name }}"
+                                    class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview-2">
+                            @else
+                                <img class="col-sm-4 offset-sm-4 img-fluid img-preview-2"></img>
+                            @endif
+
+                            @error('profileImageUrl')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="picturePreview" src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}" alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
                         </div>
-
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -177,27 +204,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const pictureImageInp = document.querySelector("#flPictureImage");
-        const pictureImageEl = document.querySelector("#picturePreview");
-
-        const ktpImageInp = document.querySelector("#flKtpImage");
-        const ktpImageEl = document.querySelector("#ktpPreview")
-
-        pictureImageInp.onchange = (ev) => {
-            const [file] = pictureImageInp.files;
-            if (file) {
-                pictureImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-        ktpImageInp.onchange = (ev) => {
-            const [file] = ktpImageInp.files;
-            if (file) {
-                ktpImageEl.src = URL.createObjectURL(file);
-            }
-        };
-    </script>
-@endpush

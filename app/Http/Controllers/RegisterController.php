@@ -38,19 +38,18 @@ class RegisterController extends Controller
             'gender' => 'required',
             'dateOfBirth' => 'required|date_format:d/m/Y',
             'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans',
-            'profileImage_link' => 'required|image',
-            'nationalIdentityCardImage_link' => 'required|image'
+            'nationalIdentityCardImageUrl' => 'required|image'
         ]);
 
-        if ($request->hasFile('profileImage_link')) {
-            $validated['profileImage_link'] = $request->file('profileImage_link')->store('images', 'public');
-        }
-
-        if ($request->hasFile('nationalIdentityCardImage_link')) {
-            $validated['nationalIdentityCardImage_link'] = $request->file('nationalIdentityCardImage_link')->store('images', 'public');
-        }
-
         $id = Generator::generateId(Sukarelawan::class);
+
+        $file = $request->file('nationalIdentityCardImageUrl');
+        $nationalIdentityCardImageUrl = null;
+        if ($file) {
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $nationalIdentityCardImageUrl = $file->storeAs('Sukarelawan/nationalIdentityCardImages', $fileName);
+        }
+
         $slug = Generator::generateSlug(User::class, $request->name);
 
         User::create([
@@ -69,8 +68,7 @@ class RegisterController extends Controller
             'gender' => $request->gender,
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
-            'nationalIdentityCardImageUrl' => $validated['nationalIdentityCardImage_link'],
-            'profileImageUrl' =>  $validated['profileImage_link'],
+            'nationalIdentityCardImageUrl' => $nationalIdentityCardImageUrl,
             'slug' => $slug
         ]);
 
