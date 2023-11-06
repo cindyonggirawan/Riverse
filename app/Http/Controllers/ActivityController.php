@@ -43,7 +43,7 @@ class ActivityController extends Controller
         }
 
         if ($request->has('searchActivity')) {
-            $query->where('title', 'like', '%' . $request->input('searchActivity') . '%');
+            $query->where('name', 'like', '%' . $request->input('searchActivity') . '%');
         }
 
         //for sorting
@@ -51,13 +51,20 @@ class ActivityController extends Controller
             $sortBy = $request->input('sortBy');
 
             if ($sortBy === 'dateClosest') {
-                $query->orderBy('date');
+                $query->orderBy('cleanUpDate');
             } elseif ($sortBy === 'dateFarthest') {
-                $query->orderByDesc('date');
-            } elseif ($sortBy === 'mostLikes') {
-                $query->orderBy('likes', 'desc');
+                $query->orderByDesc('cleanUpDate');
+            }
+            // TODO: fix likes sorting
+
+            elseif ($sortBy === 'mostLikes') {
+                $query->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
+                    $query->where('isLiked', true);
+                }])->orderBy('likes', 'desc');
             } elseif ($sortBy === 'leastLikes') {
-                $query->orderBy('likes', 'asc');
+                $query->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
+                    $query->where('isLiked', true);
+                }])->orderBy('likes', 'asc');
             }
         } elseif ($request->has('reset')) {
             //reset sorting
@@ -70,7 +77,9 @@ class ActivityController extends Controller
 
         return view('public.activities', [
             'title' => 'Activities',
-            'activities' => $activities
+            'activities' => $activities,
+            "searchActivity" => $request->input("searchActivity"),
+            "searchFasilitator" => $request->input("searchFasilitator"),
         ]);
     }
 
