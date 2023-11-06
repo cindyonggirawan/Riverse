@@ -61,4 +61,23 @@ class Activity extends Model
     {
         return $this->hasMany(SukarelawanActivityDetail::class, 'sukarelawanId', 'id');
     }
+
+    public function getLikes()
+    {
+        return $this->sukarelawan_activity_details->where('isLiked', true)->count();
+    }
+
+    public function getJoinedSukarelawanAmount()
+    {
+        return 0;
+    }
+
+    public function scopeSortByLikes($query, $order = 'desc')
+    {
+        return $query->select('activities.*')
+            ->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
+                $query->where('isLiked', true);
+            }])
+            ->orderBy('likes', $order);
+    }
 }
