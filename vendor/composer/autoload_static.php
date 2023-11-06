@@ -526,6 +526,7 @@ class ComposerStaticInit126b8f455b84296575fa7b53291017e3
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FasilitatorController' => __DIR__ . '/../..' . '/app/Http/Controllers/FasilitatorController.php',
         'App\\Http\\Controllers\\FasilitatorTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/FasilitatorTypeController.php',
+        'App\\Http\\Controllers\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/ForgotPasswordController.php',
         'App\\Http\\Controllers\\LevelController' => __DIR__ . '/../..' . '/app/Http/Controllers/LevelController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Http\\Controllers\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegisterController.php',

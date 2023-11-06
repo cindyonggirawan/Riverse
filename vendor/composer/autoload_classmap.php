@@ -15,6 +15,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FasilitatorController' => $baseDir . '/app/Http/Controllers/FasilitatorController.php',
     'App\\Http\\Controllers\\FasilitatorTypeController' => $baseDir . '/app/Http/Controllers/FasilitatorTypeController.php',
+    'App\\Http\\Controllers\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/ForgotPasswordController.php',
     'App\\Http\\Controllers\\LevelController' => $baseDir . '/app/Http/Controllers/LevelController.php',
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
     'App\\Http\\Controllers\\RegisterController' => $baseDir . '/app/Http/Controllers/RegisterController.php',
