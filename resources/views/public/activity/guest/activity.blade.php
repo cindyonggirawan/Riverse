@@ -194,8 +194,8 @@
           Kontak Fasilitator
         </h5>
         <div class="row">
-          <div class="profpic">
-            <img src="{{ asset('/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+          <div class="profpic"></div>
+            <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
           </div>
           <div class="selected">
               {{$activity->fasilitator->user->name}}

@@ -2,7 +2,8 @@
     <a href="activities/{{ $activity->slug }}">
         <div class="activity-card-container">
             {{-- TODO: change to activity image --}}
-            <div class="img-container" style="background-image: url('{{ asset('/' . $activity->bannerImageUrl) }}');">
+            <div class="img-container"
+                style="background-image: url('{{ asset('/images/' . ($activity->bannerImageUrl ?? Config::get('constants.default_banner_image'))) }}');">
                 <div class="likes">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="21" viewBox="0 0 22 21" fill="none">
                         <path
@@ -22,7 +23,7 @@
                 </h4>
                 <div class="card-row">
                     <div class="profpic">
-                        <img src="{{ asset('/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                        <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                     </div>
                     <a href="">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>

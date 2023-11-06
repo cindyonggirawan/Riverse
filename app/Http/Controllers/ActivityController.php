@@ -186,14 +186,13 @@ class ActivityController extends Controller
             $hasNewImage = true;
             $previousPicture = Session::get('step1Data.picture');
             if ($previousPicture) {
-                Storage::delete('public/' . $previousPicture);
+                Storage::delete('public/images' . $previousPicture);
             }
 
             $picture = $request->file('picture');
             $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-            $picture->storeAs('public/images', $pictureName);
-            $pictureURL = 'images/' . $pictureName;
-            $validatedStep1['picture'] = $pictureURL;
+            $bannerImageUrl = $picture->storeAs('Activity/bannerImages', $pictureName);
+            $validatedStep1['picture'] = $bannerImageUrl;
         }
 
         if ($hasNewImage == false) {
@@ -244,7 +243,7 @@ class ActivityController extends Controller
             'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
             'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
             'groupChatUrl' => $combinedData["groupChatUrl"],
-            'picture' => $combinedData["picture"],
+            'bannerImageUrl' => $combinedData["picture"],
             'slug' => Generator::generateSlug(Activity::class, $combinedData["name"])
         ]);
 
@@ -417,37 +416,6 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ]
         ]);
-
-
-        // Check if a picture has been uploaded
-        // if ($request->hasFile('picture')) {
-
-        //     $validatedPicture = $request->validate([
-        //         'picture' => "sometimes|image"
-        //     ]);
-
-
-        //     $hasNewImage = true;
-
-        //     // $previousPicture = $activity->picture;
-        //     // if ($previousPicture) {
-        //     //     Storage::delete('public/' . $previousPicture);
-        //     // }
-
-        //     $picture = $request->file('picture');
-        //     $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-        //     $picture->storeAs('public/images', $pictureName);
-        //     $pictureURL = 'images/' . $pictureName;
-        //     $validatedStep1['picture'] = $pictureURL;
-        // }
-
-        // if ($hasNewImage == false) {
-        //     $validatedStep1['picture'] = $request->oldPicture;
-        // }
-
-        // dd($validatedStep1);
-
-
 
         Session::put('step1DataUpdate', $validatedStep1);
     }
