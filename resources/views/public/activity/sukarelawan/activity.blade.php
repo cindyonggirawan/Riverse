@@ -57,7 +57,7 @@
       </div>
 
       <div class="btn-container
-      {{"bg-danger"}} 
+      {{"bg-danger"}}
       {{"bg-disabled"}}">
       {{-- @if (TODO: status->null) --}}
         {{-- <a href="" class="btn-fill full">Daftar jadi Sukarelawan</a>   --}}
@@ -145,7 +145,7 @@
             </div>
           </div>
         </div>
-        <a href="" class="btn-fill"> 
+        <a href="" class="btn-fill">
           <div class="white">
             Clock-in
           </div>
