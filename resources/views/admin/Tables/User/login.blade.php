@@ -1,9 +1,18 @@
-@extends('admin.layouts.main')
+@extends('layout.index')
 
-@section('admin.information')
-    <div class="row">
-        <div class="col">
-            <div class="card card-primary">
+@section('css')
+{{-- @include('layout.useBootstrap') --}}
+<link rel="stylesheet" href="{{ asset('/css/login.css') }}"/>
+@endsection
+
+@section('content')
+<div class="row">
+    <div>
+        <!-- Form -->
+        <form action="/login" method="post" class="login-container">
+            @csrf
+            <!-- Card Body -->
+            <div class="login-content">
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -18,64 +27,48 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <!-- Form -->
-                <form action="/login" method="post" class="form-horizontal">
-                    @csrf
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label required">Email</label>
-                            <div class="col-sm-8">
-                                <input type="email" name="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror" placeholder="Email" required
-                                    autofocus value="{{ old('email') }}">
-                            </div>
-                            @error('email')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-sm-4 col-form-label required">Password</label>
-                            <div class="input-group col-sm-8">
-                                <input type="password" name="password" id="password"
-                                    class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                                    required>
-                                <div class="input-group-append">
-                                    <button id="toggle_password" class="btn btn-default" type="button">
-                                        <i id="password_eye_icon" class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @error('password')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <hr class="my-4">
-
-                        <div class="text-center my-2"><a href="/register">I don't have an account</a></div>
-
-                        <div class="text-center my-2"><a href="/email-verification">I didn't receive the verification
-                                email</a>
-                        </div>
-
-                        <div class="text-center"><a href="/forgot-password">I forgot my password</a></div>
+                <div class="form-text-header">
+                    <h1>Masuk</h1>
+                    <div class="register-account-text">
+                        <p>Belum punya akun?</p>
+                        <a href="/register">Daftar</a>
                     </div>
-                    <!-- /.card-body -->
-                    <!-- Card Footer -->
-                    <div class="card-footer">
-                        <a href="{{ url()->previous() }}" class="btn btn-default">
-                            <i class="fas fa-angle-left">
-                            </i>
-                            Back
-                        </a>
-                        <button type="submit" class="btn btn-primary float-right">Login</button>
+                </div>
+                <div class="form-text">
+                    <label for="email" class="required">Email</label>
+                    <div class="row">
+                        <input type="email" name="email" id="email"
+                            class="input-text-long @error('email') is-invalid @enderror" placeholder="Email" required
+                            autofocus value="{{ old('email') }}">
                     </div>
-                    <!-- /.card-footer -->
-                </form>
-                <!-- /.form -->
+                    @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-text">
+                    <label for="password" class="required">Password</label>
+                    <div class="row">
+                        <input type="password" name="password" id="password"
+                            class="input-text-long @error('password') is-invalid @enderror" placeholder="Password"
+                            required>
+                    </div>
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <a class="forgot-password-text" href="/forgot-password">Lupa password?</a>
+                <!-- /.card-body -->
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <button type="submit" class="purple-outline-btn-long">Login</button>
+                </div>
+                <!-- /.card-footer -->
             </div>
-        </div>
+        </form>
+        <!-- /.form -->
     </div>
+    <div class="login-image" style="background-image: url('{{ asset('/images/login-image.png') }}');">
+
+    </div>
+</div>
 @endsection
