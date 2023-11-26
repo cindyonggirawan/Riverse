@@ -11,7 +11,7 @@
                             stroke="#5822CA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     {{-- TODO: make into LIKE BUTTON --}}
-                    <p>{{ $activity->getLikes() }}</p>
+                    <p>{{ $activity->likeCount() }}</p>
                 </div>
             </div>
 

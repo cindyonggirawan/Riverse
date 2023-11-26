@@ -59,15 +59,15 @@ class Activity extends Model
 
     public function sukarelawan_activity_details(): HasMany
     {
-        return $this->hasMany(SukarelawanActivityDetail::class, 'sukarelawanId', 'id');
+        return $this->hasMany(SukarelawanActivityDetail::class, 'activityId', 'id');
     }
 
-    public function getLikes()
+    public function likeCount()
     {
         return $this->sukarelawan_activity_details->where('isLiked', true)->count();
     }
 
-    public function getJoinedSukarelawanAmount()
+    public function joinedSukarelawanCount()
     {
         return 0;
     }

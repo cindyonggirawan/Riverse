@@ -321,3 +321,7 @@ h1 a {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+a.selected p.selected {
+    color: #5822ca;
+}

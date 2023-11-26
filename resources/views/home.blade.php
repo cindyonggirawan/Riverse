@@ -56,20 +56,17 @@
         <div class="activity-row">
 
             {{-- TODO: FETCH HOME PAGE ACTIVITIES HERE --}}
-
-            {{-- <x-activity-card :activity="$a" /> --}}
-
-            {{-- <x-activity-card-big :activity="" /> --}}
+            <x-activity-card-big :activity="$activities[0]" />
             <div class="activity-col">
-                {{-- <x-activity-card-horizontal :activity="" />
-                <x-activity-card-horizontal :activity="" />
-                <x-activity-card-horizontal :activity="" /> --}}
+                <x-activity-card-horizontal :activity="$activities[0]" />
+                <x-activity-card-horizontal :activity="$activities[1]" />
+                <x-activity-card-horizontal :activity="$activities[2]" />
             </div>
         </div>
         <div class="activity-row">
-            {{-- <x-activity-card :activity="" />
-            <x-activity-card :activity="" />
-            <x-activity-card :activity="" /> --}}
+            <x-activity-card :activity="$activities[0]" />
+            <x-activity-card :activity="$activities[1]" />
+            <x-activity-card :activity="$activities[2]" />
 
             <div class="lihat-semua-card-container">
                 <img src="{{ asset('images/activities_hands.png') }}" alt="">

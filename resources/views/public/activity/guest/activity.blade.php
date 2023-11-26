@@ -1,4 +1,3 @@
-
 @php
     use Carbon\Carbon;
     $sukarelawanCriteria = explode('; ', $activity->sukarelawanCriteria);
@@ -15,40 +14,67 @@
 {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#groupLinkModal">
   Open Modal
 </button> --}}
-
+<div class="modal" id="groupLinkModal">
+  <div class="modal-content">
+    <div class="modal-content-body">
+      <h3>Scan QR code</h3>
+      <p class="disable">
+        Masuk ke dalam group chat
+      </p>
+      <div class="barcode-container">
+        <img src="" alt="">
+      </div>
+      <p class="disable">
+        atau tekan tautan dibawah ini
+      </p>
+      <div class="row">
+        <a href="{{"linkGrupWA"}}" class="selected">{{"linkGrupWA"}}</a>
+      </div>
+      <button type="button" class="btn-fill full" data-dismiss="modal">
+        Sudah Bergabung
+      </button>
+    </div>
+  </div>
+</div>
 <div class="activities-body">
   <div class="col">
     {{-- Image --}}
     <div class="content-card-center">
           {{-- For Image --}}
-      <div class="img-container">
-        <div class="likes">
+      <div class="img-container"
+      style="background-image: url('{{ asset('/images/' . ($activity->bannerImageUrl ?? Config::get('constants.default_banner_image'))) }}');">
+      
+      
+      <div class="likes">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="21" viewBox="0 0 22 21" fill="none">
             <path d="M5.383 9.75C6.189 9.75 6.916 9.304 7.414 8.67C8.19026 7.67962 9.16471 6.86218 10.275 6.27C10.998 5.886 11.625 5.314 11.928 4.555C12.1408 4.02325 12.2501 3.45575 12.25 2.883V2.25C12.25 2.05109 12.329 1.86032 12.4697 1.71967C12.6103 1.57902 12.8011 1.5 13 1.5C13.5967 1.5 14.169 1.73705 14.591 2.15901C15.013 2.58097 15.25 3.15326 15.25 3.75C15.25 4.902 14.99 5.993 14.527 6.968C14.261 7.526 14.634 8.25 15.252 8.25H18.378C19.404 8.25 20.323 8.944 20.432 9.965C20.477 10.387 20.5 10.815 20.5 11.25C20.5041 13.9863 19.5691 16.6412 17.851 18.771C17.463 19.253 16.864 19.5 16.246 19.5H12.23C11.7464 19.4998 11.266 19.4221 10.807 19.27L7.693 18.23C7.23411 18.0774 6.75361 17.9997 6.27 18H4.654M4.654 18C4.737 18.205 4.827 18.405 4.924 18.602C5.121 19.002 4.846 19.5 4.401 19.5H3.493C2.604 19.5 1.78 18.982 1.521 18.132C1.17465 16.9952 0.999065 15.8133 1 14.625C1 13.072 1.295 11.589 1.831 10.227C2.137 9.453 2.917 9 3.75 9H4.803C5.275 9 5.548 9.556 5.303 9.96C4.44889 11.366 3.99843 12.9799 4.001 14.625C3.99937 15.7816 4.22145 16.9277 4.655 18H4.654ZM13 8.25H15.25" stroke="#5822CA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <p>{{ $activity->getLikes() }}</p>
+          <p>{{$likeCount}}</p>
         </div>
       </div>
+
+      
       <div class="row">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
             <path d="M11 15C11 14.8689 10.9742 14.7389 10.924 14.6177C10.8738 14.4965 10.8002 14.3864 10.7074 14.2936C10.6147 14.2009 10.5045 14.1273 10.3833 14.0771C10.2621 14.0269 10.1322 14.001 10.001 14.001C9.86983 14.001 9.73993 14.0269 9.61872 14.0771C9.49752 14.1273 9.38739 14.2009 9.29462 14.2936C9.20186 14.3864 9.12827 14.4965 9.07807 14.6177C9.02786 14.7389 9.00202 14.8689 9.00202 15C9.01023 15.2594 9.11903 15.5054 9.30539 15.6859C9.49175 15.8665 9.74104 15.9674 10.0005 15.9674C10.26 15.9674 10.5093 15.8665 10.6957 15.6859C10.882 15.5054 10.9908 15.2594 10.999 15H11ZM10.74 7.14705C10.7141 6.95871 10.6176 6.78724 10.4701 6.66732C10.3226 6.5474 10.1351 6.48797 9.94541 6.50105C9.75575 6.51414 9.57813 6.59876 9.44848 6.7378C9.31884 6.87685 9.24683 7.05994 9.24702 7.25005L9.25102 11.751L9.25802 11.853C9.28394 12.0414 9.3804 12.2129 9.52792 12.3328C9.67543 12.4527 9.86298 12.5121 10.0526 12.499C10.2423 12.486 10.4199 12.4013 10.5496 12.2623C10.6792 12.1232 10.7512 11.9402 10.751 11.75L10.747 7.24805L10.74 7.14705ZM11.97 1.65905C11.113 0.111047 8.88802 0.111047 8.03202 1.65905L0.286024 15.66C-0.543976 17.16 0.541024 19 2.25602 19H17.746C19.46 19 20.545 17.16 19.715 15.66L11.969 1.66005L11.97 1.65905ZM9.34402 2.38505C9.40884 2.2677 9.50393 2.16987 9.61939 2.10175C9.73485 2.03362 9.86646 1.99769 10.0005 1.99769C10.1346 1.99769 10.2662 2.03362 10.3817 2.10175C10.4971 2.16987 10.5922 2.2677 10.657 2.38505L18.402 16.387C18.4652 16.5012 18.4974 16.6299 18.4957 16.7603C18.4939 16.8908 18.4581 17.0185 18.3918 17.1309C18.3256 17.2433 18.2312 17.3364 18.1179 17.4012C18.0047 17.4659 17.8765 17.5 17.746 17.5H2.25602C2.12548 17.5002 1.99717 17.4662 1.88377 17.4015C1.77037 17.3369 1.67582 17.2437 1.60946 17.1313C1.5431 17.0189 1.50723 16.8911 1.5054 16.7606C1.50357 16.63 1.53584 16.5013 1.59902 16.387L9.34402 2.38505Z" fill="#E21919"/>
           </svg>
-          
           <?php
           $registrationDate = Carbon::parse($activity->registrationDeadlineDate);
           $formattedDateregistrationDeadlineDate = $registrationDate->format('j M Y');
           ?>
-
         <p class="danger">Batas Registrasi: {{$formattedDateregistrationDeadlineDate}}</p>
       </div>
 
-      <div class="btn-container"
+      <div class="btn-container
+      {{-- {{"bg-danger"}} 
+      {{"bg-disabled"}} --}}
+      "
       >
       {{-- @if (TODO: status->null) --}}
-        <a href="/login" class="btn-fill full">Daftar jadi Sukarelawan</a>  
+        {{-- <a href="" class="btn-fill full">Daftar jadi Sukarelawan</a>   --}}
       {{-- @endif --}}
       {{-- @if (TODO: status->registered) --}}
-        {{-- <a href="" class="btn-fill full">Batalkan Pendaftaran</a> --}}
+        <a href="/login" target="_blank" class="btn-fill full">Daftar Sukarelawan</a>
       {{-- @endif --}}
       {{-- @if (TODO: status->joined) --}}
         {{-- <a href="" class="btn-fill full">Sudah Diterima</a> --}}
@@ -63,12 +89,11 @@
         Lowongan Sukarelawan
       </h5>
       <p>
-        {{-- TODO: make this function to get the max number and the joined --}}
-        {{$activity->getJoinedSukarelawanAmount()}} dari {{$activity->minimumNumOfSukarelawan}}
+        {{$activity->joinedSukarelawanCount()}} dari {{$activity->minimumNumOfSukarelawan}}
       </p>
       <div class="progress-bar">
         @php
-          $joinedPercentage = ceil($activity->getJoinedSukarelawanAmount() / $activity->minimumNumOfSukarelawan);
+          $joinedPercentage = ceil($activity->joinedSukarelawanCount() / $activity->minimumNumOfSukarelawan);
         @endphp
         <div class="progress-fill" style="width: {{$joinedPercentage}}%">
         </div>
@@ -100,47 +125,6 @@
     <h1>
       {{$activity->name}}
     </h1>
-        {{-- Absensi --}}
-    {{-- <div class="content-card cclg">
-      <div class="absensi" style="background-image: url('{{ asset('/images/absensi_bg.png') }}');">
-        <h5>
-          Absensi
-        </h5>
-        <div class="row">
-          <div class="clock-time-container clockin">
-            <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
-              <path d="M38.9322 28.8208C38.9322 28.471 38.7932 28.1356 38.5459 27.8882C38.2986 27.6409 37.9631 27.502 37.6133 27.502C37.2635 27.502 36.9281 27.6409 36.6807 27.8882C36.4334 28.1356 36.2944 28.471 36.2944 28.8208V37.6133C36.2943 37.8369 36.3511 38.0569 36.4594 38.2525C36.5677 38.4482 36.7239 38.6131 36.9134 38.7317L42.1889 42.0289C42.4855 42.2145 42.8437 42.2747 43.1847 42.1962C43.3536 42.1574 43.5131 42.0856 43.6542 41.9851C43.7954 41.8846 43.9153 41.7573 44.0072 41.6104C44.0991 41.4635 44.1612 41.3 44.1899 41.1291C44.2186 40.9583 44.2134 40.7834 44.1745 40.6146C44.1357 40.4457 44.0639 40.2862 43.9634 40.1451C43.8629 40.0039 43.7356 39.884 43.5887 39.7921L38.9322 36.8818V28.8208Z" fill="#D88B4C"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M37.6134 22.2266C33.5327 22.2266 29.6191 23.8477 26.7336 26.7333C23.8481 29.6189 22.2271 33.5326 22.2271 37.6134C22.2271 41.6943 23.8481 45.608 26.7336 48.4936C29.6191 51.3792 33.5327 53.0003 37.6134 53.0003C41.6941 53.0003 45.6077 51.3792 48.4932 48.4936C51.3787 45.608 52.9998 41.6943 52.9998 37.6134C52.9998 33.5326 51.3787 29.6189 48.4932 26.7333C45.6077 23.8477 41.6941 22.2266 37.6134 22.2266ZM24.8647 37.6134C24.8647 35.9392 25.1945 34.2813 25.8351 32.7346C26.4758 31.1878 27.4149 29.7823 28.5987 28.5984C29.7825 27.4146 31.188 26.4755 32.7347 25.8348C34.2814 25.1941 35.9392 24.8643 37.6134 24.8643C39.2876 24.8643 40.9454 25.1941 42.4921 25.8348C44.0389 26.4755 45.4443 27.4146 46.6281 28.5984C47.8119 29.7823 48.751 31.1878 49.3917 32.7346C50.0324 34.2813 50.3621 35.9392 50.3621 37.6134C50.3621 40.9947 49.0189 44.2375 46.6281 46.6284C44.2373 49.0193 40.9946 50.3625 37.6134 50.3625C34.2322 50.3625 30.9896 49.0193 28.5987 46.6284C26.2079 44.2375 24.8647 40.9947 24.8647 37.6134Z" fill="#D88B4C"/>
-              <path d="M24.1778 24.1784L9.67119 24.1784M24.1778 24.1784L24.1778 9.67125M24.1778 24.1784L7.25342 7.2534" stroke="#D88B4C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="col">
-              <h5>Clock-in</h5>
-              <h4>
-                {{"--:--"}}
-              </h4>
-            </div>
-          </div>
-          <div class="clock-time-container clockout">
-            <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
-              <path d="M16.7056 28.8218C16.7056 28.472 16.5666 28.1365 16.3193 27.8892C16.072 27.6419 15.7365 27.5029 15.3867 27.5029C15.0369 27.5029 14.7015 27.6419 14.4542 27.8892C14.2068 28.1365 14.0679 28.472 14.0679 28.8218V37.6142C14.0678 37.8378 14.1245 38.0578 14.2328 38.2534C14.3411 38.449 14.4973 38.6139 14.6869 38.7326L19.9623 42.0297C20.2589 42.2154 20.6171 42.2756 20.9581 42.1971C21.127 42.1582 21.2865 42.0865 21.4276 41.9859C21.5687 41.8854 21.6887 41.7581 21.7806 41.6112C21.8725 41.4644 21.9346 41.3008 21.9633 41.13C21.992 40.9591 21.9868 40.7843 21.9479 40.6154C21.909 40.4466 21.8373 40.287 21.7368 40.1459C21.6363 40.0048 21.5089 39.8849 21.3621 39.793L16.7056 36.8827V28.8218Z" fill="#38D46D"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.3867 22.2266C11.3059 22.2266 7.39224 23.8477 4.50667 26.7332C1.6211 29.6188 0 33.5325 0 37.6133C0 41.6941 1.6211 45.6078 4.50667 48.4933C7.39224 51.3789 11.3059 53 15.3867 53C19.4675 53 23.3812 51.3789 26.2668 48.4933C29.1523 45.6078 30.7734 41.6941 30.7734 37.6133C30.7734 33.5325 29.1523 29.6188 26.2668 26.7332C23.3812 23.8477 19.4675 22.2266 15.3867 22.2266ZM2.63772 37.6133C2.63772 35.9391 2.96749 34.2812 3.60818 32.7345C4.24888 31.1877 5.18796 29.7822 6.37182 28.5984C7.55567 27.4145 8.96111 26.4754 10.5079 25.8347C12.0547 25.194 13.7125 24.8643 15.3867 24.8643C17.0609 24.8643 18.7188 25.194 20.2655 25.8347C21.8123 26.4754 23.2178 27.4145 24.4016 28.5984C25.5855 29.7822 26.5246 31.1877 27.1653 32.7345C27.806 34.2812 28.1357 35.9391 28.1357 37.6133C28.1357 40.9945 26.7925 44.2373 24.4016 46.6282C22.0107 49.0191 18.768 50.3623 15.3867 50.3623C12.0055 50.3623 8.76272 49.0191 6.37182 46.6282C3.98092 44.2373 2.63772 40.9945 2.63772 37.6133Z" fill="#38D46D"/>
-              <path d="M45.0127 7.25347L30.506 7.25347M45.0127 7.25347L45.0127 21.7602M45.0127 7.25347L28.0882 24.178" stroke="#38D46D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="col">
-              <h5>Clock-out</h5>
-              <h4>
-                {{"--:--"}}
-              </h4>
-            </div>
-          </div>
-        </div>
-        <a href="" class="btn-fill"> 
-          <div class="white">
-            Clock-in
-          </div>
-        </a>
-      </div>
-    </div> --}}
     <div class="row">
       {{-- Tempat Tanggal --}}
       <div class="content-card ccmd">
@@ -158,7 +142,7 @@
             </p>
           </div>
           {{-- LINK G MAPS --}}
-          <a href="{{$activity->river->locationUrl}}">Tampilkan rute di Peta</a>
+          <a href="{{$activity->river->locationUrl}}" target="_blank">Tampilkan rute di Peta</a>
         </div>
         <div class="row-spaced">
           <div class="row">
@@ -184,7 +168,7 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12C3 14.3869 3.94821 16.6761 5.63604 18.364C7.32387 20.0518 9.61305 21 12 21C14.3869 21 16.6761 20.0518 18.364 18.364C20.0518 16.6761 21 14.3869 21 12C21 9.61305 20.0518 7.32387 18.364 5.63604C16.6761 3.94821 14.3869 3 12 3ZM4.54286 12C4.54286 11.0207 4.73574 10.051 5.1105 9.14628C5.48525 8.24153 6.03454 7.41946 6.727 6.727C7.41946 6.03454 8.24153 5.48525 9.14628 5.1105C10.051 4.73574 11.0207 4.54286 12 4.54286C12.9793 4.54286 13.949 4.73574 14.8537 5.1105C15.7585 5.48525 16.5805 6.03454 17.273 6.727C17.9655 7.41946 18.5147 8.24153 18.8895 9.14628C19.2643 10.051 19.4571 11.0207 19.4571 12C19.4571 13.9778 18.6715 15.8745 17.273 17.273C15.8745 18.6715 13.9778 19.4571 12 19.4571C10.0222 19.4571 8.12549 18.6715 6.727 17.273C5.32852 15.8745 4.54286 13.9778 4.54286 12Z" fill="#838181"/>
             </svg>
             <p>
-              {{"13:00"}} - {{"18:00"}} WIB
+              {{ \Carbon\Carbon::parse($activity->startTime)->format('H:i') }} - {{ \Carbon\Carbon::parse($activity->endTime)->format('H:i') }} WIB
             </p>
           </div>
       </div>
@@ -194,12 +178,14 @@
           Kontak Fasilitator
         </h5>
         <div class="row">
-          <div class="profpic"></div>
+          <div class="profpic">
             <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
           </div>
-          <div class="selected">
-              {{$activity->fasilitator->user->name}}
-          </div>
+          <a href="/fasilitator/{{ $activity->fasilitator->slug }}" class="selected">
+            <p class="selected">
+              {{$activity->fasilitator->user->name }}
+            </p>
+         </a>
         </div>
         <div class="row">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -219,7 +205,6 @@
     {{-- Deskripsi --}}
     <div class="content-card cclg">
       <h5>
-        Deskripsi Aktivitas
       </h5>
       <p>
         {{$activity->description}}
@@ -248,7 +233,6 @@
       <h5>
         Kriteria Sukarelawan
       </h5>
-
       @php
           $criteriaCounter = 1;
       @endphp
@@ -269,7 +253,6 @@
         Perlengkapan Sukarelawan
       </h5>
       <div class="perlengkapan-container">
-
         @php
             $perCounter = 1;
         @endphp
