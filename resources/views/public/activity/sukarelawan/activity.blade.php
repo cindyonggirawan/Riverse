@@ -5,6 +5,7 @@
 @endphp
 
 @php
+    // NOTE: Buat checking status Sukarelawan di Aktivitas tertentu
     $isTerdaftar = false;
     $isLiked = false;
 
@@ -24,6 +25,9 @@
     }
     // dd($isTerdaftar);
     // dd($isLiked);
+@endphp
+@php
+    // NOTE: Buat checking apakah Sukarelawan udh bisa ClockIn / Clockout
 @endphp
 
 @extends('layout.index')
@@ -89,7 +93,7 @@
                                         "
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <p id="likeCount">{{ $likeCount }}</p>
+                                <p id="likeCount">{{ $activity->likeCount() }}</p>
                             </div>
                         </button>
                     </form>
@@ -137,7 +141,7 @@
                 </p>
                 <div class="progress-bar">
                     @php
-                        $joinedPercentage = ceil($activity->joinedSukarelawanCount() / $activity->minimumNumOfSukarelawan);
+                        $joinedPercentage = ceil($activity->joinedSukarelawanCount() / $activity->minimumNumOfSukarelawan) * 10;
                     @endphp
                     <div class="progress-fill" style="width: {{ $joinedPercentage }}%">
                     </div>
@@ -193,9 +197,9 @@
                                 </svg>
                                 <div class="col">
                                     <h5>Clock-in</h5>
-                                    <h4>
-                                        {{ '--:--' }}
-                                    </h4>
+                                    <h2>
+                                        {{ substr($activity->startTime, 0, 5) }}
+                                    </h2>
                                 </div>
                             </div>
                             <div class="clock-time-container clockout">
@@ -214,17 +218,27 @@
                                 </svg>
                                 <div class="col">
                                     <h5>Clock-out</h5>
-                                    <h4>
-                                        {{ '--:--' }}
-                                    </h4>
+                                    <h2>
+                                        {{ substr($activity->endTime, 0, 5) }}
+                                    </h2>
                                 </div>
                             </div>
                         </div>
-                        <a href="" class="btn-fill">
-                            <div class="white">
-                                Clock-in
-                            </div>
-                        </a>
+
+                        @if ($activity->isEligibleForClockIn())
+                            <a href="" class="btn-fill">
+                                <div class="white">
+                                    Clock-in
+                                </div>
+                            </a>
+                        @else
+                            <a href="" class="btn-fill  bg-disabled">
+                                <div class="white">
+                                    Clock-in
+                                </div>
+                            </a>
+                        @endif
+
                     </div>
                 </div>
             @endif
@@ -277,7 +291,17 @@
                             </p>
                         </div>
                         {{-- LINK G MAPS --}}
-                        <a href="">Tambahkan Jadwal ke Kalendar</a>
+                        @php
+                            $eventDetails = 'Gathering Point Location';
+                            $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
+
+                            $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
+                            $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
+
+                            $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
+                        @endphp
+                        <a href="{{ $googleCalendarUrl }}">Tambahkan
+                            Jadwal ke Kalendar</a>
                     </div>
                     <div class="row">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

@@ -51,16 +51,16 @@ class ActivityController extends Controller
 
             if ($sortBy === 'dateClosest') {
                 $query->orderBy('cleanUpDate');
-            } elseif ($sortBy === 'dateFarthest') {
+            } 
+            elseif ($sortBy === 'dateFarthest') {
                 $query->orderByDesc('cleanUpDate');
             }
-
-            // TODO: fix likes sorting
             elseif ($sortBy === 'mostLikes') {
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
                 }])->orderByDesc('like_count');
-            } elseif ($sortBy === 'leastLikes') {
+            } 
+            elseif ($sortBy === 'leastLikes') {
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
                 }])->orderBy('like_count');
@@ -736,19 +736,50 @@ class ActivityController extends Controller
 
     }
 
-
-    
-
-
     public function clockIn(Activity $activity){
+        //check if activity status is eligible [Terdaftar]
+        $sukarelawan = auth()->user()->sukarelawan;
+        $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
+        if (!$sukarelawanActivityDetail) {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Status Invalid');
+        }
+        
+        $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
+        if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Status Invalid');
+        }
 
-        //check if activity status is eligible
+
+        //check if currDate === cleanUpDate
+        $currDate = now()->toDateString();
+        $cleanUpDate = $activity->cleanUpDate;
+        if ($currDate !== $cleanUpDate) {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Invalid Date');
+        }
+
         //check if the time is within the time range, startTime +- 30min
+        $startTime = Carbon::parse($activity->startTime);
+        $currentTime = now();
+
+        if ($currentTime->greaterThanOrEqualTo($startTime->subMinutes(30)) && $currentTime->lessThanOrEqualTo($startTime->addMinutes(30))) {
+        } else {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Invalid Time');
+        }
+
         //check if sukarelawan is at/near designated location
+
     }
 
     public function clockOut(Activity $activity){
-        //check if activity status is eligible
+        //check if activity status is eligible [ClockedIn]
         //check if the time is within the time range, endTime +- 30min
         //check if sukarelawan is at/near designated location
     }

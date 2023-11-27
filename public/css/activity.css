@@ -893,3 +893,7 @@ select.searchbox option.placeholder {
 .bg-danger {
     background-color: #e21919;
 }
+
+.bg-disabled {
+    background-color: #838181;
+}
