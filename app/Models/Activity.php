@@ -71,13 +71,4 @@ class Activity extends Model
     {
         return 0;
     }
-
-    public function scopeSortByLikes($query, $order = 'desc')
-    {
-        return $query->select('activities.*')
-            ->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
-                $query->where('isLiked', true);
-            }])
-            ->orderBy('likes', $order);
-    }
 }

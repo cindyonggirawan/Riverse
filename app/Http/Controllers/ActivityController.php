@@ -56,18 +56,18 @@ class ActivityController extends Controller
             }
 
             // TODO: fix likes sorting
-
             elseif ($sortBy === 'mostLikes') {
-                $query->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
+                $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
-                }])->orderBy('likes', 'desc');
+                }])->orderByDesc('like_count');
             } elseif ($sortBy === 'leastLikes') {
-                $query->withCount(['sukarelawanActivityDetails as likes' => function ($query) {
+                $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
-                }])->orderBy('likes', 'asc');
+                }])->orderBy('like_count');
             }
         } elseif ($request->has('reset')) {
             //reset sorting
+            $query->latest();
         }
 
         $activities = $query->get();
