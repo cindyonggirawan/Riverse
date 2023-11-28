@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fasilitator;
 use App\Models\User;
+use App\Models\Fasilitator;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
+use Illuminate\Support\Facades\Storage;
 
 class VerifyFasilitatorController extends Controller
 {
@@ -176,6 +177,9 @@ class VerifyFasilitatorController extends Controller
             ->get();
 
         foreach ($fasilitators as $fasilitator) {
+            if ($fasilitator->logoImageUrl) {
+                Storage::delete($fasilitator->logoImageUrl);
+            }
             Fasilitator::destroy($fasilitator->id);
             User::destroy($fasilitator->id);
         }
