@@ -40,8 +40,8 @@
     <script src="{{ asset('js/likeActivity.js') }}"></script>
 
     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#groupLinkModal">
-  Open Modal
-</button> --}}
+        Open Modal
+    </button> --}}
     <div class="modal" id="groupLinkModal">
         <div class="modal-content">
             <div class="modal-content-body">
@@ -50,6 +50,9 @@
                     Masuk ke dalam group chat
                 </p>
                 <div class="barcode-container">
+                    @php
+                        //TODO: Barcode script here:
+                    @endphp
                     <img src="" alt="">
                 </div>
                 <p class="disable">
@@ -97,10 +100,9 @@
                             </div>
                         </button>
                     </form>
-
-
-
                 </div>
+
+
                 <div class="row">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 19"
                         fill="none">
@@ -124,12 +126,12 @@
                     @else
                         <form method="POST" action="{{ route('activities.join', ['activity' => $activity->slug]) }}">
                             @csrf
+                            {{-- <button type="submit" class="btn-fill full" data-toggle="modal"
+                                data-target="#groupLinkModal">Daftar Aktivitas</button> --}}
                             <button type="submit" class="btn-fill full">Daftar Aktivitas</button>
                         </form>
                     @endif
                 </div>
-
-
             </div>
             {{-- Lowongan Sukarelawan --}}
             <div class="content-card">
@@ -148,25 +150,37 @@
                 </div>
             </div>
 
+            @if ($isTerdaftar)
+                {{-- Link Group --}}
+                <div class="content-card">
+                    <div class="row-spaced">
+                        <h5>Link Group</h5>
 
-            {{-- TODO: add: IF status == registered, show link group --}}
-            {{-- @if (sukarelawan . status == registered) --}}
-            {{-- Link Group --}}
-            {{-- <div class="content-card">
-        <div class="row-spaced">
-          <h5>Link Group</h5>
-          <button>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6001 15.1996C1.6001 15.8361 1.85295 16.4466 2.30304 16.8967C2.75313 17.3468 3.36358 17.5996 4.0001 17.5996H6.4001V15.9996H4.0001C3.78792 15.9996 3.58444 15.9153 3.43441 15.7653C3.28438 15.6153 3.2001 15.4118 3.2001 15.1996V3.99961C3.2001 3.78744 3.28438 3.58395 3.43441 3.43392C3.58444 3.28389 3.78792 3.19961 4.0001 3.19961H15.2001C15.4123 3.19961 15.6158 3.28389 15.7658 3.43392C15.9158 3.58395 16.0001 3.78744 16.0001 3.99961V6.39961H8.8001C8.16358 6.39961 7.55313 6.65247 7.10304 7.10255C6.65295 7.55264 6.4001 8.16309 6.4001 8.79961V19.9996C6.4001 20.6361 6.65295 21.2466 7.10304 21.6967C7.55313 22.1468 8.16358 22.3996 8.8001 22.3996H20.0001C20.6366 22.3996 21.2471 22.1468 21.6972 21.6967C22.1472 21.2466 22.4001 20.6361 22.4001 19.9996V8.79961C22.4001 8.16309 22.1472 7.55264 21.6972 7.10255C21.2471 6.65247 20.6366 6.39961 20.0001 6.39961H17.6001V3.99961C17.6001 3.36309 17.3472 2.75264 16.8972 2.30255C16.4471 1.85247 15.8366 1.59961 15.2001 1.59961H4.0001C3.36358 1.59961 2.75313 1.85247 2.30304 2.30255C1.85295 2.75264 1.6001 3.36309 1.6001 3.99961V15.1996ZM8.0001 8.79961C8.0001 8.58744 8.08438 8.38395 8.23441 8.23392C8.38444 8.08389 8.58792 7.99961 8.8001 7.99961H20.0001C20.2123 7.99961 20.4158 8.08389 20.5658 8.23392C20.7158 8.38395 20.8001 8.58744 20.8001 8.79961V19.9996C20.8001 20.2118 20.7158 20.4153 20.5658 20.5653C20.4158 20.7153 20.2123 20.7996 20.0001 20.7996H8.8001C8.58792 20.7996 8.38444 20.7153 8.23441 20.5653C8.08438 20.4153 8.0001 20.2118 8.0001 19.9996V8.79961Z" fill="#838181"/>
-            </svg>
-          </button>
-        </div>
-        <a href="">{{"Open Group Link"}}</a>
-        <div class="barcode-container">
-          <img src="" alt="">
-        </div>
-      </div>    --}}
-            {{-- @endif --}}
+                        <input id= "groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
+
+                        <div class="tooltip">
+                            <button onclick="copyGroupChatUrl()">
+                                <span class="tooltiptext" id="myTooltip">Copy Link</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M1.6001 15.1996C1.6001 15.8361 1.85295 16.4466 2.30304 16.8967C2.75313 17.3468 3.36358 17.5996 4.0001 17.5996H6.4001V15.9996H4.0001C3.78792 15.9996 3.58444 15.9153 3.43441 15.7653C3.28438 15.6153 3.2001 15.4118 3.2001 15.1996V3.99961C3.2001 3.78744 3.28438 3.58395 3.43441 3.43392C3.58444 3.28389 3.78792 3.19961 4.0001 3.19961H15.2001C15.4123 3.19961 15.6158 3.28389 15.7658 3.43392C15.9158 3.58395 16.0001 3.78744 16.0001 3.99961V6.39961H8.8001C8.16358 6.39961 7.55313 6.65247 7.10304 7.10255C6.65295 7.55264 6.4001 8.16309 6.4001 8.79961V19.9996C6.4001 20.6361 6.65295 21.2466 7.10304 21.6967C7.55313 22.1468 8.16358 22.3996 8.8001 22.3996H20.0001C20.6366 22.3996 21.2471 22.1468 21.6972 21.6967C22.1472 21.2466 22.4001 20.6361 22.4001 19.9996V8.79961C22.4001 8.16309 22.1472 7.55264 21.6972 7.10255C21.2471 6.65247 20.6366 6.39961 20.0001 6.39961H17.6001V3.99961C17.6001 3.36309 17.3472 2.75264 16.8972 2.30255C16.4471 1.85247 15.8366 1.59961 15.2001 1.59961H4.0001C3.36358 1.59961 2.75313 1.85247 2.30304 2.30255C1.85295 2.75264 1.6001 3.36309 1.6001 3.99961V15.1996ZM8.0001 8.79961C8.0001 8.58744 8.08438 8.38395 8.23441 8.23392C8.38444 8.08389 8.58792 7.99961 8.8001 7.99961H20.0001C20.2123 7.99961 20.4158 8.08389 20.5658 8.23392C20.7158 8.38395 20.8001 8.58744 20.8001 8.79961V19.9996C20.8001 20.2118 20.7158 20.4153 20.5658 20.5653C20.4158 20.7153 20.2123 20.7996 20.0001 20.7996H8.8001C8.58792 20.7996 8.38444 20.7153 8.23441 20.5653C8.08438 20.4153 8.0001 20.2118 8.0001 19.9996V8.79961Z"
+                                        fill="#838181" />
+                                </svg>
+                            </button>
+                        </div>
+
+                    </div>
+                    {{-- @php
+                        use SimpleSoftwareIO\QrCode\Facades\QrCode;
+                        QrCode::generate("$activity->groupChatUrl");
+                    @endphp --}}
+                    <a href="{{ $activity->groupChatUrl }}" target="_blank">{{ 'Open Group Link' }}</a>
+                    <div class="barcode-container">
+                        <img src="" alt="">
+                    </div>
+                </div>
+            @endif
 
         </div>
         <div class="col">
@@ -203,8 +217,8 @@
                                 </div>
                             </div>
                             <div class="clock-time-container clockout">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53"
+                                    viewBox="0 0 53 53" fill="none">
                                     <path
                                         d="M16.7056 28.8218C16.7056 28.472 16.5666 28.1365 16.3193 27.8892C16.072 27.6419 15.7365 27.5029 15.3867 27.5029C15.0369 27.5029 14.7015 27.6419 14.4542 27.8892C14.2068 28.1365 14.0679 28.472 14.0679 28.8218V37.6142C14.0678 37.8378 14.1245 38.0578 14.2328 38.2534C14.3411 38.449 14.4973 38.6139 14.6869 38.7326L19.9623 42.0297C20.2589 42.2154 20.6171 42.2756 20.9581 42.1971C21.127 42.1582 21.2865 42.0865 21.4276 41.9859C21.5687 41.8854 21.6887 41.7581 21.7806 41.6112C21.8725 41.4644 21.9346 41.3008 21.9633 41.13C21.992 40.9591 21.9868 40.7843 21.9479 40.6154C21.909 40.4466 21.8373 40.287 21.7368 40.1459C21.6363 40.0048 21.5089 39.8849 21.3621 39.793L16.7056 36.8827V28.8218Z"
                                         fill="#38D46D" />
@@ -290,8 +304,9 @@
                                 {{ $formattedCleanUpDate }}
                             </p>
                         </div>
-                        {{-- LINK G MAPS --}}
+                        {{-- LINK G Calendar --}}
                         @php
+                            //TODO: generate calendar link:
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
 
@@ -300,7 +315,7 @@
 
                             $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
                         @endphp
-                        <a href="{{ $googleCalendarUrl }}">Tambahkan
+                        <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
                             Jadwal ke Kalendar</a>
                     </div>
                     <div class="row">
@@ -425,4 +440,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function copyGroupChatUrl() {
+            var copyText = document.getElementById("groupChatUrl");
+            copyText.type = "text";
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            copyText.type = "hidden";
+
+
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copied: " + copyText.value;
+        }
+    </script>
 @endsection

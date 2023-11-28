@@ -159,9 +159,19 @@
               {{$formattedCleanUpDate}}
             </p>
           </div>
-          {{-- LINK G MAPS --}}
-          <a href="">Tambahkan Jadwal ke Kalendar</a>
-        </div>
+              {{-- LINK G Calendar --}}
+              @php
+              //TODO: generate calendar link:
+              $eventDetails = 'Gathering Point Location';
+              $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
+
+              $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
+              $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
+
+              $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
+          @endphp
+          <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
+              Jadwal ke Kalendar</a>
         <div class="row">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12.7714 6.85737C12.7714 6.65277 12.6901 6.45655 12.5454 6.31188C12.4008 6.16721 12.2045 6.08594 11.9999 6.08594C11.7953 6.08594 11.5991 6.16721 11.4545 6.31188C11.3098 6.45655 11.2285 6.65277 11.2285 6.85737V12.0002C11.2285 12.131 11.2617 12.2597 11.325 12.3741C11.3883 12.4885 11.4797 12.585 11.5906 12.6544L14.6763 14.583C14.8498 14.6915 15.0593 14.7267 15.2588 14.6808C15.3575 14.6581 15.4508 14.6161 15.5334 14.5573C15.6159 14.4986 15.6861 14.4241 15.7398 14.3382C15.7936 14.2523 15.8299 14.1566 15.8467 14.0567C15.8635 13.9567 15.8604 13.8545 15.8377 13.7557C15.815 13.6569 15.773 13.5636 15.7142 13.4811C15.6554 13.3985 15.5809 13.3284 15.495 13.2746L12.7714 11.5723V6.85737Z" fill="#838181"/>

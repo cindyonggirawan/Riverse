@@ -111,8 +111,19 @@
                                 {{ '2 Juni 2023' }}
                             </p>
                         </div>
-                        {{-- LINK G MAPS --}}
-                        <a href="">Tambahkan Jadwal ke Kalendar</a>
+                        {{-- LINK G Calendar --}}
+                        @php
+                            //TODO: generate calendar link:
+                            $eventDetails = 'Gathering Point Location';
+                            $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
+
+                            $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
+                            $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
+
+                            $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
+                        @endphp
+                        <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
+                            Jadwal ke Kalendar</a>
                     </div>
                     <div class="row">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
