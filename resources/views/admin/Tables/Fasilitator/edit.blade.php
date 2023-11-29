@@ -142,17 +142,30 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="flLogoImage" class="col-sm-4 col-form-label">Logo Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="logoImage_link" id="flLogoImage" class="form-control">
+                            <label for="logoImageUrl" class="col-sm-4 col-form-label required">Logo Image</label>
+                            <input type="hidden" name="oldlogoImageUrl" id="oldlogoImageUrl"
+                                value="{{ $fasilitator->logoImageUrl }}">
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input @error('logoImageUrl') is-invalid @enderror"
+                                        name="logoImageUrl" id="logoImageUrl" accept="image/*" onchange="previewImage()"
+                                        required>
+                                    <label class="custom-file-label" for="logoImageUrl">Choose</label>
+                                </div>
                             </div>
-                            @error('logoImage_link')
+                            @if ($fasilitator->logoImageUrl !== null)
+                                <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
+                                    alt="{{ $fasilitator->user->name }}"
+                                    class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview">
+                            @else
+                                <img class="col-sm-4 offset-sm-4 img-fluid img-preview"></img>
+                            @endif
+
+                            @error('logoImageUrl')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="logoPreview" src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}" alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
                         </div>
-
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -171,18 +184,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const logoImageInp = document.querySelector("#flLogoImage");
-        const logoImageEl = document.querySelector("#logoPreview");
-
-        logoImageInp.onchange = (ev) => {
-            const [file] = logoImageInp.files;
-            if (file) {
-                logoImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-    </script>
-@endpush

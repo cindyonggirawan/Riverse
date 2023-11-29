@@ -940,3 +940,27 @@ select.searchbox option.placeholder {
     visibility: visible;
     opacity: 1;
 }
+
+.outline-btn-small {
+    text-decoration: none;
+
+    max-width: 90px;
+    height: 35px;
+    padding: 6px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    border: 2px solid #19b2e2;
+    color: #19b2e2;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.outline-btn-small:hover {
+    border: 2px solid #5822ca;
+    color: white;
+    background-color: #5822ca;
+    transition-duration: 0.4s;
+}

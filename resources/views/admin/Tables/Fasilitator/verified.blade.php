@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Gambar Logo</th>
                                 <th>Nama</th>
                                 <th>Tipe</th>
                                 <th>Alamat</th>
@@ -28,6 +29,15 @@
                             @foreach ($fasilitators as $fasilitator)
                                 <tr>
                                     <td>{{ $fasilitator->id }}</a></td>
+                                    <td>
+                                        @if ($fasilitator->logoImageUrl !== null)
+                                            <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
+                                                alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-small">
+                                        @else
+                                            <img src="{{ asset('images/Fasilitator/logoImages/default.png') }}"
+                                                alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-small">
+                                        @endif
+                                    </td>
                                     <td>{{ $fasilitator->user->name }}</td>
                                     <td>{{ $fasilitator->fasilitatorType->name }}</td>
                                     <td>{{ $fasilitator->address }}</td>
@@ -38,8 +48,8 @@
                                     </td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="unverifyForm" action="/unverify/fasilitators/{{ $fasilitator->slug }}"
-                                                method="post">
+                                            <form id="unverifyForm"
+                                                action="/unverify/fasilitators/{{ $fasilitator->slug }}" method="post">
                                                 @method('patch')
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-secondary btn-sm btn-square">

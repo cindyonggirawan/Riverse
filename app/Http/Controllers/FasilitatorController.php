@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Fasilitator;
-use App\Models\FasilitatorType;
 use App\Models\Generator;
+use App\Models\Fasilitator;
 use Illuminate\Http\Request;
-use App\Models\VerificationStatus;
+use App\Models\FasilitatorType;
 use Illuminate\Validation\Rule;
+use App\Models\VerificationStatus;
+use Illuminate\Support\Facades\Storage;
 
 class FasilitatorController extends Controller
 {
@@ -31,6 +32,9 @@ class FasilitatorController extends Controller
 
     public function destroy(Fasilitator $fasilitator)
     {
+        if ($fasilitator->logoImageUrl) {
+            Storage::delete($fasilitator->logoImageUrl);
+        }
         Fasilitator::destroy($fasilitator->id);
         User::destroy($fasilitator->id);
 
@@ -74,13 +78,20 @@ class FasilitatorController extends Controller
                 'regex:/^(?!62)\d{10,13}$/',
                 Rule::unique('fasilitators')->ignore($fasilitator->id),
             ],
-            'logoImage_link' => 'nullable|image'
+            'logoImageUrl' => 'required|image'
         ]);
 
-        $validated['logoImage_link'] = $fasilitator->logoImageUrl;
+        $id = $fasilitator->id;
 
-        if ($request->hasFile('logoImage_link')) {
-            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
+        $file = $request->file('logoImageUrl');
+        if ($file) {
+            if ($request->oldLogoImageUrl) {
+                Storage::delete($request->oldLogoImageUrl);
+            }
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $logoImageUrl = $file->storeAs('Fasilitator/logoImages', $fileName);
+        } else {
+            $logoImageUrl = $fasilitator->logoImageUrl;
         }
 
         $slug = $fasilitator->slug;
@@ -129,7 +140,7 @@ class FasilitatorController extends Controller
             'verified_at' => $verified_at,
             'rejected_at' => $rejected_at,
             'reasonForRejection' => $reasonForRejection,
-            'logoImageUrl' => $validated['logoImage_link'],
+            'logoImageUrl' => $logoImageUrl,
             'slug' => $slug
         ]);
 

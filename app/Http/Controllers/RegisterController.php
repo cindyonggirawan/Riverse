@@ -94,14 +94,18 @@ class RegisterController extends Controller
             'description' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators',
-            'logoImage_link' => ['required', 'image']
+            'logoImageUrl' => 'required|image'
         ]);
 
-        if ($request->hasFile('logoImage_link')) {
-            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
+        $id = Generator::generateId(Fasilitator::class);
+
+        $file = $request->file('logoImageUrl');
+        $logoImageUrl = null;
+        if ($file) {
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $logoImageUrl = $file->storeAs('Fasilitator/logoImages', $fileName);
         }
 
-        $id = Generator::generateId(Fasilitator::class);
         $slug = Generator::generateSlug(User::class, $request->name);
 
         User::create([
@@ -120,7 +124,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $validated['logoImage_link'],
+            'logoImageUrl' => $logoImageUrl,
             'slug' => $slug
         ]);
 

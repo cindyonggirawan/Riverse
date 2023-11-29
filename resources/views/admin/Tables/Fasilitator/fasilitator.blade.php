@@ -14,6 +14,17 @@
                         <dt class="col-sm-4">Email</dt>
                         <dd class="col-sm-8">{{ $fasilitator->user->email }}</dd>
 
+                        <dt class="col-sm-4">Logo Image</dt>
+                        <dd class="col-sm-8">
+                            @if ($fasilitator->logoImageUrl !== null)
+                                <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
+                                    alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-big">
+                            @else
+                                <img src="{{ asset('images/Fasilitator/logoImages/default.png') }}"
+                                    alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-big">
+                            @endif
+                        </dd>
+
                         <dt class="col-sm-4">Name</dt>
                         <dd class="col-sm-8">{{ $fasilitator->user->name }}</dd>
 
