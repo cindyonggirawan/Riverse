@@ -156,6 +156,11 @@ select.searchbox option.placeholder {
     gap: 20px;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
 .activities-body .row {
     display: flex;
     flex-direction: row;

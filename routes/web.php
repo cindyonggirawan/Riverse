@@ -232,10 +232,6 @@ Route::get('/levels', [LevelController::class, 'index']);
 
 Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
 
-
-
-
-
 Route::get('/benefits/create', [BenefitController::class, 'create']);
 
 Route::post('/benefits/create', [BenefitController::class, 'store']);

@@ -67,16 +67,12 @@
             </div>
         </div>
     </div>
+
     <div class="activities-body">
         <div class="col">
-            {{-- Image --}}
             <div class="content-card-center">
-                {{-- For Image --}}
                 <div class="img-container"
                     style="background-image: url('{{ asset('/images/' . ($activity->bannerImageUrl ?? Config::get('constants.default_banner_image'))) }}');">
-
-
-                    {{-- Like Button --}}
                     <form method="POST" action="{{ route('activities.like', ['activity' => $activity->slug]) }}">
                         @csrf
                         <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
@@ -155,9 +151,7 @@
                 <div class="content-card">
                     <div class="row-spaced">
                         <h5>Link Group</h5>
-
                         <input id= "groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
-
                         <div class="tooltip">
                             <button onclick="copyGroupChatUrl()">
                                 <span class="tooltiptext" id="myTooltip">Copy Link</span>
@@ -169,20 +163,22 @@
                                 </svg>
                             </button>
                         </div>
-
                     </div>
-                    {{-- @php
+                    @php
                         use SimpleSoftwareIO\QrCode\Facades\QrCode;
-                        QrCode::generate("$activity->groupChatUrl");
-                    @endphp --}}
+                    @endphp
                     <a href="{{ $activity->groupChatUrl }}" target="_blank">{{ 'Open Group Link' }}</a>
                     <div class="barcode-container">
-                        <img src="" alt="">
+                        <div class="visible-print text-center">
+                            {!! QrCode::size(200)->generate("$activity->groupChatUrl") !!}
+                        </div>
                     </div>
                 </div>
             @endif
 
         </div>
+
+
         <div class="col">
             <h1>
                 {{ $activity->name }}

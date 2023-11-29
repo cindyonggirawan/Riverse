@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $names = ["Null", 'Terdaftar', 'ClockedIn', 'ClockedOut'];
+        $names = ["Null", "Pending",'Terdaftar', 'ClockedIn', 'ClockedOut'];
         foreach ($names as $name) {
             SukarelawanActivityStatus::create([
                 'id' => Generator::generateId(SukarelawanActivityStatus::class),
