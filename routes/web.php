@@ -47,6 +47,9 @@ Route::get('/admin', function () {
 
 Route::get('/', [Controller::class, 'index']);
 
+Route::get('/', [ActivityController::class, 'fetchHomePageActivities']);
+
+
 Route::get('/roles', [RoleController::class, 'index']);
 
 Route::get('/roles/{role:slug}', [RoleController::class, 'show']);
@@ -202,7 +205,7 @@ Route::get('/manage/activities', [ActivityController::class, 'index']);
 
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
 
-Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow']);
+Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow'])->name("activity.publicShow");
 
 Route::get('/manage/activities/{activity:slug}', [ActivityController::class, 'show']);
 
@@ -229,10 +232,6 @@ Route::get('/levels', [LevelController::class, 'index']);
 
 Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
 
-
-
-
-
 Route::get('/benefits/create', [BenefitController::class, 'create']);
 
 Route::post('/benefits/create', [BenefitController::class, 'store']);
@@ -244,3 +243,7 @@ Route::patch('/benefits/{benefit:slug}', [BenefitController::class, 'update']);
 Route::get('/benefits', [BenefitController::class, 'index']);
 
 Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
+
+Route::post('/activities/{activity:slug}/like', [ActivityController::class, 'like'])->name('activities.like');
+Route::post('/activities/{activity:slug}/join', [ActivityController::class, 'joinActivity'])->name('activities.join');
+Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'unjoinActivity'])->name('activities.unjoin');
