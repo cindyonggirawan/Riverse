@@ -38,16 +38,27 @@ class RegisterController extends Controller
             'gender' => 'required',
             'dateOfBirth' => 'required|date_format:d/m/Y',
             'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans',
-            'nationalIdentityCardImageUrl' => 'required|image'
+            'nationalIdentityCardImageUrl' => 'required|image',
+            'profileImageUrl' => 'required|image'
         ]);
 
         $id = Generator::generateId(Sukarelawan::class);
 
         $file = $request->file('nationalIdentityCardImageUrl');
+        $fileProfileImage = $request->file('profileImageUrl');
+
         $nationalIdentityCardImageUrl = null;
+        $profileImageUrl = null;
+
         if ($file) {
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $nationalIdentityCardImageUrl = $file->storeAs('Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl = $file->storeAs('/public/images/Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl ='Sukarelawan/nationalIdentityCardImages/' . $fileName;
+        }
+        if ($fileProfileImage) {
+            $fileName = $id . '.' . $fileProfileImage->getClientOriginalExtension();
+            $profileImageUrl = $fileProfileImage->storeAs('/public/images/Sukarelawan/profileImages', $fileName);
+            $profileImageUrl = 'Sukarelawan/profileImages/' . $fileName;
         }
 
         $slug = Generator::generateSlug(User::class, $request->name);
@@ -69,6 +80,7 @@ class RegisterController extends Controller
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
             'nationalIdentityCardImageUrl' => $nationalIdentityCardImageUrl,
+            'profileImageUrl' => $profileImageUrl,
             'slug' => $slug
         ]);
 
@@ -97,12 +109,19 @@ class RegisterController extends Controller
             'logoImage_link' => ['required', 'image']
         ]);
 
-        if ($request->hasFile('logoImage_link')) {
-            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
-        }
-
         $id = Generator::generateId(Fasilitator::class);
+
         $slug = Generator::generateSlug(User::class, $request->name);
+
+        $fileLogoImage = $request->file('logoImage_link');
+
+        $logoImage_link = null;
+
+        if ($fileLogoImage) {
+            $fileName = $id . '.' . $fileLogoImage->getClientOriginalExtension();
+            $logoImage_link = $fileLogoImage->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImage_link ='Fasilitator/logoImages/' . $fileName;
+        }
 
         User::create([
             'id' => $id,
@@ -120,7 +139,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $validated['logoImage_link'],
+            'logoImageUrl' => $logoImage_link,
             'slug' => $slug
         ]);
 

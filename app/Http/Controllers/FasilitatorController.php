@@ -9,6 +9,7 @@ use App\Models\Generator;
 use Illuminate\Http\Request;
 use App\Models\VerificationStatus;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class FasilitatorController extends Controller
 {
@@ -77,10 +78,16 @@ class FasilitatorController extends Controller
             'logoImage_link' => 'nullable|image'
         ]);
 
-        $validated['logoImage_link'] = $fasilitator->logoImageUrl;
+        $id = $fasilitator->id;
 
-        if ($request->hasFile('logoImage_link')) {
-            $validated['logoImage_link'] = $request->file('logoImage_link')->store('images', 'public');
+        $logoImageUrl = $fasilitator->logoImageUrl;
+
+        $file = $request->file('logoImage_link');
+
+        if ($file) {
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
         }
 
         $slug = $fasilitator->slug;
@@ -129,7 +136,7 @@ class FasilitatorController extends Controller
             'verified_at' => $verified_at,
             'rejected_at' => $rejected_at,
             'reasonForRejection' => $reasonForRejection,
-            'logoImageUrl' => $validated['logoImage_link'],
+            'logoImageUrl' => $logoImageUrl,
             'slug' => $slug
         ]);
 

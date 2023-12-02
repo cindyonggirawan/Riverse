@@ -76,32 +76,28 @@ class SukarelawanController extends Controller
                 'regex:/^\d{16}$/',
                 Rule::unique('sukarelawans')->ignore($sukarelawan->id),
             ],
-            'nationalIdentityCardImageUrl' => 'required|image',
-            'profileImageUrl' => 'required|image'
+            'profileImageUrl' => 'nullable|image',
+            'nationalIdentityCardImageUrl' => 'nullable|image'
         ]);
 
         $id = $sukarelawan->id;
 
+        $nationalIdentityCardImageUrl = $sukarelawan->nationalIdentityCardImageUrl;
+
         $file = $request->file('nationalIdentityCardImageUrl');
         if ($file) {
-            if ($request->oldNationalIdentityCardImageUrl) {
-                Storage::delete($request->oldNationalIdentityCardImageUrl);
-            }
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $nationalIdentityCardImageUrl = $file->storeAs('Sukarelawan/nationalIdentityCardImages', $fileName);
-        } else {
-            $nationalIdentityCardImageUrl = $sukarelawan->nationalIdentityCardImageUrl;
+            $nationalIdentityCardImageUrl = $file->storeAs('/public/images/Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl = 'Sukarelawan/nationalIdentityCardImages/' . $fileName;
         }
 
-        $file = $request->file('profileImageUrl');
-        if ($file) {
-            if ($request->oldProfileImageUrl) {
-                Storage::delete($request->oldProfileImageUrl);
-            }
-            $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $profileImageUrl = $file->storeAs('Sukarelawan/profileImages', $fileName);
-        } else {
-            $profileImageUrl = $sukarelawan->profileImageUrl;
+        $profileImageUrl = $sukarelawan->profileImageUrl;
+
+        $fileProfileImage = $request->file('profileImageUrl');
+        if ($fileProfileImage) {
+            $fileName = $id . '.' . $fileProfileImage->getClientOriginalExtension();
+            $profileImageUrl = $fileProfileImage->storeAs('/public/images/Sukarelawan/profileImages', $fileName);
+            $profileImageUrl = 'Sukarelawan/profileImages/' . $fileName;
         }
 
         $slug = $sukarelawan->slug;

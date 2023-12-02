@@ -22,7 +22,7 @@
             </a>
             <a class="nav-link {{ Request::is('activities') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/activities">Aktivitas</a>
-            <a class="nav-link {{ Request::is('/leaderboard') ? 'selected underlined' : '' }}" aria-current="page"
+            <a class="nav-link {{ Request::is('leaderboard') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/leaderboard">Leaderboard</a>
             <a class="nav-link {{ Request::is('/benefit') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/benefit">Keuntungan</a>
@@ -47,11 +47,11 @@
 
                 @if (auth()->user()->role->name == 'Sukarelawan')
                     <img class="custom-test-profile-image shadow-4-strong"
-                        src={{ asset('storage/' . auth()->user()->sukarelawan->profileImageUrl) }}
+                        src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }}
                         alt="sukarelawan image">
                 @elseif (auth()->user()->role->name == 'Fasilitator')
                     <img class="custom-test-profile-image shadow-4-strong"
-                        src={{ asset('storage/' . auth()->user()->fasilitator->logoImageUrl) }}
+                        src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }}
                         alt="fasilitator image">
                 @endif
 

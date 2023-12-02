@@ -134,7 +134,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="nationalIdentityCardImageUrl" class="col-sm-4 col-form-label required">National
+                            <label for="nationalIdentityCardImageUrl" class="col-sm-4 col-form-label">National
                                 Identity Card Image</label>
                             <input type="hidden" name="oldNationalIdentityCardImageUrl"
                                 id="oldNationalIdentityCardImageUrl"
@@ -144,12 +144,12 @@
                                     <input type="file"
                                         class="custom-file-input @error('nationalIdentityCardImageUrl') is-invalid @enderror"
                                         name="nationalIdentityCardImageUrl" id="nationalIdentityCardImageUrl"
-                                        accept="image/*" onchange="previewImage()" required>
+                                        accept="image/*" onchange="previewImage()">
                                     <label class="custom-file-label" for="nationalIdentityCardImageUrl">Choose</label>
                                 </div>
                             </div>
                             @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
-                                <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                <img src="{{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
                                     alt="{{ $sukarelawan->user->name }}"
                                     class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview">
                             @else
@@ -162,7 +162,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="profileImageUrl" class="col-sm-4 col-form-label required">Profile Image</label>
+                            <label for="profileImageUrl" class="col-sm-4 col-form-label">Profile Image</label>
                             <input type="hidden" name="oldProfileImageUrl" id="oldProfileImageUrl"
                                 value="{{ $sukarelawan->profileImageUrl }}">
                             <div class="input-group col-sm-8">
@@ -170,12 +170,12 @@
                                     <input type="file"
                                         class="custom-file-input custom-file-input-2 @error('profileImageUrl') is-invalid @enderror"
                                         name="profileImageUrl" id="profileImageUrl" accept="image/*"
-                                        onchange="previewImage2()" required>
+                                        onchange="previewImage2()">
                                     <label class="custom-file-label" for="profileImageUrl">Choose</label>
                                 </div>
                             </div>
                             @if ($sukarelawan->profileImageUrl !== null)
-                                <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                <img src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
                                     alt="{{ $sukarelawan->user->name }}"
                                     class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview-2">
                             @else

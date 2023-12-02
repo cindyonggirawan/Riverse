@@ -136,15 +136,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="flLogoImage" class="col-sm-4 col-form-label">Logo Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="logoImage_link" id="flLogoImage" class="form-control">
+                            <label for="logoImage_link" class="col-sm-4 col-form-label required">>Logo Image</label>
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input-2 @error('logoImage_link') is-invalid @enderror"
+                                        name="logoImage_link" id="logoImage_link"
+                                        accept="image/*" onchange="previewImage2()" required>
+                                    <label class="custom-file-label" for="logoImage_link">Choose</label>
+                                </div>
                             </div>
+                            <img class="col-sm-4 offset-sm-4 img-fluid img-preview-2"></img>
                             @error('logoImage_link')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="logoPreview" src='' alt=""
-                                style="aspect-ratio: 1; object-fit: cover;">
                         </div>
 
                         <hr class="my-4">
