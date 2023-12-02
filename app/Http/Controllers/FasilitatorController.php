@@ -78,20 +78,21 @@ class FasilitatorController extends Controller
                 'regex:/^(?!62)\d{10,13}$/',
                 Rule::unique('fasilitators')->ignore($fasilitator->id),
             ],
-            'logoImageUrl' => 'required|image'
+            'logoImageUrl' => 'nullable|image'
         ]);
 
         $id = $fasilitator->id;
 
         $file = $request->file('logoImageUrl');
+
+        $logoImageUrl = $fasilitator->logoImageUrl;
         if ($file) {
             if ($request->oldLogoImageUrl) {
                 Storage::delete($request->oldLogoImageUrl);
             }
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('Fasilitator/logoImages', $fileName);
-        } else {
-            $logoImageUrl = $fasilitator->logoImageUrl;
+            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
         }
 
         $slug = $fasilitator->slug;

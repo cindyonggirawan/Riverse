@@ -1,0 +1,338 @@
+.page-body {
+    width: 65%;
+    background-color: none;
+}
+
+.custom-table-responsive {
+    border-radius: 20px;
+}
+
+.leaderboard-top-container {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-top-content-container {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.leaderboard-top-content-wrap-row-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.purple-text {
+    color: #5822CA;
+    font-weight: bold;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.rank-1-container {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    padding: 15px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid #5822CA; */
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    margin-bottom: 30%;
+}
+
+.rank-2-container {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    padding: 15px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid #5822CA; */
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-position-y: 70%;
+    background-repeat: no-repeat;
+    margin-bottom: 8%;
+}
+
+.rank-3-container {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    padding: 15px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid #5822CA; */
+    background-size: contain;
+    background-position-y: 85%;
+    background-repeat: no-repeat;
+    margin-bottom: 8%;
+}
+
+.top-3-profile-picture {
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+    margin-right: 10px;
+    background-size: cover;
+    margin-bottom: 10px;
+}
+
+.leaderboard-profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-size: cover;
+}
+
+.user-rank-container {
+    width: 96%;
+    height: 90%;
+    background-color: #eee4f9;
+    border-radius: 20px;
+    padding: 15px;
+    justify-content: center;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8%;
+}
+
+.user-rank-container p {
+    font-size: 14px;
+}
+
+.header-text p {
+    color: #838181;
+    text-align: justify;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.custom-container-row {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    justify-content: space-between
+}
+
+.header-custom-container-row {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.rank-column {
+    width: 10%;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+    font-size: 14px;
+    text-align: justify;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-row-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.adjust-rank-1-container-content {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+
+.adjust-rank-2-container-content{
+    width: 100%;
+    height: 80px;
+    display: flex;
+}
+
+.text-center{
+    text-align: center;
+    margin-top: 80px;
+}
+
+.name-column {
+    width: 30%;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+    font-size: 14px;
+    text-align:justify;
+    display: flex;
+    font-weight: 500;
+    flex-direction: row;
+    align-items: center;
+}
+
+.level-column {
+    width: 10%;
+    padding: 20px;
+    border-radius: 20px;
+    color: black;
+    font-size: 12px;
+    text-align: justify;
+    display: flex;
+    font-weight: bold;
+    flex-direction: row;
+    align-items: center;
+}
+
+.level-column-header {
+    width: 10%;
+    padding: 20px;
+    border-radius: 20px;
+    color: black;
+    font-size: 14px;
+    text-align: justify;
+    display: flex;
+    font-weight: bold;
+    flex-direction: row;
+    align-items: center;
+}
+
+.level-column p{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+    color: white;
+    background-color: #703eda;
+}
+
+.activity-qty-column {
+    width: 10%;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    font-weight: 500;
+    flex-direction: row;
+    align-items: center;
+}
+
+.exp-column {
+    width: 10%;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    font-weight: bold;
+    flex-direction: row;
+    align-items: center;
+}
+
+  .custom-container-row:not(:first-child):nth-child(3n+1) {
+    background-color: #d3f0fa;
+  }
+
+  .custom-container-row:not(:first-child):nth-child(3n+2) {
+    background-color: #d6e6f8;
+  }
+
+  .custom-container-row:not(:first-child):nth-child(3n+3) {
+    background-color: #e9dcf8;
+  }
+
+
+  /* ---- */
+  .custom-container-row>p:not(:first-child):nth-child(3n+1) {
+    color: rgb(197, 138, 138);
+  }
+
+  .custom-container-row>p:not(:first-child):nth-child(3n+2)  {
+   color: #0178ff;
+  }
+
+  .custom-container-row>p:not(:first-child):nth-child(3n+3) {
+    color: #4906da;
+  }
+
+
+.ranking-trophy-image {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-size: cover;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.ranking-trophy-image-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #5822CA;
+    border-radius: 10px;
+    background-size: cover;
+    margin-bottom: 20px;
+    margin-top: 30px;
+
+}
+
+.star-image {
+    width: 20px;
+    height: 20px;
+    margin-left: 4px;
+    background-size: cover;
+}
+
+.leaderboard-background-image {
+    width: 500px;
+    height: 310px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    left: -10%;
+}
+
+.empty-leaderboard-background {
+    width: 100%;
+    height: 350px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.crown-image {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
