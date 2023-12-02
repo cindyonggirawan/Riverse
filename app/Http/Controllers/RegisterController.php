@@ -115,7 +115,8 @@ class RegisterController extends Controller
         $logoImageUrl = null;
         if ($file) {
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('Fasilitator/logoImages', $fileName);
+            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
         }
 
         $slug = Generator::generateSlug(User::class, $request->name);

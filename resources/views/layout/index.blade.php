@@ -47,11 +47,19 @@
 
                 @if (auth()->user()->role->name == 'Sukarelawan')
                     <img class="custom-test-profile-image shadow-4-strong"
-                        src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }}
+                        @if (empty(auth()->user()->sukarelawan->profileImageUrl))
+                            src={{ asset('images/Sukarelawan/profileImages/default.png') }}
+                        @else
+                            src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }}
+                        @endif
                         alt="sukarelawan image">
                 @elseif (auth()->user()->role->name == 'Fasilitator')
                     <img class="custom-test-profile-image shadow-4-strong"
-                        src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }}
+                        @if (empty(auth()->user()->fasilitator->logoImageUrl))
+                            src={{ asset('images/Fasilitator/logoImages/default.png') }}
+                        @else
+                            src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }}
+                        @endif
                         alt="fasilitator image">
                 @endif
 

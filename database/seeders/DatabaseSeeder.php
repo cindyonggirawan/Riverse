@@ -21,7 +21,6 @@ use App\Models\River;
 use App\Models\Sukarelawan;
 use App\Models\SukarelawanActivityDetail;
 use App\Models\SukarelawanActivityStatus;
-use App\Models\SukarelawanActivityStatus;
 
 class DatabaseSeeder extends Seeder
 {
