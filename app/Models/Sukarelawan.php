@@ -69,6 +69,7 @@ class Sukarelawan extends Model
         return $this->hasMany(SukarelawanActivityDetail::class, 'sukarelawanId', 'id');
     }
 
+    
     public function experience_histories()
     {
         return $this->hasMany(ExperienceHistory::class, 'sukarelawanId', 'id');

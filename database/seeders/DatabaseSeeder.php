@@ -21,6 +21,7 @@ use App\Models\River;
 use App\Models\Sukarelawan;
 use App\Models\SukarelawanActivityDetail;
 use App\Models\SukarelawanActivityStatus;
+use App\Models\SukarelawanActivityStatus;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
         $names = ['Admin', 'Sukarelawan', 'Fasilitator'];
         foreach ($names as $name) {
             Role::create([
@@ -62,6 +64,15 @@ class DatabaseSeeder extends Seeder
                 'id' => Generator::generateId(ActivityStatus::class),
                 'name' => $name,
                 'slug' => Generator::generateSlug(ActivityStatus::class, $name)
+            ]);
+        }
+
+        $names = ["Null", "Pending",'Terdaftar', 'ClockedIn', 'ClockedOut'];
+        foreach ($names as $name) {
+            SukarelawanActivityStatus::create([
+                'id' => Generator::generateId(SukarelawanActivityStatus::class),
+                'name' => $name,
+                'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, $name)
             ]);
         }
 

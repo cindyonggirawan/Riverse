@@ -136,18 +136,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="logoImage_link" class="col-sm-4 col-form-label required">>Logo Image</label>
+                            <label for="logoImageUrl" class="col-sm-4 col-form-label required">Logo Image</label>
                             <div class="input-group col-sm-8">
                                 <div class="custom-file">
                                     <input type="file"
-                                        class="custom-file-input-2 @error('logoImage_link') is-invalid @enderror"
-                                        name="logoImage_link" id="logoImage_link"
-                                        accept="image/*" onchange="previewImage2()" required>
-                                    <label class="custom-file-label" for="logoImage_link">Choose</label>
+                                        class="custom-file-input @error('logoImageUrl') is-invalid @enderror"
+                                        name="logoImageUrl" id="logoImageUrl" accept="image/*" onchange="previewImage()"
+                                        required>
+                                    <label class="custom-file-label" for="logoImageUrl">Choose</label>
                                 </div>
                             </div>
-                            <img class="col-sm-4 offset-sm-4 img-fluid img-preview-2"></img>
-                            @error('logoImage_link')
+                            <img class="col-sm-4 offset-sm-4 img-fluid img-preview"></img>
+                            @error('logoImageUrl')
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -173,19 +173,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const logoImageInp = document.querySelector("#flLogoImage");
-        const logoImageEl = document.querySelector("#logoPreview");
-
-        logoImageInp.onchange = (ev) => {
-            const [file] = logoImageInp.files;
-            if (file) {
-                logoImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-    </script>
-@endpush
-

@@ -156,6 +156,11 @@ select.searchbox option.placeholder {
     gap: 20px;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
 .activities-body .row {
     display: flex;
     flex-direction: row;
@@ -199,6 +204,10 @@ select.searchbox option.placeholder {
     background-color: #5822ca;
     border-radius: 12px;
     position: relative;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .content-card h5 {
@@ -859,4 +868,99 @@ select.searchbox option.placeholder {
 .form-recap .row {
     display: flex;
     gap: 30%;
+}
+
+.likes :hover {
+    cursor: pointer;
+}
+
+.liked {
+    background-color: #5822ca;
+    border: rgba(255, 255, 255, 0.75) 1.5px solid;
+}
+
+.liked p {
+    color: white;
+}
+
+.btn-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.batas {
+    text-align: center;
+}
+
+.bg-danger {
+    background-color: #e21919;
+}
+
+.bg-disabled {
+    background-color: #838181;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #5722cac8;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    background-color: #5722ca;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.outline-btn-small {
+    text-decoration: none;
+
+    max-width: 90px;
+    height: 35px;
+    padding: 6px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    border: 2px solid #19b2e2;
+    color: #19b2e2;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.outline-btn-small:hover {
+    border: 2px solid #5822ca;
+    color: white;
+    background-color: #5822ca;
+    transition-duration: 0.4s;
 }

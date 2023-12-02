@@ -106,22 +106,19 @@ class RegisterController extends Controller
             'description' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators',
-            'logoImage_link' => ['required', 'image']
+            'logoImageUrl' => 'required|image'
         ]);
 
         $id = Generator::generateId(Fasilitator::class);
 
-        $slug = Generator::generateSlug(User::class, $request->name);
-
-        $fileLogoImage = $request->file('logoImage_link');
-
-        $logoImage_link = null;
-
-        if ($fileLogoImage) {
-            $fileName = $id . '.' . $fileLogoImage->getClientOriginalExtension();
-            $logoImage_link = $fileLogoImage->storeAs('/public/images/Fasilitator/logoImages', $fileName);
-            $logoImage_link ='Fasilitator/logoImages/' . $fileName;
+        $file = $request->file('logoImageUrl');
+        $logoImageUrl = null;
+        if ($file) {
+            $fileName = $id . '.' . $file->getClientOriginalExtension();
+            $logoImageUrl = $file->storeAs('Fasilitator/logoImages', $fileName);
         }
+
+        $slug = Generator::generateSlug(User::class, $request->name);
 
         User::create([
             'id' => $id,
@@ -139,7 +136,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $logoImage_link,
+            'logoImageUrl' => $logoImageUrl,
             'slug' => $slug
         ]);
 

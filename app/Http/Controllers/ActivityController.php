@@ -12,6 +12,8 @@ use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Models\SukarelawanActivityDetail;
+use App\Models\SukarelawanActivityStatus;
 
 class ActivityController extends Controller
 {
@@ -27,14 +29,11 @@ class ActivityController extends Controller
     public function publicIndex(Request $request)
     {
         $query = Activity::query();
-
-        //TODO: fix this relation
-        // // get activites yg sedang dibuka doang!
-        // $query->whereHas('activity_statuses', function ($subQuery) {
-        //     $subQuery->where('name', 'Sedang Dibuka');
-        // });
-
-        //for filtering TODO: clarify this relation
+         // filter by activityStatusId
+         $query->whereHas('activityStatus', function ($subQuery) {
+            $subQuery->where('name', 'Pendaftaran Sedang Dibuka');
+        });
+        
         if ($request->has('searchFasilitator')) {
             $searchFasilitatorName = $request->input('searchFasilitator');
             $query->whereHas('fasilitator.user', function ($subQuery) use ($searchFasilitatorName) {
@@ -43,7 +42,7 @@ class ActivityController extends Controller
         }
 
         if ($request->has('searchActivity')) {
-            $query->where('title', 'like', '%' . $request->input('searchActivity') . '%');
+            $query->where('name', 'like', '%' . $request->input('searchActivity') . '%');
         }
 
         //for sorting
@@ -51,16 +50,24 @@ class ActivityController extends Controller
             $sortBy = $request->input('sortBy');
 
             if ($sortBy === 'dateClosest') {
-                $query->orderBy('date');
-            } elseif ($sortBy === 'dateFarthest') {
-                $query->orderByDesc('date');
-            } elseif ($sortBy === 'mostLikes') {
-                $query->orderBy('likes', 'desc');
-            } elseif ($sortBy === 'leastLikes') {
-                $query->orderBy('likes', 'asc');
+                $query->orderBy('cleanUpDate');
+            } 
+            elseif ($sortBy === 'dateFarthest') {
+                $query->orderByDesc('cleanUpDate');
+            }
+            elseif ($sortBy === 'mostLikes') {
+                $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
+                    $query->where('isLiked', true);
+                }])->orderByDesc('like_count');
+            } 
+            elseif ($sortBy === 'leastLikes') {
+                $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
+                    $query->where('isLiked', true);
+                }])->orderBy('like_count');
             }
         } elseif ($request->has('reset')) {
             //reset sorting
+            $query->latest();
         }
 
         $activities = $query->get();
@@ -70,7 +77,9 @@ class ActivityController extends Controller
 
         return view('public.activities', [
             'title' => 'Activities',
-            'activities' => $activities
+            'activities' => $activities,
+            "searchActivity" => $request->input("searchActivity"),
+            "searchFasilitator" => $request->input("searchFasilitator"),
         ]);
     }
 
@@ -85,26 +94,32 @@ class ActivityController extends Controller
     public function publicShow(Activity $activity)
     {
         $user = auth()->user();
-
+        $likeCount = $activity->likeCount();
+        // dd($likeCount);
+    
         if ($user != null) {
             if (str_starts_with($user->id, 'FR')) {
                 return view('public.activity.fasilitator.activity', [
                     'title' => 'Activity',
-                    'activity' => $activity
+                    'activity' => $activity,
+                    'likeCount' => $likeCount,
                 ]);
             } else {
                 return view('public.activity.sukarelawan.activity', [
                     'title' => 'Activity',
-                    'activity' => $activity
+                    'activity' => $activity,
+                    'likeCount' => $likeCount,
                 ]);
             }
         } else {
             return view('public.activity.guest.activity', [
                 'title' => 'Activity',
-                'activity' => $activity
+                'activity' => $activity,
+                'likeCount' => $likeCount,
             ]);
         }
     }
+    
 
 
     public function create()
@@ -177,14 +192,13 @@ class ActivityController extends Controller
             $hasNewImage = true;
             $previousPicture = Session::get('step1Data.picture');
             if ($previousPicture) {
-                Storage::delete('public/' . $previousPicture);
+                Storage::delete('public/images' . $previousPicture);
             }
 
             $picture = $request->file('picture');
             $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-            $picture->storeAs('public/images', $pictureName);
-            $pictureURL = 'images/' . $pictureName;
-            $validatedStep1['picture'] = $pictureURL;
+            $bannerImageUrl = $picture->storeAs('Activity/bannerImages', $pictureName);
+            $validatedStep1['picture'] = $bannerImageUrl;
         }
 
         if ($hasNewImage == false) {
@@ -235,7 +249,7 @@ class ActivityController extends Controller
             'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
             'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
             'groupChatUrl' => $combinedData["groupChatUrl"],
-            'picture' => $combinedData["picture"],
+            'bannerImageUrl' => $combinedData["picture"],
             'slug' => Generator::generateSlug(Activity::class, $combinedData["name"])
         ]);
 
@@ -408,37 +422,6 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ]
         ]);
-
-
-        // Check if a picture has been uploaded
-        // if ($request->hasFile('picture')) {
-
-        //     $validatedPicture = $request->validate([
-        //         'picture' => "sometimes|image"
-        //     ]);
-
-
-        //     $hasNewImage = true;
-
-        //     // $previousPicture = $activity->picture;
-        //     // if ($previousPicture) {
-        //     //     Storage::delete('public/' . $previousPicture);
-        //     // }
-
-        //     $picture = $request->file('picture');
-        //     $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-        //     $picture->storeAs('public/images', $pictureName);
-        //     $pictureURL = 'images/' . $pictureName;
-        //     $validatedStep1['picture'] = $pictureURL;
-        // }
-
-        // if ($hasNewImage == false) {
-        //     $validatedStep1['picture'] = $request->oldPicture;
-        // }
-
-        // dd($validatedStep1);
-
-
 
         Session::put('step1DataUpdate', $validatedStep1);
     }
@@ -658,5 +641,146 @@ class ActivityController extends Controller
         ]);
 
         return redirect('/manage/activities')->with('success', 'Activity update successful!');
+    }
+
+
+    public function fetchHomePageActivities()
+    {
+        $activities = Activity::latest()->limit(9)->get();
+        return view('home', ['activities' => $activities]);
+    }
+
+
+    public function like(Activity $activity)
+    {
+        $sukarelawan = auth()->user()->sukarelawan;
+        $status = SukarelawanActivityStatus::where('name', 'Null')->first();
+
+    
+        $existingLike = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
+            ->where('activityId', $activity->id)
+            ->first();
+    
+        if ($existingLike) {
+            // If already liked, toggle isLiked
+            $existingLike->update(['isLiked' => !$existingLike->isLiked]);
+            $isLiked = !$existingLike->isLiked;
+        } else {
+            // If not liked, create a like
+            SukarelawanActivityDetail::create([
+                'id' => Generator::generateId(SukarelawanActivityDetail::class),
+                'sukarelawanId' => $sukarelawan->id,
+                'activityId' => $activity->id,
+                'isLiked' => true,
+                'sukarelawanActivityStatusId' => $status->id,
+            ]);
+            $isLiked = true;
+        }
+
+        $message = "Like action successful";
+
+        return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+    }
+    
+    
+    public function joinActivity(Activity $activity)
+    {
+        $sukarelawan = auth()->user()->sukarelawan;
+    
+        if ($sukarelawan) {
+            $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
+                ->where('activityId', $activity->id)
+                ->first();
+
+            $terdaftarStatus = SukarelawanActivityStatus::where('name', 'Terdaftar')->first();
+    
+            if ($existingDetail) {
+                $existingDetail->update(['sukarelawanActivityStatusId' => $terdaftarStatus->id]);
+            } else {
+                // If no row exists, create a new row
+                SukarelawanActivityDetail::create([
+                    'id' => Generator::generateId(SukarelawanActivityDetail::class),
+                    'sukarelawanId' => $sukarelawan->id,
+                    'activityId' => $activity->id,
+                    'sukarelawanActivityStatusId' => $terdaftarStatus->id,
+                    'isLiked' => true,
+                ]);
+            }
+
+        } else {
+            return redirect('/login');
+        }
+        return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+
+    }
+
+    public function unjoinActivity(Activity $activity)
+    {
+        $sukarelawan = auth()->user()->sukarelawan;
+    
+        if ($sukarelawan) {
+            $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
+                ->where('activityId', $activity->id)
+                ->first();
+
+            $cancelStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
+    
+            if ($existingDetail) {
+                $existingDetail->update(['sukarelawanActivityStatusId' => $cancelStatus->id]);
+            }
+
+        } else {
+            return redirect('/login');
+        }
+        return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
+
+    }
+
+    public function clockIn(Activity $activity){
+        //check if activity status is eligible [Terdaftar]
+        $sukarelawan = auth()->user()->sukarelawan;
+        $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
+        if (!$sukarelawanActivityDetail) {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Status Invalid');
+        }
+        
+        $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
+        if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Status Invalid');
+        }
+
+
+        //check if currDate === cleanUpDate
+        $currDate = now()->toDateString();
+        $cleanUpDate = $activity->cleanUpDate;
+        if ($currDate !== $cleanUpDate) {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Invalid Date');
+        }
+
+        //check if the time is within the time range, startTime +- 30min
+        $startTime = Carbon::parse($activity->startTime);
+        $currentTime = now();
+
+        if ($currentTime->greaterThanOrEqualTo($startTime->subMinutes(30)) && $currentTime->lessThanOrEqualTo($startTime->addMinutes(30))) {
+        } else {
+            return redirect()
+                ->route('activity.publicShow', ['activity' => $activity->slug])
+                ->with('error', 'Failed to Clock In, Invalid Time');
+        }
+
+        //check if sukarelawan is at/near designated location
+
+    }
+
+    public function clockOut(Activity $activity){
+        //check if activity status is eligible [ClockedIn]
+        //check if the time is within the time range, endTime +- 30min
+        //check if sukarelawan is at/near designated location
     }
 }

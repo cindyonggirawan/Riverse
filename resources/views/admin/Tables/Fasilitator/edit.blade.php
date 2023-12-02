@@ -142,16 +142,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="logoImage_link" class="col-sm-4 col-form-label">Profile Image</label>
-                            <input type="hidden" name="oldLogoImageUrl" id="oldLogoImageUrl"
+                            <label for="logoImageUrl" class="col-sm-4 col-form-label required">Logo Image</label>
+                            <input type="hidden" name="oldlogoImageUrl" id="oldlogoImageUrl"
                                 value="{{ $fasilitator->logoImageUrl }}">
                             <div class="input-group col-sm-8">
                                 <div class="custom-file">
                                     <input type="file"
-                                        class="custom-file-input custom-file-input-2 @error('logoImage_link') is-invalid @enderror"
-                                        name="logoImage_link" id="logoImage_link" accept="image/*"
-                                        onchange="previewImage2()">
-                                    <label class="custom-file-label" for="logoImage_link">Choose</label>
+                                        class="custom-file-input @error('logoImageUrl') is-invalid @enderror"
+                                        name="logoImageUrl" id="logoImageUrl" accept="image/*" onchange="previewImage()"
+                                        required>
+                                    <label class="custom-file-label" for="logoImageUrl">Choose</label>
                                 </div>
                             </div>
                             @if ($fasilitator->logoImageUrl !== null)
@@ -166,7 +166,6 @@
                                 <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -185,18 +184,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const logoImageInp = document.querySelector("#flLogoImage");
-        const logoImageEl = document.querySelector("#logoPreview");
-
-        logoImageInp.onchange = (ev) => {
-            const [file] = logoImageInp.files;
-            if (file) {
-                logoImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-    </script>
-@endpush
