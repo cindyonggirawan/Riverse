@@ -449,11 +449,6 @@ class ActivityController extends Controller
         $step2Data = Session::get('step2DataUpdate');
         $combinedData = array_merge($step1Data, $step2Data);
 
-        $slug = $activity->slug;
-        if ($activity->name !== $combinedData["name"]) {
-            $slug = Generator::generateSlug(Activity::class, $request->name);
-        }
-
         $activity->update([
             'name' => $combinedData["name"],
             'description' => $combinedData["description"],
@@ -468,13 +463,13 @@ class ActivityController extends Controller
             'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
             'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
             'groupChatUrl' => $combinedData['groupChatUrl'],
-            'slug' => $slug
+            'slug' => Generator::generateSlug(Activity::class, $combinedData['name'])
         ]);
 
         Session::forget('step1DataUpdate');
         Session::forget('step2DataUpdate');
 
-        return $slug;
+        return $activity->slug;
     }
 
     public function update(Request $request, Activity $activity)
@@ -736,10 +731,13 @@ class ActivityController extends Controller
 
     }
 
-    public function clockIn(Activity $activity){
+    public function takeAttendance(Activity $activity, $isWithinGatherRadius = false){
         //check if activity status is eligible [Terdaftar]
         $sukarelawan = auth()->user()->sukarelawan;
         $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
+        
+        // dd($sukarelawanActivityDetail);
+
         if (!$sukarelawanActivityDetail) {
             return redirect()
                 ->route('activity.publicShow', ['activity' => $activity->slug])
@@ -774,13 +772,16 @@ class ActivityController extends Controller
                 ->with('error', 'Failed to Clock In, Invalid Time');
         }
 
-        //check if sukarelawan is at/near designated location
+        // G JADI CHECK VIA LOCATION, karena harus pakai GOOGLE TOKEN
 
+        // IF PASSED ALL LOGIC THEN UPDATE TO CLOCKEDIN
+        $newStatus = SukarelawanActivityStatus::where("name", "ClockedIn")->first();
+        if($newStatus){
+            $sukarelawanActivityDetail->sukarelawanActivityStatusId = $newStatus->id;
+            $sukarelawanActivityDetail->save();
+        }
+
+        return redirect()->route("activity.publicShow", ['activity' => $activity->slug]);
     }
 
-    public function clockOut(Activity $activity){
-        //check if activity status is eligible [ClockedIn]
-        //check if the time is within the time range, endTime +- 30min
-        //check if sukarelawan is at/near designated location
-    }
 }

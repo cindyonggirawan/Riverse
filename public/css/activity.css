@@ -118,8 +118,9 @@ select.searchbox option.placeholder {
 
 .btn-fill:hover,
 .btn-outline:hover {
-    opacity: 75%;
+    /* opacity: 75%; */
     transition: ease-in 0.2s;
+    filter: brightness(0.9);
 }
 
 .full {
@@ -475,6 +476,11 @@ select.searchbox option.placeholder {
 .clockin {
     color: #d88b4c;
     background-color: #fff9e2;
+}
+
+.clockin.success {
+    color: #38d46d;
+    background-color: #e3ffe2;
 }
 
 .clockout {
@@ -963,4 +969,39 @@ select.searchbox option.placeholder {
     color: white;
     background-color: #5822ca;
     transition-duration: 0.4s;
+}
+
+.caption {
+    font-size: 10px;
+    margin-top: -1em;
+    background-color: rgba(255, 255, 255, 0.72);
+    padding: 0.5em 1em;
+    border-radius: 0.2em;
+}
+
+.col-sm {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+/* form.no-style-form {
+    width: fit-content;
+    height: fit-content;
+    max-height: 50px;
+} */
+
+.btn-fill.absensi-btn {
+    background-color: #5722ca;
+    max-height: fit-content;
+}
+
+.btn-fill.absensi-btn.invert {
+    background-color: white;
+    color: #5722ca;
+    /* background-color: #5722ca; */
+    max-height: fit-content;
 }

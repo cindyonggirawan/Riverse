@@ -1,17 +1,17 @@
-if (navigator.geolocation) {
+let isWithinGatherRadius = document.getElementById("isWithinGatherRadius");
+
+function requestLocationPermission() {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-} else {
-    // Geolocation is not supported by the browser
 }
 
-function successCallback(position) {
+function checkIfWithinRadius(position) {
     const userLocation = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
     };
 
-    const gatheringPointUrl = "{{ $activity->gatheringPointUrl ?? '' }}"; //retrieve gathingPointUrl from blade view
-    const maxDistance = 2; //2 km max range
+    const gatheringPointUrl = "{{ $activity->gatheringPointUrl ?? '' }}"; // retrieve gatheringPointUrl from blade view
+    const maxDistance = 2; // 2 km max range
 
     // Check if the Google Maps link contains latitude and longitude
     const match = gatheringPointUrl.match(/@([-0-9.]+),([-0-9.]+)/);
@@ -31,9 +31,12 @@ function successCallback(position) {
 
         if (distance <= maxDistance) {
             console.log("User is nearby the gathering point.");
+            isWithinGatherRadius.value = true;
         } else {
             console.log("User is not nearby the gathering point.");
+            isWithinGatherRadius.value = false;
         }
+        console.log("isWithinGatherRadius:", isWithinGatherRadius.value);
     } else {
         // If latitude and longitude are not found in the URL, use the Geocoding API
         getLatLngFromGoogleMapsLink(gatheringPointUrl)
@@ -59,10 +62,19 @@ function successCallback(position) {
     }
 }
 
-function errorCallback(error) {}
+function successCallback(position) {
+    console.log("Geolocation success callback triggered.");
+    checkIfWithinRadius(position);
+}
+
+function errorCallback(error) {
+    console.error("Geolocation error:", error);
+
+    // Handle errors or provide user instructions here
+}
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
-    //harvesine formula:
+    // Haversine formula:
     const R = 6371; // Radius of the Earth in km
     const dLat = deg2rad(lat2 - lat1);
     const dLon = deg2rad(lon2 - lon1);
@@ -102,3 +114,8 @@ async function getLatLngFromGoogleMapsLink(googleMapsLink) {
         throw error;
     }
 }
+
+window.onload = function () {
+    console.log("Page has loaded!");
+    requestLocationPermission();
+};
