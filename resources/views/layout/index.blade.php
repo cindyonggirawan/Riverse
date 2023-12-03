@@ -46,21 +46,25 @@
                 </h5>
 
                 @if (auth()->user()->role->name == 'Sukarelawan')
-                    <img class="custom-test-profile-image shadow-4-strong"
-                        @if (empty(auth()->user()->sukarelawan->profileImageUrl))
-                            src={{ asset('images/Sukarelawan/profileImages/default.png') }}
-                        @else
-                            src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }}
-                        @endif
-                        alt="sukarelawan image">
+                    <a href="/sukarelawan/{{ auth()->user()->sukarelawan->slug }}">
+                        <div class="profpic">
+                            <img class="custom-test-profile-image shadow-4-strong"
+                                @if (empty(auth()->user()->sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
+                    @else
+                        src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }} @endif
+                                alt="sukarelawan image">
+                        </div>
+                    </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <img class="custom-test-profile-image shadow-4-strong"
-                        @if (empty(auth()->user()->fasilitator->logoImageUrl))
-                            src={{ asset('images/Fasilitator/logoImages/default.png') }}
+                    <a href="/fasilitator/{{ auth()->user()->sukarelawan->slug }}"></a>
+                    <div class="profpic">
+                        <img class="custom-test-profile-image shadow-4-strong"
+                            @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
                         @else
-                            src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }}
-                        @endif
-                        alt="fasilitator image">
+                            src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
+                            alt="fasilitator image">
+
+                    </div>
                 @endif
 
                 {{-- LOGOUT --}}
