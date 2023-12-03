@@ -295,22 +295,24 @@ h1 a {
 }
 
 .profpic {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
     border-radius: 100%;
     background-color: #5822ca;
+    cursor: pointer;
 }
 
 .profpic img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 100%;
 }
 
-.custom-test-profile-image {
+/* .custom-test-profile-image {
     max-width: 70px;
     border-radius: 50%;
-}
+} */
 
 @media (max-width: 768px) {
     .page-body {
