@@ -22,6 +22,7 @@ use Symfony\Component\VarDumper\Cloner\Stub;
 class CliDumper extends AbstractDumper
 {
     public static $defaultColors;
+    /** @var callable|resource|string|null */
     public static $defaultOutput = 'php://stdout';
 
     protected $colors;
@@ -134,6 +135,7 @@ class CliDumper extends AbstractDumper
     public function dumpScalar(Cursor $cursor, string $type, string|int|float|bool|null $value)
     {
         $this->dumpKey($cursor);
+        $this->collapseNextHash = $this->expandNextHash = false;
 
         $style = 'const';
         $attr = $cursor->attr;
@@ -197,6 +199,7 @@ class CliDumper extends AbstractDumper
     public function dumpString(Cursor $cursor, string $str, bool $bin, int $cut)
     {
         $this->dumpKey($cursor);
+        $this->collapseNextHash = $this->expandNextHash = false;
         $attr = $cursor->attr;
 
         if ($bin) {
@@ -290,6 +293,7 @@ class CliDumper extends AbstractDumper
         $this->colors ??= $this->supportsColors();
 
         $this->dumpKey($cursor);
+        $this->expandNextHash = false;
         $attr = $cursor->attr;
 
         if ($this->collapseNextHash) {
@@ -534,7 +538,7 @@ class CliDumper extends AbstractDumper
         if ($this->outputStream !== static::$defaultOutput) {
             return $this->hasColorSupport($this->outputStream);
         }
-        if (null !== static::$defaultColors) {
+        if (isset(static::$defaultColors)) {
             return static::$defaultColors;
         }
         if (isset($_SERVER['argv'][1])) {

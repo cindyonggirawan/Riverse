@@ -15,6 +15,7 @@ use Ramsey\Uuid\Generator\CombGenerator;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Symfony\Component\Uid\Ulid;
+use Throwable;
 use Traversable;
 use voku\helper\ASCII;
 
@@ -49,6 +50,13 @@ class Str
      * @var callable|null
      */
     protected static $uuidFactory;
+
+    /**
+     * The callback that should be used to generate ULIDs.
+     *
+     * @var callable|null
+     */
+    protected static $ulidFactory;
 
     /**
      * The callback that should be used to generate random strings.
@@ -285,6 +293,19 @@ class Str
     }
 
     /**
+     * Convert the case of a string.
+     *
+     * @param  string  $string
+     * @param  int  $mode
+     * @param  string|null  $encoding
+     * @return string
+     */
+    public static function convertCase(string $string, int $mode = MB_CASE_FOLD, ?string $encoding = 'UTF-8')
+    {
+        return mb_convert_case($string, $mode, $encoding);
+    }
+
+    /**
      * Determine if a given string ends with a given substring.
      *
      * @param  string  $haystack
@@ -319,7 +340,7 @@ class Str
         $radius = $options['radius'] ?? 100;
         $omission = $options['omission'] ?? '...';
 
-        preg_match('/^(.*?)('.preg_quote((string) $phrase).')(.*)$/iu', (string) $text, $matches);
+        preg_match('/^(.*?)('.preg_quote((string) $phrase, '/').')(.*)$/iu', (string) $text, $matches);
 
         if (empty($matches)) {
             return null;
@@ -432,6 +453,10 @@ class Str
             return false;
         }
 
+        if (function_exists('json_validate')) {
+            return json_validate($value, 512);
+        }
+
         try {
             json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
@@ -445,13 +470,18 @@ class Str
      * Determine if a given value is a valid URL.
      *
      * @param  mixed  $value
+     * @param  array  $protocols
      * @return bool
      */
-    public static function isUrl($value)
+    public static function isUrl($value, array $protocols = [])
     {
         if (! is_string($value)) {
             return false;
         }
+
+        $protocolList = empty($protocols)
+            ? 'aaa|aaas|about|acap|acct|acd|acr|adiumxtra|adt|afp|afs|aim|amss|android|appdata|apt|ark|attachment|aw|barion|beshare|bitcoin|bitcoincash|blob|bolo|browserext|calculator|callto|cap|cast|casts|chrome|chrome-extension|cid|coap|coap\+tcp|coap\+ws|coaps|coaps\+tcp|coaps\+ws|com-eventbrite-attendee|content|conti|crid|cvs|dab|data|dav|diaspora|dict|did|dis|dlna-playcontainer|dlna-playsingle|dns|dntp|dpp|drm|drop|dtn|dvb|ed2k|elsi|example|facetime|fax|feed|feedready|file|filesystem|finger|first-run-pen-experience|fish|fm|ftp|fuchsia-pkg|geo|gg|git|gizmoproject|go|gopher|graph|gtalk|h323|ham|hcap|hcp|http|https|hxxp|hxxps|hydrazone|iax|icap|icon|im|imap|info|iotdisco|ipn|ipp|ipps|irc|irc6|ircs|iris|iris\.beep|iris\.lwz|iris\.xpc|iris\.xpcs|isostore|itms|jabber|jar|jms|keyparc|lastfm|ldap|ldaps|leaptofrogans|lorawan|lvlt|magnet|mailserver|mailto|maps|market|message|mid|mms|modem|mongodb|moz|ms-access|ms-browser-extension|ms-calculator|ms-drive-to|ms-enrollment|ms-excel|ms-eyecontrolspeech|ms-gamebarservices|ms-gamingoverlay|ms-getoffice|ms-help|ms-infopath|ms-inputapp|ms-lockscreencomponent-config|ms-media-stream-id|ms-mixedrealitycapture|ms-mobileplans|ms-officeapp|ms-people|ms-project|ms-powerpoint|ms-publisher|ms-restoretabcompanion|ms-screenclip|ms-screensketch|ms-search|ms-search-repair|ms-secondary-screen-controller|ms-secondary-screen-setup|ms-settings|ms-settings-airplanemode|ms-settings-bluetooth|ms-settings-camera|ms-settings-cellular|ms-settings-cloudstorage|ms-settings-connectabledevices|ms-settings-displays-topology|ms-settings-emailandaccounts|ms-settings-language|ms-settings-location|ms-settings-lock|ms-settings-nfctransactions|ms-settings-notifications|ms-settings-power|ms-settings-privacy|ms-settings-proximity|ms-settings-screenrotation|ms-settings-wifi|ms-settings-workplace|ms-spd|ms-sttoverlay|ms-transit-to|ms-useractivityset|ms-virtualtouchpad|ms-visio|ms-walk-to|ms-whiteboard|ms-whiteboard-cmd|ms-word|msnim|msrp|msrps|mss|mtqp|mumble|mupdate|mvn|news|nfs|ni|nih|nntp|notes|ocf|oid|onenote|onenote-cmd|opaquelocktoken|openpgp4fpr|pack|palm|paparazzi|payto|pkcs11|platform|pop|pres|prospero|proxy|pwid|psyc|pttp|qb|query|redis|rediss|reload|res|resource|rmi|rsync|rtmfp|rtmp|rtsp|rtsps|rtspu|s3|secondlife|service|session|sftp|sgn|shttp|sieve|simpleledger|sip|sips|skype|smb|sms|smtp|snews|snmp|soap\.beep|soap\.beeps|soldat|spiffe|spotify|ssh|steam|stun|stuns|submit|svn|tag|teamspeak|tel|teliaeid|telnet|tftp|tg|things|thismessage|tip|tn3270|tool|ts3server|turn|turns|tv|udp|unreal|urn|ut2004|v-event|vemmi|ventrilo|videotex|vnc|view-source|wais|webcal|wpid|ws|wss|wtai|wyciwyg|xcon|xcon-userid|xfire|xmlrpc\.beep|xmlrpc\.beeps|xmpp|xri|ymsgr|z39\.50|z39\.50r|z39\.50s'
+            : implode('|', $protocols);
 
         /*
          * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (5.0.7).
@@ -459,7 +489,7 @@ class Str
          * (c) Fabien Potencier <fabien@symfony.com> http://symfony.com
          */
         $pattern = '~^
-            (aaa|aaas|about|acap|acct|acd|acr|adiumxtra|adt|afp|afs|aim|amss|android|appdata|apt|ark|attachment|aw|barion|beshare|bitcoin|bitcoincash|blob|bolo|browserext|calculator|callto|cap|cast|casts|chrome|chrome-extension|cid|coap|coap\+tcp|coap\+ws|coaps|coaps\+tcp|coaps\+ws|com-eventbrite-attendee|content|conti|crid|cvs|dab|data|dav|diaspora|dict|did|dis|dlna-playcontainer|dlna-playsingle|dns|dntp|dpp|drm|drop|dtn|dvb|ed2k|elsi|example|facetime|fax|feed|feedready|file|filesystem|finger|first-run-pen-experience|fish|fm|ftp|fuchsia-pkg|geo|gg|git|gizmoproject|go|gopher|graph|gtalk|h323|ham|hcap|hcp|http|https|hxxp|hxxps|hydrazone|iax|icap|icon|im|imap|info|iotdisco|ipn|ipp|ipps|irc|irc6|ircs|iris|iris\.beep|iris\.lwz|iris\.xpc|iris\.xpcs|isostore|itms|jabber|jar|jms|keyparc|lastfm|ldap|ldaps|leaptofrogans|lorawan|lvlt|magnet|mailserver|mailto|maps|market|message|mid|mms|modem|mongodb|moz|ms-access|ms-browser-extension|ms-calculator|ms-drive-to|ms-enrollment|ms-excel|ms-eyecontrolspeech|ms-gamebarservices|ms-gamingoverlay|ms-getoffice|ms-help|ms-infopath|ms-inputapp|ms-lockscreencomponent-config|ms-media-stream-id|ms-mixedrealitycapture|ms-mobileplans|ms-officeapp|ms-people|ms-project|ms-powerpoint|ms-publisher|ms-restoretabcompanion|ms-screenclip|ms-screensketch|ms-search|ms-search-repair|ms-secondary-screen-controller|ms-secondary-screen-setup|ms-settings|ms-settings-airplanemode|ms-settings-bluetooth|ms-settings-camera|ms-settings-cellular|ms-settings-cloudstorage|ms-settings-connectabledevices|ms-settings-displays-topology|ms-settings-emailandaccounts|ms-settings-language|ms-settings-location|ms-settings-lock|ms-settings-nfctransactions|ms-settings-notifications|ms-settings-power|ms-settings-privacy|ms-settings-proximity|ms-settings-screenrotation|ms-settings-wifi|ms-settings-workplace|ms-spd|ms-sttoverlay|ms-transit-to|ms-useractivityset|ms-virtualtouchpad|ms-visio|ms-walk-to|ms-whiteboard|ms-whiteboard-cmd|ms-word|msnim|msrp|msrps|mss|mtqp|mumble|mupdate|mvn|news|nfs|ni|nih|nntp|notes|ocf|oid|onenote|onenote-cmd|opaquelocktoken|openpgp4fpr|pack|palm|paparazzi|payto|pkcs11|platform|pop|pres|prospero|proxy|pwid|psyc|pttp|qb|query|redis|rediss|reload|res|resource|rmi|rsync|rtmfp|rtmp|rtsp|rtsps|rtspu|s3|secondlife|service|session|sftp|sgn|shttp|sieve|simpleledger|sip|sips|skype|smb|sms|smtp|snews|snmp|soap\.beep|soap\.beeps|soldat|spiffe|spotify|ssh|steam|stun|stuns|submit|svn|tag|teamspeak|tel|teliaeid|telnet|tftp|tg|things|thismessage|tip|tn3270|tool|ts3server|turn|turns|tv|udp|unreal|urn|ut2004|v-event|vemmi|ventrilo|videotex|vnc|view-source|wais|webcal|wpid|ws|wss|wtai|wyciwyg|xcon|xcon-userid|xfire|xmlrpc\.beep|xmlrpc\.beeps|xmpp|xri|ymsgr|z39\.50|z39\.50r|z39\.50s)://                                 # protocol
+            (LARAVEL_PROTOCOLS)://                                 # protocol
             (((?:[\_\.\pL\pN-]|%[0-9A-Fa-f]{2})+:)?((?:[\_\.\pL\pN-]|%[0-9A-Fa-f]{2})+)@)?  # basic auth
             (
                 ([\pL\pN\pS\-\_\.])+(\.?([\pL\pN]|xn\-\-[\pL\pN-]+)+\.?) # a domain name
@@ -476,7 +506,7 @@ class Str
             (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]|%[0-9A-Fa-f]{2})* )?       # a fragment (optional)
         $~ixu';
 
-        return preg_match($pattern, $value) > 0;
+        return preg_match(str_replace('LARAVEL_PROTOCOLS', $protocolList, $pattern), $value) > 0;
     }
 
     /**
@@ -720,6 +750,10 @@ class Str
      */
     public static function padBoth($value, $length, $pad = ' ')
     {
+        if (function_exists('mb_str_pad')) {
+            return mb_str_pad($value, $length, $pad, STR_PAD_BOTH);
+        }
+
         $short = max(0, $length - mb_strlen($value));
         $shortLeft = floor($short / 2);
         $shortRight = ceil($short / 2);
@@ -739,6 +773,10 @@ class Str
      */
     public static function padLeft($value, $length, $pad = ' ')
     {
+        if (function_exists('mb_str_pad')) {
+            return mb_str_pad($value, $length, $pad, STR_PAD_LEFT);
+        }
+
         $short = max(0, $length - mb_strlen($value));
 
         return mb_substr(str_repeat($pad, $short), 0, $short).$value;
@@ -754,6 +792,10 @@ class Str
      */
     public static function padRight($value, $length, $pad = ' ')
     {
+        if (function_exists('mb_str_pad')) {
+            return mb_str_pad($value, $length, $pad, STR_PAD_RIGHT);
+        }
+
         $short = max(0, $length - mb_strlen($value));
 
         return $value.mb_substr(str_repeat($pad, $short), 0, $short);
@@ -811,25 +853,47 @@ class Str
      */
     public static function password($length = 32, $letters = true, $numbers = true, $symbols = true, $spaces = false)
     {
-        return (new Collection)
-                ->when($letters, fn ($c) => $c->merge([
-                    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-                    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                    'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-                    'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                ]))
-                ->when($numbers, fn ($c) => $c->merge([
-                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                ]))
-                ->when($symbols, fn ($c) => $c->merge([
-                    '~', '!', '#', '$', '%', '^', '&', '*', '(', ')', '-',
-                    '_', '.', ',', '<', '>', '?', '/', '\\', '{', '}', '[',
-                    ']', '|', ':', ';',
-                ]))
-                ->when($spaces, fn ($c) => $c->merge([' ']))
-                ->pipe(fn ($c) => Collection::times($length, fn () => $c[random_int(0, $c->count() - 1)]))
-                ->implode('');
+        $password = new Collection();
+
+        $options = (new Collection([
+            'letters' => $letters === true ? [
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+                'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            ] : null,
+            'numbers' => $numbers === true ? [
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            ] : null,
+            'symbols' => $symbols === true ? [
+                '~', '!', '#', '$', '%', '^', '&', '*', '(', ')', '-',
+                '_', '.', ',', '<', '>', '?', '/', '\\', '{', '}', '[',
+                ']', '|', ':', ';',
+            ] : null,
+            'spaces' => $spaces === true ? [' '] : null,
+        ]))->filter()->each(fn ($c) => $password->push($c[random_int(0, count($c) - 1)])
+        )->flatten();
+
+        $length = $length - $password->count();
+
+        return $password->merge($options->pipe(
+            fn ($c) => Collection::times($length, fn () => $c[random_int(0, $c->count() - 1)])
+        ))->shuffle()->implode('');
+    }
+
+    /**
+     * Find the multi-byte safe position of the first occurrence of a given substring in a string.
+     *
+     * @param  string  $haystack
+     * @param  string  $needle
+     * @param  int  $offset
+     * @param  string|null  $encoding
+     * @return int|false
+     */
+    public static function position($haystack, $needle, $offset = 0, $encoding = null)
+    {
+        return mb_strpos($haystack, (string) $needle, $offset, $encoding);
     }
 
     /**
@@ -943,10 +1007,26 @@ class Str
         $result = array_shift($segments);
 
         foreach ($segments as $segment) {
-            $result .= (array_shift($replace) ?? $search).$segment;
+            $result .= self::toStringOr(array_shift($replace) ?? $search, $search).$segment;
         }
 
         return $result;
+    }
+
+    /**
+     * Convert the given value to a string or return the given fallback on failure.
+     *
+     * @param  mixed  $value
+     * @param  string  $fallback
+     * @return string
+     */
+    private static function toStringOr($value, $fallback)
+    {
+        try {
+            return (string) $value;
+        } catch (Throwable $e) {
+            return $fallback;
+        }
     }
 
     /**
@@ -1003,6 +1083,29 @@ class Str
     }
 
     /**
+     * Replace the first occurrence of the given value if it appears at the start of the string.
+     *
+     * @param  string  $search
+     * @param  string  $replace
+     * @param  string  $subject
+     * @return string
+     */
+    public static function replaceStart($search, $replace, $subject)
+    {
+        $search = (string) $search;
+
+        if ($search === '') {
+            return $subject;
+        }
+
+        if (static::startsWith($subject, $search)) {
+            return static::replaceFirst($search, $replace, $subject);
+        }
+
+        return $subject;
+    }
+
+    /**
      * Replace the last occurrence of a given value in the string.
      *
      * @param  string  $search
@@ -1012,6 +1115,8 @@ class Str
      */
     public static function replaceLast($search, $replace, $subject)
     {
+        $search = (string) $search;
+
         if ($search === '') {
             return $subject;
         }
@@ -1026,10 +1131,51 @@ class Str
     }
 
     /**
+     * Replace the last occurrence of a given value if it appears at the end of the string.
+     *
+     * @param  string  $search
+     * @param  string  $replace
+     * @param  string  $subject
+     * @return string
+     */
+    public static function replaceEnd($search, $replace, $subject)
+    {
+        $search = (string) $search;
+
+        if ($search === '') {
+            return $subject;
+        }
+
+        if (static::endsWith($subject, $search)) {
+            return static::replaceLast($search, $replace, $subject);
+        }
+
+        return $subject;
+    }
+
+    /**
+     * Replace the patterns matching the given regular expression.
+     *
+     * @param  string  $pattern
+     * @param  \Closure|string  $replace
+     * @param  array|string  $subject
+     * @param  int  $limit
+     * @return string|string[]|null
+     */
+    public static function replaceMatches($pattern, $replace, $subject, $limit = -1)
+    {
+        if ($replace instanceof Closure) {
+            return preg_replace_callback($pattern, $replace, $subject, $limit);
+        }
+
+        return preg_replace($pattern, $replace, $subject, $limit);
+    }
+
+    /**
      * Remove any occurrence of the given string in the subject.
      *
      * @param  string|iterable<string>  $search
-     * @param  string  $subject
+     * @param  string|iterable<string>  $subject
      * @param  bool  $caseSensitive
      * @return string
      */
@@ -1296,6 +1442,22 @@ class Str
     }
 
     /**
+     * Take the first or last {$limit} characters of a string.
+     *
+     * @param  string  $string
+     * @param  int  $limit
+     * @return string
+     */
+    public static function take($string, int $limit): string
+    {
+        if ($limit < 0) {
+            return static::substr($string, $limit);
+        }
+
+        return static::substr($string, 0, $limit);
+    }
+
+    /**
      * Make a string's first character lowercase.
      *
      * @param  string  $string
@@ -1338,6 +1500,20 @@ class Str
     public static function wordCount($string, $characters = null)
     {
         return str_word_count($string, 0, $characters);
+    }
+
+    /**
+     * Wrap a string to a given number of characters.
+     *
+     * @param  string  $string
+     * @param  int  $characters
+     * @param  string  $break
+     * @param  bool  $cutLongWords
+     * @return string
+     */
+    public static function wordWrap($string, $characters = 75, $break = "\n", $cutLongWords = false)
+    {
+        return wordwrap($string, $characters, $break, $cutLongWords);
     }
 
     /**
@@ -1463,11 +1639,93 @@ class Str
      */
     public static function ulid($time = null)
     {
+        if (static::$ulidFactory) {
+            return call_user_func(static::$ulidFactory);
+        }
+
         if ($time === null) {
             return new Ulid();
         }
 
         return new Ulid(Ulid::generate($time));
+    }
+
+    /**
+     * Indicate that ULIDs should be created normally and not using a custom factory.
+     *
+     * @return void
+     */
+    public static function createUlidsNormally()
+    {
+        static::$ulidFactory = null;
+    }
+
+    /**
+     * Set the callable that will be used to generate ULIDs.
+     *
+     * @param  callable|null  $factory
+     * @return void
+     */
+    public static function createUlidsUsing(callable $factory = null)
+    {
+        static::$ulidFactory = $factory;
+    }
+
+    /**
+     * Set the sequence that will be used to generate ULIDs.
+     *
+     * @param  array  $sequence
+     * @param  callable|null  $whenMissing
+     * @return void
+     */
+    public static function createUlidsUsingSequence(array $sequence, $whenMissing = null)
+    {
+        $next = 0;
+
+        $whenMissing ??= function () use (&$next) {
+            $factoryCache = static::$ulidFactory;
+
+            static::$ulidFactory = null;
+
+            $ulid = static::ulid();
+
+            static::$ulidFactory = $factoryCache;
+
+            $next++;
+
+            return $ulid;
+        };
+
+        static::createUlidsUsing(function () use (&$next, $sequence, $whenMissing) {
+            if (array_key_exists($next, $sequence)) {
+                return $sequence[$next++];
+            }
+
+            return $whenMissing();
+        });
+    }
+
+    /**
+     * Always return the same ULID when generating new ULIDs.
+     *
+     * @param  Closure|null  $callback
+     * @return Ulid
+     */
+    public static function freezeUlids(Closure $callback = null)
+    {
+        $ulid = Str::ulid();
+
+        Str::createUlidsUsing(fn () => $ulid);
+
+        if ($callback !== null) {
+            try {
+                $callback($ulid);
+            } finally {
+                Str::createUlidsNormally();
+            }
+        }
+
+        return $ulid;
     }
 
     /**

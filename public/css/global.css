@@ -349,3 +349,69 @@ a.selected p.selected {
     background-color: #5822ca;
     transition-duration: 0.4s;
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: auto;
+    margin-top: 5em;
+
+    background-color: white;
+
+    /* max-width: 50%; */
+    max-width: fit-content;
+    border-radius: 1.5em;
+    /* padding: 1em -2em; */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    list-style-type: none;
+
+    padding: 0em 2.5em;
+}
+
+.pagination .elements {
+    margin-left: 5em;
+    margin-right: 5em;
+    width: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.pagination .elements .active {
+    background-color: #5822ca;
+    color: white;
+    border-radius: 0.2em;
+    width: 2em;
+    height: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination a {
+    color: #9fadc4;
+}
+
+.pagination .arrow {
+    font-size: 50px;
+    font-weight: 100;
+}
+
+.pagination .disabled span {
+    color: #edf0f3;
+}

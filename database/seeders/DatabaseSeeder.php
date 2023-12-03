@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $names = ["Null", "Pending",'Terdaftar', 'ClockedIn', 'ClockedOut'];
+        $names = ["Null", "Pending",'Terdaftar', 'ClockedIn', 'Claimed'];
         foreach ($names as $name) {
             SukarelawanActivityStatus::create([
                 'id' => Generator::generateId(SukarelawanActivityStatus::class),
@@ -279,7 +279,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Generator::generateSlug(River::class, $name)
         ]);
 
-        $names = ['Activity 1', 'Activity 2', 'Activity 3'];
+        $names = ['Activity 1', 'Activity 2', 'Activity 3', 'Activity 4', 'Activity 5', 'Activity 6', 'Activity 7', 'Activity 8', 'Activity 9', 'Activity 10', 'Activity 11'];
         foreach ($names as $name) {
             Activity::create([
                 'id' => Generator::generateId(Activity::class),
@@ -289,11 +289,11 @@ class DatabaseSeeder extends Seeder
                 'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
                 'name' => $name,
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                'registrationDeadlineDate' => '2023-09-09',
+                'registrationDeadlineDate' => '2023-12-12',
                 'experiencePointGiven' => 20,
-                'cleanUpDate' => '2023-09-10',
-                'startTime' => '09:00:00',
-                'endTime' => '12:00:00',
+                'cleanUpDate' => '2023-12-12',
+                'startTime' => '13:00:00',
+                'endTime' => '16:00:00',
                 'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
                 'sukarelawanJobName' => 'Pembersih Handal',
                 'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
