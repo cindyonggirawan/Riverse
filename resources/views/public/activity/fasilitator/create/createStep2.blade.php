@@ -64,10 +64,10 @@
                         <div class="number-input">
                             <button type="button" onclick="decrementValue()" class="decrement">-</button>
                             <input type="number" name="minimumNumOfSukarelawan" id="minimumNumOfSukarelawan"
-                                value="{{ Session::get('step2Data.minimumNumOfSukarelawan') ?? 0 }}">
+                                value="{{ Session::get('step2Data.minimumNumOfSukarelawan') ?? (old('minimumNumOfSukarelawan') ?? 0) }}">
                             <button type="button" onclick="incrementValue()" class="increment">+</button>
-
                         </div>
+
 
 
                         <label for="sukarelawanEquipment">Perlengkapan Sukarelawan</label>

@@ -44,7 +44,11 @@
         <div class="col">
             <div class="content-card-center">
                 <div class="img-container"
-                    style="background-image: url('{{ asset('/images/' . ($activity->bannerImageUrl ?? Config::get('constants.default_banner_image'))) }}');">
+                    style="background-image: url('{{ asset(
+                        $activity->bannerImageUrl
+                            ? 'storage/' . $activity->bannerImageUrl
+                            : '/images/' . Config::get('constants.default_banner_image'),
+                    ) }}');">
                     <div class="likes">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="21" viewBox="0 0 22 21"
                             fill="none">

@@ -1,5 +1,6 @@
 @php
     use Carbon\Carbon;
+    use SimpleSoftwareIO\QrCode\Facades\QrCode;
     $sukarelawanCriteria = explode('; ', $activity->sukarelawanCriteria);
     $sukarelawanEquipment = explode('; ', $activity->sukarelawanEquipment);
 @endphp
@@ -7,15 +8,34 @@
 @php
     // NOTE: Buat checking status Sukarelawan di Aktivitas tertentu
     $isTerdaftar = false;
+    $isClockedIn = false;
+    $isClaimed = false;
     $isLiked = false;
 
     if (auth()->check() && auth()->user()->sukarelawan) {
         // Check if the user is registered for the activity
+
         $terdaftarStatus = 'Terdaftar';
         $isTerdaftar = $activity->sukarelawan_activity_details
             ->where('sukarelawanActivityStatus.name', $terdaftarStatus)
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
+
+        if ($isTerdaftar == false) {
+            $clockedInStatus = 'ClockedIn';
+            $isClockedIn = $activity->sukarelawan_activity_details
+                ->where('sukarelawanActivityStatus.name', $clockedInStatus)
+                ->where('sukarelawanId', auth()->user()->sukarelawan->id)
+                ->isNotEmpty();
+        }
+
+        if ($isTerdaftar && $isClockedIn == false) {
+            $claimedStatus = 'Claimed';
+            $isClaimed = $activity->sukarelawan_activity_details
+                ->where('sukarelawanActivityStatus.name', $claimedStatus)
+                ->where('sukarelawanId', auth()->user()->sukarelawan->id)
+                ->isNotEmpty();
+        }
 
         // Check if the user has liked the activity
         $isLiked = $activity->sukarelawan_activity_details
@@ -23,8 +43,7 @@
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
     }
-    // dd($isTerdaftar);
-    // dd($isLiked);
+
 @endphp
 @php
     // NOTE: Buat checking apakah Sukarelawan udh bisa ClockIn / Clockout
@@ -37,11 +56,19 @@
 @endsection
 
 @section('content')
-    <script src="{{ asset('js/likeActivity.js') }}"></script>
+
+
 
     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#groupLinkModal">
         Open Modal
     </button> --}}
+
+
+    <button>
+
+    </button>
+
+
     <div class="modal" id="groupLinkModal">
         <div class="modal-content">
             <div class="modal-content-body">
@@ -67,12 +94,17 @@
             </div>
         </div>
     </div>
+    {{-- Modal will not be used... --}}
 
     <div class="activities-body">
         <div class="col">
             <div class="content-card-center">
                 <div class="img-container"
-                    style="background-image: url('{{ asset('/images/' . ($activity->bannerImageUrl ?? Config::get('constants.default_banner_image'))) }}');">
+                    style="background-image: url('{{ asset(
+                        $activity->bannerImageUrl
+                            ? 'storage/' . $activity->bannerImageUrl
+                            : '/images/' . Config::get('constants.default_banner_image'),
+                    ) }}');">
                     <form method="POST" action="{{ route('activities.like', ['activity' => $activity->slug]) }}">
                         @csrf
                         <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
@@ -114,18 +146,18 @@
                 </div>
 
                 <div class="btn-container">
-                    @if ($isTerdaftar)
+                    @if ($isTerdaftar && !$isClockedIn)
                         <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
                             @csrf
                             <button type="submit" class="btn-fill full bg-danger">Batalkan Pendaftaran</button>
                         </form>
                     @else
-                        <form method="POST" action="{{ route('activities.join', ['activity' => $activity->slug]) }}">
-                            @csrf
-                            {{-- <button type="submit" class="btn-fill full" data-toggle="modal"
-                                data-target="#groupLinkModal">Daftar Aktivitas</button> --}}
-                            <button type="submit" class="btn-fill full">Daftar Aktivitas</button>
-                        </form>
+                        @if (!$isClockedIn)
+                            <form method="POST" action="{{ route('activities.join', ['activity' => $activity->slug]) }}">
+                                @csrf
+                                <button type="submit" class="btn-fill full">Daftar Aktivitas</button>
+                            </form>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -146,7 +178,7 @@
                 </div>
             </div>
 
-            @if ($isTerdaftar)
+            @if ($isTerdaftar || $isClockedIn)
                 {{-- Link Group --}}
                 <div class="content-card">
                     <div class="row-spaced">
@@ -164,9 +196,6 @@
                             </button>
                         </div>
                     </div>
-                    @php
-                        use SimpleSoftwareIO\QrCode\Facades\QrCode;
-                    @endphp
                     <a href="{{ $activity->groupChatUrl }}" target="_blank">{{ 'Open Group Link' }}</a>
                     <div class="barcode-container">
                         <div class="visible-print text-center">
@@ -184,69 +213,90 @@
                 {{ $activity->name }}
             </h1>
             {{-- Absensi --}}
-            @if ($isTerdaftar)
+            @if ($isTerdaftar || $isClockedIn || $isClaimed)
                 <div class="content-card cclg">
                     <div class="absensi" style="background-image: url('{{ asset('/images/absensi_bg.png') }}');">
                         <h5>
                             Absensi
                         </h5>
                         <div class="row">
-                            <div class="clock-time-container clockin">
+                            <div
+                                class="clock-time-container clockin
+                            
+                            {{ $isClockedIn || $isClaimed ? 'success' : '' }}
+                            
+                            ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53"
                                     fill="none">
                                     <path
                                         d="M38.9322 28.8208C38.9322 28.471 38.7932 28.1356 38.5459 27.8882C38.2986 27.6409 37.9631 27.502 37.6133 27.502C37.2635 27.502 36.9281 27.6409 36.6807 27.8882C36.4334 28.1356 36.2944 28.471 36.2944 28.8208V37.6133C36.2943 37.8369 36.3511 38.0569 36.4594 38.2525C36.5677 38.4482 36.7239 38.6131 36.9134 38.7317L42.1889 42.0289C42.4855 42.2145 42.8437 42.2747 43.1847 42.1962C43.3536 42.1574 43.5131 42.0856 43.6542 41.9851C43.7954 41.8846 43.9153 41.7573 44.0072 41.6104C44.0991 41.4635 44.1612 41.3 44.1899 41.1291C44.2186 40.9583 44.2134 40.7834 44.1745 40.6146C44.1357 40.4457 44.0639 40.2862 43.9634 40.1451C43.8629 40.0039 43.7356 39.884 43.5887 39.7921L38.9322 36.8818V28.8208Z"
-                                        fill="#D88B4C" />
+                                        fill="
+                                        {{ $isClockedIn || $isClaimed ? '#38d46d' : '#D88B4C' }}    
+                                        " />
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M37.6134 22.2266C33.5327 22.2266 29.6191 23.8477 26.7336 26.7333C23.8481 29.6189 22.2271 33.5326 22.2271 37.6134C22.2271 41.6943 23.8481 45.608 26.7336 48.4936C29.6191 51.3792 33.5327 53.0003 37.6134 53.0003C41.6941 53.0003 45.6077 51.3792 48.4932 48.4936C51.3787 45.608 52.9998 41.6943 52.9998 37.6134C52.9998 33.5326 51.3787 29.6189 48.4932 26.7333C45.6077 23.8477 41.6941 22.2266 37.6134 22.2266ZM24.8647 37.6134C24.8647 35.9392 25.1945 34.2813 25.8351 32.7346C26.4758 31.1878 27.4149 29.7823 28.5987 28.5984C29.7825 27.4146 31.188 26.4755 32.7347 25.8348C34.2814 25.1941 35.9392 24.8643 37.6134 24.8643C39.2876 24.8643 40.9454 25.1941 42.4921 25.8348C44.0389 26.4755 45.4443 27.4146 46.6281 28.5984C47.8119 29.7823 48.751 31.1878 49.3917 32.7346C50.0324 34.2813 50.3621 35.9392 50.3621 37.6134C50.3621 40.9947 49.0189 44.2375 46.6281 46.6284C44.2373 49.0193 40.9946 50.3625 37.6134 50.3625C34.2322 50.3625 30.9896 49.0193 28.5987 46.6284C26.2079 44.2375 24.8647 40.9947 24.8647 37.6134Z"
-                                        fill="#D88B4C" />
+                                        fill="
+                                        {{ $isClockedIn || $isClaimed ? '#38d46d' : '#D88B4C' }}
+                                        " />
                                     <path
                                         d="M24.1778 24.1784L9.67119 24.1784M24.1778 24.1784L24.1778 9.67125M24.1778 24.1784L7.25342 7.2534"
-                                        stroke="#D88B4C" stroke-width="2.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
+                                        stroke="
+                                        {{ $isClockedIn || $isClaimed ? '#38d46d' : '#D88B4C' }}    
+                                        "
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <div class="col">
-                                    <h5>Clock-in</h5>
+                                <div class="col-sm">
+                                    <h5>Waktu Acara Dimulai</h5>
                                     <h2>
                                         {{ substr($activity->startTime, 0, 5) }}
                                     </h2>
                                 </div>
                             </div>
-                            <div class="clock-time-container clockout">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53"
-                                    viewBox="0 0 53 53" fill="none">
-                                    <path
-                                        d="M16.7056 28.8218C16.7056 28.472 16.5666 28.1365 16.3193 27.8892C16.072 27.6419 15.7365 27.5029 15.3867 27.5029C15.0369 27.5029 14.7015 27.6419 14.4542 27.8892C14.2068 28.1365 14.0679 28.472 14.0679 28.8218V37.6142C14.0678 37.8378 14.1245 38.0578 14.2328 38.2534C14.3411 38.449 14.4973 38.6139 14.6869 38.7326L19.9623 42.0297C20.2589 42.2154 20.6171 42.2756 20.9581 42.1971C21.127 42.1582 21.2865 42.0865 21.4276 41.9859C21.5687 41.8854 21.6887 41.7581 21.7806 41.6112C21.8725 41.4644 21.9346 41.3008 21.9633 41.13C21.992 40.9591 21.9868 40.7843 21.9479 40.6154C21.909 40.4466 21.8373 40.287 21.7368 40.1459C21.6363 40.0048 21.5089 39.8849 21.3621 39.793L16.7056 36.8827V28.8218Z"
-                                        fill="#38D46D" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M15.3867 22.2266C11.3059 22.2266 7.39224 23.8477 4.50667 26.7332C1.6211 29.6188 0 33.5325 0 37.6133C0 41.6941 1.6211 45.6078 4.50667 48.4933C7.39224 51.3789 11.3059 53 15.3867 53C19.4675 53 23.3812 51.3789 26.2668 48.4933C29.1523 45.6078 30.7734 41.6941 30.7734 37.6133C30.7734 33.5325 29.1523 29.6188 26.2668 26.7332C23.3812 23.8477 19.4675 22.2266 15.3867 22.2266ZM2.63772 37.6133C2.63772 35.9391 2.96749 34.2812 3.60818 32.7345C4.24888 31.1877 5.18796 29.7822 6.37182 28.5984C7.55567 27.4145 8.96111 26.4754 10.5079 25.8347C12.0547 25.194 13.7125 24.8643 15.3867 24.8643C17.0609 24.8643 18.7188 25.194 20.2655 25.8347C21.8123 26.4754 23.2178 27.4145 24.4016 28.5984C25.5855 29.7822 26.5246 31.1877 27.1653 32.7345C27.806 34.2812 28.1357 35.9391 28.1357 37.6133C28.1357 40.9945 26.7925 44.2373 24.4016 46.6282C22.0107 49.0191 18.768 50.3623 15.3867 50.3623C12.0055 50.3623 8.76272 49.0191 6.37182 46.6282C3.98092 44.2373 2.63772 40.9945 2.63772 37.6133Z"
-                                        fill="#38D46D" />
-                                    <path
-                                        d="M45.0127 7.25347L30.506 7.25347M45.0127 7.25347L45.0127 21.7602M45.0127 7.25347L28.0882 24.178"
-                                        stroke="#38D46D" stroke-width="2.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                <div class="col">
-                                    <h5>Clock-out</h5>
-                                    <h2>
-                                        {{ substr($activity->endTime, 0, 5) }}
-                                    </h2>
-                                </div>
-                            </div>
                         </div>
 
-                        @if ($activity->isEligibleForClockIn())
-                            <a href="" class="btn-fill">
-                                <div class="white">
-                                    Clock-in
-                                </div>
-                            </a>
+                        @if ($activity->isEligibleForClockIn() || $isClockedIn || $isClaimed)
+                            @if ($isClockedIn || $isClaimed)
+                                @if ($isClockedIn)
+                                    <div class="btn-fill clockin">
+                                        <div class="col-sm">
+                                            <h4>Kehadiran Tercatat</h4>
+                                            <div class="caption">Menunggu Verifikasi Fasilitator</div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="btn-fill clockin success">
+                                        <div class="col-sm">
+                                            <h4>Berhasil</h4>
+                                        </div>
+                                    </div>
+                                    <div class="caption">Terima kasih sudah berkontribusi</div>
+                                @endif
+                            @else
+                                <form action="{{ route('activities.attend', ['activity' => $activity->slug]) }}"
+                                    class="no-style-form" method="post">
+                                    @csrf
+                                    <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius">
+
+                                    <button type="submit" class="btn-fill absensi-btn">
+                                        <div class="col-sm">
+                                            Konfirmasi Kehadiran
+                                        </div>
+                                    </button>
+                                </form>
+                                <div class="caption">
+                                    pastikan anda sudah berada di titik kumpul </div>
+                            @endif
                         @else
                             <a href="" class="btn-fill  bg-disabled">
                                 <div class="white">
-                                    Clock-in
+                                    <div class="col-sm">
+                                        Absensi Belum Dibuka
+                                    </div>
                                 </div>
                             </a>
+                            <div class="caption">
+                                dibuka sekitaran 30 menit waktu acara dimulai
+                            </div>
                         @endif
 
                     </div>
@@ -302,7 +352,6 @@
                         </div>
                         {{-- LINK G Calendar --}}
                         @php
-                            //TODO: generate calendar link:
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
 
@@ -436,6 +485,10 @@
             </div>
         </div>
     </div>
+
+    {{-- <script src="{{ asset('js/likeActivity.js') }}"></script> --}}
+    <script src="{{ asset('js/checkLocation.js') }}"></script>
+
 
     <script>
         function copyGroupChatUrl() {

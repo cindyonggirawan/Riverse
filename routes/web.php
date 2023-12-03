@@ -186,8 +186,8 @@ Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, '
 // CRUD Activities
 
 // admin create
-Route::get('/activities/create', [ActivityController::class, 'create']);
-Route::post('/activities/create', [ActivityController::class, 'store']);
+Route::get('/admin/activities/create', [ActivityController::class, 'create']);
+Route::post('/admin/activities/create', [ActivityController::class, 'store']);
 
 
 // facilitator create
@@ -195,11 +195,12 @@ Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCrea
 Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore');
 
 // admin update
-Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
-Route::patch('/activities/{activity:slug}', [ActivityController::class, 'update']);
+Route::get('/admin/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
+Route::patch('/admin/activities/{activity:slug}', [ActivityController::class, 'update']);
 
-Route::get('/activities/{activity:slug}/edit', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit');
-Route::patch('/activities/{activity:slug}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate');
+// fasilitator
+Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit');
+Route::patch('/activities/{activity:slug}/{step}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate');
 
 Route::get('/manage/activities', [ActivityController::class, 'index']);
 
@@ -247,3 +248,5 @@ Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
 Route::post('/activities/{activity:slug}/like', [ActivityController::class, 'like'])->name('activities.like');
 Route::post('/activities/{activity:slug}/join', [ActivityController::class, 'joinActivity'])->name('activities.join');
 Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'unjoinActivity'])->name('activities.unjoin');
+Route::post('/activities/{activity:slug}/attend', [ActivityController::class, 'takeAttendance'])->name('activities.attend');
+
