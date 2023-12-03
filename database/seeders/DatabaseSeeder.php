@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Fasilitator;
 use App\Models\River;
 use App\Models\Sukarelawan;
+use App\Models\SukarelawanActivityDetail;
 use App\Models\SukarelawanActivityStatus;
 
 class DatabaseSeeder extends Seeder
@@ -96,6 +97,17 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        SukarelawanActivityStatus::create([
+            'id' => '1',
+            'name' => 'CLAIMED',
+            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'CLAIMED')
+        ]);
+        SukarelawanActivityStatus::create([
+            'id' => '2',
+            'name' => 'NOT CLAIMED',
+            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'NOT CLAIMED')
+        ]);
+
         /* OPEN USER */
 
         $email = 'admin@riverse.com';
@@ -130,6 +142,49 @@ class DatabaseSeeder extends Seeder
             'name' => $data['name'],
             'slug' => $slug
         ]);
+        User::create([
+            'id' => "1",
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => 'sukarelawan1@riverse.com',
+            'password' => Hash::make($data['password']),
+            'name' => 'Sukarelawan Leaderboard 1',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 1')
+        ]);
+        User::create([
+            'id' => "2",
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => 'sukarelawan2@riverse.com',
+            'password' => Hash::make($data['password']),
+            'name' => 'Sukarelawan Leaderboard 2',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 2')
+        ]);
+        User::create([
+            'id' => "3",
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => 'sukarelawan3@riverse.com',
+            'password' => Hash::make($data['password']),
+            'name' => 'Sukarelawan Leaderboard 3',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 3')
+        ]);
+        User::create([
+            'id' => "4",
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => 'sukarelawan4@riverse.com',
+            'password' => Hash::make($data['password']),
+            'name' => 'Sukarelawan Leaderboard 4',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 4')
+        ]);
+        User::create([
+            'id' => "5",
+            'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
+            'email' => 'sukarelawan5@riverse.com',
+            'password' => Hash::make($data['password']),
+            'name' => 'Sukarelawan Leaderboard 5',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 5')
+        ]);
+
+
+
         Sukarelawan::create([
             'id' => $id,
             'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
@@ -138,6 +193,51 @@ class DatabaseSeeder extends Seeder
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
             'nationalIdentityNumber' => $data['nationalIdentityNumber'],
             'slug' => $slug
+        ]);
+        Sukarelawan::create([
+            'id' => '1',
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => '0000000000000002',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 1')
+        ]);
+        Sukarelawan::create([
+            'id' => '2',
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => '0000000000000003',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 2')
+        ]);
+        Sukarelawan::create([
+            'id' => '3',
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => '0000000000000004',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 3')
+        ]);
+        Sukarelawan::create([
+            'id' => '4',
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => '0000000000000005',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 4')
+        ]);
+        Sukarelawan::create([
+            'id' => '5',
+            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'levelId' => Level::where('name', 'Level 1')->first()->id,
+            'gender' => $data['gender'],
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
+            'nationalIdentityNumber' => '0000000000000006',
+            'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 5')
         ]);
 
         $data = [
@@ -190,6 +290,7 @@ class DatabaseSeeder extends Seeder
                 'name' => $name,
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 'registrationDeadlineDate' => '2023-09-09',
+                'experiencePointGiven' => 20,
                 'cleanUpDate' => '2023-09-10',
                 'startTime' => '09:00:00',
                 'endTime' => '12:00:00',
@@ -203,5 +304,66 @@ class DatabaseSeeder extends Seeder
                 'slug' => Generator::generateSlug(Activity::class, $name)
             ]);
         }
+
+        //fill the activity details for sukarelawan 1
+        $activities = Activity::all();
+        foreach($activities as $activity) {
+            SukarelawanActivityDetail::create([
+                'id' => Generator::generateId(Activity::class),
+                'activityId' => $activity->id,
+                'sukarelawanActivityStatusId' => '1',
+                'sukarelawanId' => "1",
+                'isLiked' => false
+            ]);
+        }
+
+        //fill the activity details for sukarelawan 2
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[0]['id'],
+            'sukarelawanId' => "2",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[1]['id'],
+            'sukarelawanId' => "2",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+
+        //fill the activity details for sukarelawan 3
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[0]['id'],
+            'sukarelawanId' => "3",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[2]['id'],
+            'sukarelawanId' => "3",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+
+        //fill the activity details for sukarelawan 4
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[1]['id'],
+            'sukarelawanId' => "4",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+        SukarelawanActivityDetail::create([
+            'id' => Generator::generateId(SukarelawanActivityDetail::class),
+            'activityId' => $activities[2]['id'],
+            'sukarelawanId' => "4",
+            'sukarelawanActivityStatusId' => '1',
+            'isLiked' => false
+        ]);
+
     }
 }

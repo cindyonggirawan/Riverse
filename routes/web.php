@@ -18,6 +18,7 @@ use App\Http\Controllers\VerificationStatusController;
 use App\Http\Controllers\VerifyActivityController;
 use App\Http\Controllers\VerifyFasilitatorController;
 use App\Http\Controllers\VerifySukarelawanController;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -225,6 +226,8 @@ Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'upda
 Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
 Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destroyAllActivity']);
 
+
+// Level Section
 Route::get('/levels/create', [LevelController::class, 'create']);
 
 Route::post('/levels/create', [LevelController::class, 'store']);
@@ -233,6 +236,10 @@ Route::get('/levels', [LevelController::class, 'index']);
 
 Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
 
+
+
+
+//Benefit Section
 Route::get('/benefits/create', [BenefitController::class, 'create']);
 
 Route::post('/benefits/create', [BenefitController::class, 'store']);
@@ -248,5 +255,9 @@ Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
 Route::post('/activities/{activity:slug}/like', [ActivityController::class, 'like'])->name('activities.like');
 Route::post('/activities/{activity:slug}/join', [ActivityController::class, 'joinActivity'])->name('activities.join');
 Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'unjoinActivity'])->name('activities.unjoin');
+
+
+// Leaderboard Section
+Route::get('/leaderboard', [LeaderboardController::class, 'processAndShowLeaderboardData']);
 Route::post('/activities/{activity:slug}/attend', [ActivityController::class, 'takeAttendance'])->name('activities.attend');
 

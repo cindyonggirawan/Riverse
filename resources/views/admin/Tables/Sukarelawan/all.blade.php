@@ -37,7 +37,7 @@
                                     <td>{{ $sukarelawan->id }}</a></td>
                                     <td>
                                         @if ($sukarelawan->profileImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
@@ -51,7 +51,7 @@
                                     <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
                                     <td>
                                         @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"

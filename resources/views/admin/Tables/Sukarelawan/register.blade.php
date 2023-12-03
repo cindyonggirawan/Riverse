@@ -145,6 +145,23 @@
                             @enderror
                         </div>
 
+                        <div class="form-group row">
+                            <label for="profileImageUrl" class="col-sm-4 col-form-label required">Profile Picture</label>
+                            <div class="input-group col-sm-8">
+                                <div class="custom-file">
+                                    <input type="file"
+                                        class="custom-file-input-2 @error('profileImageUrl') is-invalid @enderror"
+                                        name="profileImageUrl" id="profileImageUrl"
+                                        accept="image/*" onchange="previewImage2()" required>
+                                    <label class="custom-file-label" for="profileImageUrl">Choose</label>
+                                </div>
+                            </div>
+                            <img class="col-sm-4 offset-sm-4 img-fluid img-preview-2"></img>
+                            @error('profileImageUrl')
+                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <hr class="my-4">
 
                         <div class="text-center"><a href="/login">I already have an account</a></div>
