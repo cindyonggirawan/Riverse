@@ -18,6 +18,15 @@ class BenefitController extends Controller
         ]);
     }
 
+    public function publicIndex()
+    {
+        return view('public.benefits', [
+            'title' => 'Benefits',
+            'benefits' => Benefit::orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
     public function show(Benefit $benefit)
     {
         return view('admin.Tables.Benefit.benefit', [

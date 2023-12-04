@@ -17,6 +17,15 @@ class LevelController extends Controller
         ]);
     }
 
+    public function publicIndex()
+    {
+        return view('public.benefits', [
+            'title' => 'Levels',
+            'levels' => Level::orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
     public function show(Level $level)
     {
         return view('admin.Tables.Level.level', [
