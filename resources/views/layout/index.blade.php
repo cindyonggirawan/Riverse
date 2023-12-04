@@ -24,11 +24,11 @@
                 href="/activities">Aktivitas</a>
             <a class="nav-link {{ Request::is('leaderboard') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/leaderboard">Leaderboard</a>
-            <a class="nav-link {{ Request::is('/benefit') ? 'selected underlined' : '' }}" aria-current="page"
-                href="/benefit">Keuntungan</a>
-            <a class="nav-link {{ Request::is('/tutorial') ? 'selected underlined' : '' }}" aria-current="page"
+            <a class="nav-link {{ Request::is('benefits') ? 'selected underlined' : '' }}" aria-current="page"
+                href="/benefits">Keuntungan</a>
+            <a class="nav-link {{ Request::is('tutorial') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/tutorial">Cara Kerja</a>
-            <a class="nav-link {{ Request::is('/aboutus') ? 'selected underlined' : '' }}" aria-current="page"
+            <a class="nav-link {{ Request::is('aboutus') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/aboutus">Tentang Kami</a>
         </div>
 
@@ -56,7 +56,7 @@
                         </div>
                     </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <a href="/fasilitator/{{ auth()->user()->sukarelawan->slug }}"></a>
+                    <a href="/fasilitator/{{ auth()->user()->fasilitator->slug }}"></a>
                     <div class="profpic">
                         <img class="custom-test-profile-image shadow-4-strong"
                             @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
