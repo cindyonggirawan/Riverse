@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit126b8f455b84296575fa7b53291017e3
+class ComposerStaticInite2dc98cae3ae9d1ecafba8e40b27453e
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -361,8 +361,8 @@ class ComposerStaticInit126b8f455b84296575fa7b53291017e3
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -3375,6 +3375,7 @@ class ComposerStaticInit126b8f455b84296575fa7b53291017e3
         'League\\Flysystem\\ChecksumProvider' => __DIR__ . '/..' . '/league/flysystem/src/ChecksumProvider.php',
         'League\\Flysystem\\Config' => __DIR__ . '/..' . '/league/flysystem/src/Config.php',
         'League\\Flysystem\\CorruptedPathDetected' => __DIR__ . '/..' . '/league/flysystem/src/CorruptedPathDetected.php',
+        'League\\Flysystem\\DecoratedAdapter' => __DIR__ . '/..' . '/league/flysystem/src/DecoratedAdapter.php',
         'League\\Flysystem\\DirectoryAttributes' => __DIR__ . '/..' . '/league/flysystem/src/DirectoryAttributes.php',
         'League\\Flysystem\\DirectoryListing' => __DIR__ . '/..' . '/league/flysystem/src/DirectoryListing.php',
         'League\\Flysystem\\FileAttributes' => __DIR__ . '/..' . '/league/flysystem/src/FileAttributes.php',
@@ -6755,9 +6756,9 @@ class ComposerStaticInit126b8f455b84296575fa7b53291017e3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit126b8f455b84296575fa7b53291017e3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit126b8f455b84296575fa7b53291017e3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit126b8f455b84296575fa7b53291017e3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite2dc98cae3ae9d1ecafba8e40b27453e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite2dc98cae3ae9d1ecafba8e40b27453e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite2dc98cae3ae9d1ecafba8e40b27453e::$classMap;
 
         }, null, ClassLoader::class);
     }
