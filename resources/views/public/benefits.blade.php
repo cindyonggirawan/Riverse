@@ -42,22 +42,25 @@
                 </div>
                 @foreach ($level->benefits as $benefit)
                     @php
-                        if (strpos($benefit->name, 'kopi') !== false) {
+                        if (strpos(strtolower($benefit->name), 'kopi') !== false) {
                             $benefitImageName = 'kopi';
                         }
-                        if (strpos($benefit->name, 'kaos') !== false) {
+                        if (strpos(strtolower($benefit->name), 'tee') !== false) {
                             $benefitImageName = 'kaos';
                         }
-                        if (strpos($benefit->name, 'tumbler') !== false) {
+                        if (strpos(strtolower($benefit->name), 'tumbler') !== false) {
                             $benefitImageName = 'tumbler';
                         }
-                        if (strpos($benefit->name, 'kopi') !== false) {
+                        if (strpos(strtolower($benefit->name), 'totebag') !== false) {
                             $benefitImageName = 'totebag';
                         }
                     @endphp
                     <div class="benefit-card">
                         <div class="benefit-card-image">
                             <img src="{{ asset('images/Benefits/' . $benefitImageName . '.png') }}" alt="Level Badge">
+                            @php
+                                $benefitImageName = 'default';
+                            @endphp
                         </div>
                         <div class="benefit-card-content">
                             <h3>
