@@ -7,10 +7,7 @@
 @php
     $levelGradientStyling = 'background: linear-gradient(180deg, #8C99C6 0%, #B8C4E1 100%);';
     $benefitImageName = 'default';
-@endphp
-
-@php
-    // dd(auth()->user()->sukarelawan->level->name);
+    $comparisonResult = -1;
 @endphp
 
 
@@ -70,12 +67,15 @@
                                 {{ Illuminate\Support\Str::limit($benefit->description, 100) }}
                             </p>
 
+
                             @php
-                                $userLevelName = auth()->user()->sukarelawan->level->name;
                                 // $userLevelName = 'Level 2';
-                                if (auth()->user()->sukarelawan != null) {
-                                    $comparisonResult = strcmp(preg_replace('/\D/', '', $userLevelName), preg_replace('/\D/', '', $benefit->level->name));
-                                    // 0 --> equal
+                                if (auth()->check()) {
+                                    if (auth()->user()->sukarelawan != null) {
+                                        $userLevelName = auth()->user()->sukarelawan->level->name;
+                                        $comparisonResult = strcmp(preg_replace('/\D/', '', $userLevelName), preg_replace('/\D/', '', $benefit->level->name));
+                                        // 0 --> equal
+                                    }
                                 }
                             @endphp
 
@@ -85,9 +85,15 @@
                                     <p>{{ $benefit->couponCode }}</p>
                                 </div>
                             @else
-                                <div class="voucher-code danger">
-                                    <p>Level Belum Cukup</p>
-                                </div>
+                                @if (!auth()->check() || auth()->user()->fasilitator)
+                                    <div class="voucher-code danger">
+                                        <p>Daftar Jadi Sukarelawan</p>
+                                    </div>
+                                @else
+                                    <div class="voucher-code danger">
+                                        <p>Level Belum Cukup</p>
+                                    </div>
+                                @endif
                             @endif
 
                         </div>
