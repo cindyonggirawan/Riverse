@@ -83,16 +83,16 @@ class FasilitatorController extends Controller
 
         $id = $fasilitator->id;
 
+        $logoImageUrl = $fasilitator->logoImageUrl;
+
         $file = $request->file('logoImageUrl');
 
-        $logoImageUrl = $fasilitator->logoImageUrl;
         if ($file) {
             if ($request->oldLogoImageUrl) {
                 Storage::delete($request->oldLogoImageUrl);
             }
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
-            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
+            $logoImageUrl = $file->storeAs('/images/Fasilitator/logoImages', $fileName);
         }
 
         $slug = $fasilitator->slug;

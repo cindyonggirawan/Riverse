@@ -44,21 +44,22 @@ class RegisterController extends Controller
 
         $id = Generator::generateId(Sukarelawan::class);
 
-        $file = $request->file('nationalIdentityCardImageUrl');
-        $fileProfileImage = $request->file('profileImageUrl');
-
         $nationalIdentityCardImageUrl = null;
+
+        $nationalIdentityCardImageFile = $request->file('nationalIdentityCardImageUrl');
+
+        if ($nationalIdentityCardImageFile) {
+            $fileName = $id . '.' . $nationalIdentityCardImageFile->getClientOriginalExtension();
+            $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('/images/Sukarelawan/nationalIdentityCardImages', $fileName);
+        }
+
         $profileImageUrl = null;
 
-        if ($file) {
-            $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $nationalIdentityCardImageUrl = $file->storeAs('/public/images/Sukarelawan/nationalIdentityCardImages', $fileName);
-            $nationalIdentityCardImageUrl ='Sukarelawan/nationalIdentityCardImages/' . $fileName;
-        }
-        if ($fileProfileImage) {
-            $fileName = $id . '.' . $fileProfileImage->getClientOriginalExtension();
-            $profileImageUrl = $fileProfileImage->storeAs('/public/images/Sukarelawan/profileImages', $fileName);
-            $profileImageUrl = 'Sukarelawan/profileImages/' . $fileName;
+        $profileImageFile = $request->file('profileImageUrl');
+
+        if ($profileImageFile) {
+            $fileName = $id . '.' . $profileImageFile->getClientOriginalExtension();
+            $profileImageUrl = $profileImageFile->storeAs('/images/Sukarelawan/profileImages', $fileName);
         }
 
         $slug = Generator::generateSlug(User::class, $request->name);
@@ -111,12 +112,13 @@ class RegisterController extends Controller
 
         $id = Generator::generateId(Fasilitator::class);
 
-        $file = $request->file('logoImageUrl');
         $logoImageUrl = null;
+
+        $file = $request->file('logoImageUrl');
+
         if ($file) {
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
-            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
+            $logoImageUrl = $file->storeAs('/images/Fasilitator/logoImages', $fileName);
         }
 
         $slug = Generator::generateSlug(User::class, $request->name);
