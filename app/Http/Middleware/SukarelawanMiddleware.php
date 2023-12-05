@@ -15,7 +15,7 @@ class SukarelawanMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'sukarelawan') {
+        if (auth()->check() && auth()->user()->role->name === 'Sukarelawan') {
             return $next($request);
         }
 

@@ -10,7 +10,7 @@ class AdminMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        if (auth()->check() && auth()->user()->role->name === 'Admin') {
             return $next($request);
         }
 

@@ -15,7 +15,7 @@ class FasilitatorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'fasilitator') {
+        if (auth()->check() && auth()->user()->role->name === 'Fasilitator') {
             return $next($request);
         }
 

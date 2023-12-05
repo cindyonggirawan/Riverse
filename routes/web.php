@@ -103,7 +103,7 @@ Route::get('/users/{user:slug}', [UserController::class, 'show']);
 
 Route::get('/sukarelawans', [SukarelawanController::class, 'index']);
 
-Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'show']);
+Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicShow']);
 
 Route::get('/fasilitators', [FasilitatorController::class, 'index']);
 

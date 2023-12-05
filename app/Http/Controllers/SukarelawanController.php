@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Generator;
+use App\Models\Level;
+
 use App\Models\Sukarelawan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,6 +28,17 @@ class SukarelawanController extends Controller
         return view('admin.Tables.Sukarelawan.sukarelawan', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan
+        ]);
+    }
+
+    public function publicShow(Sukarelawan $sukarelawan)
+    {
+        $levels = Level::orderBy("name")->get();
+
+        return view('public.sukarelawan', [
+            'title' => 'Sukarelawan',
+            'sukarelawan' => $sukarelawan,
+            'levels' => $levels
         ]);
     }
 
