@@ -39,6 +39,17 @@
     gap: 1.25em;
 }
 
+.sukarelawan-card-content.full {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    gap: 0.5;
+    width: 100%;
+}
+
 .sukarelawan-card-content.col {
     display: flex;
     flex-direction: column;
@@ -241,6 +252,14 @@ h3 {
 
     margin-top: 0.25em;
 }
+form .ktp-container {
+    width: 12.5em;
+}
+
+.ktp-container.disabled {
+    filter: grayscale();
+    opacity: 0.8;
+}
 
 .ktp-container img {
     width: 100%;
@@ -272,4 +291,55 @@ img.ktp-illustration {
 
 .mt-3 {
     margin-top: 2em;
+}
+
+.sukarelawan-form-col {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 2em;
+    width: 100%;
+}
+
+.sukarelawan-form-col input,
+.sukarelawan-form-col select {
+    padding: 0.5em;
+    border-radius: 8px;
+
+    border: 1px solid #9fadc4;
+    width: 95%;
+}
+
+.sukarelawan-form-col .disabled-input {
+    padding: 0.5em;
+    border-radius: 8px;
+
+    border: 1px solid #9fadc4;
+    background-color: #c9d0db3d;
+    color: #838181bf;
+    width: 95%;
+}
+
+.sukarelawan-form-col .row-even {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5%;
+    width: 100%;
+}
+.row-even .col {
+    width: 45%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.error-msg {
+    font-size: small;
+}
+
+.disabled {
+    color: #838181;
 }

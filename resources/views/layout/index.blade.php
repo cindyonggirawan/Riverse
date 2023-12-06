@@ -26,8 +26,6 @@
                 href="/leaderboard">Leaderboard</a>
             <a class="nav-link {{ Request::is('benefits') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/benefits">Keuntungan</a>
-            <a class="nav-link {{ Request::is('tutorial') ? 'selected underlined' : '' }}" aria-current="page"
-                href="/tutorial">Cara Kerja</a>
             <a class="nav-link {{ Request::is('aboutus') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/aboutus">Tentang Kami</a>
         </div>

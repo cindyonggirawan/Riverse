@@ -27,6 +27,23 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
+    public function changePasswordIndex()
+    {
+        return view('public.user.changePassword', [
+            'title' => 'Change Password'
+        ]);
+    }
+
+    public function validateChangePassword(Request $req){
+        //check if req input is === user's pw in db
+        $isCorrectOldPassword = false;
+        if ($isCorrectOldPassword){
+            resetPassword($req);
+        }else{
+
+        }
+    }
+
 
     public function sendResetLinkEmail(Request $request)
     {

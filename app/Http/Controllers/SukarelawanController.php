@@ -44,7 +44,7 @@ class SukarelawanController extends Controller
         //     //append
         // }
 
-        return view('public.sukarelawan', [
+        return view('public.sukarelawan.sukarelawan', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan,
             'levels' => $levels,
@@ -76,6 +76,18 @@ class SukarelawanController extends Controller
                 ->get()
         ]);
     }
+
+    public function publicEdit(Sukarelawan $sukarelawan)
+    {
+        return view('public.sukarelawan.edit', [
+            'title' => 'Edit Sukarelawan',
+            'sukarelawan' => $sukarelawan,
+            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+            ->get()
+        ]);
+    }
+
+
 
     public function update(Request $request, Sukarelawan $sukarelawan)
     {

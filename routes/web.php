@@ -83,9 +83,12 @@ Route::post('/register/sukarelawan', [RegisterController::class, 'storeSukarelaw
 
 Route::delete('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'destroy']);
 
-Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'edit']);
+Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'publicEdit']);
 
-Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update']);
+Route::get('/admin/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'publicEdit']);
+
+
+Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update'])->name("sukarelawan.update");
 
 Route::get('/register/fasilitator', [RegisterController::class, 'showFasilitator']);
 
@@ -121,10 +124,11 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordIndex'])->middleware('guest')->name('password.reset');
 
+Route::get('/reset-password/{sukarelawan:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->middleware('sukarelawan')->name('password.change.fasilitator');
+Route::get('/reset-password/{fasilitator:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->middleware('fasilitator')->name('password.change.sukarelawan');
+
+
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
-
-
-
 
 
 Route::get('/waiting-for-verification/sukarelawans', [VerifySukarelawanController::class, 'indexWaitingForVerificationSukarelawan']);
