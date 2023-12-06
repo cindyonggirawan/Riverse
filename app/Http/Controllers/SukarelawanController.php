@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Generator;
+use App\Models\Level;
+
 use App\Models\Sukarelawan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,6 +28,28 @@ class SukarelawanController extends Controller
         return view('admin.Tables.Sukarelawan.sukarelawan', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan
+        ]);
+    }
+
+    public function publicShow(Sukarelawan $sukarelawan)
+    {
+        $levels = Level::orderBy("name")->get();
+        // $activities = [];
+        // $sActivityDetailsFromDB = $sukarelawan->sukarelawan_activity_details->sortByDesc('updated_at')->paginate(4);
+        // if($sActivityDetails !== null && !$sActivityDetails->isEmpty()){
+        //     foreach ($sad as $sActivityDetails) {
+        //         $correspondingActivity = $sad->activity;
+                
+        //     }
+        //     //append
+        // }
+
+        return view('public.sukarelawan', [
+            'title' => 'Sukarelawan',
+            'sukarelawan' => $sukarelawan,
+            'levels' => $levels,
+            // 'sActivityDetailsFromDB' => $sActivityDetailsFromDB
+            // 'activities' => $activities
         ]);
     }
 

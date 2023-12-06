@@ -46,7 +46,7 @@
                 </h5>
 
                 @if (auth()->user()->role->name == 'Sukarelawan')
-                    <a href="/sukarelawan/{{ auth()->user()->sukarelawan->slug }}">
+                    <a href="/sukarelawans/{{ auth()->user()->sukarelawan->slug }}">
                         <div class="profpic">
                             <img class="custom-test-profile-image shadow-4-strong"
                                 @if (empty(auth()->user()->sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
@@ -56,7 +56,7 @@
                         </div>
                     </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <a href="/fasilitator/{{ auth()->user()->fasilitator->slug }}"></a>
+                    <a href="/fasilitators/{{ auth()->user()->fasilitator->slug }}"></a>
                     <div class="profpic">
                         <img class="custom-test-profile-image shadow-4-strong"
                             @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
