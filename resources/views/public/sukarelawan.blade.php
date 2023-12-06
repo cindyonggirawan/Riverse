@@ -35,7 +35,7 @@
 
 
 @section('content')
-    <h1>Sukarelawan</h1>
+    <h1 class="mt-3">Sukarelawan</h1>
     <div class="sukarelawan-row">
         <div class="sukarelawan-col">
             <div class="sukarelawan-card-container">
@@ -93,28 +93,49 @@
                 </div>
             </div>
             <div class="sukarelawan-card-container">
-                <div class="sukarelawan-card-content col status-aktivitas">
-                    <h3>Status Aktivtias</h3>
-                    <div class="row">
+                <div class="sukarelawan-card-content status-aktivitas">
+                    <div class="row fs">
                         <div class="col fs">
-                            {{-- get aktivitas status Claimed --}}
-                            <h2 class="hijau">{{ $claimedActivityCount }} aktivitas</h2>
-                            <p>XP sudah dicairkan</p>
+                            <h3>Identitas</h3>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p class="disabled">
+                                        NIK
+                                    </p>
+                                    <p>
+                                        {{ $sukarelawan->nationalIdentityNumber }}
+                                    </p>
+                                </div>
+                                <div class="col-sm">
+                                    <p class="disabled">
+                                        Tanggal Lahir
+                                    </p>
+                                    <p>
+                                        {{ $sukarelawan->dateOfBirth }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col fs">
+                                <div class="disabled">
+                                    Foto Kartu Tanda Pengenal (KTP)
+                                </div>
+                                <div class="ktp-container">
+                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl->isEmpty())
+                                        <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
+                                            alt="">
+                                    @else
+                                        <img src={{ asset('images/' . $sukarelawan->nationalIdentityCardImageUrl) }}
+                                            alt="">
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                        <div class="col fs">
-                            {{-- get aktivitas status ClockedIn --}}
-                            <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
-                            <p>menunggu pencairan XP</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col fs">
-                            {{-- get aktivitas status Terdaftar --}}
-                            <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
-                            <p>yang sedang diikuti</p>
-                        </div>
+                        <img class="ktp-illustration"
+                            src={{ asset('images/Sukarelawan/nationalIdentityCardImages/identitas-illustration.png') }}
+                            alt="">
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="sukarelawan-col">
@@ -174,9 +195,38 @@
 
             </div>
             <div class="sukarelawan-card-container">
-                <div class="sukarelawan-card-content">
+                <div class="sukarelawan-card-content col status-aktivitas">
+                    <h3>Status Aktivitas</h3>
+                    <div class="row">
+                        <div class="col fs">
+                            {{-- get aktivitas status Claimed --}}
+                            <h2 class="hijau">{{ $claimedActivityCount }} aktivitas</h2>
+                            <p>XP sudah dicairkan</p>
+                        </div>
+                        <div class="col fs">
+                            {{-- get aktivitas status ClockedIn --}}
+                            <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
+                            <p>menunggu pencairan XP</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col fs">
+                            {{-- get aktivitas status Terdaftar --}}
+                            <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
+                            <p>yang sedang diikuti</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <h3 class="mt-3">Aktivitas yang diminati</h3>
+    <div class="sukarelawan-activities-row">
+        @if ($sActivityDetail != null && $sActivityDetail->count() > 0)
+            @foreach ($sActivityDetail as $sad)
+                <x-activity-card :activity="$sad->activity" />
+            @endforeach
+        @endif
     </div>
 @endsection

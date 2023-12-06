@@ -34,11 +34,22 @@ class SukarelawanController extends Controller
     public function publicShow(Sukarelawan $sukarelawan)
     {
         $levels = Level::orderBy("name")->get();
+        // $activities = [];
+        // $sActivityDetailsFromDB = $sukarelawan->sukarelawan_activity_details->sortByDesc('updated_at')->paginate(4);
+        // if($sActivityDetails !== null && !$sActivityDetails->isEmpty()){
+        //     foreach ($sad as $sActivityDetails) {
+        //         $correspondingActivity = $sad->activity;
+                
+        //     }
+        //     //append
+        // }
 
         return view('public.sukarelawan', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan,
-            'levels' => $levels
+            'levels' => $levels,
+            // 'sActivityDetailsFromDB' => $sActivityDetailsFromDB
+            // 'activities' => $activities
         ]);
     }
 
