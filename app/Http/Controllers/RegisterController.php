@@ -17,7 +17,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('admin.Tables.User.register', [
+        return view('public.user.register.index', [
             'title' => 'Register'
         ]);
     }
