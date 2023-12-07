@@ -5,7 +5,7 @@
 @endsection
 
 @php
-    $currImageName = 'register-illustration.png';
+    $currImageName = 'register-done.png';
     // $regisSteps = [1, 2, 3];
     $currentRegisStep = 1;
 @endphp
