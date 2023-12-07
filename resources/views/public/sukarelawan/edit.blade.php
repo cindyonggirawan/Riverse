@@ -34,7 +34,7 @@
 
                     <div class="row-even">
                         <div class="col">
-                            <label for="name">Jenis Kelamin</label>
+                            <label for="gender">Jenis Kelamin</label>
                             <select id="genders" name="gender">
                                 <option value="Perempuan"
                                     {{ old('gender') == 'Perempuan' || $sukarelawan->gender == 'Perempuan' ? 'selected' : '' }}>
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="col">
-                            <label for="name">Tanggal Lahir</label>
+                            <label for="dateOfBirth">Tanggal Lahir</label>
                             <input type="date" name="dateOfBirth"
                                 value="{{ old('dateOfBirth') ?? $sukarelawan->dateOfBirth }}">
                             @error('dateOfBirth')
@@ -57,7 +57,7 @@
                             @enderror
                         </div>
                     </div>
-                    <label for="name" class="disabled">NIK</label>
+                    <label for="nik" class="disabled">NIK</label>
                     {{-- <input type="text" name="nationalIdentityNumber"
                         value="{{ old('nationalIdentityNumber') ?? $sukarelawan->nationalIdentityNumber }}"> --}}
                     <p class="disabled-input">
@@ -100,7 +100,7 @@
                                                 @if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl !== '') @else hidden @endif>
                                                 @if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl !== '')
                                                     <img id="previewImage"
-                                                        src="{{ asset('storage/' . Session::get('step1Data.picture')) ?? '' }}"
+                                                        src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
                                                         alt="Image Preview" />
                                                 @else
                                                     <img id="previewImage" src="" alt="Image Preview" />

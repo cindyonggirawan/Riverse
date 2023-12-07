@@ -87,8 +87,9 @@ Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::clas
 
 Route::get('/admin/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'publicEdit']);
 
+Route::patch('admin/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update'])->name("admin.sukarelawan.update");
 
-Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update'])->name("sukarelawan.update");
+Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicUpdate'])->name("sukarelawan.update");
 
 Route::get('/register/fasilitator', [RegisterController::class, 'showFasilitator']);
 

@@ -43,7 +43,8 @@
                     <div class="profpic">
                         <img @if (empty($sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
                         @else
-                        src={{ asset('storage/images/' . $sukarelawan->profileImageUrl) }} @endif
+
+                        src={{ asset('storage/' . $sukarelawan->profileImageUrl) }} @endif
                             alt="sukarelawan image">
                     </div>
                     <div class="profile-col">
@@ -124,7 +125,7 @@
                                         <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
                                             alt="">
                                     @else
-                                        <img src={{ asset('images/' . $sukarelawan->nationalIdentityCardImageUrl) }}
+                                        <img src={{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}
                                             alt="">
                                     @endif
                                 </div>

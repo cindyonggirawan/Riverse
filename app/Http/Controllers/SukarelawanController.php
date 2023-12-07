@@ -87,6 +87,54 @@ class SukarelawanController extends Controller
         ]);
     }
 
+    public function publicUpdate(Request $request, Sukarelawan $sukarelawan){
+        $validated = $request->validate([
+            'email' => [
+                'required',
+                'max:255',
+                'email:dns',
+                'regex:/^\S+@\S+\.\S+$/',
+                Rule::unique('users')->ignore($sukarelawan->id),
+            ],
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
+            'dateOfBirth' => 'required|date',
+            'gender' => 'required',
+            ]);
+
+            $slug = $sukarelawan->slug;
+            if ($request->name !== $sukarelawan->user->name) {
+                $slug = Generator::generateSlug(User::class, $request->name);
+            }
+
+            $user = $sukarelawan->user;
+            $user->update([
+                    'email' => strtolower($request->email),
+                    'name' => ucwords($request->name),
+                    'slug' => $slug
+                ]);
+            $sukarelawan->update([
+                'gender' => $request->gender,
+                'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
+                'slug' => $slug
+            ]);
+            
+            if ($request->picture && $request->picture != "") {
+                $request->validate(['picture'=> 'image']);
+                $newProfPicFile = $request->file('picture');
+                if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl != '') {
+                    Storage::delete($sukarelawan->profileImageUrl);
+                }
+                $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
+                $profileImageUrl = $newProfPicFile->storeAs('images/Sukarelawan/profileImages', $newProfPicName);
+
+                $sukarelawan->update([
+                    'profileImageUrl' => $profileImageUrl,
+                ]);
+            }
+
+        return redirect('/sukarelawans' . '/' . $sukarelawan->slug)->with('success', 'Sukarelawan update successful!');
+    }
+
 
 
     public function update(Request $request, Sukarelawan $sukarelawan)

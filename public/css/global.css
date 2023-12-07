@@ -106,7 +106,7 @@ h1 a {
 }
 
 .btn-fill.half {
-    min-width: 50%;
+    width: 30%;
 }
 
 .btn-fill :hover {
@@ -498,13 +498,15 @@ a.selected p.selected {
     opacity: 0.4;
 }
 
-.profic-input .image-preview {
+.profpic-input .image-preview {
     width: 100px;
     height: 100px;
     margin: auto;
 
     max-width: 100px;
     max-height: 100px;
+
+    margin-top: 3.5em;
 }
 
 .profpic-input .drop-zone {
@@ -519,10 +521,7 @@ a.selected p.selected {
     max-height: 100px;
 }
 
-.profpic-input .image-preview {
+.profpic-input .image-preview img {
     width: 100px;
     height: 100px;
-    margin: auto;
-
-    margin-top: 3.5em;
 }
