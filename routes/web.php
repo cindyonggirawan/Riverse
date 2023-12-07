@@ -125,8 +125,9 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordIndex'])->middleware('guest')->name('password.reset');
 
-Route::get('/reset-password/{sukarelawan:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->middleware('sukarelawan')->name('password.change.fasilitator');
-Route::get('/reset-password/{fasilitator:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->middleware('fasilitator')->name('password.change.sukarelawan');
+Route::get('/change-password/{user:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->name('password.change');
+
+Route::patch('/change-password/{user:slug}', [ForgotPasswordController::class, 'changePassword'])->name('password.update.change');
 
 
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');

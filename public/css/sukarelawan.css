@@ -343,3 +343,36 @@ img.ktp-illustration {
 .disabled {
     color: #838181;
 }
+
+.change-password {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 3em;
+}
+
+.change-password h2 {
+    font-weight: 300;
+    color: #838181;
+}
+
+.change-password .sukarelawan-card-content {
+    padding: 3em;
+}
+
+.change-password .change-password-img {
+    margin-left: -2em;
+    z-index: 10;
+}
+
+.center-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2em;
+}

@@ -62,7 +62,7 @@
                             <p>{{ $sukarelawan->user->email }}</p>
                         </div>
                         <div class="row">
-                            <a href="">
+                            <a href="/change-password/{{ $sukarelawan->slug }}">
                                 <div class="outline-btn blue">
                                     Ganti Password
                                 </div>

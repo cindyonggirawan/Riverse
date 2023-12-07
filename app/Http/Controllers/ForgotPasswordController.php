@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 
+use App\Models\User;
+
+
 class ForgotPasswordController extends Controller
 {
     //
@@ -27,12 +30,35 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function changePasswordIndex()
+    public function changePasswordIndex(User $user)
     {
         return view('public.user.changePassword', [
-            'title' => 'Change Password'
+            'title' => 'Change Password',
+            'user' => $user,
         ]);
     }
+
+    public function changePassword(Request $req, User $user){
+
+        $request->validate([
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:8|confirmed',
+            'newPassword_confirmation' => 'required|min:8',
+        ]);
+    
+        if (!Hash::check($request->oldPassword, $user->password)) {
+            throw ValidationException::withMessages(['oldPassword' => 'Your old password is incorrect.']);
+        }
+    
+        // Update the user's password
+        $user->update([
+            'password' => Hash::make($request->newPassword),
+        ]);
+    
+        return redirect('/')>with('success', 'Password changed successfully!');
+    }
+
+
 
     public function validateChangePassword(Request $req){
         //check if req input is === user's pw in db

@@ -106,7 +106,11 @@ h1 a {
 }
 
 .btn-fill.half {
-    width: 30%;
+    width: 45%;
+}
+
+.btn-fill.full {
+    width: 100%;
 }
 
 .btn-fill :hover {
@@ -506,7 +510,7 @@ a.selected p.selected {
     max-width: 100px;
     max-height: 100px;
 
-    margin-top: 3.5em;
+    /* margin-top: 3.5em; */
 }
 
 .profpic-input .drop-zone {
