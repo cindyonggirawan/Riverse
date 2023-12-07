@@ -77,6 +77,7 @@ Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 
+
 Route::get('/register/sukarelawan', [RegisterController::class, 'showSukarelawan']);
 
 Route::post('/register/sukarelawan', [RegisterController::class, 'storeSukarelawan']);

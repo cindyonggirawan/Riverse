@@ -17,14 +17,14 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('admin.Tables.User.register', [
+        return view('public.user.register.index', [
             'title' => 'Register'
         ]);
     }
 
     public function showSukarelawan()
     {
-        return view('admin.Tables.Sukarelawan.register', [
+        return view('public.user.register.sukarelawan', [
             'title' => 'Register as Sukarelawan'
         ]);
     }
@@ -36,10 +36,10 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|max:16|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,16}$/|confirmed',
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'gender' => 'required',
-            'dateOfBirth' => 'required|date_format:d/m/Y',
+            'dateOfBirth' => 'required|date',
             'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans',
             'nationalIdentityCardImageUrl' => 'required|image',
-            'profileImageUrl' => 'required|image'
+            // 'profileImageUrl' => 'required|image'
         ]);
 
         $id = Generator::generateId(Sukarelawan::class);
@@ -53,14 +53,14 @@ class RegisterController extends Controller
             $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('/images/Sukarelawan/nationalIdentityCardImages', $fileName);
         }
 
-        $profileImageUrl = null;
+        // $profileImageUrl = null;
 
-        $profileImageFile = $request->file('profileImageUrl');
+        // $profileImageFile = $request->file('profileImageUrl');
 
-        if ($profileImageFile) {
-            $fileName = $id . '.' . $profileImageFile->getClientOriginalExtension();
-            $profileImageUrl = $profileImageFile->storeAs('/images/Sukarelawan/profileImages', $fileName);
-        }
+        // if ($profileImageFile) {
+        //     $fileName = $id . '.' . $profileImageFile->getClientOriginalExtension();
+        //     $profileImageUrl = $profileImageFile->storeAs('/images/Sukarelawan/profileImages', $fileName);
+        // }
 
         $slug = Generator::generateSlug(User::class, $request->name);
 
@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
             'nationalIdentityCardImageUrl' => $nationalIdentityCardImageUrl,
-            'profileImageUrl' => $profileImageUrl,
+            // 'profileImageUrl' => $profileImageUrl,
             'slug' => $slug
         ]);
 
@@ -90,7 +90,7 @@ class RegisterController extends Controller
 
     public function showFasilitator()
     {
-        return view('admin.Tables.Fasilitator.register', [
+        return view('public.user.register.fasilitator', [
             'title' => 'Register as Fasilitator',
             'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
                 ->get()
