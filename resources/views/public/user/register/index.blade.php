@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="col">
-        <div class="register-col">
+        <div class="register-col pb">
             <h1>Ayo Kontribusi ke Pembersihan Sungai di Indonesia</h1>
             <div class="choose-register">
                 <a href="register/sukarelawan" class="register-option">

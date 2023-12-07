@@ -121,7 +121,7 @@
                                     Foto Kartu Tanda Pengenal (KTP)
                                 </div>
                                 <div class="ktp-container">
-                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl->isEmpty())
+                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl == '')
                                         <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
                                             alt="">
                                     @else
@@ -228,6 +228,10 @@
             @foreach ($sActivityDetail as $sad)
                 <x-activity-card :activity="$sad->activity" />
             @endforeach
+        @else
+            <h2 class="biru">
+                Belum memiliki aktivitas
+            </h2>
         @endif
     </div>
 @endsection
