@@ -16,13 +16,15 @@
                     <div class="rank-container rank-2"
                         style="background-image: url('{{ asset('images/Leaderboard/rank-2-background.png') }}')">
                         @if (!empty($sortedSukarelawans) && count($sortedSukarelawans) > 1)
-                            @if ($sortedSukarelawans[1]->profileImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sortedSukarelawans[1]->profileImageUrl) }}"
-                                    class="top-3-profile-picture" alt="">
-                            @else
-                                <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
-                                    class="top-3-profile-picture" alt="">
-                            @endif
+                            <div class="profpic lg">
+                                @if ($sortedSukarelawans[1]->profileImageUrl !== null)
+                                    <img src="{{ asset('storage/' . $sortedSukarelawans[1]->profileImageUrl) }}"
+                                        class="top-3-profile-picture" alt="">
+                                @else
+                                    <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                        class="top-3-profile-picture" alt="">
+                                @endif
+                            </div>
                             <h4 class="rank-header">{{ $sortedSukarelawans[1]->user->name }}</h4>
                             <img src="{{ asset('images/Leaderboard/ranking-trophy.png') }}" alt="trophy-image"
                                 class="ranking-trophy-image-icon">
@@ -40,13 +42,15 @@
                         style="background-image: url('{{ asset('images/Leaderboard/rank-1-background.png') }}')">
                         @if (!empty($sortedSukarelawans) && count($sortedSukarelawans) > 0)
                             <img src="{{ asset('images/Leaderboard/crown.png') }}" alt="crown-image" class="crown-image">
-                            @if ($sortedSukarelawans[0]->profileImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sortedSukarelawans[0]->profileImageUrl) }}"
-                                    class="top-3-profile-picture" alt="">
-                            @else
-                                <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
-                                    class="top-3-profile-picture" alt="">
-                            @endif
+                            <div class="profpic lg">
+                                @if ($sortedSukarelawans[0]->profileImageUrl !== null)
+                                    <img src="{{ asset('storage/' . $sortedSukarelawans[0]->profileImageUrl) }}"
+                                        class="top-3-profile-picture" alt="">
+                                @else
+                                    <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                        class="top-3-profile-picture" alt="">
+                                @endif
+                            </div>
                             <h4 class="rank-header">{{ $sortedSukarelawans[0]->user->name }}</h4>
                             <img src="{{ asset('images/Leaderboard/ranking-trophy.png') }}" alt="trophy-image"
                                 class="ranking-trophy-image-icon">
@@ -62,13 +66,15 @@
                     <div class="rank-container rank-3"
                         style="background-image: url('{{ asset('images/Leaderboard/rank-3-background.png') }}')">
                         @if (!empty($sortedSukarelawans) && count($sortedSukarelawans) > 2)
-                            @if ($sortedSukarelawans[2]->profileImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sortedSukarelawans[2]->profileImageUrl) }}"
-                                    class="top-3-profile-picture" alt="">
-                            @else
-                                <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
-                                    class="top-3-profile-picture" alt="">
-                            @endif
+                            <div class="profpic lg">
+                                @if ($sortedSukarelawans[2]->profileImageUrl !== null)
+                                    <img src="{{ asset('storage/' . $sortedSukarelawans[2]->profileImageUrl) }}"
+                                        class="top-3-profile-picture" alt="">
+                                @else
+                                    <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                        class="top-3-profile-picture" alt="">
+                                @endif
+                            </div>
                             <h4 class="rank-header">{{ $sortedSukarelawans[2]->user->name }}</h4>
                             <img src="{{ asset('images/Leaderboard/ranking-trophy.png') }}" alt="trophy-image"
                                 class="ranking-trophy-image-icon">
@@ -109,16 +115,16 @@
                         <p>Peringkat</p>
                     </div>
                     <div class="name-column header-text">
-                        <p>Email</p>
+                        <p>Username</p>
                     </div>
                     <div class="level-column-header header-text">
                         <p>Level</p>
                     </div>
                     <div class="activity-qty-column header-text">
-                        <p>Jumlah Aktivitas</p>
+                        <p>Aktivitas</p>
                     </div>
                     <div class="exp-column header-text">
-                        <p>Experience Point</p>
+                        <p>XP</p>
                     </div>
                 </div>
                 @for ($i = 3; $i < count($sortedSukarelawans); $i++)
@@ -129,14 +135,17 @@
                             <p>{{ $i + 1 }}</p>
                         </div>
                         <div class="name-column">
-                            @if ($sortedSukarelawans[$i]->profileImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sortedSukarelawans[$i]->profileImageUrl) }}"
-                                    class="leaderboard-profile-picture" alt="">
-                            @else
-                                <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
-                                    class="leaderboard-profile-picture" alt="">
-                            @endif
-                            <p>{{ $sortedSukarelawans[$i]->user->name }}</p>
+                            <div class="profpic">
+                                @if ($sortedSukarelawans[$i]->profileImageUrl && $sortedSukarelawan[$i]->profileImageUrl != '')
+                                    <img src="{{ asset('storage/' . $sortedSukarelawans[$i]->profileImageUrl) }}"
+                                        class="leaderboard-profile-picture" alt="">
+                                @else
+                                    <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
+                                        class="leaderboard-profile-picture" alt="">
+                                @endif
+                            </div>
+
+                            <p class="ml">{{ $sortedSukarelawans[$i]->user->name }}</p>
                         </div>
                         <div class="level-column">
                             <p>{{ $sortedSukarelawans[$i]->level->name }}</p>
@@ -145,7 +154,8 @@
                             <p>{{ $activityCount[$i] }} aktivitas</p>
                         </div>
                         <div class="exp-column">
-                            <img src="{{ asset('images/Leaderboard/star-exp.png') }}" alt="star-image" class="star-image">
+                            <img src="{{ asset('images/Leaderboard/star-exp.png') }}" alt="star-image"
+                                class="star-image">
                             <p class="purple-text">{{ $sortedPoints[$i] }} XP</p>
                         </div>
                     </div>

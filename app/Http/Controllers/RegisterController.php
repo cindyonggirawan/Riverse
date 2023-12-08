@@ -56,7 +56,7 @@ class RegisterController extends Controller
         $validatedStep2 = $request->validate([
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'gender' => 'required',
-            'dateOfBirth' => 'required',
+            'dateOfBirth' => 'required|date',
             'nationalIdentityNumber' => 'required|string|size:16|regex:/^\d{16}$/|unique:sukarelawans',
             'nationalIdentityCardImageUrl' => 'required|image'
         ]);
@@ -127,7 +127,7 @@ class RegisterController extends Controller
 
     public function showFasilitator()
     {
-        return view('admin.Tables.Fasilitator.register', [
+        return view('public.user.register.fasilitator', [
             'title' => 'Register as Fasilitator',
             'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
                 ->get()

@@ -35,7 +35,7 @@
 
 
 @section('content')
-    <h1 class="mt-3">Sukarelawan</h1>
+    <h1 class="mt-3">Profil Sukarelawan</h1>
     <div class="sukarelawan-row">
         <div class="sukarelawan-col">
             <div class="sukarelawan-card-container">
@@ -121,7 +121,7 @@
                                     Foto Kartu Tanda Pengenal (KTP)
                                 </div>
                                 <div class="ktp-container">
-                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl->isEmpty())
+                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl == '')
                                         <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
                                             alt="">
                                     @else
@@ -207,7 +207,7 @@
                         <div class="col fs">
                             {{-- get aktivitas status ClockedIn --}}
                             <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
-                            <p>menunggu pencairan XP</p>
+                            <p>pernah diikuti</p>
                         </div>
                     </div>
                     <div class="row">
@@ -228,6 +228,10 @@
             @foreach ($sActivityDetail as $sad)
                 <x-activity-card :activity="$sad->activity" />
             @endforeach
+        @else
+            <h2 class="biru">
+                Belum memiliki aktivitas
+            </h2>
         @endif
     </div>
 @endsection

@@ -95,9 +95,13 @@ Route::post('/register/fasilitator', [RegisterController::class, 'storeFasilitat
 
 Route::delete('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'destroy']);
 
-Route::get('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'edit']);
+Route::get('admin/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'edit']);
 
-Route::patch('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'update']);
+Route::get('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'publicEdit'])->name('fasilitator.edit');
+
+Route::patch('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'publicUpdate'])->name('fasilitator.update');
+
+Route::patch('admin/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'update']);
 
 Route::get('/users', [UserController::class, 'index']);
 
@@ -109,7 +113,7 @@ Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'p
 
 Route::get('/fasilitators', [FasilitatorController::class, 'index']);
 
-Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'show']);
+Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'publicShow']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 

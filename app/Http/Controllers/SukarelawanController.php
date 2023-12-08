@@ -44,7 +44,7 @@ class SukarelawanController extends Controller
         //     //append
         // }
 
-        return view('public.sukarelawan.sukarelawan', [
+        return view('public.sukarelawan.profile', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan,
             'levels' => $levels,
