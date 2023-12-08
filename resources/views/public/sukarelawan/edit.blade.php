@@ -57,7 +57,7 @@
                             @enderror
                         </div>
                     </div>
-                    <label for="nik" class="disabled">NIK</label>
+                    <label for="nik" class="disabled">Nomor Induk Kependudukan (NIK)</label>
                     {{-- <input type="text" name="nationalIdentityNumber"
                         value="{{ old('nationalIdentityNumber') ?? $sukarelawan->nationalIdentityNumber }}"> --}}
                     <p class="disabled-input">

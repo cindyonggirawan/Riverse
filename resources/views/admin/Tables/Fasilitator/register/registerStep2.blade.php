@@ -9,6 +9,7 @@
 @endphp
 
 @section('content')
+    <div style="height: 1220px;"></div>
     <div class="row">
         <!-- Form -->
         <form action="{{ route('fasilitator.store', ['step' => 2]) }}" method="post" class="register-container"

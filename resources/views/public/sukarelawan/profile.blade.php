@@ -101,7 +101,7 @@
                             <div class="row">
                                 <div class="col-sm">
                                     <p class="disabled">
-                                        NIK
+                                        Nomor Induk Kependudukan (NIK)
                                     </p>
                                     <p>
                                         {{ $sukarelawan->nationalIdentityNumber }}

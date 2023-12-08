@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <div style="height: 1560px;"></div>
     <div class="row">
         <!-- Form -->
         <form action="{{ route('fasilitator.store', ['step' => 4]) }}" method="post" class="register-container"

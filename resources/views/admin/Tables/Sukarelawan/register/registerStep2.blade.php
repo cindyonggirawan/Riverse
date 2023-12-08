@@ -9,6 +9,7 @@
 @endphp
 
 @section('content')
+    <div style="height: 1140px;"></div>
     <div class="row">
         <!-- Form -->
         <form action="{{ route('sukarelawan.store', ['step' => 2]) }}" method="post" class="register-container"
@@ -107,7 +108,7 @@
                     </div>
                 </div>
                 <div class="form-text">
-                    <label for="nationalIdentityNumber" class="required">NIK</label>
+                    <label for="nationalIdentityNumber" class="required">Nomor Induk Kependudukan (NIK)</label>
                     <div class="row">
                         <input type="text" name="nationalIdentityNumber" id="nationalIdentityNumber"
                             class="input-text-long @error('nationalIdentityNumber') is-invalid @enderror"

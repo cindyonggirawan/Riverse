@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <div style="height: 1260px;"></div>
     <div class="row">
         <!-- Form -->
         <form action="{{ route('sukarelawan.store', ['step' => 3]) }}" method="post" class="register-container"
@@ -97,7 +98,7 @@
                 </div>
                 <div class="form-text">
                     <div class="form-subheadline">
-                        NIK
+                        Nomor Induk Kependudukan (NIK)
                     </div>
                     <div class="form-content">
                         {{ Session::get('step2Data.nationalIdentityNumber') }}

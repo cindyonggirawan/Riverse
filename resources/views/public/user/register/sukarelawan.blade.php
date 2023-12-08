@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="form-input">
-                    <label for="nationalIdentityNumber">NIK</label>
+                    <label for="nationalIdentityNumber">Nomor Induk Kependudukan (NIK)</label>
                     <input type="text" name="nationalIdentityNumber" id=""
                         value = "{{ old('nationalIdentityNumber') }}">
                     @error('nationalIdentityNumber')
