@@ -1,13 +1,13 @@
 @extends('layout.index')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/register-sukarelawan.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/css/register-fasilitator.css') }}" />
 @endsection
 
 @section('content')
     <div class="row">
         <!-- Form -->
-        <form action="{{ route('sukarelawan.store', ['step' => 1]) }}" method="post" class="register-container"
+        <form action="{{ route('fasilitator.store', ['step' => 1]) }}" method="post" class="register-container"
             enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="currentStep" id="currentStep" value="{{ $currentStep }}">
@@ -26,10 +26,10 @@
                     </div>
                 </div>
                 <nav class="row tab-menu">
-                    <div class="tab-selected">
+                    <div class="tab-unselected">
                         <a href="/register/sukarelawan" class="tab-link">Sukarelawan</a>
                     </div>
-                    <div class="tab-unselected">
+                    <div class="tab-selected">
                         <a href="/register/fasilitator" class="tab-link">Fasilitator</a>
                     </div>
                 </nav>
@@ -44,6 +44,10 @@
                     <div class="line {{ $currentStep - 1 >= 2 ? 'filled' : '' }}"></div>
                     <div class="circle {{ $currentStep == 3 ? 'filled' : '' }}">
                         3
+                    </div>
+                    <div class="line {{ $currentStep - 1 >= 3 ? 'filled' : '' }}"></div>
+                    <div class="circle {{ $currentStep == 4 ? 'filled' : '' }}">
+                        4
                     </div>
                 </div>
                 <div class="form-header">
@@ -92,7 +96,7 @@
             </div>
         </form>
         <!-- /.form -->
-        <div class="register-image" style="background-image: url('{{ asset('/images/Register/register-sk.png') }}');">
+        <div class="register-image" style="background-image: url('{{ asset('/images/Register/register-fs.png') }}');">
         </div>
     </div>
 @endsection

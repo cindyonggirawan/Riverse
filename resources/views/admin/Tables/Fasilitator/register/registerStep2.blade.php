@@ -1,7 +1,7 @@
 @extends('layout.index')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/register-sukarelawan.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/css/register-fasilitator.css') }}" />
 @endsection
 
 @php
@@ -11,7 +11,7 @@
 @section('content')
     <div class="row">
         <!-- Form -->
-        <form action="{{ route('sukarelawan.store', ['step' => 2]) }}" method="post" class="register-container"
+        <form action="{{ route('fasilitator.store', ['step' => 2]) }}" method="post" class="register-container"
             id="register-container-2" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="hasNewImage" value="{{ $hasNewImage }}">
@@ -31,15 +31,15 @@
                     </div>
                 </div>
                 <nav class="row tab-menu">
-                    <div class="tab-selected">
+                    <div class="tab-unselected">
                         <a href="/register/sukarelawan" class="tab-link">Sukarelawan</a>
                     </div>
-                    <div class="tab-unselected">
+                    <div class="tab-selected">
                         <a href="/register/fasilitator" class="tab-link">Fasilitator</a>
                     </div>
                 </nav>
                 <div class="form-steps">
-                    <a href="/register/sukarelawan">
+                    <a href="/register/fasilitator">
                         <div class="circle">
                             1
                         </div>
@@ -52,9 +52,13 @@
                     <div class="circle {{ $currentStep == 3 ? 'filled' : '' }}">
                         3
                     </div>
+                    <div class="line {{ $currentStep - 1 >= 3 ? 'filled' : '' }}"></div>
+                    <div class="circle {{ $currentStep == 4 ? 'filled' : '' }}">
+                        4
+                    </div>
                 </div>
                 <div class="form-header">
-                    Data Sukarelawan
+                    Data Fasilitator
                 </div>
                 <div class="form-text">
                     <label for="name" class="required">Nama Lengkap</label>
@@ -67,82 +71,63 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="row">
-                    <div class="form-text-division">
-                        <label for="gender" class="required">Jenis Kelamin</label>
-                        <div class="row">
-                            <select name="gender" id="gender"
-                                class="input-text-long @error('gender') is-invalid @enderror" required>
-                                @if (Session::get('step2Data.gender') ?? old('gender') == 'Perempuan')
-                                    <option value="Laki-laki">
-                                        Laki-laki
-                                    </option>
-                                    <option value="Perempuan" selected>
-                                        Perempuan
+                <div class="form-text">
+                    <label for="fasilitatorTypeId" class="required">Tipe</label>
+                    <div class="row">
+                        <select name="fasilitatorTypeId" id="fasilitatorTypeId"
+                            class="input-text-long @error('fasilitatorTypeId') is-invalid @enderror" required>
+                            @foreach ($fasilitatorTypes as $fasilitatorType)
+                                @if (Session::get('step2Data.fasilitatorTypeId') ?? old('fasilitatorTypeId') == $fasilitatorType->id)
+                                    <option value="{{ $fasilitatorType->id }}" selected>
+                                        {{ $fasilitatorType->name }}
                                     </option>
                                 @else
-                                    <option value="Laki-laki" selected>
-                                        Laki-laki
-                                    </option>
-                                    <option value="Perempuan">
-                                        Perempuan
+                                    <option value="{{ $fasilitatorType->id }}">
+                                        {{ $fasilitatorType->name }}
                                     </option>
                                 @endif
-                            </select>
-                        </div>
-                        @error('gender')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="form-text-division">
-                        <label for="dateOfBirth" class="required">Tanggal Lahir</label>
-                        <div class="row">
-                            <input type="date" name="dateOfBirth" id="dateOfBirth"
-                                class="input-text-long @error('dateOfBirth') is-invalid @enderror" placeholder="DD/MM/YYYY"
-                                required value="{{ Session::get('step2Data.dateOfBirth') ?? old('dateOfBirth') }}">
-                        </div>
-                        @error('dateOfBirth')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-text">
-                    <label for="nationalIdentityNumber" class="required">NIK</label>
-                    <div class="row">
-                        <input type="text" name="nationalIdentityNumber" id="nationalIdentityNumber"
-                            class="input-text-long @error('nationalIdentityNumber') is-invalid @enderror"
-                            placeholder="16 Digit" required
-                            value="{{ Session::get('step2Data.nationalIdentityNumber') ?? old('nationalIdentityNumber') }}">
-                    </div>
-                    @error('nationalIdentityNumber')
+                    @error('fasilitatorTypeId')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-text">
-                    <label for="" class="form-image-label required">Kartu Tanda Penduduk (KTP)</label>
+                    <label for="description" class="required">Deskripsi</label>
+                    <div class="row">
+                        <textarea name="description" id="description" class="input-text-long @error('description') is-invalid @enderror"
+                            placeholder="Minimal 100 karakter" rows="3" style="resize: none;" required>{{ Session::get('step2Data.description') ?? old('description') }}</textarea>
+                    </div>
+                    @error('description')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-text">
+                    <label for="" class="form-image-label required">Logo</label>
                     <div class="row">
                         <div class="custom-file-input">
-                            @if (Session::has('step2Data.nationalIdentityCardImageUrl'))
-                                <input type="text" name="oldNationalIdentityCardImageUrl"
-                                    value="{{ Session::get('step2Data.nationalIdentityCardImageUrl') }}" hidden>
+                            @if (Session::has('step2Data.logoImageUrl'))
+                                <input type="text" name="oldLogoImageUrl"
+                                    value="{{ Session::get('step2Data.logoImageUrl') }}" hidden>
                             @endif
 
-                            <input type="file" class="@error('nationalIdentityCardImageUrl') is-invalid @enderror"
-                                name="nationalIdentityCardImageUrl" id="imageInput" accept="image/*"
-                                value="{{ Session::get('step2Data.nationalIdentityCardImageUrl') ?? '' }}" hidden />
+                            <input type="file" class="@error('logoImageUrl') is-invalid @enderror" name="logoImageUrl"
+                                id="imageInput" accept="image/*" value="{{ Session::get('step2Data.logoImageUrl') ?? '' }}"
+                                hidden />
                             <label for="imageInput">
                                 <div class="drop-zone">
                                     <div class="image-preview" id="imagePreview"
-                                        @if (Session::has('step2Data.nationalIdentityCardImageUrl')) @else hidden @endif>
-                                        @if (Session::has('step2Data.nationalIdentityCardImageUrl'))
+                                        @if (Session::has('step2Data.logoImageUrl')) @else hidden @endif>
+                                        @if (Session::has('step2Data.logoImageUrl'))
                                             <img id="previewImage"
-                                                src="{{ asset('storage/' . Session::get('step2Data.nationalIdentityCardImageUrl')) ?? '' }}"
+                                                src="{{ asset('storage/' . Session::get('step2Data.logoImageUrl')) ?? '' }}"
                                                 alt="Image Preview" />
                                         @else
                                             <img id="previewImage" src="" alt="Image Preview" />
                                         @endif
                                     </div>
-                                    @if (Session::has('step2Data.nationalIdentityCardImageUrl'))
+                                    @if (Session::has('step2Data.logoImageUrl'))
                                     @else
                                         <div class="browse-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
@@ -155,7 +140,7 @@
                                     @endif
                                 </div>
                             </label>
-                            @error('nationalIdentityCardImageUrl')
+                            @error('logoImageUrl')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -165,7 +150,7 @@
                 <!-- Card Footer -->
                 <div class="card-footer">
                     <button type="submit" class="purple-outline-btn-long">Lanjut</button>
-                    <a href="/register/sukarelawan">
+                    <a href="/register/fasilitator">
                         Sebelumnya
                     </a>
                 </div>
@@ -173,7 +158,7 @@
             </div>
         </form>
         <!-- /.form -->
-        <div class="register-image" style="background-image: url('{{ asset('/images/Register/register-sk.png') }}');">
+        <div class="register-image" style="background-image: url('{{ asset('/images/Register/register-fs.png') }}');">
         </div>
     </div>
     <script src="{{ asset('js/dragDropImage.js') }}"></script>

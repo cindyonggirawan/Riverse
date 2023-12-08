@@ -26,11 +26,15 @@
 }
 
 #register-container-2 {
-    height: 1120px;
+    height: 1200px;
 }
 
 #register-container-3 {
-    height: 1240px;
+    height: 820px;
+}
+
+#register-container-4 {
+    height: 1540px;
 }
 
 .register-content {
@@ -47,7 +51,11 @@
 }
 
 #register-content-3 {
-    top: 5%;
+    top: 8%;
+}
+
+#register-content-4 {
+    top: 4%;
 }
 
 .tab-menu {
@@ -120,7 +128,7 @@
 }
 
 .line {
-    width: 30%;
+    width: 15%;
     height: 1px;
     background-color: #9fadc4;
 }
@@ -201,7 +209,7 @@
 }
 
 .drop-zone {
-    margin-top: 3%;
+    margin-top: 1%;
 }
 
 .register-account-text {

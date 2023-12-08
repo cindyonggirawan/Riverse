@@ -89,9 +89,9 @@ Route::patch('admin/sukarelawans/{sukarelawan:slug}', [SukarelawanController::cl
 
 Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicUpdate'])->name("sukarelawan.update");
 
-Route::get('/register/fasilitator', [RegisterController::class, 'showFasilitator']);
+Route::get('/register/fasilitator/{step?}', [RegisterController::class, 'showFasilitator'])->name('fasilitator.show')->middleware('guest');
 
-Route::post('/register/fasilitator', [RegisterController::class, 'storeFasilitator']);
+Route::post('/register/fasilitator/{step}', [RegisterController::class, 'storeFasilitator'])->name('fasilitator.store')->middleware('guest');
 
 Route::delete('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'destroy']);
 

@@ -1,0 +1,512 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.required::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+}
+
+.register-container {
+    position: absolute;
+    width: 640px;
+    height: 840px;
+    left: 10%;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 16px;
+}
+
+#register-container-2 {
+    height: 1120px;
+}
+
+#register-container-3 {
+    height: 1240px;
+}
+
+.register-content {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 8%;
+    left: 8%;
+    padding: 10px;
+}
+
+#register-content-2 {
+    top: 6%;
+}
+
+#register-content-3 {
+    top: 5%;
+}
+
+.tab-menu {
+    background-color: #f6f8fc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 6%;
+    align-items: center;
+}
+
+.tab-selected {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-selected .tab-link {
+    color: #000000;
+}
+
+.tab-selected .tab-link:hover {
+    color: #5822ca;
+}
+
+.tab-unselected {
+    background-color: #f6f8fc;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-unselected .tab-link {
+    color: #9fadc4;
+}
+
+.tab-unselected .tab-link:hover {
+    color: #000000;
+}
+
+.form-steps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 90%;
+    margin-bottom: 8%;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f6f8fc;
+    color: #9fadc4;
+    border-radius: 100%;
+}
+
+.circle.filled {
+    background-color: #5822ca;
+    color: white;
+}
+
+.line {
+    width: 30%;
+    height: 1px;
+    background-color: #9fadc4;
+}
+
+.line.filled {
+    background-color: #5822ca;
+}
+
+.form-header {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.register-image {
+    position: absolute;
+    width: 585px;
+    height: 565px;
+    display: flex;
+    right: 0%;
+    top: 8em;
+}
+
+.input-text-long {
+    margin-top: 1%;
+    font-size: 14px;
+    text-decoration: none;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    border: #838181 solid 1px;
+    border-radius: 10px;
+    color: #000000;
+    transition: ease-in 0.1s;
+}
+
+.purple-outline-btn-long {
+    font-size: 14px;
+    text-decoration: none;
+    padding: 8px 0;
+    text-align: center;
+    width: 100%;
+    border: #5822ca solid 1px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #5822ca;
+    color: white;
+    transition: ease-in 0.1s;
+    cursor: pointer;
+}
+
+.purple-outline-btn-long:hover {
+    color: white;
+    background-color: rgb(55, 0, 172);
+}
+
+.form-text {
+    width: 90%;
+    margin-bottom: 4%;
+}
+
+.form-text-division {
+    width: 43%;
+    margin-bottom: 4%;
+}
+
+.form-text-division .row {
+    margin-top: 1%;
+}
+
+.form-text-header {
+    width: 60%;
+    margin-bottom: 8%;
+}
+
+.form-text h5 {
+    color: #838181;
+}
+
+.drop-zone {
+    margin-top: 1%;
+}
+
+.register-account-text {
+    display: flex;
+    flex-direction: row;
+}
+
+.register-account-text p {
+    font-size: 18px;
+    color: #838181;
+}
+
+.register-account-text a {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 2%;
+    text-decoration: none;
+    color: #5822ca;
+}
+
+.card-footer {
+    margin-top: 4%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    height: 10%;
+}
+
+.text-danger {
+    margin: 3px;
+    font-size: 12px;
+    color: red;
+}
+
+.form-subheadline {
+    color: #838181;
+}
+
+.form-content {
+    color: #000000;
+    margin-top: 1%;
+    margin-bottom: 4%;
+}
+
+.divider {
+    width: 90%;
+    height: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #838181;
+}
+
+.step3-image-preview .image-preview {
+    margin-top: 3%;
+    margin-left: 0;
+}
+
+@media screen and (max-width: 1190px) {
+    .register-image {
+        background-size: 0 0;
+    }
+}
+
+/* BATAS SUCI DI TEMPAT SAYA */
+
+.register-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3em;
+    margin-top: 3em;
+
+    background-color: white;
+    border-radius: 20px;
+    padding: 3em;
+}
+
+.register-col.pb {
+    padding-bottom: 25em;
+}
+
+.register-img img {
+    margin-top: -20em;
+    transform: scale(1.2);
+}
+
+.register-col h1 {
+    max-width: 75%;
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+}
+
+.choose-register {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+    justify-content: space-evenly;
+    /* gap: 1em; */
+}
+
+.choose-register .register-option {
+    /* width: 40%; */
+    min-width: 36%;
+    /* max-width: 40%; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    padding: 1em 2em;
+    color: white;
+    background-color: #5822ca;
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.choose-register .register-option.right {
+    color: #5822ca;
+    background-color: #b398ed25;
+    border: 1px solid #5822ca;
+}
+
+.choose-register .register-option:hover {
+    filter: brightness(80%);
+}
+
+.choose-register a {
+    text-decoration: none;
+}
+
+.register-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 2em;
+}
+
+.register-row .register-col {
+    width: 60%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.regis-right-img {
+    width: 30%;
+    height: auto;
+    object-fit: cover;
+}
+
+.regis-right-img img {
+    width: 100%;
+    height: auto;
+    transform: scale(1.25);
+
+    /* margin-left: -0.25em; */
+    margin-left: 0.5em;
+
+    border-radius: 100%;
+}
+
+.login-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+
+    margin-top: -2em;
+}
+
+.disabled {
+    color: #838181;
+}
+
+.step-row {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: -1em;
+}
+
+.step-row .line {
+    position: absolute;
+    width: 100%;
+    height: 0.1em;
+    /* top: 50%; */
+
+    background-color: #9fadc4;
+    border-radius: 100%;
+    z-index: 1;
+}
+
+.step-circle {
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    color: #9fadc4;
+    background-color: #f6f8fc;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+}
+
+.step-circle.filled {
+    color: white;
+    background-color: #5822ca;
+}
+
+.regis-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1em;
+
+    width: 100%;
+    margin-top: -2em;
+}
+
+.no-style-btn {
+    color: #5822ca;
+    background-color: white;
+    border: none;
+
+    width: 100%;
+}
+
+.no-style-btn:hover {
+    opacity: 0.8;
+    transition: ease-in-out;
+    cursor: pointer;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-input.half {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.form-input input,
+.form-input select {
+    width: 95%;
+    padding: 0.5em 2.5%;
+    border: 1px solid #838181;
+    border-radius: 8px;
+    margin-top: 0.25em;
+}
+
+.regis-form .btn-fill {
+    margin-top: 2em;
+}
+
+.regis-form .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.caption {
+    max-width: 60%;
+    font-size: smaller;
+    font-weight: 300;
+    color: #838181;
+}
+
+.danger {
+    color: rgb(198, 29, 29);
+}
+
+.regis-form h2 {
+    margin-top: 1em;
+}
+
+.row-fs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}

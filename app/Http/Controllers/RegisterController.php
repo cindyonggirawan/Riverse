@@ -125,38 +125,101 @@ class RegisterController extends Controller
         Session::forget('step2Data');
     }
 
-    public function showFasilitator()
+    public function showFasilitator($step = 1)
     {
-        return view('public.user.register.fasilitator', [
+        return view("admin.Tables.Fasilitator.register.registerStep{$step}", [
             'title' => 'Register as Fasilitator',
             'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
-                ->get()
+                ->get(),
+            'currentStep' => $step
         ]);
     }
 
-    public function storeFasilitator(Request $request)
+    public function storeFasilitator(Request $request, $step = 1)
     {
-        $validated = $request->validate([
+        if ($step == 1) {
+            $this->handleRegisterFasilitatorStep1($request);
+        } elseif ($step == 2) {
+            $this->handleRegisterFasilitatorStep2($request);
+        } elseif ($step == 3) {
+            $this->handleRegisterFasilitatorStep3($request);
+        } elseif ($step == 4) {
+            $this->handleRegisterFasilitatorStep4($request);
+            return redirect('/login')->with('success', 'Fasilitator registration successful!');
+        }
+        $nextStep = $step + 1;
+        return redirect()->route('fasilitator.show', $nextStep);
+    }
+
+    private function handleRegisterFasilitatorStep1(Request $request)
+    {
+        $validatedStep1 = $request->validate([
             'email' => 'required|string|max:255|email:dns|regex:/^\S+@\S+\.\S+$/|unique:users',
             'password' => 'required|string|min:8|max:16|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,16}$/|confirmed',
+        ]);
+
+        Session::put('step1Data', $validatedStep1);
+    }
+
+    private function handleRegisterFasilitatorStep2(Request $request)
+    {
+        $hasNewImage = $request->hasNewImage;
+
+        $validatedStep2 = $request->validate([
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'fasilitatorTypeId' => 'required',
-            'description' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators',
+            'description' => 'required|string|min:100|max:255',
             'logoImageUrl' => 'required|image'
         ]);
 
+        if ($request->hasFile('logoImageUrl')) {
+            $hasNewImage = true;
+            $previousImage = Session::get('step2Data.logoImageUrl');
+            if ($previousImage) {
+                Storage::delete($previousImage);
+            }
+
+            $logoImageFile = $request->file('logoImageUrl');
+            $fileName = uniqid() . '.' . $logoImageFile->getClientOriginalExtension();
+            $logoImageUrl = $logoImageFile->storeAs('/images/Fasilitator/logoImages', $fileName);
+            $validatedStep2['logoImageUrl'] = $logoImageUrl;
+        }
+
+        if ($hasNewImage == false) {
+            $validatedStep2['logoImageUrl'] = $request->oldLogoImageUrl;
+        }
+
+        Session::put('step2Data', $validatedStep2);
+    }
+
+    private function handleRegisterFasilitatorStep3(Request $request)
+    {
+        $validatedStep3 = $request->validate([
+            'address' => 'required|string|min:10|max:255',
+            'phoneNumber' => 'required|string|min:10|max:13|regex:/^(?!62)\d{10,13}$/|unique:fasilitators'
+        ]);
+
+        Session::put('step3Data', $validatedStep3);
+    }
+
+    public function handleRegisterFasilitatorStep4()
+    {
+        $step1Data = Session::get('step1Data');
+        $step2Data = Session::get('step2Data');
+        $step3Data = Session::get('step3Data');
+        $combinedData = array_merge($step1Data, $step2Data, $step3Data);
+        $request = new Request($combinedData);
+
         $id = Generator::generateId(Fasilitator::class);
 
-        $logoImageUrl = null;
+        $oldFileUrl = $request->logoImageUrl;
+        $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
+        $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
 
-        $file = $request->file('logoImageUrl');
+        $newFileName = $id . '.' . $fileExtension;
+        $newFileUrl = $directoryPath . '/' . $newFileName;
 
-        if ($file) {
-            $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('/images/Fasilitator/logoImages', $fileName);
-        }
+        Storage::move($oldFileUrl, $newFileUrl);
 
         $slug = Generator::generateSlug(User::class, $request->name);
 
@@ -176,10 +239,12 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $logoImageUrl,
+            'logoImageUrl' => $newFileUrl,
             'slug' => $slug
         ]);
 
-        return redirect('/login')->with('success', 'Fasilitator registration successful!');
+        Session::forget('step1Data');
+        Session::forget('step2Data');
+        Session::forget('step3Data');
     }
 }
