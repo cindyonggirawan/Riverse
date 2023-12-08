@@ -7,7 +7,7 @@
 
 
 {{-- <img src="{{ asset('images/Levels/' . $imageLevelName . '.png') }}" alt="Level Badge"> --}}
-
+{{-- 
 @php
 
     $clockedInActivityCount = 0;
@@ -31,7 +31,7 @@
         }
     }
 
-@endphp
+@endphp --}}
 
 
 @section('content')
@@ -216,6 +216,14 @@
                             <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
                             <p>yang sedang diikuti</p>
                         </div>
+
+                        <div class="col fs">
+                            <a href="/sukarelawans/{{ $sukarelawan->slug }}/manage">
+                                <div class="btn-fill">
+                                    Lihat Semua Aktivitas
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,10 +231,14 @@
     </div>
 
     <h3 class="mt-3">Aktivitas yang diminati</h3>
+
+
     <div class="sukarelawan-activities-row">
         @if ($sActivityDetail != null && $sActivityDetail->count() > 0)
             @foreach ($sActivityDetail as $sad)
-                <x-activity-card :activity="$sad->activity" />
+                @if ($sad->sukarelawanActivityStatus->name != 'Null' || $sad->isLiked != false)
+                    <x-activity-card :activity="$sad->activity" />
+                @endif
             @endforeach
         @else
             <h2 class="biru">

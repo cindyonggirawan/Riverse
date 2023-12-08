@@ -34,23 +34,52 @@ class SukarelawanController extends Controller
     public function publicShow(Sukarelawan $sukarelawan)
     {
         $levels = Level::orderBy("name")->get();
-        // $activities = [];
-        // $sActivityDetailsFromDB = $sukarelawan->sukarelawan_activity_details->sortByDesc('updated_at')->paginate(4);
-        // if($sActivityDetails !== null && !$sActivityDetails->isEmpty()){
-        //     foreach ($sad as $sActivityDetails) {
-        //         $correspondingActivity = $sad->activity;
-                
-        //     }
-        //     //append
-        // }
+
+        $clockedInActivityCount = 0;
+        $terdaftarActivityCount = 0;
+        $claimedActivityCount = 0;
+        $points = 0;
+        $nextLevel = null;
+
+
+        $sActivityDetail = $sukarelawan->sukarelawan_activity_details;
+
+        if ($sActivityDetail) {
+            for ($i = 0; $i < $sActivityDetail->count(); $i++) {
+                if ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'Claimed') {
+                    $activityPoint = $sActivityDetail[$i]->activity->experiencePointGiven;
+                    $points += $activityPoint;
+                    $claimedActivityCount++;
+                } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'ClockedIn') {
+                    $clockedInActivityCount++;
+                } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'Terdaftar'){
+                    $terdaftarActivityCount++;
+                }
+            }
+        }
+    
 
         return view('public.sukarelawan.profile', [
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan,
             'levels' => $levels,
-            // 'sActivityDetailsFromDB' => $sActivityDetailsFromDB
-            // 'activities' => $activities
+            'clockedInActivityCount' => $clockedInActivityCount,
+            'terdaftarActivityCount' => $terdaftarActivityCount,
+            'claimedActivityCount' => $claimedActivityCount,
+            'points' => $points,
+            'nextLevel' => $nextLevel,
+            'sActivityDetail' => $sActivityDetail
         ]);
+    }
+
+    public function manage(Sukarelawan $sukarelawan){
+        $activityDetails = $sukarelawan->sukarelawan_activity_details;
+
+        return view('public.sukarelawan.manage', [
+            'title' => 'Sukarelawan',
+            'sukarelawan' => $sukarelawan,
+            'activityDetails' => $activityDetails
+        ]);  
     }
 
     public function destroy(Sukarelawan $sukarelawan)

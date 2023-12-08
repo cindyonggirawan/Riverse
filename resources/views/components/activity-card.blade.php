@@ -27,7 +27,7 @@
                 </h4>
                 <div class="card-row">
                     <div class="profpic">
-                        <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                        <img src="{{ asset('/storage/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                     </div>
                     <a href="/fasilitator/{{ $activity->fasilitator->slug }}">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>
