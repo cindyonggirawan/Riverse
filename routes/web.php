@@ -114,6 +114,8 @@ Route::get('/sukarelawans', [SukarelawanController::class, 'index']);
 
 Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicShow']);
 
+Route::get('/sukarelawans/{sukarelawan:slug}/manage', [SukarelawanController::class, 'manage']);
+
 Route::get('/fasilitators', [FasilitatorController::class, 'index']);
 
 Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'publicShow']);
