@@ -35,7 +35,7 @@
 
 
 @section('content')
-    <h1 class="mt-3">Sukarelawan</h1>
+    <h1 class="mt-3">Profil Sukarelawan</h1>
     <div class="sukarelawan-row">
         <div class="sukarelawan-col">
             <div class="sukarelawan-card-container">
@@ -207,7 +207,7 @@
                         <div class="col fs">
                             {{-- get aktivitas status ClockedIn --}}
                             <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
-                            <p>menunggu pencairan XP</p>
+                            <p>pernah diikuti</p>
                         </div>
                     </div>
                     <div class="row">

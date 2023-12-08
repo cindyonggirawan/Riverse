@@ -35,9 +35,9 @@
                 <h5>
                     Hello,
                     @if (auth()->user()->role->name == 'Sukarelawan')
-                        Sukarelawan {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     @elseif (auth()->user()->role->name == 'Fasilitator')
-                        Fasilitator {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     @elseif (auth()->user()->role->name == 'Admin')
                         Admin
                     @endif
@@ -54,15 +54,16 @@
                         </div>
                     </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <a href="/fasilitators/{{ auth()->user()->fasilitator->slug }}"></a>
-                    <div class="profpic">
-                        <img class="custom-test-profile-image shadow-4-strong"
-                            @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
-                        @else
-                            src={{ asset('storage/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
-                            alt="fasilitator image">
+                    <a href="/fasilitators/{{ auth()->user()->fasilitator->slug }}">
+                        <div class="profpic">
+                            <img class="custom-test-profile-image shadow-4-strong"
+                                @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
+                            @else
+                                src={{ asset('storage/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
+                                alt="fasilitator image">
 
-                    </div>
+                        </div>
+                    </a>
                 @endif
 
                 {{-- LOGOUT --}}
