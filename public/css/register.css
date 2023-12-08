@@ -1,0 +1,269 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.required::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+}
+
+.register-container {
+    position: absolute;
+    width: 640px;
+    height: 840px;
+    left: 10%;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 16px;
+}
+
+#register-container-2 {
+    height: 1120px;
+}
+
+#register-container-3 {
+    height: 1240px;
+}
+
+.register-content {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 8%;
+    left: 8%;
+    padding: 10px;
+}
+
+#register-content-2 {
+    top: 6%;
+}
+
+#register-content-3 {
+    top: 5%;
+}
+
+.tab-menu {
+    background-color: #f6f8fc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 6%;
+    align-items: center;
+}
+
+.tab-selected {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-selected .tab-link {
+    color: #000000;
+}
+
+.tab-selected .tab-link:hover {
+    color: #5822ca;
+}
+
+.tab-unselected {
+    background-color: #f6f8fc;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-unselected .tab-link {
+    color: #9fadc4;
+}
+
+.tab-unselected .tab-link:hover {
+    color: #000000;
+}
+
+.form-steps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 90%;
+    margin-bottom: 8%;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f6f8fc;
+    color: #9fadc4;
+    border-radius: 100%;
+}
+
+.circle.filled {
+    background-color: #5822ca;
+    color: white;
+}
+
+.line {
+    width: 30%;
+    height: 1px;
+    background-color: #9fadc4;
+}
+
+.line.filled {
+    background-color: #5822ca;
+}
+
+.form-header {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.register-image {
+    position: absolute;
+    width: 585px;
+    height: 565px;
+    display: flex;
+    right: 0%;
+    top: 8em;
+}
+
+.input-text-long {
+    margin-top: 1%;
+    font-size: 14px;
+    text-decoration: none;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    border: #838181 solid 1px;
+    border-radius: 10px;
+    color: #000000;
+    transition: ease-in 0.1s;
+}
+
+.purple-outline-btn-long {
+    font-size: 14px;
+    text-decoration: none;
+    padding: 8px 0;
+    text-align: center;
+    width: 100%;
+    border: #5822ca solid 1px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #5822ca;
+    color: white;
+    transition: ease-in 0.1s;
+    cursor: pointer;
+}
+
+.purple-outline-btn-long:hover {
+    color: white;
+    background-color: rgb(55, 0, 172);
+}
+
+.form-text {
+    width: 90%;
+    margin-bottom: 4%;
+}
+
+.form-text-division {
+    width: 43%;
+    margin-bottom: 4%;
+}
+
+.form-text-division .row {
+    margin-top: 1%;
+}
+
+.form-text-header {
+    width: 60%;
+    margin-bottom: 8%;
+}
+
+.form-text h5 {
+    color: #838181;
+}
+
+.drop-zone {
+    margin-top: 3%;
+}
+
+.register-account-text {
+    display: flex;
+    flex-direction: row;
+}
+
+.register-account-text p {
+    font-size: 18px;
+    color: #838181;
+}
+
+.register-account-text a {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 2%;
+    text-decoration: none;
+    color: #5822ca;
+}
+
+.card-footer {
+    margin-top: 4%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    height: 10%;
+}
+
+.text-danger {
+    margin: 3px;
+    font-size: 12px;
+    color: red;
+}
+
+.form-subheadline {
+    color: #838181;
+}
+
+.form-content {
+    color: #000000;
+    margin-top: 1%;
+    margin-bottom: 4%;
+}
+
+.divider {
+    width: 90%;
+    height: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #838181;
+}
+
+.step3-image-preview .image-preview {
+    margin-top: 3%;
+    margin-left: 0;
+}
+
+@media screen and (max-width: 1190px) {
+    .register-image {
+        background-size: 0 0;
+    }
+}

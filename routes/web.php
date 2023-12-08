@@ -75,11 +75,9 @@ Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
 
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/register/sukarelawan/{step?}', [RegisterController::class, 'showSukarelawan'])->name('sukarelawan.show')->middleware('guest');
 
-Route::get('/register/sukarelawan', [RegisterController::class, 'showSukarelawan']);
-
-Route::post('/register/sukarelawan', [RegisterController::class, 'storeSukarelawan']);
+Route::post('/register/sukarelawan/{step}', [RegisterController::class, 'storeSukarelawan'])->name('sukarelawan.store')->middleware('guest');
 
 Route::delete('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'destroy']);
 
@@ -247,7 +245,7 @@ Route::get('/levels/{level:slug}', [LevelController::class, 'show'])->middleware
 
 //Benefit Section
 Route::get('/benefits/create', [BenefitController::class, 'create'])
-->middleware("admin");
+    ->middleware("admin");
 
 Route::post('/benefits/create', [BenefitController::class, 'store'])->middleware("admin");
 
@@ -268,4 +266,3 @@ Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'u
 // Leaderboard Section
 Route::get('/leaderboard', [LeaderboardController::class, 'processAndShowLeaderboardData']);
 Route::post('/activities/{activity:slug}/attend', [ActivityController::class, 'takeAttendance'])->name('activities.attend');
-
