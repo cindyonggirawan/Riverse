@@ -52,9 +52,4 @@ class Fasilitator extends Model
     {
         return $this->belongsTo(Activity::class, 'id', 'fasilitatorId');
     }
-
-    public function experience_histories(): HasMany
-    {
-        return $this->hasMany(ExperienceHistory::class, 'fasilitatorId', 'id');
-    }
 }

@@ -46,7 +46,7 @@
         <div class="img-container"
         style="background-image: url('{{ asset(
             $activity->bannerImageUrl
-                ? 'storage/' . $activity->bannerImageUrl
+                ? 'storage/images/' . $activity->bannerImageUrl
                 : '/images/' . Config::get('constants.default_banner_image'),
         ) }}');">
       <div class="likes">
@@ -68,7 +68,7 @@
       </div>
 
       <div class="btn-container
-      {{-- {{"bg-danger"}} 
+      {{-- {{"bg-danger"}}
       {{"bg-disabled"}} --}}
       "
       >

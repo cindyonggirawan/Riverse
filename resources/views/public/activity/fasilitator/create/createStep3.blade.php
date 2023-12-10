@@ -123,7 +123,7 @@
                                     @if (Session::has('step1Data.picture')) @else hidden @endif>
                                     @if (Session::has('step1Data.picture'))
                                         <img id="previewImage"
-                                            src="{{ asset('storage/' . Session::get('step1Data.picture')) ?? '' }}"
+                                            src="{{ asset('storage/images/' . Session::get('step1Data.picture')) ?? '' }}"
                                             alt="Image Preview" />
                                     @else
                                         <img id="previewImage" src="" alt="Image Preview" />
@@ -169,7 +169,7 @@
                             {{ Session::get('step2Data.minimumNumOfSukarelawan') }} orang
                         </div>
                         <div class="form-subheadline">
-                            Perlengkapan Suakrelawan
+                            Perlengkapan Sukarelawan
                         </div>
                         <div class="form-content">
                             <div class="perlengkapan-container">

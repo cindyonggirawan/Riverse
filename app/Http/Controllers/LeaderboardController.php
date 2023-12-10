@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Sukarelawan;
 use App\Models\SukarelawanActivityDetail;
-use Illuminate\Http\Request;
+use App\Models\SukarelawanActivityStatus;
 use Illuminate\Support\Facades\Auth;
 
 class LeaderboardController extends Controller
 {
     public function processAndShowLeaderboardData() {
         $sukarelawanFromDB = Sukarelawan::all();
-        $sukarelawanActivityDetailsFromDB = SukarelawanActivityDetail::all();
+        $sukarelawanActivityDetailsFromDB = SukarelawanActivityDetail::where('sukarelawanActivityStatusId', SukarelawanActivityStatus::where('name', 'Claimed')->first()->id)->get();
 
-        if($sukarelawanFromDB->isEmpty() || $sukarelawanActivityDetailsFromDB->isEmpty()) {
+        if(empty($sukarelawanFromDB) || empty($sukarelawanActivityDetailsFromDB)) {
             return view('public.leaderboard', [
                 'title' => 'Empty Leaderboard'
             ]);

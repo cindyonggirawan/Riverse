@@ -8,6 +8,7 @@ use App\Models\Activity;
 use App\Models\Generator;
 use Illuminate\Http\Request;
 use App\Models\ActivityStatus;
+use App\Models\Fasilitator;
 use App\Models\VerificationStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +34,7 @@ class ActivityController extends Controller
          $query->whereHas('activityStatus', function ($subQuery) {
             $subQuery->where('name', 'Pendaftaran Sedang Dibuka');
         });
-        
+
         if ($request->has('searchFasilitator')) {
             $searchFasilitatorName = $request->input('searchFasilitator');
             $query->whereHas('fasilitator.user', function ($subQuery) use ($searchFasilitatorName) {
@@ -51,7 +52,7 @@ class ActivityController extends Controller
 
             if ($sortBy === 'dateClosest') {
                 $query->orderBy('cleanUpDate');
-            } 
+            }
             elseif ($sortBy === 'dateFarthest') {
                 $query->orderByDesc('cleanUpDate');
             }
@@ -59,7 +60,7 @@ class ActivityController extends Controller
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
                 }])->orderByDesc('like_count');
-            } 
+            }
             elseif ($sortBy === 'leastLikes') {
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
@@ -96,7 +97,7 @@ class ActivityController extends Controller
         $user = auth()->user();
         $likeCount = $activity->likeCount();
         // dd($likeCount);
-    
+
         if ($user != null) {
             if (str_starts_with($user->id, 'FR')) {
                 return view('public.activity.fasilitator.activity', [
@@ -119,7 +120,7 @@ class ActivityController extends Controller
             ]);
         }
     }
-    
+
 
 
     public function create()
@@ -311,7 +312,8 @@ class ActivityController extends Controller
         $bannerImageUrl = null;
         if ($file) {
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $bannerImageUrl = $file->storeAs('Activity/bannerImages', $fileName);
+            $bannerImageUrl = $file->storeAs('/public/images/Activity/bannerImages', $fileName);
+            $bannerImageUrl = 'Activity/bannerImages/' . $fileName;
         }
 
         Activity::create([
@@ -362,14 +364,23 @@ class ActivityController extends Controller
     public function publicEdit(Activity $activity, $step = 1)
     {
         // $this->authorize('update', $activity);
-
-        return view("public.activity.fasilitator.update.updateStep{$step}", [
-            'title' => 'Edit Activity',
-            'activity' => $activity,
-            'currentStep' => $step,
-            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
-                ->get()
-        ]);
+        if(Auth::check() && auth()->user()->fasilitator !== null && $activity->fasilitatorId == auth()->user()->fasilitator->id) {
+            return view("public.activity.fasilitator.update.updateStep{$step}", [
+                'title' => 'Edit Activity',
+                'activity' => $activity,
+                'currentStep' => $step,
+                'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
+                    ->get()
+            ]);
+        } else {
+            $activities = Activity::latest()->limit(9)->get();
+            return view('home', [
+                'activities' => $activities,
+                'activitiesCount' => Activity::all()->count(),
+                'sukarelawanCount' => SukarelawanActivityDetail::all()->count(),
+                'fasilitatorCount' => Fasilitator::all()->count(),
+            ]);
+        }
     }
 
     public function publicUpdate(Request $request, Activity $activity, $step = 1)
@@ -642,7 +653,12 @@ class ActivityController extends Controller
     public function fetchHomePageActivities()
     {
         $activities = Activity::latest()->limit(9)->get();
-        return view('home', ['activities' => $activities]);
+        return view('home', [
+            'activities' => $activities,
+            'activitiesCount' => Activity::all()->count(),
+            'sukarelawanCount' => SukarelawanActivityDetail::all()->count(),
+            'fasilitatorCount' => Fasilitator::all()->count(),
+        ]);
     }
 
 
@@ -651,11 +667,11 @@ class ActivityController extends Controller
         $sukarelawan = auth()->user()->sukarelawan;
         $status = SukarelawanActivityStatus::where('name', 'Null')->first();
 
-    
+
         $existingLike = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
             ->where('activityId', $activity->id)
             ->first();
-    
+
         if ($existingLike) {
             // If already liked, toggle isLiked
             $existingLike->update(['isLiked' => !$existingLike->isLiked]);
@@ -676,19 +692,19 @@ class ActivityController extends Controller
 
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
     }
-    
-    
+
+
     public function joinActivity(Activity $activity)
     {
         $sukarelawan = auth()->user()->sukarelawan;
-    
+
         if ($sukarelawan) {
             $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
                 ->where('activityId', $activity->id)
                 ->first();
 
             $terdaftarStatus = SukarelawanActivityStatus::where('name', 'Terdaftar')->first();
-    
+
             if ($existingDetail) {
                 $existingDetail->update(['sukarelawanActivityStatusId' => $terdaftarStatus->id]);
             } else {
@@ -712,14 +728,14 @@ class ActivityController extends Controller
     public function unjoinActivity(Activity $activity)
     {
         $sukarelawan = auth()->user()->sukarelawan;
-    
+
         if ($sukarelawan) {
             $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
                 ->where('activityId', $activity->id)
                 ->first();
 
             $cancelStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
-    
+
             if ($existingDetail) {
                 $existingDetail->update(['sukarelawanActivityStatusId' => $cancelStatus->id]);
             }
@@ -735,7 +751,7 @@ class ActivityController extends Controller
         //check if activity status is eligible [Terdaftar]
         $sukarelawan = auth()->user()->sukarelawan;
         $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
-        
+
         // dd($sukarelawanActivityDetail);
 
         if (!$sukarelawanActivityDetail) {
@@ -743,7 +759,7 @@ class ActivityController extends Controller
                 ->route('activity.publicShow', ['activity' => $activity->slug])
                 ->with('error', 'Failed to Clock In, Status Invalid');
         }
-        
+
         $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
         if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
             return redirect()

@@ -1,0 +1,119 @@
+.activity-container {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 50px;
+}
+
+.verified-activity {
+    width: 50px;
+    height: 50px;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 150px;
+}
+
+.activity-container-content {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.activity-content-detail-row {
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: gainsboro;
+    margin-top: 15px;
+}
+
+.activity-content-detail-column {
+    display: flex;
+    flex-direction: column;
+    width: 49.5%;
+    background-color: white;
+}
+
+.activity-image {
+    width: 182px;
+    height: 145px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.colored-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: red;
+    align-self: center;
+}
+
+.colored-dot-text {
+    text-align: center;
+    margin-top: 13px;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.approve-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #4CAF50; /* Green border color */
+    color: #fff; /* White text color */
+    background-color: #4CAF50; /* Green background color */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+.approve-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    border-color: #45a049; /* Darker green border on hover */
+}
+
+.reject-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #FF5733; /* Red border color */
+    color: #fff; /* White text color */
+    background-color: #FF5733; /* Red background color */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  /* X symbol */
+
+  /* Hover effect */
+  .reject-button:hover {
+    background-color: #FF2600; /* Darker red on hover */
+    border-color: #FF2600; /* Darker red border on hover */
+  }

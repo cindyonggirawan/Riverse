@@ -56,7 +56,7 @@
                         </div>
                     </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <a href="/fasilitator/{{ auth()->user()->sukarelawan->slug }}"></a>
+                    <a href="/fasilitator/{{ auth()->user()->fasilitator->slug }}"></a>
                     <div class="profpic">
                         <img class="custom-test-profile-image shadow-4-strong"
                             @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}

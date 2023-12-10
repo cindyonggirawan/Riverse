@@ -29,19 +29,19 @@
         <div class="about">
             <div class="about-left">
                 <div class="about-card" style="background-image: url('{{ asset('/images/about_card_1.png') }}');">
-                    <h3 class="selected">1.000.000 +</h3>
+                    <h3 class="selected">{{ $sukarelawanCount }} +</h3>
                     <p>Sukarelawan</p>
                 </div>
             </div>
             <div class="about-col">
                 <div class="about-card about-card-sm"
                     style="background-image: url('{{ asset('/images/about_card_2.png') }}');">
-                    <h3 class="selected">1.000 +</h3>
+                    <h3 class="selected">{{ $activitiesCount }} +</h3>
                     <p>Aktvitas</p>
                 </div>
                 <div class="about-card about-card-sm"
                     style="background-image: url('{{ asset('/images/about_card_3.png') }}');">
-                    <h3 class="selected">100.000 +</h3>
+                    <h3 class="selected">{{ $fasilitatorCount }} +</h3>
                     <p>Fasilitator</p>
                 </div>
             </div>
@@ -71,7 +71,7 @@
             <div class="lihat-semua-card-container">
                 <img src="{{ asset('images/activities_hands.png') }}" alt="">
                 <div class="activities-card-content">
-                    <h1>1.000+</h1>
+                    <h1>{{ $activitiesCount }}+</h1>
                     <p>aktivitas tersedia<br />pada platform ini</p>
                     <a href="/activities" class="purple-outline-btn-long">Lihat Semua</a>
                 </div>
