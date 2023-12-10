@@ -141,7 +141,7 @@
                     </div>
 
                     @if (auth()->user() && auth()->user()->fasilitator && auth()->user()->fasilitator->id == $fasilitator->id)
-                        <a href="/fasilitator/{{ $fasilitator->slug }}/manage">
+                        <a href="/fasilitators/{{ $fasilitator->slug }}/manage">
                             <div class="btn-fill">
                                 Kelola Aktivitas
                             </div>

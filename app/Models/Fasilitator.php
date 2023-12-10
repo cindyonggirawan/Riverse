@@ -52,4 +52,9 @@ class Fasilitator extends Model
     {
         return $this->belongsTo(Activity::class, 'id', 'fasilitatorId');
     }
+
+
+    public function activities(): HasMany{
+        return $this->hasMany(Activity::class, 'fasilitatorId', 'id');
+    }
 }

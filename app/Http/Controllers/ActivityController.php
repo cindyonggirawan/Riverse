@@ -351,6 +351,28 @@ class ActivityController extends Controller
         return redirect('/manage/activities')->with('success', 'Activity destruction successful!');
     }
 
+    public function publicDestroy(Activity $activity)
+    {
+        if($activity->fasilitator->id != auth()->user()->fasilitator->id){
+            return redirect('/');
+        }// validate if this is the correct fasilitator
+
+        if($activity->verificationStatus->name != "Sudah Diverifikasi"){
+            if ($activity->bannerImageUrl) {
+                Storage::delete($activity->bannerImageUrl);
+            }
+            $activity->delete();
+            return redirect('fasilitators/'. 
+            auth()->user()->fasilitator->slug
+            .'/manage')->with('success', 'Activity destruction successful!');
+        } //
+        
+        
+        return redirect('/');
+    }
+
+
+
     public function edit(Activity $activity)
     {
         return view('admin.Tables.Activity.edit', [

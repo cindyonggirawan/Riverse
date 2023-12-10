@@ -52,7 +52,7 @@
         <h3>Aktvitas yang berada di
             <a href="/" class="selected">Sungai Ciliwung</a>
         </h3>
-        {{-- 
+        {{--
         <div class="activity-row">
             <x-activity-card-big :activity="$activities[0]" />
             <div class="activity-col">
