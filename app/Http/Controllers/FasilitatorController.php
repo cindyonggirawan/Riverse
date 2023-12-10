@@ -57,6 +57,16 @@ class FasilitatorController extends Controller
         ]);
     }
 
+    public function manage(Fasilitator $fasilitator){
+        $activities = $fasilitator->activities()->orderBy('created_at', 'desc')->get();
+
+        return view('public.fasilitator.manage', [
+            'title' => 'Sukarelawan',
+            'fasilitator' => $fasilitator,
+            'activities' => $activities
+        ]);  
+    }
+
     public function destroy(Fasilitator $fasilitator)
     {
         if ($fasilitator->logoImageUrl) {

@@ -29,19 +29,19 @@
         <div class="about">
             <div class="about-left">
                 <div class="about-card" style="background-image: url('{{ asset('/images/about_card_1.png') }}');">
-                    <h3 class="selected">1.000.000 +</h3>
+                    <h3 class="selected">{{ '1.000.000 +' }}</h3>
                     <p>Sukarelawan</p>
                 </div>
             </div>
             <div class="about-col">
                 <div class="about-card about-card-sm"
                     style="background-image: url('{{ asset('/images/about_card_2.png') }}');">
-                    <h3 class="selected">1.000 +</h3>
-                    <p>Aktvitas</p>
+                    <h3 class="selected">{{ '1.000 +' }}</h3>
+                    <p>Aktivitas</p>
                 </div>
                 <div class="about-card about-card-sm"
                     style="background-image: url('{{ asset('/images/about_card_3.png') }}');">
-                    <h3 class="selected">100.000 +</h3>
+                    <h3 class="selected">{{ '100.000 +' }}</h3>
                     <p>Fasilitator</p>
                 </div>
             </div>

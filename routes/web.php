@@ -117,6 +117,8 @@ Route::get('/fasilitators', [FasilitatorController::class, 'index']);
 
 Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'publicShow']);
 
+Route::get('/fasilitators/{fasilitator:slug}/manage', [FasilitatorController::class, 'manage']);
+
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -212,6 +214,8 @@ Route::patch('/admin/activities/{activity:slug}', [ActivityController::class, 'u
 // fasilitator
 Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit')->middleware("fasilitator");
 Route::patch('/activities/{activity:slug}/{step}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate')->middleware("fasilitator");
+
+Route::delete('/activities/{activity:slug}/delete', [ActivityController::class, 'publicDestroy'])->name('activity.publicDestroy')->middleware('fasilitator');
 
 Route::get('/manage/activities', [ActivityController::class, 'index'])->middleware("admin");
 
