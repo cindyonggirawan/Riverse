@@ -570,6 +570,7 @@ class ComposerStaticInite2dc98cae3ae9d1ecafba8e40b27453e
         'App\\Http\\Controllers\\VerificationStatusController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerificationStatusController.php',
         'App\\Http\\Controllers\\VerifyActivityController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifyActivityController.php',
         'App\\Http\\Controllers\\VerifyFasilitatorController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifyFasilitatorController.php',
+        'App\\Http\\Controllers\\VerifySukarelawanAttendanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifySukarelawanAttendanceController.php',
         'App\\Http\\Controllers\\VerifySukarelawanController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifySukarelawanController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminMiddleware.php',

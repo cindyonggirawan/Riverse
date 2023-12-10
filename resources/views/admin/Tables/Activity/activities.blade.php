@@ -47,7 +47,7 @@
                                     <td>{{ $activity->activityStatus->name }}</td>
                                     <td>
                                         @if ($activity->bannerImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $activity->bannerImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $activity->bannerImageUrl) }}"
                                                 alt="{{ $activity->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Activity/bannerImages/default.png') }}"

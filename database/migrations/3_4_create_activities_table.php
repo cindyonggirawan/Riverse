@@ -33,9 +33,7 @@ return new class extends Migration
             $table->bigInteger('minimumNumOfSukarelawan');
             $table->text('sukarelawanEquipment');
             $table->string('groupChatUrl');
-            $table->string('groupChatQRCodeImageUrl')->nullable();
             $table->bigInteger('experiencePointGiven')->default(0);
-            $table->string('attendanceQRCodeImageUrl')->nullable();
             $table->string('slug')->unique();
             $table->timestamp('verified_at')->nullable();
             $table->timestamp('rejected_at')->nullable();

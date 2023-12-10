@@ -19,6 +19,7 @@ use App\Http\Controllers\VerifyActivityController;
 use App\Http\Controllers\VerifyFasilitatorController;
 use App\Http\Controllers\VerifySukarelawanController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\VerifySukarelawanAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -276,3 +277,11 @@ Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'u
 // Leaderboard Section
 Route::get('/leaderboard', [LeaderboardController::class, 'processAndShowLeaderboardData']);
 Route::post('/activities/{activity:slug}/attend', [ActivityController::class, 'takeAttendance'])->name('activities.attend');
+
+
+//finalize attendance section
+Route::get('/{activity:slug}/waiting-for-verification/attendance', [VerifySukarelawanAttendanceController::class, 'indexJoinedOrClockedInSukarelawan']);
+Route::get('/{activity:slug}/attended/attendance', [VerifySukarelawanAttendanceController::class, 'indexAttendedSukarelawan']);
+Route::patch('/verify/all-attendance', [VerifySukarelawanAttendanceController::class, 'updateAllClaimedSukarelawan']);
+Route::patch('/verify/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateAttendedSukarelawan']);
+Route::patch('/reject/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateUnattendedSukarelawan']);

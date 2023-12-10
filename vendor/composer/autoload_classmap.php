@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\VerificationStatusController' => $baseDir . '/app/Http/Controllers/VerificationStatusController.php',
     'App\\Http\\Controllers\\VerifyActivityController' => $baseDir . '/app/Http/Controllers/VerifyActivityController.php',
     'App\\Http\\Controllers\\VerifyFasilitatorController' => $baseDir . '/app/Http/Controllers/VerifyFasilitatorController.php',
+    'App\\Http\\Controllers\\VerifySukarelawanAttendanceController' => $baseDir . '/app/Http/Controllers/VerifySukarelawanAttendanceController.php',
     'App\\Http\\Controllers\\VerifySukarelawanController' => $baseDir . '/app/Http/Controllers/VerifySukarelawanController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\AdminMiddleware' => $baseDir . '/app/Http/Middleware/AdminMiddleware.php',

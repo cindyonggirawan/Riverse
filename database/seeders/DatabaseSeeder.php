@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $names = ["Null", "Pending",'Terdaftar', 'ClockedIn', 'Claimed'];
+        $names = ["Null", "Pending", 'Terdaftar', 'ClockedIn', 'Claimed'];
         foreach ($names as $name) {
             SukarelawanActivityStatus::create([
                 'id' => Generator::generateId(SukarelawanActivityStatus::class),
@@ -75,25 +75,57 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $names = ['Level 1', 'Level 2', 'Level 3', "Level 4", "Level 5", "Level 6"];
-        foreach ($names as $name) {
-            Level::create([
-                'id' => Generator::generateId(Level::class),
-                'name' => $name,
-                'maximumExperiencePoint' => 100,
-                'slug' => Generator::generateSlug(Level::class, $name)
-            ]);
-        }
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 1',
+            'maximumExperiencePoint' => 100,
+            'slug' => Generator::generateSlug(Level::class, 'Level 1')
+        ]);
+
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 2',
+            'maximumExperiencePoint' => 200,
+            'slug' => Generator::generateSlug(Level::class, 'Level 2')
+        ]);
+
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 3',
+            'maximumExperiencePoint' => 300,
+            'slug' => Generator::generateSlug(Level::class, 'Level 3')
+        ]);
+
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 4',
+            'maximumExperiencePoint' => 400,
+            'slug' => Generator::generateSlug(Level::class, 'Level 4')
+        ]);
+
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 5',
+            'maximumExperiencePoint' => 500,
+            'slug' => Generator::generateSlug(Level::class, 'Level 5')
+        ]);
+
+        Level::create([
+            'id' => Generator::generateId(Level::class),
+            'name' => 'Level 6',
+            'maximumExperiencePoint' => 600,
+            'slug' => Generator::generateSlug(Level::class, 'Level 6')
+        ]);
 
         $names = [
             "Voucher B2G1 Kopi XYZ",
-            "Voucher BOGO Kopi XYZ", 
-            'Totebag dari XYZ', 
-            'Kopi Gratis di Kopi XYZ', 
+            "Voucher BOGO Kopi XYZ",
+            'Totebag dari XYZ',
+            'Kopi Gratis di Kopi XYZ',
             "Riverse Limited Edition Tee",
             'Tumbler dari Riverse',
             '2 Kopi Gratis di Kopi XYZ',
-            "3 Voucher BOGO Kopi XYZ", 
+            "3 Voucher BOGO Kopi XYZ",
         ];
 
         $benefitCounter = 1;
@@ -327,7 +359,7 @@ class DatabaseSeeder extends Seeder
             SukarelawanActivityDetail::create([
                 'id' => Generator::generateId(Activity::class),
                 'activityId' => $activity->id,
-                'sukarelawanActivityStatusId' => '1',
+                'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
                 'sukarelawanId' => "1",
                 'isLiked' => false
             ]);
@@ -336,48 +368,48 @@ class DatabaseSeeder extends Seeder
         //fill the activity details for sukarelawan 2
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[0]['id'],
+            'activityId' => $activities[0]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[1]['id'],
+            'activityId' => $activities[1]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
             'isLiked' => false
         ]);
 
         //fill the activity details for sukarelawan 3
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[0]['id'],
+            'activityId' => $activities[0]->id,
             'sukarelawanId' => "3",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[2]['id'],
+            'activityId' => $activities[2]->id,
             'sukarelawanId' => "3",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
 
         //fill the activity details for sukarelawan 4
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[1]['id'],
+            'activityId' => $activities[1]->id,
             'sukarelawanId' => "4",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
-            'activityId' => $activities[2]['id'],
+            'activityId' => $activities[2]->id,
             'sukarelawanId' => "4",
-            'sukarelawanActivityStatusId' => '1',
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
             'isLiked' => false
         ]);
 

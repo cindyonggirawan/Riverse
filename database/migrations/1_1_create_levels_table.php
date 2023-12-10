@@ -16,7 +16,6 @@ return new class extends Migration
 
             $table->string('name');
             $table->bigInteger('maximumExperiencePoint');
-            $table->string('medalImageUrl')->nullable();
             $table->string('slug')->unique();
 
             $table->timestamps();
