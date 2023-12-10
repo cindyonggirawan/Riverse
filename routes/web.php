@@ -76,27 +76,33 @@ Route::get('/rivers/{river:slug}', [RiverController::class, 'show']);
 
 
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/register/sukarelawan/{step?}', [RegisterController::class, 'showSukarelawan'])->name('sukarelawan.show')->middleware('guest');
 
-Route::get('/register/sukarelawan', [RegisterController::class, 'showSukarelawan']);
-
-Route::post('/register/sukarelawan', [RegisterController::class, 'storeSukarelawan']);
+Route::post('/register/sukarelawan/{step}', [RegisterController::class, 'storeSukarelawan'])->name('sukarelawan.store')->middleware('guest');
 
 Route::delete('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'destroy']);
 
-Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'edit']);
+Route::get('/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'publicEdit']);
 
-Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update']);
+Route::get('/admin/sukarelawans/{sukarelawan:slug}/edit', [SukarelawanController::class, 'publicEdit']);
 
-Route::get('/register/fasilitator', [RegisterController::class, 'showFasilitator']);
+Route::patch('admin/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'update'])->name("admin.sukarelawan.update");
 
-Route::post('/register/fasilitator', [RegisterController::class, 'storeFasilitator']);
+Route::patch('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicUpdate'])->name("sukarelawan.update");
+
+Route::get('/register/fasilitator/{step?}', [RegisterController::class, 'showFasilitator'])->name('fasilitator.show')->middleware('guest');
+
+Route::post('/register/fasilitator/{step}', [RegisterController::class, 'storeFasilitator'])->name('fasilitator.store')->middleware('guest');
 
 Route::delete('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'destroy']);
 
-Route::get('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'edit']);
+Route::get('admin/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'edit']);
 
-Route::patch('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'update']);
+Route::get('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'publicEdit'])->name('fasilitator.edit');
+
+Route::patch('/fasilitators/{fasilitator:slug}/edit', [FasilitatorController::class, 'publicUpdate'])->name('fasilitator.update');
+
+Route::patch('admin/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'update']);
 
 Route::get('/users', [UserController::class, 'index']);
 
@@ -104,11 +110,13 @@ Route::get('/users/{user:slug}', [UserController::class, 'show']);
 
 Route::get('/sukarelawans', [SukarelawanController::class, 'index']);
 
-Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'show']);
+Route::get('/sukarelawans/{sukarelawan:slug}', [SukarelawanController::class, 'publicShow']);
+
+Route::get('/sukarelawans/{sukarelawan:slug}/manage', [SukarelawanController::class, 'manage']);
 
 Route::get('/fasilitators', [FasilitatorController::class, 'index']);
 
-Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'show']);
+Route::get('/fasilitators/{fasilitator:slug}', [FasilitatorController::class, 'publicShow']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 
@@ -122,10 +130,12 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordIndex'])->middleware('guest')->name('password.reset');
 
+Route::get('/change-password/{user:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->name('password.change');
+
+Route::patch('/change-password/{user:slug}', [ForgotPasswordController::class, 'changePassword'])->name('password.update.change');
+
+
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
-
-
-
 
 
 Route::get('/waiting-for-verification/sukarelawans', [VerifySukarelawanController::class, 'indexWaitingForVerificationSukarelawan']);
@@ -188,23 +198,23 @@ Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, '
 // CRUD Activities
 
 // admin create
-Route::get('/admin/activities/create', [ActivityController::class, 'create']);
-Route::post('/admin/activities/create', [ActivityController::class, 'store']);
+Route::get('/admin/activities/create', [ActivityController::class, 'create'])->middleware("admin");
+Route::post('/admin/activities/create', [ActivityController::class, 'store'])->middleware("admin");
 
 
 // facilitator create
-Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCreate'])->name('activity.publicCreate');
-Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore');
+Route::get('/activities/create/{step?}', [ActivityController::class, 'publicCreate'])->name('activity.publicCreate')->middleware("fasilitator");
+Route::post('/activities/create/{step}', [ActivityController::class, 'publicStore'])->name('activity.publicStore')->middleware("fasilitator");
 
 // admin update
-Route::get('/admin/activities/{activity:slug}/edit', [ActivityController::class, 'edit']);
-Route::patch('/admin/activities/{activity:slug}', [ActivityController::class, 'update']);
+Route::get('/admin/activities/{activity:slug}/edit', [ActivityController::class, 'edit'])->middleware("admin");
+Route::patch('/admin/activities/{activity:slug}', [ActivityController::class, 'update'])->middleware("admin");
 
 // fasilitator
-Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit');
-Route::patch('/activities/{activity:slug}/{step}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate');
+Route::get('/activities/{activity:slug}/edit/{step?}', [ActivityController::class, 'publicEdit'])->name('activity.publicEdit')->middleware("fasilitator");
+Route::patch('/activities/{activity:slug}/{step}', [ActivityController::class, 'publicUpdate'])->name('activity.publicUpdate')->middleware("fasilitator");
 
-Route::get('/manage/activities', [ActivityController::class, 'index']);
+Route::get('/manage/activities', [ActivityController::class, 'index'])->middleware("admin");
 
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
 
@@ -229,33 +239,35 @@ Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destr
 
 
 // Level Section
-Route::get('/levels/create', [LevelController::class, 'create']);
+Route::get('/levels/create', [LevelController::class, 'create'])->middleware("admin");
 
-Route::post('/levels/create', [LevelController::class, 'store']);
+Route::post('/levels/create', [LevelController::class, 'store'])->middleware("admin");
 
-Route::get('/levels', [LevelController::class, 'index']);
+Route::get('/levels', [LevelController::class, 'index'])->middleware("admin");
 
-Route::get('/levels/{level:slug}', [LevelController::class, 'show']);
+Route::get('/levels/{level:slug}', [LevelController::class, 'show'])->middleware("admin");
 
 
 
 
 //Benefit Section
-Route::get('/benefits/create', [BenefitController::class, 'create']);
+Route::get('/benefits/create', [BenefitController::class, 'create'])
+    ->middleware("admin");
 
-Route::post('/benefits/create', [BenefitController::class, 'store']);
+Route::post('/benefits/create', [BenefitController::class, 'store'])->middleware("admin");
 
-Route::get('/benefits/{benefit:slug}/edit', [BenefitController::class, 'edit']);
+Route::get('/benefits/{benefit:slug}/edit', [BenefitController::class, 'edit'])->middleware("admin");
 
-Route::patch('/benefits/{benefit:slug}', [BenefitController::class, 'update']);
+Route::patch('/benefits/{benefit:slug}', [BenefitController::class, 'update'])->middleware("admin");
 
-Route::get('/benefits', [BenefitController::class, 'index']);
+Route::get('/benefits', [LevelController::class, 'publicIndex']);
 
-Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show']);
+Route::get('/benefits/{benefit:slug}', [BenefitController::class, 'show'])->middleware("admin");
 
-Route::post('/activities/{activity:slug}/like', [ActivityController::class, 'like'])->name('activities.like');
-Route::post('/activities/{activity:slug}/join', [ActivityController::class, 'joinActivity'])->name('activities.join');
-Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'unjoinActivity'])->name('activities.unjoin');
+
+Route::post('/activities/{activity:slug}/like', [ActivityController::class, 'like'])->name('activities.like')->middleware("sukarelawan");;
+Route::post('/activities/{activity:slug}/join', [ActivityController::class, 'joinActivity'])->name('activities.join')->middleware("sukarelawan");
+Route::post('/activities/{activity:slug}/unjoin', [ActivityController::class, 'unjoinActivity'])->name('activities.unjoin')->middleware("sukarelawan");
 
 
 // Leaderboard Section

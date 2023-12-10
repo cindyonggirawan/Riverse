@@ -149,12 +149,13 @@
                                 <div class="custom-file">
                                     <input type="file"
                                         class="custom-file-input @error('logoImageUrl') is-invalid @enderror"
-                                        name="logoImageUrl" id="logoImageUrl" accept="image/*" onchange="previewImage()">
+                                        name="logoImageUrl" id="logoImageUrl" accept="image/*"
+                                        onchange="previewImage()">
                                     <label class="custom-file-label" for="logoImageUrl">Choose</label>
                                 </div>
                             </div>
                             @if ($fasilitator->logoImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $fasilitator->logoImageUrl) }}"
+                                <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
                                     alt="{{ $fasilitator->user->name }}"
                                     class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview">
                             @else

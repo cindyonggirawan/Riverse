@@ -32,7 +32,7 @@
                                     <td>{{ $sukarelawan->id }}</a></td>
                                     <td>
                                         @if ($sukarelawan->profileImageUrl !== null)
-                                            <img src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
+                                            <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
@@ -46,7 +46,7 @@
                                     <td>{{ $sukarelawan->dateOfBirth }}</td>
                                     <td>
                                         @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
-                                            <img src="{{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                            <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"

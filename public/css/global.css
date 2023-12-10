@@ -23,7 +23,8 @@ h1 a {
 
 .page-body {
     background: #f6f8fc;
-    max-width: 1280px;
+    min-width: 50vw;
+    max-width: 50vw;
     min-height: 90vh;
     margin: auto;
     padding-top: 7em;
@@ -56,6 +57,11 @@ h1 a {
     display: flex;
     align-items: center;
     gap: 30px;
+}
+
+.nav-row h5 {
+    max-width: 8em;
+    text-align: right;
 }
 
 .nav-link {
@@ -91,6 +97,29 @@ h1 a {
 
 .rect-btn-outline:hover {
     background-color: #ffffffaa;
+}
+
+.btn-fill {
+    padding: 0.5em 1em;
+    background-color: #5822ca;
+    border-radius: 10px;
+    color: white;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.btn-fill.half {
+    width: 45%;
+}
+
+.btn-fill.full {
+    width: 100%;
+}
+
+.btn-fill :hover {
+    filter: brightness(0.5);
 }
 
 .riverse-logo img {
@@ -302,6 +331,11 @@ h1 a {
     cursor: pointer;
 }
 
+.profpic.lg {
+    width: 80px;
+    height: 80px;
+}
+
 .profpic img {
     width: 100%;
     height: 100%;
@@ -321,6 +355,23 @@ h1 a {
 
     .activities-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nav-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 8px;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #000;
+        font-family: Poppins;
+        font-size: 8px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
     }
 }
 
@@ -416,4 +467,95 @@ a.selected p.selected {
 
 .pagination .disabled span {
     color: #edf0f3;
+}
+
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.5em;
+}
+
+.image-preview {
+    width: 250px;
+    height: 200px;
+    margin: auto;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.drop-zone {
+    border: 1px solid #838181;
+    border-radius: 10px;
+
+    padding: 16px 20px;
+    text-align: center;
+    transition: border 0.2s;
+
+    min-width: 260px;
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    max-width: 260px;
+    max-height: fit-content;
+}
+
+.browse-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #838181;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+}
+
+.browse-button:hover {
+    color: #5822ca;
+}
+
+.dragover {
+    border-color: #5822ca;
+    color: #5822ca;
+    opacity: 0.4;
+}
+
+.profpic-input .image-preview {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+
+    max-width: 100px;
+    /* max-height: 100px; */
+
+    /* margin-top: 3.5em; */
+}
+
+.profpic-input .drop-zone {
+    padding: 0.5em;
+    text-align: center;
+    transition: border 0.2s;
+
+    min-width: 100px;
+    min-height: 100px;
+
+    max-width: 100px;
+    /* max-height: 100px; */
+}
+
+.profpic-input .image-preview img {
+    width: 100px;
+    height: 100px;
+
+    /* margin-top: 1em; */
 }

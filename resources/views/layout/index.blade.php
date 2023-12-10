@@ -24,11 +24,9 @@
                 href="/activities">Aktivitas</a>
             <a class="nav-link {{ Request::is('leaderboard') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/leaderboard">Leaderboard</a>
-            <a class="nav-link {{ Request::is('/benefit') ? 'selected underlined' : '' }}" aria-current="page"
-                href="/benefit">Keuntungan</a>
-            <a class="nav-link {{ Request::is('/tutorial') ? 'selected underlined' : '' }}" aria-current="page"
-                href="/tutorial">Cara Kerja</a>
-            <a class="nav-link {{ Request::is('/aboutus') ? 'selected underlined' : '' }}" aria-current="page"
+            <a class="nav-link {{ Request::is('benefits') ? 'selected underlined' : '' }}" aria-current="page"
+                href="/benefits">Keuntungan</a>
+            <a class="nav-link {{ Request::is('aboutus') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/aboutus">Tentang Kami</a>
         </div>
 
@@ -37,34 +35,35 @@
                 <h5>
                     Hello,
                     @if (auth()->user()->role->name == 'Sukarelawan')
-                        Sukarelawan {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     @elseif (auth()->user()->role->name == 'Fasilitator')
-                        Fasilitator {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     @elseif (auth()->user()->role->name == 'Admin')
                         Admin
                     @endif
                 </h5>
 
                 @if (auth()->user()->role->name == 'Sukarelawan')
-                    <a href="/sukarelawan/{{ auth()->user()->sukarelawan->slug }}">
+                    <a href="/sukarelawans/{{ auth()->user()->sukarelawan->slug }}">
                         <div class="profpic">
                             <img class="custom-test-profile-image shadow-4-strong"
                                 @if (empty(auth()->user()->sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
                     @else
-                        src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }} @endif
+                        src={{ asset('storage/' . auth()->user()->sukarelawan->profileImageUrl) }} @endif
                                 alt="sukarelawan image">
                         </div>
                     </a>
                 @elseif (auth()->user()->role->name == 'Fasilitator')
-                    <a href="/fasilitator/{{ auth()->user()->fasilitator->slug }}"></a>
-                    <div class="profpic">
-                        <img class="custom-test-profile-image shadow-4-strong"
-                            @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
-                        @else
-                            src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
-                            alt="fasilitator image">
+                    <a href="/fasilitators/{{ auth()->user()->fasilitator->slug }}">
+                        <div class="profpic">
+                            <img class="custom-test-profile-image shadow-4-strong"
+                                @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
+                            @else
+                                src={{ asset('storage/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
+                                alt="fasilitator image">
 
-                    </div>
+                        </div>
+                    </a>
                 @endif
 
                 {{-- LOGOUT --}}
@@ -75,7 +74,7 @@
             @else
                 {{-- LOGIN --}}
                 <a class="nav-link selected" href="/login">Login</a>
-                <a class="rect-btn-outline" {{ Request::is('register') ? 'active' : '' }}" href="/register">
+                <a class="rect-btn-outline {{ Request::is('register') ? 'active' : '' }}" href="/register/sukarelawan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15"
                         fill="none">
                         <path

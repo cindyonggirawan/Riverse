@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
                                     alt="{{ $sukarelawan->user->name }}"
                                     class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview">
                             @else
@@ -175,7 +175,7 @@
                                 </div>
                             </div>
                             @if ($sukarelawan->profileImageUrl !== null)
-                                <img src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
+                                <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
                                     alt="{{ $sukarelawan->user->name }}"
                                     class="col-sm-4 offset-sm-4 mt-3 img-fluid img-square-big img-preview-2">
                             @else

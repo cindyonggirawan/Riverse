@@ -1,0 +1,258 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.manage-body {
+    /* min-width: 90vw; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    gap: 2em;
+}
+
+.manage-table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    gap: 1em;
+}
+
+.card-row {
+    min-width: 60em;
+    width: 95%;
+    padding: 1.5em;
+
+    border-radius: 10px;
+    border: 1px solid #e6e9ee;
+    background: #fff;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-row h3 {
+    font-weight: 600;
+    color: black;
+}
+
+.activity-image {
+    width: 10em;
+    height: 7em;
+    border-radius: 16px;
+    background-color: #5822ca;
+}
+
+.activity-image img {
+    /* min-width: 5em; */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+.card-row .left-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+    width: 75%;
+}
+
+.card-row .left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1em;
+
+    min-width: 85%;
+}
+
+.card-row .right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 1em;
+}
+
+.col.fs {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.col.full {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.status {
+    padding: 0.25em 1em;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: small;
+
+    color: #5822ca;
+    background-color: #f7f1fe;
+
+    text-align: center;
+
+    margin-top: 2em;
+}
+
+.status.danger {
+    background-color: #fef1f1;
+    color: #e21919;
+}
+
+.status.redeem {
+    background-color: #f1f7fe;
+    color: #19b2e2;
+}
+
+.status.success {
+    background-color: #e3ffe2;
+    color: #38d46d;
+}
+
+.action-btn {
+    /* width: 90%; */
+    color: #5822ca;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #5822ca;
+    padding: 0.5em 1em;
+
+    /* font-size: small; */
+    /* margin-top: 2em; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25em;
+
+    transform: scale(0.8);
+}
+
+.action-btn.danger {
+    color: #e21919;
+    border-color: #e21919;
+}
+
+.action-btn:hover {
+    transition: ease-in-out 0.5s;
+    filter: brightness(0.85);
+    cursor: pointer;
+}
+
+.circle {
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+
+    margin: 4px;
+
+    background-color: #5822ca;
+}
+
+.circle.success {
+    background-color: #38d46d;
+}
+
+.circle.danger {
+    background-color: #e21919;
+}
+
+.circle.redeem {
+    background-color: #19b2e2;
+}
+
+.row.hide {
+    opacity: 0.25;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.row.hide .circle {
+    width: 40px;
+    height: 8px;
+    border-radius: 12px;
+}
+
+.row.sm {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+
+    font-size: smaller;
+}
+
+.bg-danger {
+    background-color: #e21919;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.action-btn button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+}
+
+.card-row .right a,
+.card-row .right form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.centered {
+    width: 100%;
+    /* text-align: center; */
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: flex-start;
+    margin-top: 10em;
+    gap: 2em;
+}
+
+.disabled {
+    color: #9d9d9d;
+}

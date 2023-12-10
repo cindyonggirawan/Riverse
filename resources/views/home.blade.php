@@ -52,21 +52,19 @@
         <h3>Aktvitas yang berada di
             <a href="/" class="selected">Sungai Ciliwung</a>
         </h3>
-
+        {{-- 
         <div class="activity-row">
-
-            {{-- TODO: FETCH HOME PAGE ACTIVITIES HERE --}}
             <x-activity-card-big :activity="$activities[0]" />
             <div class="activity-col">
-                <x-activity-card-horizontal :activity="$activities[0]" />
                 <x-activity-card-horizontal :activity="$activities[1]" />
                 <x-activity-card-horizontal :activity="$activities[2]" />
+                <x-activity-card-horizontal :activity="$activities[3]" />
             </div>
-        </div>
+        </div> --}}
         <div class="activity-row">
-            <x-activity-card :activity="$activities[0]" />
-            <x-activity-card :activity="$activities[1]" />
-            <x-activity-card :activity="$activities[2]" />
+            <x-activity-card :activity="$activities[4]" />
+            <x-activity-card :activity="$activities[5]" />
+            <x-activity-card :activity="$activities[6]" />
 
             <div class="lihat-semua-card-container">
                 <img src="{{ asset('images/activities_hands.png') }}" alt="">

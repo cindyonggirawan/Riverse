@@ -34,7 +34,7 @@
                                     <td>{{ $fasilitator->id }}</a></td>
                                     <td>
                                         @if ($fasilitator->logoImageUrl !== null)
-                                            <img src="{{ asset('storage/images/' . $fasilitator->logoImageUrl) }}"
+                                            <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
                                                 alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Fasilitator/logoImages/default.png') }}"

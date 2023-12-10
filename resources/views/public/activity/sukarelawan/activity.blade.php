@@ -386,9 +386,9 @@
                     </h5>
                     <div class="row">
                         <div class="profpic">
-                            <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                            <img src="{{ asset('/storage/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                         </div>
-                        <a href="/fasilitator/{{ $activity->fasilitator->slug }}" class="selected">
+                        <a href="/fasilitators/{{ $activity->fasilitator->slug }}" class="selected">
                             <p class="selected">
                                 {{ $activity->fasilitator->user->name }}
                             </p>

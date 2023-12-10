@@ -117,17 +117,44 @@ class DatabaseSeeder extends Seeder
             'slug' => Generator::generateSlug(Level::class, 'Level 6')
         ]);
 
-        $names = ['Benefit 1', 'Benefit 2', 'Benefit 3'];
+        $names = [
+            "Voucher B2G1 Kopi XYZ",
+            "Voucher BOGO Kopi XYZ",
+            'Totebag dari XYZ',
+            'Kopi Gratis di Kopi XYZ',
+            "Riverse Limited Edition Tee",
+            'Tumbler dari Riverse',
+            '2 Kopi Gratis di Kopi XYZ',
+            "3 Voucher BOGO Kopi XYZ",
+        ];
+
+        $benefitCounter = 1;
+
         foreach ($names as $name) {
             Benefit::create([
                 'id' => Generator::generateId(Benefit::class),
-                'levelId' => Level::where('name', str_replace('Benefit', 'Level', $name))->first()->id,
+                'levelId' => Level::where('name', "Level " . $benefitCounter)->first()->id,
                 'name' => $name,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                'description' => 'Redeem voucher yang kamu dapatkan di Toko XYZ terdekat.',
                 'couponCode' => strtoupper(Str::random(10)),
                 'slug' => Generator::generateSlug(Benefit::class, $name)
             ]);
+            $benefitCounter++;
+            if($benefitCounter >= 6){
+                $benefitCounter = 6;
+            }
         }
+
+        SukarelawanActivityStatus::create([
+            'id' => '1',
+            'name' => 'CLAIMED',
+            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'CLAIMED')
+        ]);
+        SukarelawanActivityStatus::create([
+            'id' => '2',
+            'name' => 'NOT CLAIMED',
+            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'NOT CLAIMED')
+        ]);
 
         /* OPEN USER */
 
