@@ -73,7 +73,7 @@ class SukarelawanController extends Controller
     }
 
     public function manage(Sukarelawan $sukarelawan){
-        $activityDetails = $sukarelawan->sukarelawan_activity_details;
+        $activityDetails = $sukarelawan->sukarelawan_activity_details()->orderBy('updated_at', 'desc')->get();
 
         return view('public.sukarelawan.manage', [
             'title' => 'Sukarelawan',
