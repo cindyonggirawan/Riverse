@@ -1,3 +1,52 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.tab-menu {
+    background-color: #f6f8fc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 6%;
+    align-items: center;
+}
+
+.tab-selected {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-selected .tab-link {
+    color: #000000;
+}
+
+.tab-selected .tab-link:hover {
+    color: #5822ca;
+}
+
+.tab-unselected {
+    background-color: #f6f8fc;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    width: 50%;
+}
+
+.tab-unselected .tab-link {
+    color: #9fadc4;
+}
+
+.tab-unselected .tab-link:hover {
+    color: #000000;
+}
+
 .activity-container {
     width: 100%;
     height: 140px;
@@ -65,7 +114,6 @@
 
 .colored-dot-text {
     text-align: center;
-    margin-top: 13px;
 }
 
 .page-title {
@@ -76,7 +124,7 @@
 
 .approve-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 5px 10px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -97,7 +145,7 @@
 .reject-button {
     display: inline-flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 5px 10px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -116,4 +164,42 @@
   .reject-button:hover {
     background-color: #FF2600; /* Darker red on hover */
     border-color: #FF2600; /* Darker red border on hover */
+  }
+
+  #table1 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  /* Style for table header */
+  #table1 th {
+    background-color: #ece9f9;
+    font-weight: bold;
+    text-align: left;
+    padding: 8px;
+  }
+
+  /* Style for table rows */
+  #table1 td, #table1 th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  /* Add some spacing to the images */
+  #table1 img {
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 5px;
+    border-radius: 10px;
+  }
+
+  /* Hide the input initially */
+  #reasonForRejection {
+    display: none;
+  }
+
+  /* Add some space for better presentation */
+  .form-inline {
+    margin-top: 5px;
   }
