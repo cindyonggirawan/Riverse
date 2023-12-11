@@ -125,7 +125,7 @@
                                     @if (Session::has('step1DataUpdate.picture')) @else hidden @endif>
                                     @if (Session::has('step1DataUpdate.picture'))
                                         <img id="previewImage"
-                                            src="{{ asset('storage/' . Session::get('step1DataUpdate.picture')) ?? '' }}"
+                                            src="{{ asset('storage/images/' . Session::get('step1DataUpdate.picture')) ?? '' }}"
                                             alt="Image Preview" />
                                     @else
                                         <img id="previewImage" src="" alt="Image Preview" />

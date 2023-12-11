@@ -5,7 +5,7 @@
             <div class="img-container"
                 style="background-image: url('{{ asset(
                     $activity->bannerImageUrl
-                        ? 'storage/' . $activity->bannerImageUrl
+                        ? 'storage/images/' . $activity->bannerImageUrl
                         : '/images/' . Config::get('constants.default_banner_image'),
                 ) }}');">
                 <div class="likes">
@@ -27,7 +27,7 @@
                 </h4>
                 <div class="card-row">
                     <div class="profpic">
-                        <img src="{{ asset('/storage/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                        <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                     </div>
                     <a href="/fasilitator/{{ $activity->fasilitator->slug }}">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>

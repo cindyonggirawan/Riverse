@@ -31,7 +31,7 @@
                     <h1>Masuk</h1>
                     <div class="register-account-text">
                         <p>Belum punya akun?</p>
-                        <a href="/register">Daftar</a>
+                        <a href="/register/sukarelawan">Daftar</a>
                     </div>
                 </div>
                 <div class="form-text">

@@ -136,8 +136,8 @@
                         </div>
                         <div class="name-column">
                             <div class="profpic">
-                                @if ($sortedSukarelawans[$i]->profileImageUrl && $sortedSukarelawan[$i]->profileImageUrl != '')
-                                    <img src="{{ asset('storage/' . $sortedSukarelawans[$i]->profileImageUrl) }}"
+                                @if ($sortedSukarelawans[$i]->profileImageUrl && $sortedSukarelawans[$i]->profileImageUrl != '')
+                                    <img src="{{ asset('storage/images/' . $sortedSukarelawans[$i]->profileImageUrl) }}"
                                         class="leaderboard-profile-picture" alt="">
                                 @else
                                     <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"

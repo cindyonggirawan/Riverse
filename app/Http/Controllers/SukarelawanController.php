@@ -57,7 +57,6 @@ class SukarelawanController extends Controller
                 }
             }
         }
-    
 
         return view('public.sukarelawan.profile', [
             'title' => 'Sukarelawan',
@@ -79,7 +78,7 @@ class SukarelawanController extends Controller
             'title' => 'Sukarelawan',
             'sukarelawan' => $sukarelawan,
             'activityDetails' => $activityDetails
-        ]);  
+        ]);
     }
 
     public function destroy(Sukarelawan $sukarelawan)
@@ -146,7 +145,7 @@ class SukarelawanController extends Controller
                 'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
                 'slug' => $slug
             ]);
-            
+
             if ($request->picture && $request->picture != "") {
                 $request->validate(['picture'=> 'image']);
                 $newProfPicFile = $request->file('picture');
@@ -154,7 +153,8 @@ class SukarelawanController extends Controller
                     Storage::delete($sukarelawan->profileImageUrl);
                 }
                 $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
-                $profileImageUrl = $newProfPicFile->storeAs('images/Sukarelawan/profileImages', $newProfPicName);
+                $profileImageUrl = $newProfPicFile->storeAs('/public/images/Sukarelawan/profileImages', $newProfPicName);
+                $profileImageUrl = 'Sukarelawan/profileImages/' . $newProfPicName;
 
                 $sukarelawan->update([
                     'profileImageUrl' => $profileImageUrl,
@@ -203,7 +203,8 @@ class SukarelawanController extends Controller
                 Storage::delete($request->oldNationalIdentityCardImageUrl);
             }
             $fileName = $id . '.' . $nationalIdentityCardImageFile->getClientOriginalExtension();
-            $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('images/Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('/public/images/Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl = 'Sukarelawan/nationalIdentityCardImages/' . $fileName;
         }
 
         $profileImageUrl = $sukarelawan->profileImageUrl;
@@ -214,7 +215,8 @@ class SukarelawanController extends Controller
                 Storage::delete($request->oldProfileImageUrl);
             }
             $fileName = $id . '.' . $profileImageFile->getClientOriginalExtension();
-            $profileImageUrl = $profileImageFile->storeAs('images/Sukarelawan/profileImages', $fileName);
+            $profileImageUrl = $profileImageFile->storeAs('/public/images/Sukarelawan/profileImages', $fileName);
+            $profileImageUrl = 'Sukarelawan/profileImages/' . $fileName;
         }
 
         $slug = $sukarelawan->slug;

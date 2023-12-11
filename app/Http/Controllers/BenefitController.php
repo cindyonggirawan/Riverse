@@ -93,8 +93,12 @@ class BenefitController extends Controller
 
         $validated['benefitImage_link'] = $benefit->bannerImageUrl;
 
-        if ($request->hasFile('benefitImage_link')) {
-            $validated['benefitImage_link'] = $request->file('benefitImage_link')->store('images', 'public');
+        $file = $request->file('benefitImage_link');
+        if ($file) {
+            $fileName = $benefit->id . '.' . $file->getClientOriginalExtension();
+            $benefitImage_link = $file->storeAs('/public/images/Benefit/benefitImages', $fileName);
+            $benefitImage_link ='Benefit/benefitImages/' . $fileName;
+            $validated['benefitImage_link'] = $benefitImage_link;
         }
 
         $slug = $benefit->slug;

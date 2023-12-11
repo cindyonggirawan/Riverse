@@ -64,7 +64,7 @@ class FasilitatorController extends Controller
             'title' => 'Sukarelawan',
             'fasilitator' => $fasilitator,
             'activities' => $activities
-        ]);  
+        ]);
     }
 
     public function destroy(Fasilitator $fasilitator)
@@ -122,13 +122,13 @@ class FasilitatorController extends Controller
                 Rule::unique('fasilitators')->ignore($fasilitator->id),
             ],
         ]);
-        
+
         $slug = $fasilitator->slug;
-        
+
         if ($request->name !== $fasilitator->user->name) {
                 $slug = Generator::generateSlug(User::class, $request->name);
             }
-            
+
             $user = $fasilitator->user;
             $user->update([
                     'email' => strtolower($request->email),
@@ -142,8 +142,8 @@ class FasilitatorController extends Controller
                 'phoneNumber' => $request->phoneNumber,
                 'slug' => $slug
             ]);
-            
-            
+
+
             if ($request->picture && $request->picture != "") {
                 $request->validate(['picture'=> 'image']);
                 $newLogoPic = $request->file('picture');
@@ -151,13 +151,14 @@ class FasilitatorController extends Controller
                     Storage::delete($fasilitator->logoImageUrl);
                 }
                 $newLogoPicName = $fasilitator->id . '.' . $newLogoPic->getClientOriginalExtension();
-                $logoImageUrl = $newLogoPic->storeAs('images/Sukarelawan/profileImages', $newLogoPicName);
+                $logoImageUrl = $newLogoPic->storeAs('/public/images/Fasilitator/logoImages', $newLogoPicName);
+                $logoImageUrl = 'Fasilitator/logoImages/' . $newLogoPicName;
 
                 $fasilitator->update([
                     'logoImageUrl' => $logoImageUrl,
                 ]);
             }
-            
+
             return redirect('/fasilitators' . '/' . $fasilitator->slug)->with('success', 'Fasilitator update successful!');
     }
 
@@ -200,7 +201,8 @@ class FasilitatorController extends Controller
                 Storage::delete($request->oldLogoImageUrl);
             }
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $logoImageUrl = $file->storeAs('/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = $file->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
         }
 
         $slug = $fasilitator->slug;

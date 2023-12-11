@@ -80,7 +80,7 @@
                                 <a href="/activities/{{ $a->slug }}">
                                     <div class="activity-image">
                                         <img src="{{ asset(
-                                            $a->bannerImageUrl ? 'storage/' . $a->bannerImageUrl : '/images/' . Config::get('constants.default_banner_image'),
+                                            $a->bannerImageUrl ? 'storage/images/' . $a->bannerImageUrl : '/images/' . Config::get('constants.default_banner_image'),
                                         ) }}"
                                             alt="">
                                     </div>

@@ -7,7 +7,7 @@
 
 
 {{-- <img src="{{ asset('images/Levels/' . $imageLevelName . '.png') }}" alt="Level Badge"> --}}
-{{-- 
+{{--
 @php
 
     $clockedInActivityCount = 0;
@@ -44,7 +44,7 @@
                         <img @if (empty($sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
                         @else
 
-                        src={{ asset('storage/' . $sukarelawan->profileImageUrl) }} @endif
+                        src={{ asset('storage/images/' . $sukarelawan->profileImageUrl) }} @endif
                             alt="sukarelawan image">
                     </div>
                     <div class="profile-col">
@@ -121,11 +121,11 @@
                                     Foto Kartu Tanda Pengenal (KTP)
                                 </div>
                                 <div class="ktp-container">
-                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl == '')
+                                    @if ($sukarelawan->nationalIdentityCardImageUrl == null || empty($sukarelawan->nationalIdentityCardImageUrl))
                                         <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
                                             alt="">
                                     @else
-                                        <img src={{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}
+                                        <img src={{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}
                                             alt="">
                                     @endif
                                 </div>

@@ -71,11 +71,11 @@
                         <div class="col">
                             <p class="disabled">Kartu Tanda Penduduk (KTP)</p>
                             <div class="ktp-container disabled">
-                                @if ($sukarelawan->nationalIdentityCardImageUrl == null || $sukarelawan->nationalIdentityCardImageUrl->isEmpty())
+                                @if ($sukarelawan->nationalIdentityCardImageUrl == null || empty($sukarelawan->nationalIdentityCardImageUrl))
                                     <img src={{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}
                                         alt="">
                                 @else
-                                    <img src={{ asset('images/' . $sukarelawan->nationalIdentityCardImageUrl) }}
+                                    <img src={{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}
                                         alt="">
                                 @endif
                             </div>
@@ -100,7 +100,7 @@
                                                 @if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl !== '') @else hidden @endif>
                                                 @if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl !== '')
                                                     <img id="previewImage"
-                                                        src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                                        src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
                                                         alt="Image Preview" />
                                                 @else
                                                     <img id="previewImage" src="" alt="Image Preview" />

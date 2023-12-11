@@ -79,7 +79,7 @@
                                                 @if ($fasilitator->logoImageUrl && $fasilitator->logoImageUrl !== '') @else hidden @endif>
                                                 @if ($fasilitator->logoImageUrl && $fasilitator->logoImageUrl !== '')
                                                     <img id="previewImage"
-                                                        src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
+                                                        src="{{ asset('storage/images/' . $fasilitator->logoImageUrl) }}"
                                                         alt="Image Preview" />
                                                 @else
                                                     <img id="previewImage" src="" alt="Image Preview" />
