@@ -198,7 +198,8 @@ class ActivityController extends Controller
 
             $picture = $request->file('picture');
             $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-            $bannerImageUrl = $picture->storeAs('Activity/bannerImages', $pictureName);
+            $bannerImageUrl = $picture->storeAs('/public/images/Activity/bannerImages', $pictureName);
+            $bannerImageUrl = 'Activity/bannerImages/' . $pictureName;
             $validatedStep1['picture'] = $bannerImageUrl;
         }
 
@@ -362,12 +363,12 @@ class ActivityController extends Controller
                 Storage::delete($activity->bannerImageUrl);
             }
             $activity->delete();
-            return redirect('fasilitators/'. 
+            return redirect('fasilitators/'.
             auth()->user()->fasilitator->slug
             .'/manage')->with('success', 'Activity destruction successful!');
         } //
-        
-        
+
+
         return redirect('/');
     }
 
@@ -559,7 +560,8 @@ class ActivityController extends Controller
                 Storage::delete($request->oldBannerImageUrl);
             }
             $fileName = $id . '.' . $file->getClientOriginalExtension();
-            $bannerImageUrl = $file->storeAs('Activity/bannerImages', $fileName);
+            $bannerImageUrl = $file->storeAs('/public/images/Activity/bannerImages', $fileName);
+            $bannerImageUrl = 'Activity/bannerImages/' . $fileName;
         } else {
             $bannerImageUrl = $activity->bannerImageUrl;
         }

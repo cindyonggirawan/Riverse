@@ -49,7 +49,7 @@
                             <img class="custom-test-profile-image shadow-4-strong"
                                 @if (empty(auth()->user()->sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
                     @else
-                        src={{ asset('storage/' . auth()->user()->sukarelawan->profileImageUrl) }} @endif
+                        src={{ asset('storage/images/' . auth()->user()->sukarelawan->profileImageUrl) }} @endif
                                 alt="sukarelawan image">
                         </div>
                     </a>
@@ -59,7 +59,7 @@
                             <img class="custom-test-profile-image shadow-4-strong"
                                 @if (empty(auth()->user()->fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
                             @else
-                                src={{ asset('storage/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
+                                src={{ asset('storage/images/' . auth()->user()->fasilitator->logoImageUrl) }} @endif
                                 alt="fasilitator image">
 
                         </div>

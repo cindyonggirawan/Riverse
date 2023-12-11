@@ -86,7 +86,7 @@
                                         <div class="activity-image">
                                             <img src="{{ asset(
                                                 $ad->activity->bannerImageUrl
-                                                    ? 'storage/' . $ad->activity->bannerImageUrl
+                                                    ? 'storage/images/' . $ad->activity->bannerImageUrl
                                                     : '/images/' . Config::get('constants.default_banner_image'),
                                             ) }}"
                                                 alt="">

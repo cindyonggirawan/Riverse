@@ -17,7 +17,7 @@
                         <img @if (empty($fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
                         @else
 
-                        src={{ asset('storage/' . $fasilitator->logoImageUrl) }} @endif
+                        src={{ asset('storage/images/' . $fasilitator->logoImageUrl) }} @endif
                             alt="fasilitator image">
                     </div>
                     <div class="profile-col">
