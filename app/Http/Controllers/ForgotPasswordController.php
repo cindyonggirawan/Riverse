@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
 
@@ -38,23 +39,23 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function changePassword(Request $req, User $user){
+    public function changePassword(Request $request, User $user){
 
         $request->validate([
             'oldPassword' => 'required',
             'newPassword' => 'required|min:8|confirmed',
             'newPassword_confirmation' => 'required|min:8',
         ]);
-    
+
         if (!Hash::check($request->oldPassword, $user->password)) {
             throw ValidationException::withMessages(['oldPassword' => 'Your old password is incorrect.']);
         }
-    
+
         // Update the user's password
         $user->update([
             'password' => Hash::make($request->newPassword),
         ]);
-    
+
         return redirect('/')>with('success', 'Password changed successfully!');
     }
 
@@ -64,7 +65,7 @@ class ForgotPasswordController extends Controller
         //check if req input is === user's pw in db
         $isCorrectOldPassword = false;
         if ($isCorrectOldPassword){
-            resetPassword($req);
+            $this->resetPassword($req);
         }else{
 
         }
