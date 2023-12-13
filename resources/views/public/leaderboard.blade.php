@@ -18,7 +18,7 @@
                         @if (!empty($sortedSukarelawans) && count($sortedSukarelawans) > 1)
                             <div class="profpic lg">
                                 @if ($sortedSukarelawans[1]->profileImageUrl !== null)
-                                    <img src="{{ asset('storage/' . $sortedSukarelawans[1]->profileImageUrl) }}"
+                                    <img src="{{ asset('storage/images/' . $sortedSukarelawans[1]->profileImageUrl) }}"
                                         class="top-3-profile-picture" alt="">
                                 @else
                                     <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
@@ -44,7 +44,7 @@
                             <img src="{{ asset('images/Leaderboard/crown.png') }}" alt="crown-image" class="crown-image">
                             <div class="profpic lg">
                                 @if ($sortedSukarelawans[0]->profileImageUrl !== null)
-                                    <img src="{{ asset('storage/' . $sortedSukarelawans[0]->profileImageUrl) }}"
+                                    <img src="{{ asset('storage/images/' . $sortedSukarelawans[0]->profileImageUrl) }}"
                                         class="top-3-profile-picture" alt="">
                                 @else
                                     <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
@@ -68,7 +68,7 @@
                         @if (!empty($sortedSukarelawans) && count($sortedSukarelawans) > 2)
                             <div class="profpic lg">
                                 @if ($sortedSukarelawans[2]->profileImageUrl !== null)
-                                    <img src="{{ asset('storage/' . $sortedSukarelawans[2]->profileImageUrl) }}"
+                                    <img src="{{ asset('storage/images/' . $sortedSukarelawans[2]->profileImageUrl) }}"
                                         class="top-3-profile-picture" alt="">
                                 @else
                                     <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"

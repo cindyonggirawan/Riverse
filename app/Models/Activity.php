@@ -76,19 +76,19 @@ class Activity extends Model
         ->count();
         return $count;
     }
-    
+
     public function isEligibleForClockIn(){
-        
+
         $sukarelawan = auth()->user()->sukarelawan;
         $activity = $this;
-        
-        
+
+
         $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
         if (!$sukarelawanActivityDetail) {
             // vardump();
             return false;
         }
-        
+
         $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
         if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
             // vardump();
@@ -98,7 +98,7 @@ class Activity extends Model
 
         // //comment this out later:
         // return true;
-        
+
         $currDate = now()->toDateString();
         $cleanUpDate = $activity->cleanUpDate;
         if ($currDate !== $cleanUpDate) {
@@ -108,17 +108,17 @@ class Activity extends Model
 
         $startTime = Carbon::parse($activity->startTime)->setTimezone('Asia/Jakarta');
         $currentTime = now()->setTimezone('Asia/Jakarta');
-        
+
         $startTimeMinus30 = $startTime->copy()->subMinutes(30);
         $startTimePlus30 = $startTime->copy()->addMinutes(30);
-        
+
         if ($currentTime->greaterThanOrEqualTo($startTimeMinus30) && $currentTime->lessThanOrEqualTo($startTimePlus30)) {
             // Your logic when the current time is within the 30-minute range of the start time
         } else {
             // dd([$currentTime, $startTimeMinus30, $startTimePlus30]);
             return false;
         }
-        
+
 
         //TODO: check location
 

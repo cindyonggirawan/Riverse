@@ -275,7 +275,7 @@
                                 <form action="{{ route('activities.attend', ['activity' => $activity->slug]) }}"
                                     class="no-style-form" method="post">
                                     @csrf
-                                    <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius">
+                                    {{-- <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius"> --}}
 
                                     <button type="submit" class="btn-fill absensi-btn">
                                         <div class="col-sm">
@@ -295,7 +295,7 @@
                                 </div>
                             </a>
                             <div class="caption">
-                                dibuka sekitaran 30 menit waktu acara dimulai
+                                hanya dibuka 30 menit sebelum atau sesudah aktivitas dimulai
                             </div>
                         @endif
 
@@ -487,7 +487,7 @@
     </div>
 
     {{-- <script src="{{ asset('js/likeActivity.js') }}"></script> --}}
-    <script src="{{ asset('js/checkLocation.js') }}"></script>
+    {{-- <script src="{{ asset('js/checkLocation.js') }}"></script> --}}
 
 
     <script>

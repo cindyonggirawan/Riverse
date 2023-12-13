@@ -5,22 +5,5 @@ namespace App\Http\Controllers;
 use App\Models\VerificationStatus;
 use Illuminate\Http\Request;
 
-class VerificationStatusController extends Controller
-{
-    public function index()
-    {
-        return view('admin.Tables.VerificationStatus.verificationStatuses', [
-            'title' => 'Verification Statuses',
-            'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
-                ->get()
-        ]);
-    }
-
-    public function show(VerificationStatus $verificationStatus)
-    {
-        return view('admin.Tables.VerificationStatus.verificationStatus', [
-            'title' => 'Verification Status',
-            'verificationStatus' => $verificationStatus
-        ]);
-    }
+class VerificationStatusController extends Controller {
 }

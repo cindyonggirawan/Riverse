@@ -73,17 +73,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <label for="flBenefitImage" class="col-sm-4 col-form-label">Benefit Image</label>
-                            <div class="col-sm-8">
-                                <input type="file" name="benefitImage_link" id="flBenefitImage" class="form-control">
-                            </div>
-                            @error('benefitImage_link')
-                                <div class="col-sm-8 offset-sm-4 text-danger">{{ $message }}</div>
-                            @enderror
-                            <img class="w-25 ratio ratio-1x1 mt-3" id="benefitPreview" src='' alt="benefit image"
-                                style="aspect-ratio: 1; object-fit: cover;">
-                        </div>
                     </div>
                     <!-- /.card-body -->
                     <!-- Card Footer -->
@@ -102,18 +91,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const benefitImageInp = document.querySelector("#flBenefitImage");
-        const benefitImageEl = document.querySelector("#benefitPreview");
-
-        benefitImageInp.onchange = (ev) => {
-            const [file] = benefitImageInp.files;
-            if (file) {
-                benefitImageEl.src = URL.createObjectURL(file);
-            }
-        };
-
-    </script>
-@endpush

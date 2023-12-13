@@ -24,14 +24,6 @@
 
         @auth
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="/notifications" class="nav-link {{ $title === 'Notifications' ? 'active' : '' }}">Notifications</a>
-            </li>
-
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/profile" class="nav-link {{ $title === 'Profile' ? 'active' : '' }}">Profile</a>
-            </li>
-
-            <li class="nav-item d-none d-sm-inline-block">
                 <form action="/logout" method="post" class="form-horizontal">
                     @csrf
                     <button type="submit" class="btn nav-link">Logout</button>

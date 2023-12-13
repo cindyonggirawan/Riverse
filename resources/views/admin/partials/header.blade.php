@@ -50,7 +50,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                @elseif ($title === 'All Sukarelawans')
+                {{-- @elseif ($title === 'All Sukarelawans')
                     <form id="deleteAllForm" action="/delete/all-sukarelawans" method="post"
                         @if ($sukarelawans->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -61,7 +61,7 @@
                         @if ($sukarelawans->count() === 0) style="display: none;" @endif>
                         <i class="fas fa-trash"></i>
                         Hapus semua
-                    </button>
+                    </button> --}}
                 @elseif ($title === 'Waiting For Verification Fasilitators')
                     <form id="verifyAllForm" action="/verify/all-fasilitators" method="post"
                         @if ($fasilitators->count() === 0) style="display: none;" @endif>
@@ -107,7 +107,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                @elseif ($title === 'All Fasilitators')
+                {{-- @elseif ($title === 'All Fasilitators')
                     <form id="deleteAllForm" action="/delete/all-fasilitators" method="post"
                         @if ($fasilitators->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -118,7 +118,7 @@
                         @if ($fasilitators->count() === 0) style="display: none;" @endif>
                         <i class="fas fa-trash"></i>
                         Hapus semua
-                    </button>
+                    </button> --}}
                 @elseif ($title === 'Waiting For Verification Activities')
                     <form id="verifyAllForm" action="/verify/all-activities" method="post"
                         @if ($activities->count() === 0) style="display: none;" @endif>
@@ -167,7 +167,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                @elseif ($title === 'All Activities')
+                {{-- @elseif ($title === 'All Activities')
                     <form id="deleteAllForm" action="/delete/all-activities" method="post"
                         @if ($activities->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -178,18 +178,12 @@
                         @if ($activities->count() === 0) style="display: none;" @endif>
                         <i class="fas fa-trash"></i>
                         Hapus semua
-                    </button>
+                    </button> --}}
                 @endif
 
-                @if ($title === 'Activities' || $title === 'Levels' || $title === 'Benefits')
+                @if ($title === 'Benefits')
                     <a class="btn btn-success"
-                        href="
-                    @if ($title === 'Activities') /activities/create
-                    @elseif ($title === 'Levels')
-                    /levels/create
-                    @elseif ($title === 'Benefits')
-                    /benefits/create @endif
-                    ">
+                        href="/admin/benefits/create">
                         <i class="fas fa-plus"></i>
                         Buat baru
                     </a>

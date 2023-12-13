@@ -15,7 +15,6 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Coupon Code</th>
-                                <th>Banner Image Url</th>
                                 <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
@@ -28,16 +27,18 @@
                                     <td>{{ $benefit->name }}</td>
                                     <td>{{ Str::words($benefit->description, 5) }}</td>
                                     <td>{{ $benefit->couponCode }}</td>
-                                    <td>{{ $benefit->bannerImageUrl !== null ? $benefit->bannerImageUrl : '-' }}</td>
                                     <td>{{ $benefit->updated_at }}</td>
                                     <td>
-                                        <div class="form-inline">
-                                            <a class="btn btn-primary btn-sm btn-square"
-                                                href="/benefits/{{ $benefit->slug }}">
-                                                <i class="fas fa-folder">
+                                        <form id="deleteForm" action="/admin/benefits/{{ $benefit->slug }}"
+                                            method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <div class="mx-1"></div>
+                                            <button class="btn btn-danger btn-sm btn-square">
+                                                <i class="fas fa-trash">
                                                 </i>
-                                            </a>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

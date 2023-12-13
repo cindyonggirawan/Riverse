@@ -19,7 +19,7 @@ class RegisterController extends Controller
 {
     public function showSukarelawan($step = 1)
     {
-        return view("admin.Tables.Sukarelawan.register.registerStep{$step}", [
+        return view("public.Sukarelawan.register.registerStep{$step}", [
             'title' => 'Register as Sukarelawan',
             'currentStep' => $step
         ]);
@@ -131,7 +131,7 @@ class RegisterController extends Controller
 
     public function showFasilitator($step = 1)
     {
-        return view("admin.Tables.Fasilitator.register.registerStep{$step}", [
+        return view("public.Fasilitator.register.registerStep{$step}", [
             'title' => 'Register as Fasilitator',
             'fasilitatorTypes' => FasilitatorType::orderBy('name', 'asc')
                 ->get(),
@@ -217,6 +217,7 @@ class RegisterController extends Controller
 
         $id = Generator::generateId(Fasilitator::class);
 
+        /*
         $oldFileUrl = $request->logoImageUrl;
         $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
         $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
@@ -225,6 +226,7 @@ class RegisterController extends Controller
         $newFileUrl = $directoryPath . '/' . $newFileName;
 
         Storage::move($oldFileUrl, $newFileUrl);
+        */
 
         $slug = Generator::generateSlug(User::class, $request->name);
 
@@ -244,7 +246,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $newFileUrl,
+            'logoImageUrl' => $request->logoImageUrl,
             'slug' => $slug
         ]);
 

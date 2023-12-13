@@ -28,7 +28,7 @@
                                 <th>Tanggal Penolakan</th>
                                 <th>Alasan Penolakan</th>
                                 <th>Status</th>
-                                <th>Pengaturan</th>
+                                {{-- <th>Pengaturan</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -37,7 +37,7 @@
                                     <td>{{ $sukarelawan->id }}</a></td>
                                     <td>
                                         @if ($sukarelawan->profileImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $sukarelawan->profileImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $sukarelawan->profileImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/profileImages/default.png') }}"
@@ -51,7 +51,7 @@
                                     <td>{{ Carbon\Carbon::parse($sukarelawan->dateOfBirth)->age }} tahun</td>
                                     <td>
                                         @if ($sukarelawan->nationalIdentityCardImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $sukarelawan->nationalIdentityCardImageUrl) }}"
                                                 alt="{{ $sukarelawan->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Sukarelawan/nationalIdentityCardImages/default.png') }}"
@@ -68,7 +68,7 @@
                                     <td>{{ $sukarelawan->reasonForRejection !== null ? $sukarelawan->reasonForRejection : '-' }}
                                     </td>
                                     <td>{{ $sukarelawan->verificationStatus->name }}</a></td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="form-inline">
                                             <a class="btn btn-primary btn-sm btn-square"
                                                 href="/sukarelawans/{{ $sukarelawan->slug }}">
@@ -98,7 +98,7 @@
                                                 </i>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

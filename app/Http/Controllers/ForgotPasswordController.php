@@ -19,21 +19,21 @@ class ForgotPasswordController extends Controller
     //
     public function index()
     {
-        return view('admin.Tables.User.auth.forgot-password', [
+        return view('public.user.auth.forgot-password', [
             'title' => 'Forgot Password'
         ]);
     }
 
     public function resetPasswordindex()
     {
-        return view('admin.Tables.User.auth.reset-password', [
+        return view('public.user.auth.reset-password', [
             'title' => 'Reset Password'
         ]);
     }
 
     public function changePasswordIndex(User $user)
     {
-        return view('public.user.changePassword', [
+        return view('public.user.auth.changePassword', [
             'title' => 'Change Password',
             'user' => $user,
         ]);
