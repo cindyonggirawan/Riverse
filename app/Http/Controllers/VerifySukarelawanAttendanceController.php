@@ -16,7 +16,7 @@ class VerifySukarelawanAttendanceController extends Controller
     public function indexJoinedOrClockedInSukarelawan(Activity $activity)
     {
         if(Auth::check() && auth()->user()->fasilitator !== null && $activity->fasilitatorId == auth()->user()->fasilitator->id) {
-            return view('fasilitator.finalizeAttendance.joinedOrClockedInSukarelawan', [
+            return view('public.fasilitator.finalizeAttendance.joinedOrClockedInSukarelawan', [
                 'title' => 'Unapproved Sukarelawan',
                 'sukarelawanActivityDetails' => SukarelawanActivityDetail::where('sukarelawanActivityStatusId', SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id)
                     ->where('activityId', $activity->id)
@@ -38,7 +38,7 @@ class VerifySukarelawanAttendanceController extends Controller
     public function indexAttendedSukarelawan(Activity $activity)
     {
         if(Auth::check() && auth()->user()->fasilitator !== null && $activity->fasilitatorId == auth()->user()->fasilitator->id) {
-            return view('fasilitator.finalizeAttendance.attendedSukarelawan', [
+            return view('public.fasilitator.finalizeAttendance.attendedSukarelawan', [
                 'title' => 'Approved Sukarelawan',
                 'sukarelawanActivityDetails' => SukarelawanActivityDetail::where('sukarelawanActivityStatusId', SukarelawanActivityStatus::where('name', 'Claimed')->first()->id)
                     ->where('activityId', $activity->id)

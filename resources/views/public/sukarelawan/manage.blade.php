@@ -23,7 +23,7 @@
         {{-- Table --}}
         <div class="manage-table">
 
-            @if (!$activityDetails->isEmpty())
+            @if (!empty($activityDetails))
                 @foreach ($activityDetails as $ad)
                     @php
                         $sActivityStatus = $ad->sukarelawanActivityStatus->name;

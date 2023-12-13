@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('couponCode');
-            $table->string('bannerImageUrl')->nullable();
             $table->string('slug')->unique();
 
             $table->timestamps();

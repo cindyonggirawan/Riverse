@@ -20,6 +20,10 @@
             <a href="/">
                 <img src="{{ asset('images/logo.png') }}" alt="Riverse Logo">
             </a>
+            @if (Auth::check() && auth()->user()->role->name == 'Admin')
+                <a class="nav-link {{ Request::is('dashboard') ? 'selected underlined' : '' }}" aria-current="page"
+                    href="/admin">Dashboard</a>
+            @endif
             <a class="nav-link {{ Request::is('activities') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/activities">Aktivitas</a>
             <a class="nav-link {{ Request::is('leaderboard') ? 'selected underlined' : '' }}" aria-current="page"

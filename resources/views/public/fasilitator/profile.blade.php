@@ -141,11 +141,20 @@
                     </div>
 
                     @if (auth()->user() && auth()->user()->fasilitator && auth()->user()->fasilitator->id == $fasilitator->id)
-                        <a href="/fasilitators/{{ $fasilitator->slug }}/manage">
-                            <div class="btn-fill">
-                                Kelola Aktivitas
-                            </div>
-                        </a>
+                        <div class="row">
+                            <a href="/fasilitators/{{ $fasilitator->slug }}/manage">
+                                <div class="btn-fill">
+                                    Kelola Aktivitas
+                                </div>
+                            </a>
+                            @if (auth()->user() && auth()->user()->fasilitator->verificationStatus->name == 'Sudah Diverifikasi')
+                                <a href="/activities/create">
+                                    <div class="btn-fill">
+                                        Buat Aktivitas Baru
+                                    </div>
+                                </a>
+                            @endif
+                        </div>
                     @endif
                 </div>
             </div>

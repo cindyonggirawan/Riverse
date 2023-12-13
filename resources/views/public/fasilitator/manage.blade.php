@@ -203,8 +203,7 @@
 
                             @if ($status == 'Sudah Diverifikasi')
                                 {{-- TODO: FIX ROUTE HERE: --}}
-                                <a href="
-                                ">
+                                <a href="/{{ $a->slug }}/waiting-for-verification/attendance">
                                     <div class="action-btn redeem">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none">
@@ -227,9 +226,10 @@
                     <img src="{{ asset('images/Register/register-illustration.png') }}" alt="">
                     <div class="col">
                         <h1 class="disabled">Belum ada aktivitas</h1>
+                        <h4 class="disabled">*Anda harus terverifikasi untuk membuat aktivitas baru</h4>
                         <h3>
                             <div class="row-sm">
-                                <a href="/activities/create/1" class="selected">Buat Aktivitas Baru</a>
+                                <a href="/activities/create" class="selected">Buat Aktivitas Baru</a>
                             </div>
                         </h3>
                     </div>

@@ -4,7 +4,7 @@
             <div class="img-container"
                 style="background-image: url('{{ asset(
                     $activity->bannerImageUrl
-                        ? 'storage/' . $activity->bannerImageUrl
+                        ? 'storage/images/' . $activity->bannerImageUrl
                         : '/images/' . Config::get('constants.default_banner_image'),
                 ) }}');">
                 <div class="likes">
@@ -23,7 +23,7 @@
                     {{ $name }}
                 </h2>
                 <div class="card-row">
-                    <img src="{{ asset('/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                    <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                     <a href="">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>
                     </a>

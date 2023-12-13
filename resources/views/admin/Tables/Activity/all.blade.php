@@ -28,7 +28,6 @@
                                 <th>Tanggal Penolakan</th>
                                 <th>Alasan Penolakan</th>
                                 <th>Status</th>
-                                <th>Pengaturan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,7 +36,7 @@
                                     <td>{{ $activity->id }}</a></td>
                                     <td>
                                         @if ($activity->bannerImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $activity->bannerImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $activity->bannerImageUrl) }}"
                                                 alt="{{ $activity->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Activity/bannerImages/default.png') }}"
@@ -63,37 +62,6 @@
                                     <td>{{ $activity->reasonForRejection !== null ? $activity->reasonForRejection : '-' }}
                                     </td>
                                     <td>{{ $activity->verificationStatus->name }}</a></td>
-                                    <td>
-                                        <div class="form-inline">
-                                            <a class="btn btn-primary btn-sm btn-square"
-                                                href="/manage/activities/{{ $activity->slug }}">
-                                                <i class="fas fa-folder">
-                                                </i>
-                                            </a>
-
-                                            <div class="mx-1"></div>
-
-                                            <a class="btn btn-info btn-sm btn-square"
-                                                href="/activities/{{ $activity->slug }}/edit">
-                                                <i class="fas fa-pencil-alt">
-                                                </i>
-                                            </a>
-
-                                            <form id="deleteForm" action="/activities/{{ $activity->slug }}"
-                                                method="post">
-                                                @method('delete')
-                                                @csrf
-                                            </form>
-
-                                            <div class="mx-1"></div>
-
-                                            <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showDeletionConfirmation()">
-                                                <i class="fas fa-trash">
-                                                </i>
-                                            </button>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

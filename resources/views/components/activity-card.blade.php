@@ -29,7 +29,7 @@
                     <div class="profpic">
                         <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
                     </div>
-                    <a href="/fasilitator/{{ $activity->fasilitator->slug }}">
+                    <a href="/fasilitators/{{ $activity->fasilitator->slug }}">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>
                     </a>
                 </div>

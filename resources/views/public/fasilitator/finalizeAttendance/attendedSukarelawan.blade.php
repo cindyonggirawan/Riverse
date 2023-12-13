@@ -1,9 +1,10 @@
-@extends('fasilitator.finalizeAttendance.finalizeSukarelawanAttendance')
+@extends('public.fasilitator.finalizeAttendance.finalizeSukarelawanAttendance')
+
 
 @section('Fasilitator.finalizeAttendance')
     <div class="activity-container">
         @if ($activity->bannerImageUrl !== null)
-            <img src={{ asset('storage/images/' . $activity->bannerImageUrl) }} alt="">
+            <img src={{ asset('storage/images/' . $activity->bannerImageUrl) }} class="activity-image" alt="">
         @else
             <img src={{ asset('images/Activity/bannerImages/default.png') }} alt="{{ $activity->name }}" class="activity-image">
         @endif
@@ -63,11 +64,10 @@
                 </div>
 
             </div>
-
         </div>
     </div>
     <div class="card-body table-responsive">
-        @include('fasilitator.finalizeAttendance.tabbar.attendanceVerification')
+        @include('public.fasilitator.finalizeAttendance.tabbar.attendanceVerification')
         <table id="table1" class="table table-bordered table-hover table-striped text-nowrap">
             <thead>
                 <tr>
@@ -97,15 +97,20 @@
                         <td>{{ $sad->created_at->format('d/m/Y') }}
                         </td>
                         <td>
-                            <form id="verifyForm" action="/verify/attendance/{{ $sad->id }}"
-                                method="post">
-                                @method('patch')
-                                @csrf
-                                <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>
-                                <button type="submit" class="approve-button">
-                                    <span class="checkmark">&#10003;</span>
-                                </button>
-                            </form>
+                            <div class="form-inline">
+                                <form id="rejectForm" action="/reject/attendance/{{ $sad->id }}"
+                                    method="post">
+                                    @method('patch')
+                                    @csrf
+                                    <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>
+                                    <input type="hidden" name="reasonForRejection" id="reasonForRejection">
+
+                                    <button class="reject-button"
+                                        onclick="showReasonForRejectionInput()">
+                                        <span class="x-symbol">&#10006;</span>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

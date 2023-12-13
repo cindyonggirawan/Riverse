@@ -145,17 +145,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        SukarelawanActivityStatus::create([
-            'id' => '1',
-            'name' => 'CLAIMED',
-            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'CLAIMED')
-        ]);
-        SukarelawanActivityStatus::create([
-            'id' => '2',
-            'name' => 'NOT CLAIMED',
-            'slug' => Generator::generateSlug(SukarelawanActivityStatus::class, 'NOT CLAIMED')
-        ]);
-
         /* OPEN USER */
 
         $email = 'admin@riverse.com';
@@ -359,7 +348,7 @@ class DatabaseSeeder extends Seeder
             SukarelawanActivityDetail::create([
                 'id' => Generator::generateId(Activity::class),
                 'activityId' => $activity->id,
-                'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
+                'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
                 'sukarelawanId' => "1",
                 'isLiked' => false
             ]);
@@ -370,14 +359,14 @@ class DatabaseSeeder extends Seeder
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[0]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[1]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
 
@@ -409,7 +398,7 @@ class DatabaseSeeder extends Seeder
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[2]->id,
             'sukarelawanId' => "4",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'ClockedIn')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
             'isLiked' => false
         ]);
 

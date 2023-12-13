@@ -25,7 +25,7 @@
                                 <th>Tanggal Penolakan</th>
                                 <th>Alasan Penolakan</th>
                                 <th>Status</th>
-                                <th>Pengaturan</th>
+                                {{-- <th>Pengaturan</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                                     <td>{{ $fasilitator->id }}</a></td>
                                     <td>
                                         @if ($fasilitator->logoImageUrl !== null)
-                                            <img src="{{ asset('storage/' . $fasilitator->logoImageUrl) }}"
+                                            <img src="{{ asset('storage/images/' . $fasilitator->logoImageUrl) }}"
                                                 alt="{{ $fasilitator->user->name }}" class="img-fluid img-square-small">
                                         @else
                                             <img src="{{ asset('images/Fasilitator/logoImages/default.png') }}"
@@ -54,7 +54,7 @@
                                     <td>{{ $fasilitator->reasonForRejection !== null ? $fasilitator->reasonForRejection : '-' }}
                                     </td>
                                     <td>{{ $fasilitator->verificationStatus->name }}</a></td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="form-inline">
                                             <a class="btn btn-primary btn-sm btn-square"
                                                 href="/fasilitators/{{ $fasilitator->slug }}">
@@ -84,7 +84,7 @@
                                                 </i>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
