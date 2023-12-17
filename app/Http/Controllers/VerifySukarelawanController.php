@@ -170,23 +170,4 @@ class VerifySukarelawanController extends Controller
                 ->get()
         ]);
     }
-
-    public function destroyAllSukarelawan()
-    {
-        $sukarelawans = Sukarelawan::orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($sukarelawans as $sukarelawan) {
-            if ($sukarelawan->nationalIdentityCardImageUrl) {
-                Storage::delete($sukarelawan->nationalIdentityCardImageUrl);
-            }
-            if ($sukarelawan->profileImageUrl) {
-                Storage::delete($sukarelawan->profileImageUrl);
-            }
-            Sukarelawan::destroy($sukarelawan->id);
-            User::destroy($sukarelawan->id);
-        }
-
-        return redirect('/all/sukarelawans')->with('success', 'All Sukarelawans destruction successful!');
-    }
 }

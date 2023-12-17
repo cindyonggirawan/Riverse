@@ -18,8 +18,6 @@ class FasilitatorController extends Controller
 {
     public function publicShow(Fasilitator $fasilitator)
     {
-
-
         $openStatus = ActivityStatus::where('name', '=', 'Pendaftaran Sedang Dibuka')->first();
         $onGoingStatus  = ActivityStatus::where('name' , '=', 'Aktivitas Sedang Berlangsung')->first();
         $finishStatus = ActivityStatus::where('name', '=', 'Aktivitas Sudah Selesai')->first();
@@ -48,17 +46,6 @@ class FasilitatorController extends Controller
             'fasilitator' => $fasilitator,
             'activities' => $activities
         ]);
-    }
-
-    public function destroy(Fasilitator $fasilitator)
-    {
-        if ($fasilitator->logoImageUrl) {
-            Storage::delete($fasilitator->logoImageUrl);
-        }
-        Fasilitator::destroy($fasilitator->id);
-        User::destroy($fasilitator->id);
-
-        return redirect('/fasilitators')->with('success', 'Fasilitator destruction successful!');
     }
 
     public function publicEdit(Fasilitator $fasilitator)

@@ -17,7 +17,7 @@ use App\Models\User;
 class ForgotPasswordController extends Controller
 {
     //
-    public function index()
+    public function publicIndex()
     {
         return view('public.user.auth.forgot-password', [
             'title' => 'Forgot Password'

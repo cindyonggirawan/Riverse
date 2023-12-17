@@ -48,12 +48,6 @@ class Fasilitator extends Model
         return $this->belongsTo(FasilitatorType::class, 'fasilitatorTypeId', 'id');
     }
 
-    public function activity(): BelongsTo
-    {
-        return $this->belongsTo(Activity::class, 'id', 'fasilitatorId');
-    }
-
-
     public function activities(): HasMany{
         return $this->hasMany(Activity::class, 'fasilitatorId', 'id');
     }
