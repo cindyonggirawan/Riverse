@@ -80,14 +80,6 @@ class ActivityController extends Controller
         ]);
     }
 
-    public function show(Activity $activity)
-    {
-        return view('admin.Tables.Activity.activity', [
-            'title' => 'Activity',
-            'activity' => $activity
-        ]);
-    }
-
     public function publicShow(Activity $activity)
     {
         $user = auth()->user();
@@ -250,15 +242,6 @@ class ActivityController extends Controller
         Session::forget('step2Data');
 
         return $newActivity;
-    }
-
-    public function destroy(Activity $activity)
-    {
-        if ($activity->bannerImageUrl) {
-            Storage::delete($activity->bannerImageUrl);
-        }
-        $activity->delete();
-        return redirect('/manage/activities')->with('success', 'Activity destruction successful!');
     }
 
     public function publicDestroy(Activity $activity)

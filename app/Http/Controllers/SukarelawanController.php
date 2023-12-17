@@ -14,23 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class SukarelawanController extends Controller
 {
-    public function index()
-    {
-        return view('admin.Tables.Sukarelawan.sukarelawans', [
-            'title' => 'Sukarelawans',
-            'sukarelawans' => Sukarelawan::orderBy('updated_at', 'desc')
-                ->get()
-        ]);
-    }
-
-    public function show(Sukarelawan $sukarelawan)
-    {
-        return view('admin.Tables.Sukarelawan.sukarelawan', [
-            'title' => 'Sukarelawan',
-            'sukarelawan' => $sukarelawan
-        ]);
-    }
-
     public function publicShow(Sukarelawan $sukarelawan)
     {
         $levels = Level::orderBy("name")->get();

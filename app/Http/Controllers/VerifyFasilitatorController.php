@@ -170,20 +170,4 @@ class VerifyFasilitatorController extends Controller
                 ->get()
         ]);
     }
-
-    public function destroyAllFasilitator()
-    {
-        $fasilitators = Fasilitator::orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($fasilitators as $fasilitator) {
-            if ($fasilitator->logoImageUrl) {
-                Storage::delete($fasilitator->logoImageUrl);
-            }
-            Fasilitator::destroy($fasilitator->id);
-            User::destroy($fasilitator->id);
-        }
-
-        return redirect('/all/fasilitators')->with('success', 'All Fasilitators destruction successful!');
-    }
 }

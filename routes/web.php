@@ -49,7 +49,6 @@ Route::middleware(['web', 'admin'])->group(function () {
     Route::patch('/unreject/sukarelawans/{sukarelawan:slug}', [VerifySukarelawanController::class, 'updateUnrejectedSukarelawan']);
     Route::patch('/unreject/all-sukarelawans', [VerifySukarelawanController::class, 'updateAllUnrejectedSukarelawan']);
     Route::get('/all/sukarelawans', [VerifySukarelawanController::class, 'indexAllSukarelawan']);
-    Route::delete('/delete/all-sukarelawans', [VerifySukarelawanController::class, 'destroyAllSukarelawan']);
 
     // VERIFY FASILITATOR STATUS
     Route::get('/waiting-for-verification/fasilitators', [VerifyFasilitatorController::class, 'indexWaitingForVerificationFasilitator']);
@@ -64,7 +63,6 @@ Route::middleware(['web', 'admin'])->group(function () {
     Route::patch('/unreject/fasilitators/{fasilitator:slug}', [VerifyFasilitatorController::class, 'updateUnrejectedFasilitator']);
     Route::patch('/unreject/all-fasilitators', [VerifyFasilitatorController::class, 'updateAllUnrejectedFasilitator']);
     Route::get('/all/fasilitators', [VerifyFasilitatorController::class, 'indexAllFasilitator']);
-    Route::delete('/delete/all-fasilitators', [VerifyFasilitatorController::class, 'destroyAllFasilitator']);
 
     // VERIFY ACTIVITY STATUS
     Route::get('/waiting-for-verification/activities', [VerifyActivityController::class, 'indexWaitingForVerificationActivity']);
@@ -79,7 +77,6 @@ Route::middleware(['web', 'admin'])->group(function () {
     Route::patch('/unreject/activities/{activity:slug}', [VerifyActivityController::class, 'updateUnrejectedActivity']);
     Route::patch('/unreject/all-activities', [VerifyActivityController::class, 'updateAllUnrejectedActivity']);
     Route::get('/all/activities', [VerifyActivityController::class, 'indexAllActivity']);
-    Route::delete('/delete/all-activities', [VerifyActivityController::class, 'destroyAllActivity']);
 
     // BENEFIT SECTION
     Route::get('/admin/benefits', [BenefitController::class, 'index']);
@@ -162,12 +159,12 @@ Route::get('/register/sukarelawan/{step?}', [RegisterController::class, 'showSuk
 Route::post('/register/sukarelawan/{step}', [RegisterController::class, 'storeSukarelawan'])->name('sukarelawan.store')->middleware('guest');
 
 // LOGIN SECTION
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::get('/login', [LoginController::class, 'publicIndex'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
 // FORGOT PASSWORD SECTION
-Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'publicIndex'])->middleware('guest')->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPasswordIndex'])->middleware('guest')->name('password.reset');
 Route::get('/change-password/{user:slug}', [ForgotPasswordController::class, 'changePasswordIndex'])->name('password.change');

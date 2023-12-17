@@ -173,19 +173,4 @@ class VerifyActivityController extends Controller
                 ->get()
         ]);
     }
-
-    public function destroyAllActivity()
-    {
-        $activities = Activity::orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($activities as $activity) {
-            if ($activity->bannerImageUrl) {
-                Storage::delete($activity->bannerImageUrl);
-            }
-            $activity->delete();
-        }
-
-        return redirect('/all/activities')->with('success', 'All Activities destruction successful!');
-    }
 }

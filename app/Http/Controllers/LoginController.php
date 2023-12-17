@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function publicIndex()
     {
         return view('public.user.login', [
             'title' => 'Login'

@@ -182,22 +182,6 @@
         <!-- Page specific script -->
         <script>
             $(function() {
-                // $('#table1').DataTable({
-                //     // responsive: true,
-                //     lengthChange: true,
-                //     order: [],
-                //     autoWidth: false,
-                //     buttons: [
-                //         "copy", "csv", "excel", "pdf", "print", "colvis"
-                //     ],
-                //     scrollColapse: true,
-                //     scrollX: true,
-                //     fixedColumns: {
-                //         leftColumns: 1,
-                //         rightColumns: 1,
-                //     }
-                // }).buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
-
                 $('#dob').datetimepicker({
                     format: 'DD/MM/YYYY'
                 });
