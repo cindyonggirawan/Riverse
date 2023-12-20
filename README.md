@@ -23,13 +23,19 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## Initial Development/Testing Setup
 
+Delete the <b>vendor</b> folder
+
 Run ```composer install```
 
-Run ```php artisan migrate: fresh --seed```
+Turn on <b>xampp</b>
 
-Configure ```env``` file
+Run ```php artisan key:generate```
 
-Run ```php artisan storage link```
+Configure ```.env``` file
+
+Run ```php artisan migrate:fresh --seed```
+
+Run ```php artisan storage:link```
 
 Run ```php artisan serve```
 
@@ -40,4 +46,3 @@ Run ```php artisan serve```
 ```fix: (what you update/fix)```
 
 ```del: (what you remove)```
-
