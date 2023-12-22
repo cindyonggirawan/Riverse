@@ -24,6 +24,11 @@
                 <a class="nav-link {{ Request::is('dashboard') ? 'selected underlined' : '' }}" aria-current="page"
                     href="/admin">Dashboard</a>
             @endif
+            @if (Auth::check() && auth()->user()->role->name == 'Fasilitator')
+                <a class="nav-link {{ Request::is('fasilitators/' . auth()->user()->fasilitator->slug . '/manage') ? 'selected underlined' : '' }}"
+                    aria-current="page"
+                    href="/fasilitators/{{ auth()->user()->fasilitator->slug }}/manage">Dashboard</a>
+            @endif
             <a class="nav-link {{ Request::is('activities') ? 'selected underlined' : '' }}" aria-current="page"
                 href="/activities">Aktivitas</a>
             <a class="nav-link {{ Request::is('leaderboard') ? 'selected underlined' : '' }}" aria-current="page"
