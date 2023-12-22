@@ -15,7 +15,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Gambar</th>
+                                <th>Gambar Banner</th>
                                 <th>Nama</th>
                                 <th>Tanggal Pelaksanaan</th>
                                 <th>Waktu Mulai</th>

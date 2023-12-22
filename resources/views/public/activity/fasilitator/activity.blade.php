@@ -86,7 +86,7 @@
                     @if ($isPassedMaxEditDate)
                         <div class="btn-fill full bg-disabled">Batas Waktu Lewat</div>
                     @else
-                        <a href="{{ $activity->slug }}/edit" target="_blank" class="btn-fill full">Kelola Aktivitas</a>
+                        <a href="{{ $activity->slug }}/edit" class="btn-fill full">Edit</a>
                     @endif
                 </div>
 

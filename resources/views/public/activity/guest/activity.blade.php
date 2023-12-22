@@ -76,7 +76,7 @@
         {{-- <a href="" class="btn-fill full">Daftar jadi Sukarelawan</a>   --}}
       {{-- @endif --}}
       {{-- @if (TODO: status->registered) --}}
-        <a href="/login" target="_blank" class="btn-fill full">Daftar Sukarelawan</a>
+        <a href="/login" class="btn-fill full">Daftar Sukarelawan</a>
       {{-- @endif --}}
       {{-- @if (TODO: status->joined) --}}
         {{-- <a href="" class="btn-fill full">Sudah Diterima</a> --}}

@@ -8,7 +8,7 @@
 
 
 @section('content')
-    <h1 class="mt-3">Profil Sukarelawan</h1>
+    <h1 class="mt-3">Profil Fasilitator</h1>
     <div class="sukarelawan-row">
         <div class="sukarelawan-col">
             <div class="sukarelawan-card-container">
@@ -150,7 +150,7 @@
                             @if (auth()->user() && auth()->user()->fasilitator->verificationStatus->name == 'Sudah Diverifikasi')
                                 <a href="/activities/create">
                                     <div class="btn-fill">
-                                        Buat Aktivitas Baru
+                                        Buat Aktivitas
                                     </div>
                                 </a>
                             @endif

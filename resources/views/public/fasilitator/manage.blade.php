@@ -9,7 +9,7 @@
     <div class="manage-body">
         {{-- Header --}}
         <h1>
-            Aktivitas Diikuti
+            Aktivitas Dibuat
         </h1>
 
         @php
@@ -31,40 +31,40 @@
                         $statusClass = '';
                         $activityClass = '';
                         $activityStatus = '';
-
+                        
                         $status = $a->verificationStatus->name;
-
+                        
                         switch ($status) {
                             case 'Sudah Diverifikasi':
                                 $statusClass = 'success';
                                 break;
                             case 'Sudah Ditolak':
                                 $statusClass = 'danger';
-
+                        
                                 break;
                             case 'Menunggu Verifikasi':
                                 $statusClass = 'redeem';
-
+                        
                                 break;
-
+                        
                             default:
                                 break;
                         }
-
+                        
                         if ($status == 'Sudah Diverifikasi') {
                             $activityStatus = $a->activityStatus->name;
-
+                        
                             switch ($activityStatus) {
                                 case 'Pendaftaran Sedang Dibuka':
                                     $activityClass = '';
                                     break;
                                 case 'Pendaftaran Sudah Ditutup':
                                     $activityClass = 'danger';
-
+                        
                                     break;
                                 case 'Aktivitas Sedang Berlangsung':
                                     $activityClass = 'redeem';
-
+                        
                                     break;
                                 case 'Pendaftaran Sudah Selesai':
                                     $activityClass = 'success';
@@ -80,7 +80,9 @@
                                 <a href="/activities/{{ $a->slug }}">
                                     <div class="activity-image">
                                         <img src="{{ asset(
-                                            $a->bannerImageUrl ? 'storage/images/' . $a->bannerImageUrl : '/images/' . Config::get('constants.default_banner_image'),
+                                            $a->bannerImageUrl
+                                                ? 'storage/images/' . $a->bannerImageUrl
+                                                : '/images/' . Config::get('constants.default_banner_image'),
                                         ) }}"
                                             alt="">
                                     </div>
@@ -226,10 +228,10 @@
                     <img src="{{ asset('images/Register/register-illustration.png') }}" alt="">
                     <div class="col">
                         <h1 class="disabled">Belum ada aktivitas</h1>
-                        <h4 class="disabled">*Anda harus terverifikasi untuk membuat aktivitas baru</h4>
+                        <h4 class="disabled">*Anda harus terverifikasi untuk membuat aktivitas</h4>
                         <h3>
                             <div class="row-sm">
-                                <a href="/activities/create" class="selected">Buat Aktivitas Baru</a>
+                                <a href="/activities/create" class="selected">Buat Aktivitas</a>
                             </div>
                         </h3>
                     </div>

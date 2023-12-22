@@ -115,7 +115,7 @@
                         <p>Peringkat</p>
                     </div>
                     <div class="name-column header-text">
-                        <p>Username</p>
+                        <p>Nama Lengkap</p>
                     </div>
                     <div class="level-column-header header-text">
                         <p>Level</p>
