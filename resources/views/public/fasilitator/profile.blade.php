@@ -144,16 +144,9 @@
                         <div class="row">
                             <a href="/fasilitators/{{ $fasilitator->slug }}/manage">
                                 <div class="btn-fill">
-                                    Kelola Aktivitas
+                                    Aktivitas Dibuat
                                 </div>
                             </a>
-                            @if (auth()->user() && auth()->user()->fasilitator->verificationStatus->name == 'Sudah Diverifikasi')
-                                <a href="/activities/create">
-                                    <div class="btn-fill">
-                                        Buat Aktivitas
-                                    </div>
-                                </a>
-                            @endif
                         </div>
                     @endif
                 </div>

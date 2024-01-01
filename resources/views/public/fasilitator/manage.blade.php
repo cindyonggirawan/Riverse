@@ -8,9 +8,17 @@
 @section('content')
     <div class="manage-body">
         {{-- Header --}}
-        <h1>
-            Aktivitas Dibuat
-        </h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h1>Aktivitas Dibuat</h1>
+
+            @if (auth()->user() && auth()->user()->fasilitator->verificationStatus->name == 'Sudah Diverifikasi')
+                <a href="/activities/create">
+                    <div class="btn-fill">
+                        Buat Aktivitas
+                    </div>
+                </a>
+            @endif
+        </div>
 
         @php
             $shownActivityCount = 0;
@@ -188,7 +196,8 @@
                                     action="{{ route('activity.publicDestroy', ['activity' => $a->slug]) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="action-btn danger">
+                                    <button type="submit" class="action-btn danger"
+                                        onclick="return confirm('Apakah Anda yakin untuk menghapus aktivitas ini?');">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none">
                                             <path
@@ -227,13 +236,15 @@
                 <div class="centered">
                     <img src="{{ asset('images/Register/register-illustration.png') }}" alt="">
                     <div class="col">
-                        <h1 class="disabled">Belum ada aktivitas</h1>
+                        <h1 class="disabled">Belum ada aktivitas yang dibuat</h1>
                         <h4 class="disabled">*Anda harus terverifikasi untuk membuat aktivitas</h4>
-                        <h3>
-                            <div class="row-sm">
-                                <a href="/activities/create" class="selected">Buat Aktivitas</a>
-                            </div>
-                        </h3>
+                        @if (auth()->user() && auth()->user()->fasilitator->verificationStatus->name == 'Sudah Diverifikasi')
+                            <h3>
+                                <div class="row-sm">
+                                    <a href="/activities/create" class="selected">Buat Aktivitas</a>
+                                </div>
+                            </h3>
+                        @endif
                     </div>
                 </div>
             @endif

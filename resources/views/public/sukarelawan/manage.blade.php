@@ -8,9 +8,17 @@
 @section('content')
     <div class="manage-body">
         {{-- Header --}}
-        <h1>
-            Aktivitas Diikuti
-        </h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h1>Aktivitas Diikuti</h1>
+
+            @if (auth()->user() && auth()->user()->sukarelawan->verificationStatus->name == 'Sudah Diverifikasi')
+                <a href="/activities">
+                    <div class="btn-fill">
+                        Lihat Aktivitas
+                    </div>
+                </a>
+            @endif
+        </div>
 
         @php
             $shownActivityCount = 0;
@@ -28,22 +36,22 @@
                     @php
                         $sActivityStatus = $ad->sukarelawanActivityStatus->name;
                         $activityStatus = $ad->activity->activityStatus->name;
-
+                        
                         $status = '';
                         $statusClass = '';
                         $activityClass = '';
-
+                        
                         switch ($activityStatus) {
                             case 'Pendaftaran Sedang Dibuka':
                                 $activityClass = '';
                                 break;
                             case 'Pendaftaran Sudah Ditutup':
                                 $activityClass = 'danger';
-
+                        
                                 break;
                             case 'Aktivitas Sedang Berlangsung':
                                 $activityClass = 'redeem';
-
+                        
                                 break;
                             case 'Pendaftaran Sudah Selesai':
                                 $activityClass = 'success';
@@ -51,7 +59,7 @@
                             default:
                                 break;
                         }
-
+                        
                         switch ($sActivityStatus) {
                             case 'Terdaftar':
                                 $currentDateTime = date('Y-m-d H:i:s');
@@ -65,7 +73,7 @@
                             case 'ClockedIn':
                                 $status = 'Menunggu Pencairan XP';
                                 $statusClass = 'success';
-
+                        
                             case 'Claimed':
                                 $status = 'XP Sudah Dicairkan';
                                 $statusClass = 'redeem';
@@ -177,7 +185,8 @@
                                     <form method="POST"
                                         action="{{ route('activities.unjoin', ['activity' => $ad->activity->slug]) }}">
                                         @csrf
-                                        <button type="submit" class="action-btn danger">
+                                        <button type="submit" class="action-btn danger"
+                                            onclick="return confirm('Apakah Anda yakin untuk membatalkan pendaftaran pada aktivitas ini?');">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none">
                                                 <path d="M4 20L20.0045 4M4 4L20.0045 20" stroke="#E21919" stroke-width="2"
@@ -198,13 +207,15 @@
                 <div class="centered">
                     <img src="{{ asset('images/Register/register-illustration.png') }}" alt="">
                     <div class="col">
-                        <h1 class="disabled">Belum Ada Aktivitas Yang Diikuti</h1>
-                        <h3>
-                            <div class="row-sm">
-                                <a href="/activities" class="selected">Lihat Aktivitas Yang Bisa Kamu Ikuti</a>
-
-                            </div>
-                        </h3>
+                        <h1 class="disabled">Belum ada aktivitas yang diikuti</h1>
+                        <h4 class="disabled">*Anda harus terverifikasi untuk mengikuti aktivitas</h4>
+                        @if (auth()->user() && auth()->user()->sukarelawan->verificationStatus->name == 'Sudah Diverifikasi')
+                            <h3>
+                                <div class="row-sm">
+                                    <a href="/activities" class="selected">Lihat Aktivitas</a>
+                                </div>
+                            </h3>
+                        @endif
                     </div>
                 </div>
             @endif

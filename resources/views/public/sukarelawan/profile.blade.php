@@ -198,39 +198,35 @@
             <div class="sukarelawan-card-container">
                 <div class="sukarelawan-card-content col status-aktivitas">
                     <h3>Status Aktivitas</h3>
-                    <div class="row">
-                        <div class="col fs">
-                            {{-- get aktivitas status Claimed --}}
-                            <h2 class="hijau">{{ $claimedActivityCount }} aktivitas</h2>
-                            <p>XP sudah dicairkan</p>
-                        </div>
-                        <div class="col fs">
-                            {{-- get aktivitas status ClockedIn --}}
-                            <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
-                            <p>pernah diikuti</p>
-                        </div>
+                    <div class="col fs">
+                        {{-- get aktivitas status Claimed --}}
+                        <h2 class="hijau">{{ $claimedActivityCount }} aktivitas</h2>
+                        <p>XP sudah dicairkan</p>
                     </div>
-                    <div class="row">
-                        <div class="col fs">
-                            {{-- get aktivitas status Terdaftar --}}
-                            <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
-                            <p>yang sedang diikuti</p>
-                        </div>
+                    <div class="col fs">
+                        {{-- get aktivitas status ClockedIn --}}
+                        <h2 class="biru">{{ $clockedInActivityCount }} aktivitas</h2>
+                        <p>pernah diikuti</p>
+                    </div>
+                    <div class="col fs">
+                        {{-- get aktivitas status Terdaftar --}}
+                        <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
+                        <p>yang sedang diikuti</p>
+                    </div>
 
-                        <div class="col fs">
-                            <a href="/sukarelawans/{{ $sukarelawan->slug }}/manage">
-                                <div class="btn-fill">
-                                    Lihat Semua Aktivitas
-                                </div>
-                            </a>
-                        </div>
+                    <div class="row">
+                        <a href="/sukarelawans/{{ $sukarelawan->slug }}/manage">
+                            <div class="btn-fill">
+                                Aktivitas Diikuti
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <h3 class="mt-3">Aktivitas yang diminati</h3>
+    <h3 class="mt-3">Aktivitas yang disukai</h3>
 
 
     <div class="sukarelawan-activities-row">

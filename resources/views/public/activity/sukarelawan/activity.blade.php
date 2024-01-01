@@ -11,16 +11,16 @@
     $isClockedIn = false;
     $isClaimed = false;
     $isLiked = false;
-
+    
     if (auth()->check() && auth()->user()->sukarelawan) {
         // Check if the user is registered for the activity
-
+    
         $terdaftarStatus = 'Terdaftar';
         $isTerdaftar = $activity->sukarelawan_activity_details
             ->where('sukarelawanActivityStatus.name', $terdaftarStatus)
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
-
+    
         if ($isTerdaftar == false) {
             $clockedInStatus = 'ClockedIn';
             $isClockedIn = $activity->sukarelawan_activity_details
@@ -28,7 +28,7 @@
                 ->where('sukarelawanId', auth()->user()->sukarelawan->id)
                 ->isNotEmpty();
         }
-
+    
         if ($isTerdaftar && $isClockedIn == false) {
             $claimedStatus = 'Claimed';
             $isClaimed = $activity->sukarelawan_activity_details
@@ -36,14 +36,14 @@
                 ->where('sukarelawanId', auth()->user()->sukarelawan->id)
                 ->isNotEmpty();
         }
-
+    
         // Check if the user has liked the activity
         $isLiked = $activity->sukarelawan_activity_details
             ->where('isLiked', true)
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
     }
-
+    
 @endphp
 @php
     // NOTE: Buat checking apakah Sukarelawan udh bisa ClockIn / Clockout
@@ -56,19 +56,9 @@
 @endsection
 
 @section('content')
-
-
-
     {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#groupLinkModal">
         Open Modal
     </button> --}}
-
-
-    <button>
-
-    </button>
-
-
     <div class="modal" id="groupLinkModal">
         <div class="modal-content">
             <div class="modal-content-body">
@@ -149,7 +139,9 @@
                     @if ($isTerdaftar && !$isClockedIn)
                         <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
                             @csrf
-                            <button type="submit" class="btn-fill full bg-danger">Batalkan Pendaftaran</button>
+                            <button type="submit" class="btn-fill full bg-danger"
+                                onclick="return confirm('Apakah Anda yakin untuk membatalkan pendaftaran pada aktivitas ini?');">Batalkan
+                                Pendaftaran</button>
                         </form>
                     @else
                         @if (!$isClockedIn)
@@ -183,7 +175,7 @@
                 <div class="content-card">
                     <div class="row-spaced">
                         <h5>Link Group</h5>
-                        <input id= "groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
+                        <input id="groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
                         <div class="tooltip">
                             <button onclick="copyGroupChatUrl()">
                                 <span class="tooltiptext" id="myTooltip">Copy Link</span>
@@ -354,10 +346,10 @@
                         @php
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
-
+                            
                             $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
                             $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
-
+                            
                             $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
                         @endphp
                         <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
@@ -386,7 +378,8 @@
                     </h5>
                     <div class="row">
                         <div class="profpic">
-                            <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                            <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}"
+                                alt="">
                         </div>
                         <a href="/fasilitators/{{ $activity->fasilitator->slug }}" class="selected">
                             <p class="selected">

@@ -6,7 +6,7 @@
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/" class="nav-link {{ $title === 'Home' ? 'active' : '' }}">Home</a>
+            <a href="/admin" class="nav-link {{ $title === 'Home' ? 'active' : '' }}">Home</a>
         </li>
     </ul>
 
