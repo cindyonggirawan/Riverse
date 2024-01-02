@@ -135,21 +135,35 @@
                     <p class="danger batas">Batas Registrasi: {{ $formattedDateregistrationDeadlineDate }}</p>
                 </div>
 
+                @php
+                    $today = Carbon::now();
+                    $isPassedMaxRegistrationDate = false;
+                    
+                    if ($today->gt($registrationDate)) {
+                        $isPassedMaxRegistrationDate = true;
+                    }
+                @endphp
                 <div class="btn-container">
-                    @if ($isTerdaftar && !$isClockedIn)
-                        <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
-                            @csrf
-                            <button type="submit" class="btn-fill full bg-danger"
-                                onclick="return confirm('Apakah Anda yakin untuk membatalkan pendaftaran pada aktivitas ini?');">Batalkan
-                                Pendaftaran</button>
-                        </form>
+                    @if ($isPassedMaxRegistrationDate)
+                        <div class="btn-fill full bg-disabled">Batas Waktu Lewat</div>
                     @else
-                        @if (!$isClockedIn)
-                            <form method="POST" action="{{ route('activities.join', ['activity' => $activity->slug]) }}">
+                        @if ($isTerdaftar && !$isClockedIn)
+                            <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
                                 @csrf
-                                <button type="submit" class="btn-fill full">Daftar Aktivitas</button>
+                                <button type="submit" class="btn-fill full bg-danger"
+                                    onclick="return confirm('Apakah Anda yakin untuk membatalkan pendaftaran pada aktivitas ini?');">Batalkan
+                                    Pendaftaran</button>
                             </form>
+                        @else
+                            @if (!$isClockedIn)
+                                <form method="POST"
+                                    action="{{ route('activities.join', ['activity' => $activity->slug]) }}">
+                                    @csrf
+                                    <button type="submit" class="btn-fill full">Daftar Aktivitas</button>
+                                </form>
+                            @endif
                         @endif
+
                     @endif
                 </div>
             </div>

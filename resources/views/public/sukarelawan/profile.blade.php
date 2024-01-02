@@ -227,8 +227,6 @@
     </div>
 
     <h3 class="mt-3">Aktivitas yang disukai</h3>
-
-
     <div class="sukarelawan-activities-row">
         @if ($sActivityDetail != null && $sActivityDetail->count() > 0)
             @foreach ($sActivityDetail as $sad)
@@ -237,8 +235,8 @@
                 @endif
             @endforeach
         @else
-            <h2 class="biru">
-                Belum memiliki aktivitas
+            <h2 class="disabled">
+                Belum ada aktivitas
             </h2>
         @endif
     </div>
