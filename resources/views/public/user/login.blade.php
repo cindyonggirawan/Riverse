@@ -1,27 +1,16 @@
 @extends('layout.index')
 
 @section('css')
-{{-- @include('layout.useBootstrap') --}}
-<link rel="stylesheet" href="{{ asset('/css/login.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/login.css') }}" />
 @endsection
 
 @section('content')
-<div class="row">
-    <div>
+    <div class="row">
         <!-- Form -->
         <form action="/login" method="post" class="login-container">
             @csrf
             <!-- Card Body -->
             <div class="login-content">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li> {{ $error }} </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 @if (session()->has('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
@@ -38,8 +27,8 @@
                     <label for="email" class="required">Email</label>
                     <div class="row">
                         <input type="email" name="email" id="email"
-                            class="input-text-long @error('email') is-invalid @enderror" placeholder="Email" required
-                            autofocus value="{{ old('email') }}">
+                            class="input-text-long @error('email') is-invalid @enderror" placeholder="hello@riverse.com"
+                            required autofocus value="{{ old('email') }}">
                     </div>
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>
@@ -49,7 +38,7 @@
                     <label for="password" class="required">Password</label>
                     <div class="row">
                         <input type="password" name="password" id="password"
-                            class="input-text-long @error('password') is-invalid @enderror" placeholder="Password"
+                            class="input-text-long @error('password') is-invalid @enderror" placeholder="Minimal 8 karakter"
                             required>
                     </div>
                     @error('password')
@@ -60,15 +49,13 @@
                 <!-- /.card-body -->
                 <!-- Card Footer -->
                 <div class="card-footer">
-                    <button type="submit" class="purple-outline-btn-long">Login</button>
+                    <button type="submit" class="purple-outline-btn-long">Masuk</button>
                 </div>
                 <!-- /.card-footer -->
             </div>
         </form>
         <!-- /.form -->
+        <div class="login-image" style="background-image: url('{{ asset('/images/login-image.png') }}');">
+        </div>
     </div>
-    <div class="login-image" style="background-image: url('{{ asset('/images/login-image.png') }}');">
-
-    </div>
-</div>
 @endsection

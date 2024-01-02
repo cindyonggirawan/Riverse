@@ -21,7 +21,7 @@ class ActivityController extends Controller
     public function publicIndex(Request $request)
     {
         $query = Activity::query();
-         // filter by activityStatusId
+        // filter by activityStatusId
         $query->whereHas('activityStatus', function ($subQuery) {
             $subQuery->where('name', 'Pendaftaran Sedang Dibuka');
         });
@@ -48,16 +48,13 @@ class ActivityController extends Controller
 
             if ($sortBy === 'dateClosest') {
                 $query->orderBy('cleanUpDate');
-            }
-            elseif ($sortBy === 'dateFarthest') {
+            } elseif ($sortBy === 'dateFarthest') {
                 $query->orderByDesc('cleanUpDate');
-            }
-            elseif ($sortBy === 'mostLikes') {
+            } elseif ($sortBy === 'mostLikes') {
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
                 }])->orderByDesc('like_count');
-            }
-            elseif ($sortBy === 'leastLikes') {
+            } elseif ($sortBy === 'leastLikes') {
                 $query->withCount(['sukarelawan_activity_details as like_count' => function ($query) {
                     $query->where('isLiked', true);
                 }])->orderBy('like_count');
@@ -111,9 +108,9 @@ class ActivityController extends Controller
 
     public function publicCreate(Request $request, $step = 1)
     {
-        if(auth()->user()->fasilitator->verificationStatus->name !== "Sudah Diverifikasi"){
+        if (auth()->user()->fasilitator->verificationStatus->name !== "Sudah Diverifikasi") {
             return redirect('/activities');
-        }// validate if this is the correct fasilitator
+        } // validate if this is the correct fasilitator
         return view("public.activity.fasilitator.create.createStep{$step}", [
             'title' => 'Create Activity',
             'currentStep' => $step,
@@ -167,27 +164,25 @@ class ActivityController extends Controller
             'picture' => "sometimes|image"
         ]);
 
+        $bannerImageFile = $request->file('picture');
 
         // Check if a picture has been uploaded
-        if ($request->hasFile('picture')) {
-
-
+        if ($bannerImageFile) {
             $hasNewImage = true;
-            $previousPicture = Session::get('step1Data.picture');
-            if ($previousPicture) {
-                Storage::delete('public/images' . $previousPicture);
+            $previousImage = Session::get('step1Data.picture');
+            if ($previousImage) {
+                Storage::delete('/images' . '/' . $previousImage);
             }
-
-            $picture = $request->file('picture');
-            $pictureName = uniqid() . '_' . $picture->getClientOriginalName();
-            $bannerImageUrl = $picture->storeAs('/public/images/Activity/bannerImages', $pictureName);
-            $bannerImageUrl = 'Activity/bannerImages/' . $pictureName;
+            $fileName = uniqid() . '.' . $bannerImageFile->getClientOriginalExtension();
+            $bannerImageUrl = $bannerImageFile->storeAs('/images/Activity/bannerImages', $fileName);
+            $bannerImageUrl = 'Activity/bannerImages/' . $fileName;
             $validatedStep1['picture'] = $bannerImageUrl;
         }
 
         if ($hasNewImage == false) {
             $validatedStep1['picture'] = $request->oldPicture;
         }
+
         Session::put('step1Data', $validatedStep1);
     }
 
@@ -205,36 +200,51 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ]
         ]);
+
         Session::put('step2Data', $validatedStep2);
     }
 
-    private function handleCreateStep3(Request $request)
+    private function handleCreateStep3()
     {
         $step1Data = Session::get('step1Data');
         $step2Data = Session::get('step2Data');
         $combinedData = array_merge($step1Data, $step2Data);
+        $request = new Request($combinedData);
+
+        $id = Generator::generateId(Activity::class);
+
+        $oldFileUrl = $request->picture;
+        $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
+        $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+
+        $newFileName = $id . '.' . $fileExtension;
+        $newFileUrl =  $directoryPath . '/' . $newFileName;
+
+        Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
+
+        $slug = Generator::generateSlug(Activity::class, $request->name);
 
         $newActivity = Activity::create([
-            'id' => Generator::generateId(Activity::class),
+            'id' => $id,
             'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
             'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
             'fasilitatorId' => Auth::user()->id,
             'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
-            'name' => $combinedData["name"],
-            'description' => $combinedData["description"],
-            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["registrationDeadlineDate"]))),
-            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["cleanUpDate"]))),
-            'startTime' => date('H:i:s', strtotime($combinedData['startTime'])),
-            'endTime' => date('H:i:s', strtotime($combinedData["endTime"])),
-            'gatheringPointUrl' => $combinedData["gatheringPointUrl"],
-            'sukarelawanJobName' => $combinedData["sukarelawanJobName"],
-            'sukarelawanJobDetail' => $combinedData["sukarelawanJobDetail"],
-            'sukarelawanCriteria' => $combinedData["sukarelawanCriteria"],
-            'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
-            'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
-            'groupChatUrl' => $combinedData["groupChatUrl"],
-            'bannerImageUrl' => $combinedData["picture"],
-            'slug' => Generator::generateSlug(Activity::class, $combinedData["name"])
+            'name' => ucwords($request->name),
+            'description' => $request->description,
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $request->registrationDeadlineDate))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $request->cleanUpDate))),
+            'startTime' => date('H:i:s', strtotime($request->startTime)),
+            'endTime' => date('H:i:s', strtotime($request->endTime)),
+            'gatheringPointUrl' => $request->gatheringPointUrl,
+            'sukarelawanJobName' => $request->sukarelawanJobName,
+            'sukarelawanJobDetail' => $request->sukarelawanJobDetail,
+            'sukarelawanCriteria' => $request->sukarelawanCriteria,
+            'minimumNumOfSukarelawan' => $request->minimumNumOfSukarelawan,
+            'sukarelawanEquipment' => $request->sukarelawanEquipment,
+            'groupChatUrl' => $request->groupChatUrl,
+            'bannerImageUrl' => $newFileUrl,
+            'slug' => $slug
         ]);
 
         // Optionally, you can clear the session data for steps 1 and 2 if needed
@@ -246,18 +256,18 @@ class ActivityController extends Controller
 
     public function publicDestroy(Activity $activity)
     {
-        if($activity->fasilitator->id != auth()->user()->fasilitator->id){
+        if ($activity->fasilitator->id != auth()->user()->fasilitator->id) {
             return redirect('/');
-        }// validate if this is the correct fasilitator
+        } // validate if this is the correct fasilitator
 
-        if($activity->verificationStatus->name != "Sudah Diverifikasi"){
+        if ($activity->verificationStatus->name != "Sudah Diverifikasi") {
             if ($activity->bannerImageUrl) {
                 Storage::delete($activity->bannerImageUrl);
             }
             $activity->delete();
-            return redirect('fasilitators/'.
-            auth()->user()->fasilitator->slug
-            .'/manage')->with('success', 'Activity destruction successful!');
+            return redirect('fasilitators/' .
+                auth()->user()->fasilitator->slug
+                . '/manage')->with('success', 'Activity destruction successful!');
         } //
 
 
@@ -267,7 +277,7 @@ class ActivityController extends Controller
     public function publicEdit(Activity $activity, $step = 1)
     {
         // $this->authorize('update', $activity);
-        if(Auth::check() && auth()->user()->fasilitator !== null && $activity->fasilitatorId == auth()->user()->fasilitator->id) {
+        if (Auth::check() && auth()->user()->fasilitator !== null && $activity->fasilitatorId == auth()->user()->fasilitator->id) {
             return view("public.activity.fasilitator.update.updateStep{$step}", [
                 'title' => 'Edit Activity',
                 'activity' => $activity,
@@ -457,12 +467,10 @@ class ActivityController extends Controller
                     'isLiked' => true,
                 ]);
             }
-
         } else {
             return redirect('/login');
         }
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
-
     }
 
     public function unjoinActivity(Activity $activity)
@@ -483,15 +491,14 @@ class ActivityController extends Controller
             if ($existingDetail) {
                 $existingDetail->update(['sukarelawanActivityStatusId' => $cancelStatus->id]);
             }
-
         } else {
             return redirect('/login');
         }
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
-
     }
 
-    public function takeAttendance(Activity $activity){
+    public function takeAttendance(Activity $activity)
+    {
         //check if activity status is eligible [Terdaftar]
         $sukarelawan = auth()->user()->sukarelawan;
         $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
@@ -538,12 +545,11 @@ class ActivityController extends Controller
 
         // IF PASSED ALL LOGIC THEN UPDATE TO CLOCKEDIN
         $newStatus = SukarelawanActivityStatus::where("name", "ClockedIn")->first();
-        if($newStatus){
+        if ($newStatus) {
             $sukarelawanActivityDetail->sukarelawanActivityStatusId = $newStatus->id;
             $sukarelawanActivityDetail->save();
         }
 
         return redirect()->route("activity.publicShow", ['activity' => $activity->slug]);
     }
-
 }

@@ -67,11 +67,11 @@ class RegisterController extends Controller
             $hasNewImage = true;
             $previousImage = Session::get('step2Data.nationalIdentityCardImageUrl');
             if ($previousImage) {
-                Storage::delete($previousImage);
+                Storage::delete('/images' . '/' . $previousImage);
             }
             $fileName = uniqid() . '.' . $nationalIdentityCardImageFile->getClientOriginalExtension();
-            $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('/public/images/Sukarelawan/nationalIdentityCardImages', $fileName);
-            $nationalIdentityCardImageUrl ='Sukarelawan/nationalIdentityCardImages/' . $fileName;
+            $nationalIdentityCardImageUrl = $nationalIdentityCardImageFile->storeAs('/images/Sukarelawan/nationalIdentityCardImages', $fileName);
+            $nationalIdentityCardImageUrl = 'Sukarelawan/nationalIdentityCardImages/' . $fileName;
             $validatedStep2['nationalIdentityCardImageUrl'] = $nationalIdentityCardImageUrl;
         }
 
@@ -91,8 +91,6 @@ class RegisterController extends Controller
 
         $id = Generator::generateId(Sukarelawan::class);
 
-        //uncomment dlu biar bisa save nationalIdentityCardImageUrl
-/*
         $oldFileUrl = $request->nationalIdentityCardImageUrl;
         $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
         $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
@@ -100,8 +98,7 @@ class RegisterController extends Controller
         $newFileName = $id . '.' . $fileExtension;
         $newFileUrl = $directoryPath . '/' . $newFileName;
 
-        Storage::move($oldFileUrl, $newFileUrl);
-*/
+        Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
 
         $slug = Generator::generateSlug(User::class, $request->name);
 
@@ -121,7 +118,7 @@ class RegisterController extends Controller
             'gender' => $request->gender,
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
             'nationalIdentityNumber' => $request->nationalIdentityNumber,
-            'nationalIdentityCardImageUrl' => $request->nationalIdentityCardImageUrl,
+            'nationalIdentityCardImageUrl' => $newFileUrl,
             'slug' => $slug
         ]);
 
@@ -180,12 +177,11 @@ class RegisterController extends Controller
             $hasNewImage = true;
             $previousImage = Session::get('step2Data.logoImageUrl');
             if ($previousImage) {
-                Storage::delete($previousImage);
+                Storage::delete('/images' . '/' . $previousImage);
             }
-
             $logoImageFile = $request->file('logoImageUrl');
             $fileName = uniqid() . '.' . $logoImageFile->getClientOriginalExtension();
-            $logoImageUrl = $logoImageFile->storeAs('/public/images/Fasilitator/logoImages', $fileName);
+            $logoImageUrl = $logoImageFile->storeAs('/images/Fasilitator/logoImages', $fileName);
             $logoImageUrl = 'Fasilitator/logoImages/' . $fileName;
             $validatedStep2['logoImageUrl'] = $logoImageUrl;
         }
@@ -217,7 +213,6 @@ class RegisterController extends Controller
 
         $id = Generator::generateId(Fasilitator::class);
 
-        /*
         $oldFileUrl = $request->logoImageUrl;
         $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
         $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
@@ -225,8 +220,7 @@ class RegisterController extends Controller
         $newFileName = $id . '.' . $fileExtension;
         $newFileUrl = $directoryPath . '/' . $newFileName;
 
-        Storage::move($oldFileUrl, $newFileUrl);
-        */
+        Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
 
         $slug = Generator::generateSlug(User::class, $request->name);
 
@@ -246,7 +240,7 @@ class RegisterController extends Controller
             'description' => $request->description,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
-            'logoImageUrl' => $request->logoImageUrl,
+            'logoImageUrl' => $newFileUrl,
             'slug' => $slug
         ]);
 

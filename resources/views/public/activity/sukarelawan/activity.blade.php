@@ -43,7 +43,6 @@
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
     }
-    
 @endphp
 @php
     // NOTE: Buat checking apakah Sukarelawan udh bisa ClockIn / Clockout
@@ -264,18 +263,18 @@
                             @if ($isClockedIn || $isClaimed)
                                 @if ($isClockedIn)
                                     <div class="btn-fill clockin">
-                                        <div class="col-sm">
-                                            <h4>Kehadiran Tercatat</h4>
-                                            <div class="caption">Menunggu Verifikasi Fasilitator</div>
-                                        </div>
+                                        Absensi Tercatat
+                                    </div>
+                                    <div class="caption">
+                                        Menunggu verifikasi absensi Anda dari Fasilitator
                                     </div>
                                 @else
                                     <div class="btn-fill clockin success">
-                                        <div class="col-sm">
-                                            <h4>Berhasil</h4>
-                                        </div>
+                                        Berhasil Menyelesaikan Aktivitas
                                     </div>
-                                    <div class="caption">Terima kasih sudah berkontribusi</div>
+                                    <div class="caption">
+                                        Terima kasih atas kontribusi Anda
+                                    </div>
                                 @endif
                             @else
                                 <form action="{{ route('activities.attend', ['activity' => $activity->slug]) }}"
@@ -284,27 +283,21 @@
                                     {{-- <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius"> --}}
 
                                     <button type="submit" class="btn-fill absensi-btn">
-                                        <div class="col-sm">
-                                            Konfirmasi Kehadiran
-                                        </div>
+                                        Absen Kehadiran
                                     </button>
                                 </form>
                                 <div class="caption">
-                                    pastikan anda sudah berada di titik kumpul </div>
+                                    Pastikan Anda sudah berada di titik kumpul
+                                </div>
                             @endif
                         @else
-                            <a href="" class="btn-fill  bg-disabled">
-                                <div class="white">
-                                    <div class="col-sm">
-                                        Absensi Belum Dibuka
-                                    </div>
-                                </div>
-                            </a>
+                            <div class="btn-fill bg-disabled">
+                                Absensi Belum Dibuka
+                            </div>
                             <div class="caption">
-                                hanya dibuka 30 menit sebelum atau sesudah aktivitas dimulai
+                                Absensi hanya dibuka 30 menit sebelum dan sesudah aktivitas dimulai
                             </div>
                         @endif
-
                     </div>
                 </div>
             @endif

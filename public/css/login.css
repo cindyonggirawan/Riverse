@@ -1,6 +1,7 @@
 .row {
     display: flex;
     flex-direction: row;
+    gap: 20px;
 }
 
 .col {
@@ -8,13 +9,19 @@
     flex-direction: column;
 }
 
+.required::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+}
+
 .login-container {
     position: absolute;
     width: 640px;
     height: 540px;
+    top: 20%;
     left: 10%;
     padding: 10px;
-
     background: #ffffff;
     border-radius: 16px;
 }
@@ -23,7 +30,7 @@
     position: absolute;
     width: 80%;
     height: 80%;
-    top: 12%;
+    top: 8%;
     left: 8%;
     padding: 10px;
 }
@@ -46,20 +53,19 @@
     width: 100%;
     border: #838181 solid 1px;
     border-radius: 10px;
-    color: #838181;
+    color: #000000;
     transition: ease-in 0.1s;
 }
 
 .purple-outline-btn-long {
-    margin-top: 1em;
     font-size: 14px;
     text-decoration: none;
-    padding: 8px;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 8px 0;
+    text-align: center;
+    width: 100%;
     border: #5822ca solid 1px;
     border-radius: 10px;
+    box-sizing: border-box;
     background-color: #5822ca;
     color: white;
     transition: ease-in 0.1s;
@@ -111,8 +117,8 @@
 }
 
 .card-footer {
-    margin-top: 10%;
-    width: 100%;
+    margin-top: 4%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
