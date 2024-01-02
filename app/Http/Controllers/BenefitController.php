@@ -54,7 +54,7 @@ class BenefitController extends Controller
             'slug' => Generator::generateSlug(Benefit::class, $request->name)
         ]);
 
-        return redirect('/benefits')->with('success', 'Benefit creation successful!');
+        return redirect('/admin/benefits')->with('success', 'Benefit creation successful!');
     }
 
     public function destroy(Benefit $benefit)
@@ -62,5 +62,17 @@ class BenefitController extends Controller
         Benefit::destroy($benefit->id);
 
         return redirect('/admin/benefits')->with('success', 'Benefit destruction successful!');
+    }
+
+    public function destroyAll()
+    {
+        $benefits = Benefit::orderBy('name', 'asc')
+            ->get();
+
+        foreach ($benefits as $benefit) {
+            Benefit::destroy($benefit->id);
+        }
+
+        return redirect('/admin/benefits')->with('success', 'All Benefit destruction successful!');
     }
 }

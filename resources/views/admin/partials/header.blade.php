@@ -50,7 +50,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                {{-- @elseif ($title === 'All Sukarelawans')
+                    {{-- @elseif ($title === 'All Sukarelawans')
                     <form id="deleteAllForm" action="/delete/all-sukarelawans" method="post"
                         @if ($sukarelawans->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -107,7 +107,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                {{-- @elseif ($title === 'All Fasilitators')
+                    {{-- @elseif ($title === 'All Fasilitators')
                     <form id="deleteAllForm" action="/delete/all-fasilitators" method="post"
                         @if ($fasilitators->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -167,7 +167,7 @@
                             Kembalikan semua
                         </button>
                     </form>
-                {{-- @elseif ($title === 'All Activities')
+                    {{-- @elseif ($title === 'All Activities')
                     <form id="deleteAllForm" action="/delete/all-activities" method="post"
                         @if ($activities->count() === 0) style="display: none;" @endif>
                         @method('delete')
@@ -179,14 +179,25 @@
                         <i class="fas fa-trash"></i>
                         Hapus semua
                     </button> --}}
-                @endif
-
-                @if ($title === 'Benefits')
-                    <a class="btn btn-success"
-                        href="/admin/benefits/create">
+                @elseif ($title === 'Benefits')
+                    <a class="btn btn-success" href="/admin/benefits/create">
                         <i class="fas fa-plus"></i>
                         Buat baru
                     </a>
+
+                    <form id="deleteAllForm" action="/admin/benefits" method="post"
+                        @if ($benefits->count() === 0) style="display: none;" @endif>
+                        @method('delete')
+                        @csrf
+                    </form>
+
+                    <div class="mx-1" @if ($benefits->count() === 0) style="display: none;" @endif></div>
+
+                    <button class="btn btn-danger" onclick="showAllDeletionConfirmation()"
+                        @if ($benefits->count() === 0) style="display: none;" @endif>
+                        <i class="fas fa-trash"></i>
+                        Hapus semua
+                    </button>
                 @endif
             </div>
         </div>

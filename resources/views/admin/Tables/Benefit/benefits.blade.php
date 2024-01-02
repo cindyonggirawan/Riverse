@@ -29,16 +29,18 @@
                                     <td>{{ $benefit->couponCode }}</td>
                                     <td>{{ $benefit->updated_at }}</td>
                                     <td>
-                                        <form id="deleteForm" action="/admin/benefits/{{ $benefit->slug }}"
-                                            method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <div class="mx-1"></div>
-                                            <button class="btn btn-danger btn-sm btn-square">
+                                        <div class="form-inline">
+                                            <form id="deleteForm" action="/admin/benefits/{{ $benefit->slug }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+
+                                            <button class="btn btn-danger btn-sm btn-square"
+                                                onclick="showDeletionConfirmation()">
                                                 <i class="fas fa-trash">
                                                 </i>
                                             </button>
-                                        </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

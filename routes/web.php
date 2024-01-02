@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* ADMIN SECTION */
+
 Route::middleware(['web', 'admin'])->group(function () {
 
     // ADMIN HOME
@@ -81,9 +82,9 @@ Route::middleware(['web', 'admin'])->group(function () {
     // BENEFIT SECTION
     Route::get('/admin/benefits', [BenefitController::class, 'index']);
     Route::delete('/admin/benefits/{benefit:slug}', [BenefitController::class, 'destroy']);
+    Route::delete('/admin/benefits', [BenefitController::class, 'destroyAll']);
     Route::get('/admin/benefits/create', [BenefitController::class, 'create']);
-    Route::post('/benefits/create', [BenefitController::class, 'store']);
-
+    Route::post('/admin/benefits/create', [BenefitController::class, 'store']);
 });
 /* == END OF ADMIN SECTION == */
 
@@ -117,8 +118,6 @@ Route::middleware(['web', 'fasilitator'])->group(function () {
     Route::patch('/verify/all-attendance', [VerifySukarelawanAttendanceController::class, 'updateAllClaimedSukarelawan']);
     Route::patch('/verify/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateAttendedSukarelawan']);
     Route::patch('/reject/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateUnattendedSukarelawan']);
-
-
 });
 /* == END OF FASILITATOR SECTION == */
 
@@ -142,7 +141,6 @@ Route::middleware(['web', 'sukarelawan'])->group(function () {
 
     // SUKARELAWAN TAKE ATTENDANCE
     Route::post('/activities/{activity:slug}/attend', [ActivityController::class, 'takeAttendance'])->name('activities.attend');
-
 });
 /* == END OF SUKARELAWAN SECTION == */
 

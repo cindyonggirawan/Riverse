@@ -5,7 +5,7 @@
         <div class="col">
             <div class="card card-primary">
                 <!-- Form -->
-                <form action="/benefits/create" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="/admin/benefits/create" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <!-- Card Body -->
                     <div class="card-body">
