@@ -411,30 +411,32 @@ class ActivityController extends Controller
     public function like(Activity $activity)
     {
         $sukarelawan = auth()->user()->sukarelawan;
-        $status = SukarelawanActivityStatus::where('name', 'Null')->first();
 
+        if ($sukarelawan) {
+            $existingLike = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
+                ->where('activityId', $activity->id)
+                ->first();
 
-        $existingLike = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
-            ->where('activityId', $activity->id)
-            ->first();
+            $nullStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
 
-        if ($existingLike) {
-            // If already liked, toggle isLiked
-            $existingLike->update(['isLiked' => !$existingLike->isLiked]);
-            $isLiked = !$existingLike->isLiked;
+            if ($existingLike) {
+                // If sukarelawan has interacted with the activity, toggle isLiked
+                $existingLike->update([
+                    'isLiked' => !$existingLike->isLiked
+                ]);
+            } else {
+                // If not, create a like relationship by connecting sukarelawan and activity
+                SukarelawanActivityDetail::create([
+                    'id' => Generator::generateId(SukarelawanActivityDetail::class),
+                    'sukarelawanId' => $sukarelawan->id,
+                    'activityId' => $activity->id,
+                    'sukarelawanActivityStatusId' => $nullStatus->id,
+                    'isLiked' => true
+                ]);
+            }
         } else {
-            // If not liked, create a like
-            SukarelawanActivityDetail::create([
-                'id' => Generator::generateId(SukarelawanActivityDetail::class),
-                'sukarelawanId' => $sukarelawan->id,
-                'activityId' => $activity->id,
-                'isLiked' => true,
-                'sukarelawanActivityStatusId' => $status->id,
-            ]);
-            $isLiked = true;
+            return redirect('/login');
         }
-
-        $message = "Like action successful";
 
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
     }
@@ -444,11 +446,23 @@ class ActivityController extends Controller
     {
         $sukarelawan = auth()->user()->sukarelawan;
 
+        $today = Carbon::now();
+        $registrationDate = Carbon::parse($activity->registrationDeadlineDate);
+        $isPassedMaxRegistrationDate = false;
+
+        if ($today->gt($registrationDate)) {
+            $isPassedMaxRegistrationDate = true;
+        }
+
         if ($sukarelawan) {
-            if ($sukarelawan->verificationStatus->name !== 'Sudah Diverifikasi') {
+            if ($isPassedMaxRegistrationDate) {
                 return redirect()->route('activity.publicShow', ['activity' => $activity->slug])
-                    ->with('error', 'Failed to Join, Sukarelawan not verified');
+                    ->with('error', 'Failed to Join, Sukarelawan has passed the maximum registration date');
+            } else if ($sukarelawan->verificationStatus->name !== 'Sudah Diverifikasi') {
+                return redirect()->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Join, Sukarelawan has not been verified');
             }
+
             $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
                 ->where('activityId', $activity->id)
                 ->first();
@@ -456,20 +470,24 @@ class ActivityController extends Controller
             $terdaftarStatus = SukarelawanActivityStatus::where('name', 'Terdaftar')->first();
 
             if ($existingDetail) {
-                $existingDetail->update(['sukarelawanActivityStatusId' => $terdaftarStatus->id]);
+                // If sukarelawan has interacted with the activity, change the status from null to terdaftar
+                $existingDetail->update([
+                    'sukarelawanActivityStatusId' => $terdaftarStatus->id
+                ]);
             } else {
-                // If no row exists, create a new row
+                // If not, create a join relationship by connecting sukarelawan and activity
                 SukarelawanActivityDetail::create([
                     'id' => Generator::generateId(SukarelawanActivityDetail::class),
                     'sukarelawanId' => $sukarelawan->id,
                     'activityId' => $activity->id,
                     'sukarelawanActivityStatusId' => $terdaftarStatus->id,
-                    'isLiked' => true,
+                    'isLiked' => false
                 ]);
             }
         } else {
             return redirect('/login');
         }
+
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
     }
 
@@ -477,77 +495,90 @@ class ActivityController extends Controller
     {
         $sukarelawan = auth()->user()->sukarelawan;
 
+        $today = Carbon::now();
+        $registrationDate = Carbon::parse($activity->registrationDeadlineDate);
+        $isPassedMaxRegistrationDate = false;
+
+        if ($today->gt($registrationDate)) {
+            $isPassedMaxRegistrationDate = true;
+        }
+
         if ($sukarelawan) {
-            if ($sukarelawan->verificationStatus->name !== 'Sudah Diverifikasi') {
+            if ($isPassedMaxRegistrationDate) {
                 return redirect()->route('activity.publicShow', ['activity' => $activity->slug])
-                    ->with('error', 'Failed to Join, Sukarelawan not verified');
+                    ->with('error', 'Failed to Join, Sukarelawan has passed the maximum registration date');
+            } else if ($sukarelawan->verificationStatus->name !== 'Sudah Diverifikasi') {
+                return redirect()->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Join, Sukarelawan has not been verified');
             }
+
             $existingDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
                 ->where('activityId', $activity->id)
                 ->first();
 
-            $cancelStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
+            $nullStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
 
+            // Sukarelawan definitely have interacted with the activity, change the status from null to terdaftar
             if ($existingDetail) {
-                $existingDetail->update(['sukarelawanActivityStatusId' => $cancelStatus->id]);
+                $existingDetail->update([
+                    'sukarelawanActivityStatusId' => $nullStatus->id
+                ]);
+            } else {
+                return redirect()
+                    ->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Unjoin, Sukarelawan has not joined');
             }
         } else {
             return redirect('/login');
         }
+
         return redirect()->route('activity.publicShow', ['activity' => $activity->slug]);
     }
 
     public function takeAttendance(Activity $activity)
     {
-        //check if activity status is eligible [Terdaftar]
         $sukarelawan = auth()->user()->sukarelawan;
-        $sukarelawanActivityDetail = SukarelawanActivityDetail::where(['sukarelawanId' => $sukarelawan->id, 'activityId' => $activity->id])->first();
 
-        //dd($sukarelawanActivityDetail);
+        if ($sukarelawan) {
+            if ($sukarelawan->verificationStatus->name !== 'Sudah Diverifikasi') {
+                return redirect()->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Join, Sukarelawan has not been verified');
+            }
 
-        if (!$sukarelawanActivityDetail) {
-            return redirect()
-                ->route('activity.publicShow', ['activity' => $activity->slug])
-                ->with('error', 'Failed to Clock In, Status Invalid');
-        }
+            $sukarelawanActivityDetail = SukarelawanActivityDetail::where('sukarelawanId', $sukarelawan->id)
+                ->where('activityId', $activity->id)
+                ->first();
 
-        $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
-        if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
-            return redirect()
-                ->route('activity.publicShow', ['activity' => $activity->slug])
-                ->with('error', 'Failed to Clock In, Status Invalid');
-        }
+            // If sukarelawan has not joined the activity
+            if (!$sukarelawanActivityDetail) {
+                return redirect()
+                    ->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Clock In, Sukarelawan has not joined');
+            }
 
+            $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
 
-        //check if currDate === cleanUpDate
-        $currDate = now()->toDateString();
-        $cleanUpDate = $activity->cleanUpDate;
-        if ($currDate !== $cleanUpDate) {
-            return redirect()
-                ->route('activity.publicShow', ['activity' => $activity->slug])
-                ->with('error', 'Failed to Clock In, Invalid Date');
-        }
+            // If sukarelawan has joined the activity but the status is not registered
+            if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
+                return redirect()
+                    ->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Clock In, Sukarelawan status is not registered');
+            }
 
-        //check if the time is within the time range, startTime +- 30min
-        $startTime = Carbon::parse($activity->startTime);
-        $startTimeMinus30 = $startTime->copy()->subMinutes(30);
-        $startTimePlus30 = $startTime->copy()->addMinutes(30);
-        $currentTime = now();
+            // If sukarelawan has joined the activity but the clock in time is invalid
+            if (!$activity->isEligibleForClockIn()) {
+                return redirect()
+                    ->route('activity.publicShow', ['activity' => $activity->slug])
+                    ->with('error', 'Failed to Clock In, Sukarelawan clock in time is invalid');
+            }
 
-        if ($currentTime->greaterThanOrEqualTo($startTimeMinus30) && $currentTime->lessThanOrEqualTo($startTimePlus30)) {
+            // If not, change the status from terdaftar to clockedin
+            $clockedInStatus = SukarelawanActivityStatus::where("name", "ClockedIn")->first();
+            $sukarelawanActivityDetail->update([
+                'sukarelawanActivityStatusId' => $clockedInStatus->id
+            ]);
         } else {
-            return redirect()
-                ->route('activity.publicShow', ['activity' => $activity->slug])
-                ->with('error', 'Failed to Clock In, Invalid Time');
-        }
-
-        // G JADI CHECK VIA LOCATION, karena harus pakai GOOGLE TOKEN
-
-        // IF PASSED ALL LOGIC THEN UPDATE TO CLOCKEDIN
-        $newStatus = SukarelawanActivityStatus::where("name", "ClockedIn")->first();
-        if ($newStatus) {
-            $sukarelawanActivityDetail->sukarelawanActivityStatusId = $newStatus->id;
-            $sukarelawanActivityDetail->save();
+            return redirect('/login');
         }
 
         return redirect()->route("activity.publicShow", ['activity' => $activity->slug]);

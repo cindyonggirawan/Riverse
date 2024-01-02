@@ -78,19 +78,22 @@
                         $today = Carbon::now();
                         $cleanUpDate = Carbon::parse($activity->cleanUpDate)->subDays(2);
                         $isPassedMaxEditDate = false;
-
+                        
                         if ($today->gt($cleanUpDate)) {
                             $isPassedMaxEditDate = true;
                         }
                     @endphp
-                    @if ($isPassedMaxEditDate)
-                        <div class="btn-fill full bg-disabled">Batas Waktu Lewat</div>
-                    @else
-                        <a href="{{ $activity->slug }}/edit" class="btn-fill full">Edit</a>
+                    @if ($activity->fasilitatorId == auth()->user()->fasilitator->id)
+                        @if ($isPassedMaxEditDate)
+                            <div class="btn-fill full bg-disabled">Pengeditan Telah Ditutup</div>
+                        @elseif (auth()->user()->fasilitator->verificationStatus->name != 'Sudah Diverifikasi')
+                            <div class="btn-fill full bg-disabled">Anda
+                                {{ auth()->user()->fasilitator->verificationStatus->name }}</div>
+                        @else
+                            <a href="{{ $activity->slug }}/edit" class="btn-fill full">Edit</a>
+                        @endif
                     @endif
                 </div>
-
-
             </div>
             {{-- Lowongan Sukarelawan --}}
             <div class="content-card">
@@ -112,7 +115,7 @@
             <div class="content-card">
                 <div class="row-spaced">
                     <h5>Link Group</h5>
-                    <input id= "groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
+                    <input id="groupChatUrl" value="{{ $activity->groupChatUrl }}" type="hidden">
                     <div class="tooltip">
                         <button onclick="copyGroupChatUrl()">
                             <span class="tooltiptext" id="myTooltip">Copy Link</span>
@@ -191,10 +194,10 @@
                             //TODO: generate calendar link:
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
-
+                            
                             $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
                             $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
-
+                            
                             $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
                         @endphp
                         <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
@@ -223,7 +226,8 @@
                     </h5>
                     <div class="row">
                         <div class="profpic">
-                            <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                            <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}"
+                                alt="">
                         </div>
                         <a href="/fasilitators/{{ $activity->fasilitator->slug }}" class="selected">
                             <p class="selected">

@@ -136,6 +136,7 @@
 
                 @php
                     $today = Carbon::now();
+                    $registrationDate = Carbon::parse($activity->registrationDeadlineDate);
                     $isPassedMaxRegistrationDate = false;
                     
                     if ($today->gt($registrationDate)) {
@@ -144,7 +145,10 @@
                 @endphp
                 <div class="btn-container">
                     @if ($isPassedMaxRegistrationDate)
-                        <div class="btn-fill full bg-disabled">Batas Waktu Lewat</div>
+                        <div class="btn-fill full bg-disabled">Registrasi Telah Ditutup</div>
+                    @elseif (auth()->user()->sukarelawan->verificationStatus->name != 'Sudah Diverifikasi')
+                        <div class="btn-fill full bg-disabled">Anda
+                            {{ auth()->user()->sukarelawan->verificationStatus->name }}</div>
                     @else
                         @if ($isTerdaftar && !$isClockedIn)
                             <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
@@ -162,7 +166,6 @@
                                 </form>
                             @endif
                         @endif
-
                     @endif
                 </div>
             </div>
@@ -259,44 +262,46 @@
                             </div>
                         </div>
 
-                        @if ($activity->isEligibleForClockIn() || $isClockedIn || $isClaimed)
-                            @if ($isClockedIn || $isClaimed)
-                                @if ($isClockedIn)
-                                    <div class="btn-fill clockin">
-                                        Absensi Tercatat
-                                    </div>
-                                    <div class="caption">
-                                        Menunggu verifikasi absensi Anda dari Fasilitator
-                                    </div>
+                        @if (auth()->user()->sukarelawan->verificationStatus->name == 'Sudah Diverifikasi')
+                            @if ($activity->isEligibleForClockIn() || $isClockedIn || $isClaimed)
+                                @if ($isClockedIn || $isClaimed)
+                                    @if ($isClockedIn)
+                                        <div class="btn-fill clockin">
+                                            Absensi Tercatat
+                                        </div>
+                                        <div class="caption">
+                                            Menunggu verifikasi absensi Anda dari Fasilitator
+                                        </div>
+                                    @else
+                                        <div class="btn-fill clockin success">
+                                            Berhasil Menyelesaikan Aktivitas
+                                        </div>
+                                        <div class="caption">
+                                            Terima kasih atas kontribusi Anda
+                                        </div>
+                                    @endif
                                 @else
-                                    <div class="btn-fill clockin success">
-                                        Berhasil Menyelesaikan Aktivitas
-                                    </div>
+                                    <form action="{{ route('activities.attend', ['activity' => $activity->slug]) }}"
+                                        class="no-style-form" method="post">
+                                        @csrf
+                                        {{-- <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius"> --}}
+
+                                        <button type="submit" class="btn-fill absensi-btn">
+                                            Absen Kehadiran
+                                        </button>
+                                    </form>
                                     <div class="caption">
-                                        Terima kasih atas kontribusi Anda
+                                        Pastikan Anda sudah berada di titik kumpul
                                     </div>
                                 @endif
                             @else
-                                <form action="{{ route('activities.attend', ['activity' => $activity->slug]) }}"
-                                    class="no-style-form" method="post">
-                                    @csrf
-                                    {{-- <input type="hidden" name="isWithinGatherRadius" id="isWithinGatherRadius"> --}}
-
-                                    <button type="submit" class="btn-fill absensi-btn">
-                                        Absen Kehadiran
-                                    </button>
-                                </form>
+                                <div class="btn-fill bg-disabled">
+                                    Absensi Belum Dibuka
+                                </div>
                                 <div class="caption">
-                                    Pastikan Anda sudah berada di titik kumpul
+                                    Absensi hanya dibuka 30 menit sebelum dan sesudah aktivitas dimulai
                                 </div>
                             @endif
-                        @else
-                            <div class="btn-fill bg-disabled">
-                                Absensi Belum Dibuka
-                            </div>
-                            <div class="caption">
-                                Absensi hanya dibuka 30 menit sebelum dan sesudah aktivitas dimulai
-                            </div>
                         @endif
                     </div>
                 </div>

@@ -140,7 +140,7 @@
                         <div class="image-preview" id="imagePreview" @if (Session::has('step1DataUpdate.picture') || $activity->picture != null) @else hidden @endif>
                             @if (Session::has('step1DataUpdate.picture') || $activity->picture != null)
                                 <img id="previewImage"
-                                    src="{{ asset('storage/' . Session::get('step1DataUpdate.picture')) ?? $activity->picture }}"
+                                    src="{{ asset('storage/images/' . Session::get('step1DataUpdate.picture')) ?? $activity->picture }}"
                                     alt="Image Preview" />
                             @else
                                 <img id="previewImage" src="" alt="Image Preview" />
