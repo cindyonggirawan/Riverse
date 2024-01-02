@@ -1,7 +1,6 @@
 .row {
     display: flex;
     flex-direction: row;
-    gap: 20px;
 }
 
 .tab-menu {
@@ -10,8 +9,7 @@
     box-sizing: border-box;
     padding: 5px;
     text-align: center;
-    width: 90%;
-    margin-bottom: 6%;
+    width: 100%;
     align-items: center;
 }
 
@@ -49,11 +47,10 @@
 
 .activity-container {
     width: 100%;
-    height: 140px;
     display: flex;
     align-items: center;
     border-radius: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .verified-activity {
@@ -68,16 +65,20 @@
     background-color: white;
     padding: 30px;
     border-radius: 20px;
-    margin-top: 150px;
+    justify-content: center;
 }
 
 .activity-container-content {
-    width: 65%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
-    margin-left: 40px;
+}
+
+.card-row {
+    align-items: center;
+}
+
+.card-row:nth-child(odd) {
+    margin-bottom: 15px;
 }
 
 .activity-content-detail-row {
@@ -85,22 +86,18 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: gainsboro;
     margin-top: 15px;
 }
 
-.activity-content-detail-column {
-    display: flex;
-    flex-direction: column;
-    width: 49.5%;
-    background-color: white;
+.activity-content-detail-column:nth-child(odd) {
+    margin-right: 60px;
 }
 
 .activity-image {
     width: 182px;
     height: 145px;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-right: 30px;
 }
 
 .colored-dot {
@@ -130,76 +127,101 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    border: 2px solid #4CAF50; /* Green border color */
-    color: #fff; /* White text color */
-    background-color: #4CAF50; /* Green background color */
+    border: 1px solid #5822ca; /* Purple border color */
+    background-color: #fff;
+    color: #5822ca;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  }
+}
 
 .approve-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-    border-color: #45a049; /* Darker green border on hover */
+    background-color: #5822ca; /* on hover */
+    color: #fff;
 }
 
 .reject-button {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     padding: 5px 10px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    border: 2px solid #FF5733; /* Red border color */
-    color: #fff; /* White text color */
-    background-color: #FF5733; /* Red background color */
+    border: 1px solid #e21919; /* Red border color */
+    background-color: #fff;
+    color: #e21919;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  }
+}
 
-  /* X symbol */
+.reject-button:hover {
+    background-color: #e21919; /* on hover */
+    color: #fff;
+}
 
-  /* Hover effect */
-  .reject-button:hover {
-    background-color: #FF2600; /* Darker red on hover */
-    border-color: #FF2600; /* Darker red border on hover */
-  }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 30px;
+}
 
-  #table1 {
+th {
+    border-top: 1px solid #e6e9ee;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e6e9ee;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f6f8fc;
+}
+
+.img-square-small {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 10%;
+}
+
+#table1 {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-  }
+}
 
-  /* Style for table header */
-  #table1 th {
+/* Style for table header */
+#table1 th {
     background-color: #ece9f9;
     font-weight: bold;
     text-align: left;
     padding: 8px;
-  }
+}
 
-  /* Style for table rows */
-  #table1 td, #table1 th {
+/* Style for table rows */
+#table1 td,
+#table1 th {
     border: 1px solid #ddd;
     padding: 8px;
-  }
+}
 
-  /* Add some spacing to the images */
-  #table1 img {
+/* Add some spacing to the images */
+#table1 img {
     max-width: 50px;
     max-height: 50px;
     margin-right: 5px;
     border-radius: 10px;
-  }
+}
 
-  /* Hide the input initially */
-  #reasonForRejection {
+/* Hide the input initially */
+#reasonForRejection {
     display: none;
-  }
+}
 
-  /* Add some space for better presentation */
-  .form-inline {
+/* Add some space for better presentation */
+.form-inline {
     margin-top: 5px;
-  }
+}

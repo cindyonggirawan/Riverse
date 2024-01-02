@@ -1,17 +1,18 @@
 @extends('public.fasilitator.finalizeAttendance.finalizeSukarelawanAttendance')
 
-
 @section('Fasilitator.finalizeAttendance')
     <div class="activity-container">
         @if ($activity->bannerImageUrl !== null)
             <img src={{ asset('storage/images/' . $activity->bannerImageUrl) }} class="activity-image" alt="">
         @else
-            <img src={{ asset('images/Activity/bannerImages/default.png') }} alt="{{ $activity->name }}" class="activity-image">
+            <img src={{ asset('images/Activity/bannerImages/default.png') }} alt="{{ $activity->name }}"
+                class="activity-image">
         @endif
         <div class="activity-container-content">
             <div class="card-row">
                 <h3>{{ $activity->name }}</h3>
-                <img src={{ asset('images/FinalizeAttendance/verified-activity.png') }} alt="" class="verified-activity">
+                <img src={{ asset('images/FinalizeAttendance/verified-activity.png') }} alt=""
+                    class="verified-activity">
             </div>
             <div class="activity-content-detail-row">
                 <div class="activity-content-detail-column">
@@ -55,20 +56,18 @@
                         <p>{{ substr($activity->startTime, 0, 5) }} - {{ substr($activity->endTime, 0, 5) }} WIB</p>
                     </div>
                 </div>
-                <br>
                 <div class="activity-content-detail-column">
                     <div class="card-row">
                         <div class="colored-dot"></div>
                         <p class="colored-dot-text">Aktivitas sudah selesai</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-    <div class="card-body table-responsive">
+    <div class="card-body">
         @include('public.fasilitator.finalizeAttendance.tabbar.attendanceVerification')
-        <table id="table1" class="table table-bordered table-hover table-striped text-nowrap">
+        <table>
             <thead>
                 <tr>
                     <th>Gambar Profil</th>
@@ -98,15 +97,12 @@
                         </td>
                         <td>
                             <div class="form-inline">
-                                <form id="rejectForm" action="/reject/attendance/{{ $sad->id }}"
-                                    method="post">
+                                <form id="rejectForm" action="/reject/attendance/{{ $sad->id }}" method="post">
                                     @method('patch')
                                     @csrf
                                     <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>
                                     <input type="hidden" name="reasonForRejection" id="reasonForRejection">
-
-                                    <button class="reject-button"
-                                        onclick="showReasonForRejectionInput()">
+                                    <button class="reject-button" onclick="showReasonForRejectionInput()">
                                         <span class="x-symbol">&#10006;</span>
                                     </button>
                                 </form>
