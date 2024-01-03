@@ -36,22 +36,20 @@
                     @php
                         $sActivityStatus = $ad->sukarelawanActivityStatus->name;
                         $activityStatus = $ad->activity->activityStatus->name;
-                        
+
                         $status = '';
                         $statusClass = '';
                         $activityClass = '';
-                        
+
                         switch ($activityStatus) {
                             case 'Pendaftaran Sedang Dibuka':
                                 $activityClass = '';
                                 break;
                             case 'Pendaftaran Sudah Ditutup':
                                 $activityClass = 'danger';
-                        
                                 break;
                             case 'Aktivitas Sedang Berlangsung':
                                 $activityClass = 'redeem';
-                        
                                 break;
                             case 'Pendaftaran Sudah Selesai':
                                 $activityClass = 'success';
@@ -59,7 +57,7 @@
                             default:
                                 break;
                         }
-                        
+
                         switch ($sActivityStatus) {
                             case 'Terdaftar':
                                 $currentDateTime = date('Y-m-d H:i:s');
@@ -73,7 +71,7 @@
                             case 'ClockedIn':
                                 $status = 'Menunggu Pencairan XP';
                                 $statusClass = 'success';
-                        
+                                break;
                             case 'Claimed':
                                 $status = 'XP Sudah Dicairkan';
                                 $statusClass = 'redeem';
@@ -174,7 +172,7 @@
                                         $today = Carbon\Carbon::now();
                                         $registrationDate = Carbon\Carbon::parse($ad->activity->registrationDeadlineDate);
                                         $isPassedMaxRegistrationDate = false;
-                                        
+
                                         if ($today->gt($registrationDate)) {
                                             $isPassedMaxRegistrationDate = true;
                                         }
