@@ -2,6 +2,12 @@
     use Carbon\Carbon;
     $sukarelawanCriteria = explode('; ', $activity->sukarelawanCriteria);
     $sukarelawanEquipment = explode('; ', $activity->sukarelawanEquipment);
+
+    $status = $activity->verificationStatus->name;
+    $isVerified = false;
+    if ($status == 'Suddah Diverifikasi') {
+        $isVerified = true;
+    }
 @endphp
 
 @extends('layout.index')
@@ -40,8 +46,8 @@
 
 
     <div class="activities-body">
-
         <div class="col">
+
             <div class="content-card-center">
                 <div class="img-container"
                     style="background-image: url('{{ asset(
@@ -78,7 +84,7 @@
                         $today = Carbon::now();
                         $cleanUpDate = Carbon::parse($activity->cleanUpDate)->subDays(2);
                         $isPassedMaxEditDate = false;
-                        
+
                         if ($today->gt($cleanUpDate)) {
                             $isPassedMaxEditDate = true;
                         }
@@ -90,7 +96,9 @@
                             <div class="btn-fill full bg-disabled">Anda
                                 {{ auth()->user()->fasilitator->verificationStatus->name }}</div>
                         @else
-                            <a href="{{ $activity->slug }}/edit" class="btn-fill full">Edit</a>
+                            @if (!$isVerified)
+                                <a href="{{ $activity->slug }}/edit" class="btn-fill full">Edit</a>
+                            @endif
                         @endif
                     @endif
                 </div>
@@ -194,10 +202,10 @@
                             //TODO: generate calendar link:
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
-                            
+
                             $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
                             $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
-                            
+
                             $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
                         @endphp
                         <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan

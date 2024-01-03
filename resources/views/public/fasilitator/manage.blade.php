@@ -39,40 +39,40 @@
                         $statusClass = '';
                         $activityClass = '';
                         $activityStatus = '';
-                        
+
                         $status = $a->verificationStatus->name;
-                        
+
                         switch ($status) {
                             case 'Sudah Diverifikasi':
                                 $statusClass = 'success';
                                 break;
                             case 'Sudah Ditolak':
                                 $statusClass = 'danger';
-                        
+
                                 break;
                             case 'Menunggu Verifikasi':
                                 $statusClass = 'redeem';
-                        
+
                                 break;
-                        
+
                             default:
                                 break;
                         }
-                        
+
                         if ($status == 'Sudah Diverifikasi') {
                             $activityStatus = $a->activityStatus->name;
-                        
+
                             switch ($activityStatus) {
                                 case 'Pendaftaran Sedang Dibuka':
                                     $activityClass = '';
                                     break;
                                 case 'Pendaftaran Sudah Ditutup':
                                     $activityClass = 'danger';
-                        
+
                                     break;
                                 case 'Aktivitas Sedang Berlangsung':
                                     $activityClass = 'redeem';
-                        
+
                                     break;
                                 case 'Pendaftaran Sudah Selesai':
                                     $activityClass = 'success';
@@ -180,7 +180,7 @@
                                     $today = Carbon\Carbon::now();
                                     $cleanUpDate = Carbon\Carbon::parse($a->cleanUpDate)->subDays(2);
                                     $isPassedMaxEditDate = false;
-                                    
+
                                     if ($today->gt($cleanUpDate)) {
                                         $isPassedMaxEditDate = true;
                                     }
@@ -220,6 +220,8 @@
                                             Hapus
                                         </button>
                                     </form>
+                                @else
+                                    {{-- <p>is passed max edit date</p> --}}
                                 @endif
                             @endif
 
