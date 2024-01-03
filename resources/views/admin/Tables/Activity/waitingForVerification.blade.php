@@ -52,29 +52,31 @@
                                     </td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="verifyForm" action="/verify/activities/{{ $activity->slug }}"
-                                                method="post">
+                                            <form id="verifyForm{{ $activity->id }}"
+                                                action="/verify/activities/{{ $activity->slug }}" method="post">
                                                 @method('patch')
                                                 @csrf
-                                                <input type="hidden" name="experiencePointGiven" id="experiencePointGiven">
+                                                <input type="hidden" name="experiencePointGiven"
+                                                    id="experiencePointGiven{{ $activity->id }}">
                                             </form>
 
                                             <button class="btn btn-success btn-sm btn-square"
-                                                onclick="showExperiencePointGivenInput()">
+                                                onclick="showExperiencePointGivenInput('{{ $activity->id }}')">
                                                 <i class="fas fa-check"></i>
                                             </button>
 
-                                            <form id="rejectForm" action="/reject/activities/{{ $activity->slug }}"
-                                                method="post">
+                                            <form id="rejectForm{{ $activity->id }}"
+                                                action="/reject/activities/{{ $activity->slug }}" method="post">
                                                 @method('patch')
                                                 @csrf
-                                                <input type="hidden" name="reasonForRejection" id="reasonForRejection">
+                                                <input type="hidden" name="reasonForRejection"
+                                                    id="reasonForRejection{{ $activity->id }}">
                                             </form>
 
                                             <div class="mx-1"></div>
 
                                             <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showReasonForRejectionInput()">
+                                                onclick="showReasonForRejectionInput('{{ $activity->id }}')">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </div>

@@ -12,11 +12,11 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Level</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Coupon Code</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th>Kode Kupon</th>
+                                <th>Tanggal Dibuat</th>
+                                <th>Pengaturan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,13 +30,14 @@
                                     <td>{{ $benefit->updated_at }}</td>
                                     <td>
                                         <div class="form-inline">
-                                            <form id="deleteForm" action="/admin/benefits/{{ $benefit->slug }}" method="post">
+                                            <form id="deleteForm{{ $benefit->id }}"
+                                                action="/admin/benefits/{{ $benefit->slug }}" method="post">
                                                 @method('delete')
                                                 @csrf
                                             </form>
 
                                             <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showDeletionConfirmation()">
+                                                onclick="showDeletionConfirmation('{{ $benefit->id }}')">
                                                 <i class="fas fa-trash">
                                                 </i>
                                             </button>

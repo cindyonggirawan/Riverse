@@ -54,17 +54,18 @@
                                                 </button>
                                             </form>
 
-                                            <form id="rejectForm" action="/reject/fasilitators/{{ $fasilitator->slug }}"
-                                                method="post">
+                                            <form id="rejectForm{{ $fasilitator->id }}"
+                                                action="/reject/fasilitators/{{ $fasilitator->slug }}" method="post">
                                                 @method('patch')
                                                 @csrf
-                                                <input type="hidden" name="reasonForRejection" id="reasonForRejection">
+                                                <input type="hidden" name="reasonForRejection"
+                                                    id="reasonForRejection{{ $fasilitator->id }}">
                                             </form>
 
                                             <div class="mx-1"></div>
 
                                             <button class="btn btn-danger btn-sm btn-square"
-                                                onclick="showReasonForRejectionInput()">
+                                                onclick="showReasonForRejectionInput('{{ $fasilitator->id }}')">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </div>

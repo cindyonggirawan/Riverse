@@ -87,6 +87,14 @@
                 object-fit: cover;
                 border-radius: 10%;
             }
+
+            th,
+            td {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 100px;
+            }
         </style>
     </head>
 
@@ -285,7 +293,7 @@
                 });
             });
 
-            function showExperiencePointGivenInput() {
+            function showExperiencePointGivenInput(formId) {
                 Swal.fire({
                     icon: 'info',
                     title: 'Experience Point Given',
@@ -297,13 +305,13 @@
                     showCancelButton: true,
                     confirmButtonText: 'Save',
                     preConfirm: (number) => {
-                        document.getElementById('experiencePointGiven').value = number;
-                        document.getElementById('verifyForm').submit();
+                        document.getElementById('experiencePointGiven' + formId).value = number;
+                        document.getElementById('verifyForm' + formId).submit();
                     }
                 });
             }
 
-            function showReasonForRejectionInput() {
+            function showReasonForRejectionInput(formId) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Reason for Rejection',
@@ -312,8 +320,8 @@
                     showCancelButton: true,
                     confirmButtonText: 'Save',
                     preConfirm: (text) => {
-                        document.getElementById('reasonForRejection').value = text;
-                        document.getElementById('rejectForm').submit();
+                        document.getElementById('reasonForRejection' + formId).value = text;
+                        document.getElementById('rejectForm' + formId).submit();
                     }
                 });
             }
@@ -353,7 +361,7 @@
                 });
             }
 
-            function showDeletionConfirmation() {
+            function showDeletionConfirmation(formId) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Deletion',
@@ -361,7 +369,7 @@
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
                     preConfirm: () => {
-                        document.getElementById('deleteForm').submit();
+                        document.getElementById('deleteForm' + formId).submit();
                     }
                 })
             }

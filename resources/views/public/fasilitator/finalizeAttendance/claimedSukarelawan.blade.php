@@ -96,18 +96,15 @@
                         <td>{{ $sad->created_at->format('d/m/Y') }}
                         </td>
                         <td>
-                            <div class="form-inline">
-                                <form id="rejectForm" action="/reject/claimedSukarelawanAttendance/{{ $sad->id }}"
-                                    method="post">
-                                    @method('patch')
-                                    @csrf
-                                    <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>
-                                    <input type="hidden" name="reasonForRejection" id="reasonForRejection">
-                                    <button class="reject-button" onclick="showReasonForRejectionInput()">
-                                        <span class="x-symbol">&#10006;</span>
-                                    </button>
-                                </form>
-                            </div>
+                            <form id="rejectForm" action="/reject/claimedSukarelawanAttendance/{{ $sad->id }}"
+                                method="post">
+                                @method('patch')
+                                @csrf
+                                <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>
+                                <button type="submit" class="reject-button">
+                                    <span class="x-symbol">&#10006;</span>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
