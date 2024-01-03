@@ -467,12 +467,12 @@ class ActivityController extends Controller
                 ->where('activityId', $activity->id)
                 ->first();
 
-            $terdaftarStatus = SukarelawanActivityStatus::where('name', 'Terdaftar')->first();
+            $joinedStatus = SukarelawanActivityStatus::where('name', 'Joined')->first();
 
             if ($existingDetail) {
-                // If sukarelawan has interacted with the activity, change the status from null to terdaftar
+                // If sukarelawan has interacted with the activity, change the status from null to joined
                 $existingDetail->update([
-                    'sukarelawanActivityStatusId' => $terdaftarStatus->id
+                    'sukarelawanActivityStatusId' => $joinedStatus->id
                 ]);
             } else {
                 // If not, create a join relationship by connecting sukarelawan and activity
@@ -480,7 +480,7 @@ class ActivityController extends Controller
                     'id' => Generator::generateId(SukarelawanActivityDetail::class),
                     'sukarelawanId' => $sukarelawan->id,
                     'activityId' => $activity->id,
-                    'sukarelawanActivityStatusId' => $terdaftarStatus->id,
+                    'sukarelawanActivityStatusId' => $joinedStatus->id,
                     'isLiked' => false
                 ]);
             }
@@ -518,7 +518,7 @@ class ActivityController extends Controller
 
             $nullStatus = SukarelawanActivityStatus::where('name', 'Null')->first();
 
-            // Sukarelawan definitely have interacted with the activity, change the status from null to terdaftar
+            // Sukarelawan definitely have interacted with the activity, change the status from joined to null
             if ($existingDetail) {
                 $existingDetail->update([
                     'sukarelawanActivityStatusId' => $nullStatus->id
@@ -559,7 +559,7 @@ class ActivityController extends Controller
             $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
 
             // If sukarelawan has joined the activity but the status is not registered
-            if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
+            if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Joined') {
                 return redirect()
                     ->route('activity.publicShow', ['activity' => $activity->slug])
                     ->with('error', 'Failed to Clock In, Sukarelawan status is not registered');
@@ -572,7 +572,7 @@ class ActivityController extends Controller
                     ->with('error', 'Failed to Clock In, Sukarelawan clock in time is invalid');
             }
 
-            // If not, change the status from terdaftar to clockedin
+            // If not, change the status from joined to clockedin
             $clockedInStatus = SukarelawanActivityStatus::where("name", "ClockedIn")->first();
             $sukarelawanActivityDetail->update([
                 'sukarelawanActivityStatusId' => $clockedInStatus->id

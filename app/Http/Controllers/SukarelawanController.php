@@ -19,7 +19,7 @@ class SukarelawanController extends Controller
         $levels = Level::orderBy("name")->get();
 
         $clockedInActivityCount = 0;
-        $terdaftarActivityCount = 0;
+        $joinedActivityCount = 0;
         $claimedActivityCount = 0;
         $points = 0;
         $nextLevel = null;
@@ -35,8 +35,8 @@ class SukarelawanController extends Controller
                     $claimedActivityCount++;
                 } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'ClockedIn') {
                     $clockedInActivityCount++;
-                } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'Terdaftar'){
-                    $terdaftarActivityCount++;
+                } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'Joined') {
+                    $joinedActivityCount++;
                 }
             }
         }
@@ -46,7 +46,7 @@ class SukarelawanController extends Controller
             'sukarelawan' => $sukarelawan,
             'levels' => $levels,
             'clockedInActivityCount' => $clockedInActivityCount,
-            'terdaftarActivityCount' => $terdaftarActivityCount,
+            'joinedActivityCount' => $joinedActivityCount,
             'claimedActivityCount' => $claimedActivityCount,
             'points' => $points,
             'nextLevel' => $nextLevel,
@@ -54,7 +54,8 @@ class SukarelawanController extends Controller
         ]);
     }
 
-    public function manage(Sukarelawan $sukarelawan){
+    public function manage(Sukarelawan $sukarelawan)
+    {
         $activityDetails = $sukarelawan->sukarelawan_activity_details()->orderBy('updated_at', 'desc')->get();
 
         return view('public.sukarelawan.manage', [
@@ -70,11 +71,12 @@ class SukarelawanController extends Controller
             'title' => 'Edit Sukarelawan',
             'sukarelawan' => $sukarelawan,
             'verificationStatuses' => VerificationStatus::orderBy('name', 'asc')
-            ->get()
+                ->get()
         ]);
     }
 
-    public function publicUpdate(Request $request, Sukarelawan $sukarelawan){
+    public function publicUpdate(Request $request, Sukarelawan $sukarelawan)
+    {
         $validated = $request->validate([
             'email' => [
                 'required',
@@ -86,41 +88,40 @@ class SukarelawanController extends Controller
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'dateOfBirth' => 'required|date',
             'gender' => 'required',
-            ]);
+        ]);
 
-            $slug = $sukarelawan->slug;
-            if ($request->name !== $sukarelawan->user->name) {
-                $slug = Generator::generateSlug(User::class, $request->name);
+        $slug = $sukarelawan->slug;
+        if ($request->name !== $sukarelawan->user->name) {
+            $slug = Generator::generateSlug(User::class, $request->name);
+        }
+
+        $user = $sukarelawan->user;
+        $user->update([
+            'email' => strtolower($request->email),
+            'name' => ucwords($request->name),
+            'slug' => $slug
+        ]);
+        $sukarelawan->update([
+            'gender' => $request->gender,
+            'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
+            'slug' => $slug
+        ]);
+
+        if ($request->picture && $request->picture != "") {
+            $request->validate(['picture' => 'image']);
+            $newProfPicFile = $request->file('picture');
+            if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl != '') {
+                Storage::delete($sukarelawan->profileImageUrl);
             }
+            $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
+            $profileImageUrl = $newProfPicFile->storeAs('/public/images/Sukarelawan/profileImages', $newProfPicName);
+            $profileImageUrl = 'Sukarelawan/profileImages/' . $newProfPicName;
 
-            $user = $sukarelawan->user;
-            $user->update([
-                    'email' => strtolower($request->email),
-                    'name' => ucwords($request->name),
-                    'slug' => $slug
-                ]);
             $sukarelawan->update([
-                'gender' => $request->gender,
-                'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $request->dateOfBirth))),
-                'slug' => $slug
+                'profileImageUrl' => $profileImageUrl,
             ]);
-
-            if ($request->picture && $request->picture != "") {
-                $request->validate(['picture'=> 'image']);
-                $newProfPicFile = $request->file('picture');
-                if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl != '') {
-                    Storage::delete($sukarelawan->profileImageUrl);
-                }
-                $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
-                $profileImageUrl = $newProfPicFile->storeAs('/public/images/Sukarelawan/profileImages', $newProfPicName);
-                $profileImageUrl = 'Sukarelawan/profileImages/' . $newProfPicName;
-
-                $sukarelawan->update([
-                    'profileImageUrl' => $profileImageUrl,
-                ]);
-            }
+        }
 
         return redirect('/sukarelawans' . '/' . $sukarelawan->slug)->with('success', 'Sukarelawan update successful!');
     }
-
 }

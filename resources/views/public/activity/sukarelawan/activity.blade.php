@@ -7,7 +7,7 @@
 
 @php
     // NOTE: Buat checking status Sukarelawan di Aktivitas tertentu
-    $isTerdaftar = false;
+    $isJoined = false;
     $isClockedIn = false;
     $isClaimed = false;
     $isLiked = false;
@@ -15,13 +15,13 @@
     if (auth()->check() && auth()->user()->sukarelawan) {
         // Check if the user is registered for the activity
     
-        $terdaftarStatus = 'Terdaftar';
-        $isTerdaftar = $activity->sukarelawan_activity_details
-            ->where('sukarelawanActivityStatus.name', $terdaftarStatus)
+        $joinedStatus = 'Joined';
+        $isJoined = $activity->sukarelawan_activity_details
+            ->where('sukarelawanActivityStatus.name', $joinedStatus)
             ->where('sukarelawanId', auth()->user()->sukarelawan->id)
             ->isNotEmpty();
     
-        if ($isTerdaftar == false) {
+        if ($isJoined == false) {
             $clockedInStatus = 'ClockedIn';
             $isClockedIn = $activity->sukarelawan_activity_details
                 ->where('sukarelawanActivityStatus.name', $clockedInStatus)
@@ -29,7 +29,7 @@
                 ->isNotEmpty();
         }
     
-        if ($isTerdaftar && $isClockedIn == false) {
+        if ($isJoined && $isClockedIn == false) {
             $claimedStatus = 'Claimed';
             $isClaimed = $activity->sukarelawan_activity_details
                 ->where('sukarelawanActivityStatus.name', $claimedStatus)
@@ -150,7 +150,7 @@
                         <div class="btn-fill full bg-disabled">Anda
                             {{ auth()->user()->sukarelawan->verificationStatus->name }}</div>
                     @else
-                        @if ($isTerdaftar && !$isClockedIn)
+                        @if ($isJoined && !$isClockedIn)
                             <form method="POST" action="{{ route('activities.unjoin', ['activity' => $activity->slug]) }}">
                                 @csrf
                                 <button type="submit" class="btn-fill full bg-danger"
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            @if ($isTerdaftar || $isClockedIn)
+            @if ($isJoined || $isClockedIn)
                 {{-- Link Group --}}
                 <div class="content-card">
                     <div class="row-spaced">
@@ -221,7 +221,7 @@
                 {{ $activity->name }}
             </h1>
             {{-- Absensi --}}
-            @if ($isTerdaftar || $isClockedIn || $isClaimed)
+            @if ($isJoined || $isClockedIn || $isClaimed)
                 <div class="content-card cclg">
                     <div class="absensi" style="background-image: url('{{ asset('/images/absensi_bg.png') }}');">
                         <h5>

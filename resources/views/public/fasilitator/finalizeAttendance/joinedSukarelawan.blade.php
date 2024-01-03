@@ -96,7 +96,8 @@
                         <td>{{ $sad->created_at->format('d/m/Y') }}
                         </td>
                         <td>
-                            <form id="verifyForm" action="/verify/attendance/{{ $sad->id }}" method="post">
+                            <form id="verifyForm" action="/verify/joinedSukarelawanAttendance/{{ $sad->id }}"
+                                method="post">
                                 @method('patch')
                                 @csrf
                                 <input type="hidden" name="activitySlug" value={{ $sad->activity->slug }}>

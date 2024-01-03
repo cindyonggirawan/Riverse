@@ -70,14 +70,15 @@ class Activity extends Model
 
     public function joinedSukarelawanCount()
     {
-        $count = $this->sukarelawan_activity_details()->whereHas('sukarelawanActivityStatus', function ($query){
-            $query->where('name',  "Terdaftar");
+        $count = $this->sukarelawan_activity_details()->whereHas('sukarelawanActivityStatus', function ($query) {
+            $query->where('name',  "Joined");
         })
-        ->count();
+            ->count();
         return $count;
     }
 
-    public function isEligibleForClockIn(){
+    public function isEligibleForClockIn()
+    {
 
         $sukarelawan = auth()->user()->sukarelawan;
         $activity = $this;
@@ -90,7 +91,7 @@ class Activity extends Model
         }
 
         $sukarelawanActivityStatus = SukarelawanActivityStatus::find($sukarelawanActivityDetail->sukarelawanActivityStatusId);
-        if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Terdaftar') {
+        if (!$sukarelawanActivityStatus || $sukarelawanActivityStatus->name !== 'Joined') {
             // vardump();
             return false;
         }
@@ -126,7 +127,8 @@ class Activity extends Model
         return true;
     }
 
-    public function isEligibleForClockOut(){
+    public function isEligibleForClockOut()
+    {
         return true;
     }
 }

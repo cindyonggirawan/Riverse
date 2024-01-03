@@ -59,7 +59,7 @@
                         }
 
                         switch ($sActivityStatus) {
-                            case 'Terdaftar':
+                            case 'Joined':
                                 $currentDateTime = date('Y-m-d H:i:s');
                                 if ($currentDateTime <= $ad->activity->cleanUpDate . $ad->activity->endTime) {
                                     $status = 'Menunggu Clock In';
@@ -166,7 +166,7 @@
                             </div>
 
                             <div class="right">
-                                @if ($sActivityStatus == 'Terdaftar')
+                                @if ($sActivityStatus == 'Joined')
                                     {{-- if status is registered can attend and cancel  --}}
                                     @php
                                         $today = Carbon\Carbon::now();

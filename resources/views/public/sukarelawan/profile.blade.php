@@ -11,7 +11,7 @@
 @php
 
     $clockedInActivityCount = 0;
-    $terdaftarActivityCount = 0;
+    $joinedActivityCount = 0;
     $claimedActivityCount = 0;
 
     $points = 0;
@@ -26,7 +26,7 @@
             } elseif ($sActivityDetail[$i]->sukarelawanActivityStatus->name == 'ClockedIn') {
                 $clockedInActivityCount++;
             } else {
-                $terdaftarActivityCount++;
+                $joinedActivityCount++;
             }
         }
     }
@@ -209,8 +209,8 @@
                         <p>pernah diikuti</p>
                     </div>
                     <div class="col fs">
-                        {{-- get aktivitas status Terdaftar --}}
-                        <h2 class="kuning">{{ $terdaftarActivityCount }} aktivitas</h2>
+                        {{-- get aktivitas status Joined --}}
+                        <h2 class="kuning">{{ $joinedActivityCount }} aktivitas</h2>
                         <p>yang sedang diikuti</p>
                     </div>
 

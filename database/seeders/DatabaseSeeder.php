@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $names = ["Null", "Pending", 'Terdaftar', 'ClockedIn', 'Claimed'];
+        $names = ['Null', 'Joined', 'ClockedIn', 'Claimed'];
         foreach ($names as $name) {
             SukarelawanActivityStatus::create([
                 'id' => Generator::generateId(SukarelawanActivityStatus::class),
@@ -140,7 +140,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => Generator::generateSlug(Benefit::class, $name)
             ]);
             $benefitCounter++;
-            if($benefitCounter >= 6){
+            if ($benefitCounter >= 6) {
                 $benefitCounter = 6;
             }
         }
@@ -344,11 +344,11 @@ class DatabaseSeeder extends Seeder
 
         //fill the activity details for sukarelawan 1
         $activities = Activity::all();
-        foreach($activities as $activity) {
+        foreach ($activities as $activity) {
             SukarelawanActivityDetail::create([
                 'id' => Generator::generateId(Activity::class),
                 'activityId' => $activity->id,
-                'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+                'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
                 'sukarelawanId' => "1",
                 'isLiked' => false
             ]);
@@ -359,14 +359,14 @@ class DatabaseSeeder extends Seeder
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[0]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[1]->id,
             'sukarelawanId' => "2",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
 
@@ -375,14 +375,14 @@ class DatabaseSeeder extends Seeder
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[0]->id,
             'sukarelawanId' => "3",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[2]->id,
             'sukarelawanId' => "3",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
 
@@ -391,16 +391,15 @@ class DatabaseSeeder extends Seeder
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[1]->id,
             'sukarelawanId' => "4",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
         SukarelawanActivityDetail::create([
             'id' => Generator::generateId(SukarelawanActivityDetail::class),
             'activityId' => $activities[2]->id,
             'sukarelawanId' => "4",
-            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Terdaftar')->first()->id,
+            'sukarelawanActivityStatusId' => SukarelawanActivityStatus::where('name', 'Joined')->first()->id,
             'isLiked' => false
         ]);
-
     }
 }

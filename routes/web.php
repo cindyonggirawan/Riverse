@@ -113,11 +113,12 @@ Route::middleware(['web', 'fasilitator'])->group(function () {
     Route::get('/fasilitators/{fasilitator:slug}/manage', [FasilitatorController::class, 'manage']);
 
     // FASILITATOR FINALIZE ATTENDANCE
-    Route::get('/{activity:slug}/waiting-for-verification/attendance', [VerifySukarelawanAttendanceController::class, 'indexJoinedOrClockedInSukarelawan']);
-    Route::get('/{activity:slug}/attended/attendance', [VerifySukarelawanAttendanceController::class, 'indexAttendedSukarelawan']);
-    Route::patch('/verify/all-attendance', [VerifySukarelawanAttendanceController::class, 'updateAllClaimedSukarelawan']);
-    Route::patch('/verify/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateAttendedSukarelawan']);
-    Route::patch('/reject/attendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateUnattendedSukarelawan']);
+    Route::get('/{activity:slug}/waiting-for-verification/joinedSukarelawanAttendance', [VerifySukarelawanAttendanceController::class, 'indexJoinedSukarelawan']);
+    Route::get('/{activity:slug}/waiting-for-verification/clockedInSukarelawanAttendance', [VerifySukarelawanAttendanceController::class, 'indexClockedInSukarelawan']);
+    Route::get('/{activity:slug}/verified/claimedSukarelawanAttendance', [VerifySukarelawanAttendanceController::class, 'indexClaimedSukarelawan']);
+    Route::patch('/verify/joinedSukarelawanAttendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateJoinedSukarelawan']);
+    Route::patch('/verify/clockedInSukarelawanAttendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateClockedInSukarelawan']);
+    Route::patch('/reject/claimedSukarelawanAttendance/{sukarelawanActivityDetail:id}', [VerifySukarelawanAttendanceController::class, 'updateClaimedSukarelawan']);
 });
 /* == END OF FASILITATOR SECTION == */
 
