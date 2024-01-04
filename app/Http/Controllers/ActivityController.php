@@ -83,7 +83,7 @@ class ActivityController extends Controller
         $likeCount = $activity->likeCount();
         // dd($likeCount);
 
-        if ($user != null) {
+        if ($user != null && $user->role->name != 'Admin') {
             if (str_starts_with($user->id, 'FR')) {
                 return view('public.activity.fasilitator.activity', [
                     'title' => 'Activity',
