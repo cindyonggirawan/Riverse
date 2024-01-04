@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
 
         Sukarelawan::create([
             'id' => $id,
-            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'verificationStatusId' => VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id,
             'levelId' => Level::where('name', 'Level 1')->first()->id,
             'gender' => $data['gender'],
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
@@ -298,7 +298,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Fasilitator::create([
             'id' => $id,
-            'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+            'verificationStatusId' => VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id,
             'fasilitatorTypeId' => $data['fasilitatorTypeId'],
             'description' => $data['description'],
             'address' => $data['address'],
@@ -320,7 +320,7 @@ class DatabaseSeeder extends Seeder
         foreach ($names as $name) {
             Activity::create([
                 'id' => Generator::generateId(Activity::class),
-                'verificationStatusId' => VerificationStatus::where('name', 'Menunggu Verifikasi')->first()->id,
+                'verificationStatusId' => VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id,
                 'riverId' => River::where('name', 'Sungai Ciliwung')->first()->id,
                 'fasilitatorId' => Fasilitator::first()->id,
                 'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,

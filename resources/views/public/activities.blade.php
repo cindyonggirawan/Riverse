@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>{{ '1.000' }} aktivitas membutuhkan bantuan</h1>
+    <h1>Aktivitas yang membutuhkan bantuan anda</h1>
     <div class="activities-body">
         <div class="filter">
             <p>Filter</p>
