@@ -286,7 +286,10 @@ img.ktp-illustration {
 
     max-width: 100%;
     width: 100%;
-    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
 }
 
 .mt-3 {
