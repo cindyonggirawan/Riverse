@@ -30,7 +30,7 @@
     position: absolute;
     width: 80%;
     height: 80%;
-    top: 8%;
+    top: 12%;
     left: 8%;
     padding: 10px;
 }
@@ -38,7 +38,7 @@
 .login-image {
     position: absolute;
     width: 585px;
-    height: 565px;
+    height: 523px;
     display: flex;
     right: 0%;
     top: 8em;
