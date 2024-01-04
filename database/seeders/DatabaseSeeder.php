@@ -227,6 +227,7 @@ class DatabaseSeeder extends Seeder
             'verificationStatusId' => VerificationStatus::where('name', 'Sudah Diverifikasi')->first()->id,
             'levelId' => Level::where('name', 'Level 1')->first()->id,
             'gender' => $data['gender'],
+            'verified_at' => now(),
             'dateOfBirth' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dateOfBirth']))),
             'nationalIdentityNumber' => $data['nationalIdentityNumber'],
             'slug' => $slug
@@ -302,6 +303,7 @@ class DatabaseSeeder extends Seeder
             'fasilitatorTypeId' => $data['fasilitatorTypeId'],
             'description' => $data['description'],
             'address' => $data['address'],
+            'verified_at' => now(),
             'phoneNumber' => $data['phoneNumber'],
             'slug' => $slug
         ]);
@@ -335,6 +337,7 @@ class DatabaseSeeder extends Seeder
                 'sukarelawanJobName' => 'Pembersih Handal',
                 'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
                 'sukarelawanCriteria' => 'Tidak takut air dan kotoran.',
+                'verified_at' => now(),
                 'minimumNumOfSukarelawan' => 10,
                 'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan.',
                 'groupChatUrl' => 'https://wa.me/8987654321',
