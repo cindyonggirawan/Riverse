@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>Aktivitas yang membutuhkan bantuan anda</h1>
+    <h1>Aktivitas yang membutuhkan bantuan Anda</h1>
     <div class="activities-body">
         <div class="filter">
             <p>Filter</p>

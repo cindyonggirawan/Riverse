@@ -2,10 +2,10 @@
     use Carbon\Carbon;
     $sukarelawanCriteria = explode('; ', $activity->sukarelawanCriteria);
     $sukarelawanEquipment = explode('; ', $activity->sukarelawanEquipment);
-
+    
     $status = $activity->verificationStatus->name;
     $isVerified = false;
-    if ($status == 'Suddah Diverifikasi') {
+    if ($status == 'Sudah Diverifikasi') {
         $isVerified = true;
     }
 @endphp
@@ -84,7 +84,7 @@
                         $today = Carbon::now();
                         $cleanUpDate = Carbon::parse($activity->cleanUpDate)->subDays(2);
                         $isPassedMaxEditDate = false;
-
+                        
                         if ($today->gt($cleanUpDate)) {
                             $isPassedMaxEditDate = true;
                         }
@@ -202,10 +202,10 @@
                             //TODO: generate calendar link:
                             $eventDetails = 'Gathering Point Location';
                             $encodedEventDetails = urlencode("$eventDetails\nGoogle Maps: $activity->gatheringPointUrl");
-
+                            
                             $formattedStartDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->startTime));
                             $formattedEndDate = date('Ymd\THis', strtotime($activity->cleanUpDate . ' ' . $activity->endTime));
-
+                            
                             $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE' . '&text=' . urlencode($activity->name) . "&dates=$formattedStartDate/$formattedEndDate" . "&details=$encodedEventDetails" . '&location=' . urlencode($activity->river->name);
                         @endphp
                         <a href="{{ $googleCalendarUrl }}" target="_blank">Tambahkan
