@@ -180,4 +180,9 @@ Route::get('/benefits', [LevelController::class, 'publicIndex']);
 Route::get('/activities', [ActivityController::class, 'publicIndex'])->name('activities.index');
 Route::get('/activities/{activity:slug}', [ActivityController::class, 'publicShow'])->name("activity.publicShow");
 
+//ABOUTUS SECTION
+Route::get('/aboutus', function(){
+    return view('aboutus');
+});
+
 /* == END OF GUEST SECTION == */
