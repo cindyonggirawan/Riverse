@@ -109,7 +109,7 @@ class FasilitatorController extends Controller
                     Storage::delete($fasilitator->logoImageUrl);
                 }
                 $newLogoPicName = $fasilitator->id . '.' . $newLogoPic->getClientOriginalExtension();
-                $logoImageUrl = $newLogoPic->storeAs('/public/images/Fasilitator/logoImages', $newLogoPicName);
+                $logoImageUrl = $newLogoPic->storeAs('/images/Fasilitator/logoImages', $newLogoPicName);
                 $logoImageUrl = 'Fasilitator/logoImages/' . $newLogoPicName;
 
                 $fasilitator->update([

@@ -114,7 +114,7 @@ class SukarelawanController extends Controller
                 Storage::delete($sukarelawan->profileImageUrl);
             }
             $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
-            $profileImageUrl = $newProfPicFile->storeAs('/public/images/Sukarelawan/profileImages', $newProfPicName);
+            $profileImageUrl = $newProfPicFile->storeAs('/images/Sukarelawan/profileImages', $newProfPicName);
             $profileImageUrl = 'Sukarelawan/profileImages/' . $newProfPicName;
 
             $sukarelawan->update([
