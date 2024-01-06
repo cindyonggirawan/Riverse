@@ -11,6 +11,12 @@
     font-weight: 500;
 }
 
+.required::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+}
+
 form .row {
     width: 90%;
 }
@@ -521,10 +527,15 @@ select.searchbox option.placeholder {
     /* margin-bottom: 50px; */
 }
 
+.card-footer {
+    width: 100%;
+}
+
 .create-activity form .btn-fill {
-    width: 33%;
+    width: 35%;
     margin: auto;
-    margin-top: 50px;
+    font-size: 14px;
+    /* margin-top: 50px; */
     /* margin-bottom: -50px; */
 }
 
@@ -555,7 +566,7 @@ select.searchbox option.placeholder {
     border-radius: 100%;
 }
 
-.filled {
+.circle.filled {
     background-color: #5822ca;
     color: white;
 }
@@ -564,6 +575,10 @@ select.searchbox option.placeholder {
     width: 300px;
     height: 1px;
     background-color: #838181;
+}
+
+.line.filled {
+    background-color: #5822ca;
 }
 
 .create-activity-form {
@@ -588,7 +603,7 @@ select.searchbox option.placeholder {
 .form-card-container {
     background: white;
     border-radius: 16px;
-    width: 100%;
+    width: 782px;
 }
 
 .form-card {
@@ -606,7 +621,7 @@ select.searchbox option.placeholder {
 .form-card .row {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: start;
     width: 100%;
 
     gap: 10px;
@@ -633,13 +648,53 @@ select.searchbox option.placeholder {
     margin-bottom: 2px;
 }
 
-.form-card input {
+.form-text {
+    width: 100%;
+    margin-bottom: 4%;
+}
+
+.form-text-division {
+    width: 50%;
+    margin-bottom: 4%;
+}
+
+.row-division {
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.row-division .line {
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.last {
+    margin-bottom: 0;
+}
+
+.input-text-long {
+    margin-top: 1%;
+    font-size: 14px;
+    text-decoration: none;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    border: #838181 solid 1px;
+    border-radius: 10px;
+    color: #000000;
+    transition: ease-in 0.1s;
+}
+
+.form-card input,
+.form-card textarea {
     font-size: 14px;
     padding: 12px 15px;
     border-radius: 10px;
 
-    margin-top: 5px;
-    margin-bottom: 20px;
+    margin-top: 1%;
+    padding: 8px;
 
     border: 1px solid #9fadc4;
     position: relative;
@@ -699,7 +754,7 @@ select.searchbox option.placeholder {
 }
 
 .drop-zone {
-    border: 1px solid #838181;
+    border: 1px solid #9fadc4;
     border-radius: 10px;
 
     padding: 16px 20px;
@@ -723,7 +778,7 @@ select.searchbox option.placeholder {
     justify-content: center;
     align-items: center;
 
-    color: #838181;
+    color: #9fadc4;
 
     cursor: pointer;
 
@@ -745,6 +800,7 @@ select.searchbox option.placeholder {
 }
 
 .number-input {
+    margin-top: 1%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -767,7 +823,12 @@ select.searchbox option.placeholder {
     background-color: #f6f8fc;
     color: #9fadc4;
     border: 1px solid #9fadc4;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+}
+
+.number-input #minimumNumOfSukarelawan {
+    padding: 12px 15px;
+    margin-top: 0;
 }
 
 .number-input input {
@@ -790,14 +851,14 @@ select.searchbox option.placeholder {
     border-radius: 0px 10px 10px 0;
 }
 
-.form-card textarea {
+/* .form-card textarea {
     resize: none;
     padding: 12px 15px;
     border-radius: 10px;
     margin-bottom: 20px;
 
     border: 1px solid #9fadc4;
-}
+} */
 
 .form-card textarea::placeholder {
     color: #9fadc4; /* Set the color you want */
@@ -844,6 +905,7 @@ select.searchbox option.placeholder {
     border: none;
     background: none;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .goBack button:hover {
@@ -856,6 +918,13 @@ select.searchbox option.placeholder {
     width: 100%;
     border: none;
 }
+
+.text-danger {
+    margin: 3px;
+    font-size: 12px;
+    color: red;
+}
+
 .error {
     font-size: 12px;
     color: #e21919;

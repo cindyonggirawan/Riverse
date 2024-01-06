@@ -325,6 +325,10 @@ h1 a {
     z-index: 2;
 }
 
+.content-card.ccsm .row {
+    align-items: center;
+}
+
 .profpic {
     width: 32px;
     height: 32px;

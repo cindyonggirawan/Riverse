@@ -14,11 +14,8 @@
             <div class="sukarelawan-card-container">
                 <div class="sukarelawan-card-content">
                     <div class="profpic">
-                        <img @if (empty($fasilitator->logoImageUrl)) src={{ asset('images/Fasilitator/logoImages/default.png') }}
-                        @else
-
-                        src={{ asset('storage/images/' . $fasilitator->logoImageUrl) }} @endif
-                            alt="fasilitator image">
+                        <img src="{{ asset($fasilitator->logoImageUrl ? 'storage/images/' . $fasilitator->logoImageUrl : '/images/' . Config::get('constants.default_logo_image')) }}"
+                            alt="Fasilitator Profile Picture">
                     </div>
                     <div class="profile-col">
                         <h1>{{ $fasilitator->user->name }}</h1>

@@ -4,9 +4,6 @@
     <link rel="stylesheet" href="{{ asset('/css/activity.css') }}" />
 @endsection
 
-
-
-
 @php
     // parse sukarelawan kriteria
     $sukarelawanCriteria = explode('; ', Session::get('step2DataUpdate.sukarelawanCriteria'));
@@ -24,14 +21,14 @@
                         1
                     </div>
                 </a>
-                <div class="line filled"></div>
+                <div class="line {{ $currentStep - 1 >= 1 ? 'filled' : '' }}"></div>
                 <a href="/activities/{{ $activity->slug }}/edit/2">
                     <div class="circle">
                         2
                     </div>
                 </a>
-                <div class="line filled"></div>
-                <div class="circle filled">
+                <div class="line {{ $currentStep - 1 >= 2 ? 'filled' : '' }}"></div>
+                <div class="circle {{ $currentStep == 3 ? 'filled' : '' }}">
                     3
                 </div>
             </div>
@@ -93,8 +90,13 @@
                                     Waktu
                                 </div>
                                 <div class="form-content">
-                                    {{ Session::get('step1DataUpdate.startTime') }} -
-                                    {{ Session::get('step1DataUpdate.endTime') }} WIB
+                                    @php
+                                        $startTime = Session::get('step1DataUpdate.startTime');
+                                        $endTime = Session::get('step1DataUpdate.endTime');
+                                        $formattedStartTime = date('H:i', strtotime($startTime));
+                                        $formattedEndTime = date('H:i', strtotime($endTime));
+                                    @endphp
+                                    {{ $formattedStartTime }} - {{ $formattedEndTime }} WIB
                                 </div>
                             </div>
                         </div>
@@ -112,7 +114,7 @@
                             </a>
                         </div>
 
-                        <div class="divider"></div>
+                        {{-- <div class="divider"></div>
                         <div class="form-header">
                             Pratinjau Banner Aktivitas
                         </div>
@@ -121,19 +123,17 @@
                         </div>
                         <div class="form-content">
                             <div class="step3-image-preview">
-                                <div class="image-preview" id="imagePreview"
-                                    @if (Session::has('step1DataUpdate.picture')) @else hidden @endif>
-                                    @if (Session::has('step1DataUpdate.picture'))
+                                @if (Session::has('step1DataUpdate.picture'))
+                                    <div class="image-preview" id="imagePreview">
                                         <img id="previewImage"
                                             src="{{ asset('storage/images/' . Session::get('step1DataUpdate.picture')) ?? '' }}"
                                             alt="Image Preview" />
-                                    @else
-                                        <img id="previewImage" src="" alt="Image Preview" />
-                                    @endif
-                                </div>
+                                    </div>
+                                @else
+                                    Tidak ada banner
+                                @endif
                             </div>
-
-                        </div>
+                        </div> --}}
 
                         <div class="divider"></div>
                         <div class="form-header">
@@ -198,14 +198,13 @@
 
                     </div>
                 </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn-fill" id="submitButton">
+                        Simpan
+                    </button>
+                </div>
             </div>
-
-
-            <button type="submit" class="btn-fill" id="submitButton">
-                Simpan
-            </button>
-
-
         </form>
 
         <div class="goBack">

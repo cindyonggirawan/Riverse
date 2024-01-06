@@ -41,11 +41,8 @@
             <div class="sukarelawan-card-container">
                 <div class="sukarelawan-card-content">
                     <div class="profpic">
-                        <img @if (empty($sukarelawan->profileImageUrl)) src={{ asset('images/Sukarelawan/profileImages/default.png') }}
-                        @else
-
-                        src={{ asset('storage/images/' . $sukarelawan->profileImageUrl) }} @endif
-                            alt="sukarelawan image">
+                        <img src="{{ asset($sukarelawan->profileImageUrl ? 'storage/images/' . $sukarelawan->profileImageUrl : '/images/' . Config::get('constants.default_profile_image')) }}"
+                            alt="Sukarelawan Profile Picture">
                     </div>
                     <div class="profile-col">
                         <h1>{{ $sukarelawan->user->name }}</h1>

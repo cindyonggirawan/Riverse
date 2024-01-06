@@ -234,8 +234,8 @@
                     </h5>
                     <div class="row">
                         <div class="profpic">
-                            <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}"
-                                alt="">
+                            <img src="{{ asset($activity->fasilitator->logoImageUrl ? 'storage/images/' . $activity->fasilitator->logoImageUrl : '/images/' . Config::get('constants.default_logo_image')) }}"
+                                alt="Fasilitator Profile Picture">
                         </div>
                         <a href="/fasilitators/{{ $activity->fasilitator->slug }}" class="selected">
                             <p class="selected">

@@ -14,12 +14,12 @@
                         1
                     </div>
                 </a>
-                <div class="line filled"></div>
-                <div class="circle filled">
+                <div class="line {{ $currentStep - 1 >= 1 ? 'filled' : '' }}"></div>
+                <div class="circle {{ $currentStep == 2 ? 'filled' : '' }}">
                     2
                 </div>
-                <div class="line"></div>
-                <div class="circle">
+                <div class="line {{ $currentStep - 1 >= 2 ? 'filled' : '' }}"></div>
+                <div class="circle {{ $currentStep == 3 ? 'filled' : '' }}">
                     3
                 </div>
             </div>
@@ -35,47 +35,63 @@
                         <div class="form-header">
                             Data Sukarelawan
                         </div>
-                        <label for="sukarelawanJobName">Nama Pekerjaan</label>
-                        @error('sukarelawanJobName')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <input type="text" name="sukarelawanJobName" id="sukarelawanJobName"
-                            placeholder="Maksimal 50 Karakter"
-                            value="{{ Session::get('step2Data.sukarelawanJobName') ?? '' }}">
-
-
-                        <label for="sukarelawanJobDetail">Tugas Sukarelawan</label>
-                        @error('sukarelawanJobDetail')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <textarea class="lg" name="sukarelawanJobDetail" id="sukarelawanJobDetail" placeholder="Jelaskan tugas relawan">{{ Session::get('step2Data')['sukarelawanJobDetail'] ?? '' }}</textarea>
-
-                        <label for="sukarelawanCriteria">Kriteria Sukarelawan</label>
-                        @error('sukarelawanCriteria')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <textarea class="lg" name="sukarelawanCriteria" id="sukarelawanCriteria" placeholder="Batasi dengan ';'"
-                            rows="4">{{ Session::get('step2Data')['sukarelawanCriteria'] ?? '' }}</textarea>
-
-                        <label for="minimumNumOfSukarelawan">Jumlah Sukarelawan</label>
-                        @error('minimumNumOfSukarelawan')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <div class="number-input">
-                            <button type="button" onclick="decrementValue()" class="decrement">-</button>
-                            <input type="number" name="minimumNumOfSukarelawan" id="minimumNumOfSukarelawan"
-                                value="{{ Session::get('step2Data.minimumNumOfSukarelawan') ?? (old('minimumNumOfSukarelawan') ?? 0) }}">
-                            <button type="button" onclick="incrementValue()" class="increment">+</button>
+                        <div class="form-text">
+                            <label for="sukarelawanJobName" class="required">Nama Pekerjaan</label>
+                            <div class="row">
+                                <input type="text" name="sukarelawanJobName" id="sukarelawanJobName"
+                                    class="input-text-long @error('sukarelawanJobName') is-invalid @enderror"
+                                    placeholder="Maksimal 50 Karakter" required
+                                    value="{{ Session::get('step2Data.sukarelawanJobName') ?? old('sukarelawanJobName') }}">
+                            </div>
+                            @error('sukarelawanJobName')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-
-
-
-                        <label for="sukarelawanEquipment">Perlengkapan Sukarelawan</label>
-                        @error('sukarelawanEquipment')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <textarea class="lg" name="sukarelawanEquipment" id="sukarelawanEquipment" placeholder="Batasi dengan ';'"
-                            rows="4">{{ Session::get('step2Data')['sukarelawanEquipment'] ?? '' }}</textarea>
+                        <div class="form-text">
+                            <label for="sukarelawanJobDetail" class="required">Tugas Sukarelawan</label>
+                            <div class="row">
+                                <textarea name="sukarelawanJobDetail" id="sukarelawanJobDetail"
+                                    class="input-text-long @error('sukarelawanJobDetail') is-invalid @enderror" placeholder="Jelaskan tugas relawan"
+                                    rows="3" style="resize: none;" required>{{ Session::get('step2Data.sukarelawanJobDetail') ?? old('sukarelawanJobDetail') }}</textarea>
+                            </div>
+                            @error('sukarelawanJobDetail')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-text">
+                            <label for="sukarelawanCriteria" class="required">Kriteria Sukarelawan</label>
+                            <div class="row">
+                                <textarea name="sukarelawanCriteria" id="sukarelawanCriteria"
+                                    class="input-text-long @error('sukarelawanCriteria') is-invalid @enderror" placeholder="Batasi dengan ;"
+                                    rows="3" style="resize: none;" required>{{ Session::get('step2Data.sukarelawanCriteria') ?? old('sukarelawanCriteria') }}</textarea>
+                            </div>
+                            @error('sukarelawanCriteria')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-text">
+                            <label for="minimumNumOfSukarelawan" class="required">Jumlah Sukarelawan</label>
+                            <div class="number-input">
+                                <button type="button" onclick="decrementValue()" class="decrement">-</button>
+                                <input type="number" name="minimumNumOfSukarelawan" id="minimumNumOfSukarelawan"
+                                    value="{{ Session::get('step2Data.minimumNumOfSukarelawan') ?? (old('minimumNumOfSukarelawan') ?? 0) }}">
+                                <button type="button" onclick="incrementValue()" class="increment">+</button>
+                            </div>
+                            @error('minimumNumOfSukarelawan')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-text last">
+                            <label for="sukarelawanEquipment" class="required">Perlengkapan Sukarelawan</label>
+                            <div class="row">
+                                <textarea name="sukarelawanEquipment" id="sukarelawanEquipment"
+                                    class="input-text-long @error('sukarelawanEquipment') is-invalid @enderror" placeholder="Batasi dengan ;"
+                                    rows="3" style="resize: none;" required>{{ Session::get('step2Data.sukarelawanEquipment') ?? old('sukarelawanEquipment') }}</textarea>
+                            </div>
+                            @error('sukarelawanEquipment')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 
@@ -84,18 +100,26 @@
                         <div class="form-header">
                             Alat Komunikasi
                         </div>
-                        <label for="groupChatUrl">Group Chat</label>
-                        @error('groupChatUrl')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
-                        <input type="text" name="groupChatUrl" id="groupChatUrl" placeholder="Tautan Whatsapp/Line"
-                            value="{{ Session::get('step2Data')['groupChatUrl'] ?? '' }}">
+                        <div class="form-text last">
+                            <label for="groupChatUrl" class="required">Group Chat</label>
+                            <div class="row">
+                                <input type="text" name="groupChatUrl" id="groupChatUrl"
+                                    class="input-text-long @error('groupChatUrl') is-invalid @enderror"
+                                    placeholder="Tautan Whatsapp/Line" required
+                                    value="{{ Session::get('step2Data.groupChatUrl') ?? old('groupChatUrl') }}">
+                            </div>
+                            @error('groupChatUrl')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-fill" id="nextStepButton" name="nextStepButton">
-                    Lanjut
-                </button>
+                <div class="card-footer">
+                    <button type="submit" class="btn-fill" id="nextStepButton" name="nextStepButton">
+                        Lanjut
+                    </button>
+                </div>
             </div>
         </form>
 

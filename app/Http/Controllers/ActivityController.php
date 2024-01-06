@@ -164,19 +164,17 @@ class ActivityController extends Controller
             'picture' => "sometimes|image"
         ]);
 
-        $bannerImageFile = $request->file('picture');
-
-        // Check if a picture has been uploaded
-        if ($bannerImageFile) {
+        if ($request->hasFile('picture')) {
             $hasNewImage = true;
             $previousImage = Session::get('step1Data.picture');
             if ($previousImage) {
                 Storage::delete('/images' . '/' . $previousImage);
             }
-            $fileName = uniqid() . '.' . $bannerImageFile->getClientOriginalExtension();
-            $bannerImageUrl = $bannerImageFile->storeAs('/images/Activity/bannerImages', $fileName);
-            $bannerImageUrl = 'Activity/bannerImages/' . $fileName;
-            $validatedStep1['picture'] = $bannerImageUrl;
+            $pictureFile = $request->file('picture');
+            $fileName = uniqid() . '.' . $pictureFile->getClientOriginalExtension();
+            $pictureUrl = $pictureFile->storeAs('/images/Activity/bannerImages', $fileName);
+            $pictureUrl = 'Activity/bannerImages/' . $fileName;
+            $validatedStep1['picture'] = $pictureUrl;
         }
 
         if ($hasNewImage == false) {
@@ -213,14 +211,17 @@ class ActivityController extends Controller
 
         $id = Generator::generateId(Activity::class);
 
-        $oldFileUrl = $request->picture;
-        $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
-        $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+        $newFileUrl = null;
+        if ($request->picture) {
+            $oldFileUrl = $request->picture;
+            $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
+            $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
 
-        $newFileName = $id . '.' . $fileExtension;
-        $newFileUrl =  $directoryPath . '/' . $newFileName;
+            $newFileName = $id . '.' . $fileExtension;
+            $newFileUrl =  $directoryPath . '/' . $newFileName;
 
-        Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
+            Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
+        }
 
         $slug = Generator::generateSlug(Activity::class, $request->name);
 
@@ -364,6 +365,7 @@ class ActivityController extends Controller
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
             ]
         ]);
+
         Session::put('step2DataUpdate', $validatedStep2);
     }
 
