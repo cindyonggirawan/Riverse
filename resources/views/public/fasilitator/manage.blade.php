@@ -74,7 +74,7 @@
                                     $activityClass = 'redeem';
 
                                     break;
-                                case 'Pendaftaran Sudah Selesai':
+                                case 'Aktivitas Sudah Selesai':
                                     $activityClass = 'success';
                                     break;
                                 default:
