@@ -5,7 +5,7 @@
 
     $status = $activity->verificationStatus->name;
     $isVerified = false;
-    if ($status == 'Suddah Diverifikasi') {
+    if ($status == 'Sudah Diverifikasi') {
         $isVerified = true;
     }
 @endphp
