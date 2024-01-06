@@ -301,6 +301,7 @@ h1 a {
     display: flex;
     flex-direction: row;
     gap: 8px;
+    align-items: center;
 }
 
 .card-row img {
@@ -410,13 +411,13 @@ a.selected p.selected {
     align-items: center;
     flex-direction: row;
     margin: auto;
-    margin-top: 5em;
+    margin-top: 3em;
 
     background-color: white;
 
     /* max-width: 50%; */
     max-width: fit-content;
-    border-radius: 1.5em;
+    border-radius: 12px;
     /* padding: 1em -2em; */
 }
 
@@ -441,13 +442,14 @@ a.selected p.selected {
     justify-content: center;
     align-items: center;
 
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 300;
 }
 
 .pagination .elements .active {
     background-color: #5822ca;
     color: white;
+    font-weight: 600;
     border-radius: 0.2em;
     width: 2em;
     height: 2em;
@@ -462,8 +464,12 @@ a.selected p.selected {
 }
 
 .pagination .arrow {
-    font-size: 50px;
+    font-size: 32px;
     font-weight: 100;
+}
+
+.pagination .arrow a:hover {
+    color: #5822ca;
 }
 
 .pagination .disabled span {

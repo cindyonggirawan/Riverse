@@ -27,7 +27,8 @@
                 </h4>
                 <div class="card-row">
                     <div class="profpic">
-                        <img src="{{ asset('storage/images/' . $activity->fasilitator->logoImageUrl) }}" alt="">
+                        <img src="{{ asset($activity->fasilitator->logoImageUrl ? 'storage/images/' . $activity->fasilitator->logoImageUrl : '/images/' . Config::get('constants.default_logo_image')) }}"
+                            alt="Fasilitator Profile Picture">
                     </div>
                     <a href="/fasilitators/{{ $activity->fasilitator->slug }}">
                         <p class="selected">{{ $activity->fasilitator->user->name }}</p>
