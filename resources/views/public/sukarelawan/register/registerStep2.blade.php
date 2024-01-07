@@ -137,7 +137,7 @@
                                         @if (Session::has('step2Data.nationalIdentityCardImageUrl')) @else hidden @endif>
                                         @if (Session::has('step2Data.nationalIdentityCardImageUrl'))
                                             <img id="previewImage"
-                                                src="{{ asset('storage/images/' . Session::get('step2Data.nationalIdentityCardImageUrl')) ?? '' }}"
+                                                src="{{ asset('storage/images/' . (Session::get('step2Data.nationalIdentityCardImageUrl') ?? '')) }}"
                                                 alt="Image Preview" />
                                         @else
                                             <img id="previewImage" src="" alt="Image Preview" />

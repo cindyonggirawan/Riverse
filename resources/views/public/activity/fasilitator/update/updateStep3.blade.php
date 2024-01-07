@@ -114,7 +114,7 @@
                             </a>
                         </div>
 
-                        {{-- <div class="divider"></div>
+                        <div class="divider"></div>
                         <div class="form-header">
                             Pratinjau Banner Aktivitas
                         </div>
@@ -126,14 +126,14 @@
                                 @if (Session::has('step1DataUpdate.picture'))
                                     <div class="image-preview" id="imagePreview">
                                         <img id="previewImage"
-                                            src="{{ asset('storage/images/' . Session::get('step1DataUpdate.picture')) ?? '' }}"
+                                            src="{{ asset('storage/images/' . (Session::get('step1DataUpdate.picture') ?? '')) }}"
                                             alt="Image Preview" />
                                     </div>
                                 @else
                                     Tidak ada banner
                                 @endif
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="divider"></div>
                         <div class="form-header">

@@ -109,7 +109,7 @@
                                 @if (Session::has('step2Data.logoImageUrl')) @else hidden @endif>
                                 @if (Session::has('step2Data.logoImageUrl'))
                                     <img id="previewImage"
-                                        src="{{ asset('storage/images/' . Session::get('step2Data.logoImageUrl')) ?? '' }}"
+                                        src="{{ asset('storage/images/' . (Session::get('step2Data.logoImageUrl') ?? '')) }}"
                                         alt="Image Preview" />
                                 @else
                                     <img id="previewImage" src="" alt="Image Preview" />

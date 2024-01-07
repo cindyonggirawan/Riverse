@@ -124,7 +124,7 @@
                                 @if (Session::has('step1Data.picture'))
                                     <div class="image-preview" id="imagePreview">
                                         <img id="previewImage"
-                                            src="{{ asset('storage/images/' . Session::get('step1Data.picture')) ?? '' }}"
+                                            src="{{ asset('storage/images/' . (Session::get('step1Data.picture') ?? '')) }}"
                                             alt="Image Preview" />
                                     </div>
                                 @else

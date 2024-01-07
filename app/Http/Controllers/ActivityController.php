@@ -318,7 +318,7 @@ class ActivityController extends Controller
 
     private function handleUpdateStep1(Request $request)
     {
-        // $hasNewImage = $request->hasNewImage;
+        $hasNewImage = $request->hasNewImage;
 
         $validatedStep1 = $request->validate([
             'name' => 'required|string|max:255',
@@ -345,8 +345,26 @@ class ActivityController extends Controller
                 'required',
                 'string',
                 'regex:#^(https?://)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$#',
-            ]
+            ],
+            'picture' => "sometimes|image"
         ]);
+
+        if ($request->hasFile('picture')) {
+            $hasNewImage = true;
+            $previousImage = Session::get('step1DataUpdate.picture');
+            if ($previousImage) {
+                Storage::delete('/images' . '/' . $previousImage);
+            }
+            $pictureFile = $request->file('picture');
+            $fileName = uniqid() . '.' . $pictureFile->getClientOriginalExtension();
+            $pictureUrl = $pictureFile->storeAs('/images/Activity/bannerImages', $fileName);
+            $pictureUrl = 'Activity/bannerImages/' . $fileName;
+            $validatedStep1['picture'] = $pictureUrl;
+        }
+
+        if ($hasNewImage == false) {
+            $validatedStep1['picture'] = $request->oldPicture;
+        }
 
         Session::put('step1DataUpdate', $validatedStep1);
     }
@@ -374,22 +392,42 @@ class ActivityController extends Controller
         $step1Data = Session::get('step1DataUpdate');
         $step2Data = Session::get('step2DataUpdate');
         $combinedData = array_merge($step1Data, $step2Data);
+        $request = new Request($combinedData);
+
+        $newFileUrl = null;
+        if ($request->picture) {
+            $oldFileUrl = $request->picture;
+            $directoryPath = pathinfo($oldFileUrl, PATHINFO_DIRNAME);
+            $fileExtension = pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+
+            $newFileName = $activity->id . '.' . $fileExtension;
+            $newFileUrl =  $directoryPath . '/' . $newFileName;
+
+            Storage::move('/images' . '/' . $oldFileUrl, '/images' . '/' . $newFileUrl);
+        }
+
+        $slug = $activity->slug;
+
+        if ($request->name !== $activity->name) {
+            $slug = Generator::generateSlug(Activity::class, $request->name);
+        }
 
         $activity->update([
-            'name' => $combinedData["name"],
-            'description' => $combinedData["description"],
-            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["registrationDeadlineDate"]))),
-            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $combinedData["cleanUpDate"]))),
-            'startTime' => date('H:i:s', strtotime($combinedData["startTime"])),
-            'endTime' => date('H:i:s', strtotime($combinedData["endTime"])),
-            'gatheringPointUrl' => $combinedData["gatheringPointUrl"],
-            'sukarelawanJobName' => $combinedData["sukarelawanJobName"],
-            'sukarelawanJobDetail' => $combinedData["sukarelawanJobDetail"],
-            'sukarelawanCriteria' => $combinedData["sukarelawanCriteria"],
-            'minimumNumOfSukarelawan' => $combinedData["minimumNumOfSukarelawan"],
-            'sukarelawanEquipment' => $combinedData["sukarelawanEquipment"],
-            'groupChatUrl' => $combinedData['groupChatUrl'],
-            'slug' => Generator::generateSlug(Activity::class, $combinedData['name'])
+            'name' => $request->name,
+            'description' => $request->description,
+            'registrationDeadlineDate' => date('Y-m-d', strtotime(str_replace('/', '-', $request->registrationDeadlineDate))),
+            'cleanUpDate' => date('Y-m-d', strtotime(str_replace('/', '-', $request->cleanUpDate))),
+            'startTime' => date('H:i:s', strtotime($request->startTime)),
+            'endTime' => date('H:i:s', strtotime($request->endTime)),
+            'gatheringPointUrl' => $request->gatheringPointUrl,
+            'sukarelawanJobName' => $request->sukarelawanJobName,
+            'sukarelawanJobDetail' => $request->sukarelawanJobDetail,
+            'sukarelawanCriteria' => $request->sukarelawanCriteria,
+            'minimumNumOfSukarelawan' => $request->minimumNumOfSukarelawan,
+            'sukarelawanEquipment' => $request->sukarelawanEquipment,
+            'groupChatUrl' => $request->groupChatUrl,
+            'bannerImageUrl' => $newFileUrl,
+            'slug' => $slug
         ]);
 
         Session::forget('step1DataUpdate');

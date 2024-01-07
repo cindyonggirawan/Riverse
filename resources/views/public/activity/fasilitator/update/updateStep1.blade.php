@@ -151,7 +151,7 @@
                     </div>
                 </div>
 
-                {{-- <div class="form-card-container">
+                <div class="form-card-container">
                     <div class="form-card">
                         <div class="form-header">
                             Banner Aktivitas
@@ -163,25 +163,37 @@
                                     @if (Session::has('step1DataUpdate.picture'))
                                         <input type="text" name="oldPicture"
                                             value="{{ Session::get('step1DataUpdate.picture') }}" hidden>
+                                    @elseif ($activity->bannerImageUrl && $activity->bannerImageUrl !== '')
+                                        <input type="text" name="oldPicture" value="{{ $activity->bannerImageUrl }}"
+                                            hidden>
                                     @endif
 
+                                    @php
+                                        $fileValue = null;
+                                        if (Session::has('step1DataUpdate.picture')) {
+                                            $fileValue = Session::get('step1DataUpdate.picture');
+                                        } elseif ($activity->bannerImageUrl) {
+                                            $fileValue = $activity->bannerImageUrl;
+                                        } else {
+                                            $fileValue = '';
+                                        }
+                                    @endphp
+
                                     <input type="file" class="@error('picture') is-invalid @enderror" name="picture"
-                                        id="imageInput" accept="image/*"
-                                        value="{{ Session::get('step1DataUpdate.picture') ?? $activity->bannerImageUrl }}"
-                                        hidden />
+                                        id="imageInput" accept="image/*" value="{{ $fileValue }}" hidden />
                                     <label for="imageInput">
                                         <div class="drop-zone">
                                             <div class="image-preview" id="imagePreview"
-                                                @if (Session::has('step1DataUpdate.picture') || $activity->bannerImageUrl != null) @else hidden @endif>
-                                                @if (Session::has('step1DataUpdate.picture') || $activity->bannerImageUrl != null)
+                                                @if (Session::has('step1DataUpdate.picture') || ($activity->bannerImageUrl && $activity->bannerImageUrl !== null)) @else hidden @endif>
+                                                @if (Session::has('step1DataUpdate.picture') || ($activity->bannerImageUrl && $activity->bannerImageUrl !== null))
                                                     <img id="previewImage"
-                                                        src="{{ asset('storage/images/' . Session::get('step1DataUpdate.picture')) ?? $activity->bannerImageUrl }}"
+                                                        src="{{ asset('storage/images/' . (Session::get('step1DataUpdate.picture') ?? $activity->bannerImageUrl)) }}"
                                                         alt="Image Preview" />
                                                 @else
                                                     <img id="previewImage" src="" alt="Image Preview" />
                                                 @endif
                                             </div>
-                                            @if (Session::has('step1DataUpdate.picture'))
+                                            @if (Session::has('step1DataUpdate.picture') || ($activity->bannerImageUrl && $activity->bannerImageUrl !== null))
                                             @else
                                                 <div class="browse-button">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
@@ -202,7 +214,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <div class="card-footer">
                     <button type="submit" class="btn-fill" id="nextStepButton" name="nextStepButton">

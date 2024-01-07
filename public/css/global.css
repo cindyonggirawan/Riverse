@@ -387,6 +387,7 @@ a.selected p.selected {
 
 .outline-btn-small {
     text-decoration: none;
+    font-size: 14px;
 
     max-width: 90px;
     height: 35px;
