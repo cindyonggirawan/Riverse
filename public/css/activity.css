@@ -527,6 +527,10 @@ select.searchbox option.placeholder {
     /* margin-bottom: 50px; */
 }
 
+.create-activity.without-steps form {
+    margin-top: 20px;
+}
+
 .card-footer {
     width: 100%;
 }
@@ -688,7 +692,8 @@ select.searchbox option.placeholder {
 }
 
 .form-card input,
-.form-card textarea {
+.form-card textarea,
+.form-card select {
     font-size: 14px;
     padding: 12px 15px;
     border-radius: 10px;
@@ -1073,4 +1078,16 @@ select.searchbox option.placeholder {
     color: #5722ca;
     /* background-color: #5722ca; */
     max-height: fit-content;
+}
+
+.disabled img {
+    margin-top: 0.5em;
+    border: 1px solid #9fadc4;
+    border-radius: 10px;
+    width: 300px;
+    height: 212px;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
 }

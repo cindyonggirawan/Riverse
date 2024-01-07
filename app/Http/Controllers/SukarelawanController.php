@@ -80,17 +80,20 @@ class SukarelawanController extends Controller
         $validated = $request->validate([
             'email' => [
                 'required',
+                'string',
                 'max:255',
                 'email:dns',
                 'regex:/^\S+@\S+\.\S+$/',
                 Rule::unique('users')->ignore($sukarelawan->id),
             ],
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
-            'dateOfBirth' => 'required|date',
             'gender' => 'required',
+            'dateOfBirth' => 'required|date',
+            'picture' => 'sometimes|image',
         ]);
 
         $slug = $sukarelawan->slug;
+
         if ($request->name !== $sukarelawan->user->name) {
             $slug = Generator::generateSlug(User::class, $request->name);
         }
@@ -107,18 +110,18 @@ class SukarelawanController extends Controller
             'slug' => $slug
         ]);
 
-        if ($request->picture && $request->picture != "") {
-            $request->validate(['picture' => 'image']);
-            $newProfPicFile = $request->file('picture');
-            if ($sukarelawan->profileImageUrl && $sukarelawan->profileImageUrl != '') {
-                Storage::delete($sukarelawan->profileImageUrl);
+        if ($request->hasFile('picture')) {
+            $previousImage = $sukarelawan->profileImageUrl;
+            if ($previousImage) {
+                Storage::delete('/images' . '/' . $previousImage);
             }
-            $newProfPicName = $sukarelawan->id . '.' . $newProfPicFile->getClientOriginalExtension();
-            $profileImageUrl = $newProfPicFile->storeAs('/images/Sukarelawan/profileImages', $newProfPicName);
-            $profileImageUrl = 'Sukarelawan/profileImages/' . $newProfPicName;
+            $pictureFile = $request->file('picture');
+            $fileName = $sukarelawan->id . '.' . $pictureFile->getClientOriginalExtension();
+            $pictureUrl = $pictureFile->storeAs('/images/Sukarelawan/profileImages', $fileName);
+            $pictureUrl = 'Sukarelawan/profileImages/' . $fileName;
 
             $sukarelawan->update([
-                'profileImageUrl' => $profileImageUrl,
+                'profileImageUrl' => $pictureUrl
             ]);
         }
 

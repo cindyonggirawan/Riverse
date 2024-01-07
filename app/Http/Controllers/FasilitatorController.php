@@ -19,7 +19,7 @@ class FasilitatorController extends Controller
     public function publicShow(Fasilitator $fasilitator)
     {
         $openStatus = ActivityStatus::where('name', '=', 'Pendaftaran Sedang Dibuka')->first();
-        $onGoingStatus  = ActivityStatus::where('name' , '=', 'Aktivitas Sedang Berlangsung')->first();
+        $onGoingStatus  = ActivityStatus::where('name', '=', 'Aktivitas Sedang Berlangsung')->first();
         $finishStatus = ActivityStatus::where('name', '=', 'Aktivitas Sudah Selesai')->first();
 
         $allActivities = Activity::where('fasilitatorId', '=', $fasilitator->id)->get();
@@ -38,7 +38,8 @@ class FasilitatorController extends Controller
         ]);
     }
 
-    public function manage(Fasilitator $fasilitator){
+    public function manage(Fasilitator $fasilitator)
+    {
         $activities = $fasilitator->activities()->orderBy('created_at', 'desc')->get();
 
         return view('public.fasilitator.manage', [
@@ -58,10 +59,12 @@ class FasilitatorController extends Controller
         ]);
     }
 
-    public function publicUpdate(Fasilitator $fasilitator, Request $request){
+    public function publicUpdate(Fasilitator $fasilitator, Request $request)
+    {
         $validated = $request->validate([
             'email' => [
                 'required',
+                'string',
                 'max:255',
                 'email:dns',
                 'regex:/^\S+@\S+\.\S+$/',
@@ -69,8 +72,9 @@ class FasilitatorController extends Controller
             ],
             'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'fasilitatorTypeId' => 'required',
-            'description' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'description' => 'required|string|min:100|max:255',
+            'picture' => 'sometimes|image',
+            'address' => 'required|string|min:10|max:255',
             'phoneNumber' => [
                 'required',
                 'string',
@@ -84,39 +88,38 @@ class FasilitatorController extends Controller
         $slug = $fasilitator->slug;
 
         if ($request->name !== $fasilitator->user->name) {
-                $slug = Generator::generateSlug(User::class, $request->name);
-            }
+            $slug = Generator::generateSlug(User::class, $request->name);
+        }
 
-            $user = $fasilitator->user;
-            $user->update([
-                    'email' => strtolower($request->email),
-                    'name' => ucwords($request->name),
-                    'slug' => $slug
-                ]);
+        $user = $fasilitator->user;
+        $user->update([
+            'email' => strtolower($request->email),
+            'name' => ucwords($request->name),
+            'slug' => $slug
+        ]);
+        $fasilitator->update([
+            'fasilitatorTypeId' => $request->fasilitatorTypeId,
+            'description' => $request->description,
+            'address' => $request->address,
+            'phoneNumber' => $request->phoneNumber,
+            'slug' => $slug
+        ]);
+
+        if ($request->hasFile('picture')) {
+            $previousImage = $fasilitator->logoImageUrl;
+            if ($previousImage) {
+                Storage::delete('/images' . '/' . $previousImage);
+            }
+            $pictureFile = $request->file('picture');
+            $fileName = $fasilitator->id . '.' . $pictureFile->getClientOriginalExtension();
+            $pictureUrl = $pictureFile->storeAs('/images/Fasilitator/logoImages', $fileName);
+            $pictureUrl = 'Fasilitator/logoImages/' . $fileName;
+
             $fasilitator->update([
-                'fasilitatorTypeId' => $request->fasilitatorTypeId,
-                'description' => $request->description,
-                'address' => $request->address,
-                'phoneNumber' => $request->phoneNumber,
-                'slug' => $slug
+                'logoImageUrl' => $pictureUrl
             ]);
+        }
 
-
-            if ($request->picture && $request->picture != "") {
-                $request->validate(['picture'=> 'image']);
-                $newLogoPic = $request->file('picture');
-                if ($fasilitator->logoImageUrl && $fasilitator->logoImageUrl != '') {
-                    Storage::delete($fasilitator->logoImageUrl);
-                }
-                $newLogoPicName = $fasilitator->id . '.' . $newLogoPic->getClientOriginalExtension();
-                $logoImageUrl = $newLogoPic->storeAs('/images/Fasilitator/logoImages', $newLogoPicName);
-                $logoImageUrl = 'Fasilitator/logoImages/' . $newLogoPicName;
-
-                $fasilitator->update([
-                    'logoImageUrl' => $logoImageUrl,
-                ]);
-            }
-
-            return redirect('/fasilitators' . '/' . $fasilitator->slug)->with('success', 'Fasilitator update successful!');
+        return redirect('/fasilitators' . '/' . $fasilitator->slug)->with('success', 'Fasilitator update successful!');
     }
 }
