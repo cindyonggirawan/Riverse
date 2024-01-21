@@ -80,9 +80,9 @@
                         <a href="{{ url()->previous() }}" class="btn btn-default">
                             <i class="fas fa-angle-left">
                             </i>
-                            Back
+                            Kembali
                         </a>
-                        <button type="submit" class="btn btn-primary float-right">Create</button>
+                        <button type="submit" class="btn btn-primary float-right">Simpan</button>
                     </div>
                     <!-- /.card-footer -->
                 </form>
