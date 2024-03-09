@@ -164,7 +164,7 @@ class DatabaseSeeder extends Seeder
         $data = [
             'email' => 'sukarelawan@riverse.com',
             'password' => 'Sukarelawan123',
-            'name' => 'Sukarelawan',
+            'name' => 'John Doe',
             'gender' => 'Laki-laki',
             'dateOfBirth' => '01/01/2001',
             'nationalIdentityNumber' => '0000000000000001'
@@ -184,7 +184,7 @@ class DatabaseSeeder extends Seeder
             'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
             'email' => 'sukarelawan1@riverse.com',
             'password' => Hash::make($data['password']),
-            'name' => 'Sukarelawan Leaderboard 1',
+            'name' => 'Alif Rahmadan',
             'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 1')
         ]);
         User::create([
@@ -192,7 +192,7 @@ class DatabaseSeeder extends Seeder
             'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
             'email' => 'sukarelawan2@riverse.com',
             'password' => Hash::make($data['password']),
-            'name' => 'Sukarelawan Leaderboard 2',
+            'name' => 'Elliot',
             'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 2')
         ]);
         User::create([
@@ -200,7 +200,7 @@ class DatabaseSeeder extends Seeder
             'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
             'email' => 'sukarelawan3@riverse.com',
             'password' => Hash::make($data['password']),
-            'name' => 'Sukarelawan Leaderboard 3',
+            'name' => 'Cindy',
             'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 3')
         ]);
         User::create([
@@ -208,7 +208,7 @@ class DatabaseSeeder extends Seeder
             'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
             'email' => 'sukarelawan4@riverse.com',
             'password' => Hash::make($data['password']),
-            'name' => 'Sukarelawan Leaderboard 4',
+            'name' => 'Susi Puji',
             'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 4')
         ]);
         User::create([
@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
             'roleId' => Role::where('name', 'Sukarelawan')->first()->id,
             'email' => 'sukarelawan5@riverse.com',
             'password' => Hash::make($data['password']),
-            'name' => 'Sukarelawan Leaderboard 5',
+            'name' => 'Kevin',
             'slug' => Generator::generateSlug(User::class, 'Sukarelawan Leaderboard 5')
         ]);
 
@@ -281,9 +281,11 @@ class DatabaseSeeder extends Seeder
         $data = [
             'email' => 'fasilitator@riverse.com',
             'password' => 'Fasilitator123',
-            'name' => 'Fasilitator',
+            'name' => 'Bersih Sungai Ciliwung',
             'fasilitatorTypeId' => FasilitatorType::where('name', 'Komunitas')->first()->id,
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            'description' => "
+            Organisasi 'Bersih Sungai Ciliwung' adalah kelompok yang gigih dalam menjaga kebersihan Sungai Ciliwung, salah satu sungai terpenting di Indonesia. Dengan semangat peduli lingkungan, kami rutin mengadakan kegiatan pembersihan sungai untuk menghindari pencemaran oleh sampah plastik dan limbah berbahaya. Melalui upaya kolaboratif, kami berupaya menciptakan kesadaran masyarakat tentang pentingnya menjaga kebersihan sungai sebagai sumber air bersih dan habitat alami. Selain kegiatan pembersihan, kami juga aktif melibatkan komunitas setempat dalam program edukasi untuk meningkatkan pemahaman akan dampak positif yang dihasilkan dari usaha bersama dalam menjaga kelestarian Sungai Ciliwung.
+            ",
             'address' => 'Jl. Pondok Indah No. 123, Kota Jakarta Utara',
             'phoneNumber' => '8987654321'
         ];
@@ -327,7 +329,9 @@ class DatabaseSeeder extends Seeder
                 'fasilitatorId' => Fasilitator::first()->id,
                 'activityStatusId' => ActivityStatus::where('name', 'Pendaftaran Sedang Dibuka')->first()->id,
                 'name' => $name,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                'description' => "
+                Acara 'Bersih Sungai Ciliwung: Aksi Nyata untuk Lingkungan' merupakan inisiatif yang mengundang seluruh masyarakat untuk bergabung dalam kegiatan pembersihan sungai yang bertujuan menjaga kebersihan dan kelestarian Sungai Ciliwung di Indonesia. Acara ini diadakan dengan semangat kolaborasi dan kepedulian terhadap lingkungan. Peserta akan berpartisipasi dalam kegiatan membersihkan sampah plastik dan limbah di sepanjang sungai, sambil mendapatkan kesempatan untuk belajar lebih banyak tentang pentingnya menjaga keberlanjutan lingkungan sungai. Selain itu, acara ini juga akan menampilkan workshop, presentasi, dan kegiatan edukatif lainnya yang bertujuan untuk meningkatkan pemahaman masyarakat tentang dampak positif dari menjaga kebersihan sungai. Bersama-sama, mari wujudkan perubahan positif dan tingkatkan kesadaran akan pentingnya merawat Sungai Ciliwung untuk masa depan yang lebih hijau dan berkelanjutan.
+                ",
                 'registrationDeadlineDate' => '2024-7-7',
                 'experiencePointGiven' => 20,
                 'cleanUpDate' => '2024-8-8',
@@ -335,11 +339,11 @@ class DatabaseSeeder extends Seeder
                 'endTime' => '16:00:00',
                 'gatheringPointUrl' => 'https://maps.app.goo.gl/qJZgk1uYFzEmb2ZQ8',
                 'sukarelawanJobName' => 'Pembersih Handal',
-                'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, dan membakar sampah yang tidak dapat didaur ulang.',
-                'sukarelawanCriteria' => 'Tidak takut air dan kotoran.',
+                'sukarelawanJobDetail' => 'Menangkat sampah di sungai, memisahkan sampah yang dapat didaur ulang, membakar sampah yang tidak dapat didaur ulang.',
+                'sukarelawanCriteria' => 'Tidak takut air dan kotoran, Berusia 14 - 50 tahun, Berdomisili di Jabodetabek',
                 'verified_at' => now(),
                 'minimumNumOfSukarelawan' => 10,
-                'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan.',
+                'sukarelawanEquipment' => 'Plastik sampah besar dan sarung tangan, baju ganti, alat pencapit sampah',
                 'groupChatUrl' => 'https://wa.me/8987654321',
                 'slug' => Generator::generateSlug(Activity::class, $name)
             ]);
